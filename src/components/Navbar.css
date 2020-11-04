@@ -12,13 +12,15 @@
   
   .navbar-container {
     display: flex;
+    float:left;
     justify-content: center;
     align-items: center;
     height: 80px;
-    max-width: 1500px;
+
   }
   
-  .navbar-logo {
+  
+  /*.navbar-logo {
     color: #fff;
     justify-self: left;
     margin-left: 20px;
@@ -27,7 +29,7 @@
     font-size: 2rem;
     display: flex;
     align-items: left;
-  }
+  }*/
 
   .nav-links-mobile {
     display: none;
@@ -38,34 +40,6 @@
     .NavbarItems {
       position: relative;
     }
-  
-    .navbar-logo {
-      position: center;
-      top: 0;
-      left: 0;
-      transform: translate(25%, 50%);
-    }
-  
+  }
 
   
-    .nav-links-mobile {
-      display: block;
-      text-align: center;
-      margin: 2rem auto;
-      border-radius: 4px;
-      width: 80%;
-      text-decoration: none;
-      font-size: 1.5rem;
-      background-color: transparent;
-      color: #fff;
-      padding: 14px 20px;
-      border: 1px solid #fff;
-      transition: all 0.3s ease-out;
-    }
-  
-    .nav-links-mobile:hover {
-      background: #fff;
-      color: #242424;
-      transition: 250ms;
-    }
-  }

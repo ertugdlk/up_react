@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Button from './Common/Button'
 
 function LoginWindow() 
 {
@@ -9,18 +10,27 @@ function LoginWindow()
         <Window>
         <Modal>
         <form>
+          <label>
+                Email:
                 <input
                   type="text"
-                  placeholder="Email"
+                  placeholder="Enter Your Email"
                   name="Email"
                   required
                 ></input>
+                </label>
+                <label>
+                  Password:
                 <input
                   type="password"
                   placeholder="Enter Password"
                   name="Password"
                   required
                 ></input>
+                </label>
+                <div>
+                  <Button>Login</Button>
+              </div>
             </form>
         </Modal>  
         </Window>  
