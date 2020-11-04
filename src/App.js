@@ -1,15 +1,19 @@
 //import logo from './logo.svg';
 //import './App.css';
+import React from 'react';
+import Navbar from './components/Navbar';
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
+    <>
+    <Router>
+      <Navbar/>
+        <Switch>
+          <Route path ='' exact />
+        </Switch>
+      </Router>
+   </>
   );
 }
 
