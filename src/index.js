@@ -7,7 +7,6 @@ import { BrowserRouter as Router,
   Switch ,
   Route} from "react-router-dom";
 import Dashboard from './components/Dashboard';
-import 'semantic-ui-css/semantic.min.css'
 
 
 ReactDOM.render(
