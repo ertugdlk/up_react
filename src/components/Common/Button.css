@@ -20,10 +20,35 @@
     background-color: transparent;
     color: #fff;
     padding: 8px 20px;
-    border: 1px solid var(--primary);
     transition: all 0.3s ease-out;
+    
+  }
+
+  .btn--navbar--createAccount{
+    padding: 0 3rem;
+    transition: all 0.3s ease-out;
+
+  }
+
+  .btn--navbar--login{
+    transition: all 0.3s ease-out;
+    padding:0 3rem;
   }
   
+  .btn--register{
+    background-color: #00FF60;
+    color:#000;
+    border-radius: 0 3rem;
+  
+  }
+
+  .btn--login{
+    background-color: #00FF60;
+    color:#000;
+    border-radius: 3em;
+
+  }
+
   .btn--medium {
     padding: 8px 20px;
     font-size: 18px;

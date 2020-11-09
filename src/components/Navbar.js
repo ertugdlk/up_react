@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Button } from './Common/Button';
 import LoginWindow from './LoginWindow';
 import CreateAccountWindow from './CreateAccountWindow';
-import './Navbar.css';
+import styled from 'styled-components'
+import Logo from '../logo.png'
+import { Grid } from '@material-ui/core';
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -13,6 +15,7 @@ const handleClickLogin = ()=>
 {
   setVisible(true);
   setClick(false);
+
 }
 
 const handleClickCreateAccount = ()=> 
@@ -26,18 +29,50 @@ const handleClickCreateAccount = ()=>
   
   return (
     <>
-  
-      {visible ? <LoginWindow></LoginWindow> : null}
-      <nav className='navbar'>
-        <div className='navbar-container'>
-            Başlık
-          </div>
-          <Button onClick={handleClickLogin} className="LoginButton" id="Login" buttonStyle='btn--outline'>Login </Button>
-        {click?<CreateAccountWindow></CreateAccountWindow>:null}
-          <Button onClick={handleClickCreateAccount} className="CreateAccountButton"id="Create Account" buttonStyle='btn--outline'>Create Account</Button>
-      </nav>
+    <NavigationBar>
+      {click ? <CreateAccountWindow></CreateAccountWindow> : null}
+      <LogoSize>
+            <img src={Logo}/>
+      </LogoSize>
+      <Grid>
+          <Button onClick={handleClickCreateAccount} buttonStyle='btn--navbar--createAccount'>Create Account</Button>
+        {visible?<LoginWindow></LoginWindow>:null}
+          <Button onClick={handleClickLogin} buttonStyle='btn--navbar--login'>Login</Button>
+      </Grid>
+      </NavigationBar>
     </>
   );
 }
 
+const NavigationBar = styled.header`
+    background-color: #16161b;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: fixed;
+    width:100%;
+    top: 0;
+    left:0;
+    z-index: 999;
+  `;
+
+const LogoSize = styled.div`
+  position: absolute;
+  top:-40px;
+  width: 130px;
+  height: 40px;
+  left:0;
+`;
+
+const Name = styled.div`
+
+    color:#fff;
+    display: fixed;
+    align-items: center;
+    height: 100%;
+    padding: 0 28rem;
+    cursor:pointer;   
+`;
 export default Navbar;
