@@ -1,38 +1,52 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
+import fetch from 'node-fetch'
 
 
 function LoginWindow() 
 {
+  const [username , setUsername] = useState('')
+  const [password , setPassword] = useState('')
+
+  const handleLogin = async () => {
+    try
+    {
+      const url = "http://localhost:5000/auth/login"
+      const body = { nickname: username , password: password}
+      const response = await fetch(url , { method: 'POST', body: JSON.stringify(body) })
+      console.log(response)
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
+
+  }
 
     return(
         <>
         <Window>
         <Modal>
-        <form>
         <Title>
           <b>LOGIN</b>
         </Title>
-          <label>
-                Username
-                <StyledInput
-                  type="text"
-                  name="Username"
-                  required
-                ></StyledInput>
-                </label>
-                <label>
-                  Password
-                <StyledInput
-                  type="password"
-                  name="Password"
-                  required
-                ></StyledInput>
-                </label>
-                <div>
-                  <Button buttonStyle='btn--login'>Login</Button>
-              </div>
-            </form>
+        <form>
+            <label>Email</label>
+            <input
+              onChange={e => setUsername(e.target.value)}
+              type="text"
+              name="email"
+              required
+            />
+            <label>Password</label>
+            <input
+              onChange={e => setPassword(e.target.value )}
+              type="text"
+              name="password"
+              required
+            />
+            <Button onClick={handleLogin}>Login</Button>
+          </form>
         </Modal>  
         </Window>  
         </>
@@ -56,6 +70,8 @@ const Window = styled.div`
     width: 300px;
     height: 400px;
     top: 200px;
+    left: 40%;
+    align-self:center;
     background: #161616;
     border-radius: 12px;
     z-index: 3;
@@ -89,6 +105,11 @@ const Button = styled.button`
   padding: 0.75em 3em;
   border: 2px solid #00ff60;
   border-radius: 3px;
+  &:hover {
+      background-color: #16161b;
+      color: #f1f1f1;
+      border-color: #f1f1f1;
+  }
 `;
 
 

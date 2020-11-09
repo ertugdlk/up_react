@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Button } from './Common/Button';
 import LoginWindow from './LoginWindow';
-import CreateAccountWindow from './CreateAccountWindow';
+import RegisterWindow from './RegisterWindow';
 import styled from 'styled-components'
 import Logo from '../logo.png'
 import { Grid } from '@material-ui/core';
 
-function Navbar() {
+function Homepage() {
   const [click, setClick] = useState(false);
   const [visible , setVisible] = useState(false)
 
@@ -30,11 +30,11 @@ const handleClickCreateAccount = ()=>
   return (
     <>
     <NavigationBar>
-      {click ? <CreateAccountWindow></CreateAccountWindow> : null}
-      <LogoSize>
+    <LogoSize>
             <img src={Logo}/>
       </LogoSize>
       <Grid>
+      {click ? <RegisterWindow></RegisterWindow> : null}
           <Button onClick={handleClickCreateAccount} buttonStyle='btn--navbar--createAccount'>Create Account</Button>
         {visible?<LoginWindow></LoginWindow>:null}
           <Button onClick={handleClickLogin} buttonStyle='btn--navbar--login'>Login</Button>
@@ -75,4 +75,4 @@ const Name = styled.div`
     padding: 0 28rem;
     cursor:pointer;   
 `;
-export default Navbar;
+export default Homepage;

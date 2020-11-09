@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 
-function CreateAccountWindow() 
+function RegisterWindow() 
 {
   const [click, setClick] = useState(false);
   const [visible , setVisible] = useState(false);
@@ -78,6 +78,7 @@ const Window = styled.div`
     width: 300px;
     height: fit-content;
     top: 150px;
+    left: 40%;
     background: #161616;
     border-radius: 12px;
     z-index: 3;
@@ -109,4 +110,4 @@ border: 2px solid #00ff60;
 border-radius: 3px;
 `;
 
-export default CreateAccountWindow
+export default RegisterWindow
