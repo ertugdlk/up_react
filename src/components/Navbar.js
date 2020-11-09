@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from './Common/Button';
 import LoginWindow from './LoginWindow';
 import CreateAccountWindow from './CreateAccountWindow';
-import './Navbar.css';
+import styled from 'styled-components'
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -13,6 +13,7 @@ const handleClickLogin = ()=>
 {
   setVisible(true);
   setClick(false);
+
 }
 
 const handleClickCreateAccount = ()=> 
@@ -26,18 +27,38 @@ const handleClickCreateAccount = ()=>
   
   return (
     <>
-  
-      {visible ? <LoginWindow></LoginWindow> : null}
-      <nav className='navbar'>
-        <div className='navbar-container'>
-            Başlık
-          </div>
-          <Button onClick={handleClickLogin} className="LoginButton" id="Login" buttonStyle='btn--outline'>Login </Button>
-        {click?<CreateAccountWindow></CreateAccountWindow>:null}
-          <Button onClick={handleClickCreateAccount} className="CreateAccountButton"id="Create Account" buttonStyle='btn--outline'>Create Account</Button>
-      </nav>
+    <NavigationBar>
+      {click ? <CreateAccountWindow></CreateAccountWindow> : null}
+        <Name >
+            UnknownPros
+        </Name>
+          <Button onClick={handleClickCreateAccount} buttonStyle='btn--navbar--createAccount'>Create Account</Button>
+        {visible?<LoginWindow></LoginWindow>:null}
+          <Button onClick={handleClickLogin} buttonStyle='btn--navbar--login'>Login</Button>
+      </NavigationBar>
     </>
   );
 }
 
+const NavigationBar = styled.header`
+    background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  `;
+
+const Name = styled.div`
+
+    color:#fff;
+    display: fixed;
+    align-items: center;
+    height: 100%;
+    padding: 0 28rem;
+    cursor:pointer;   
+`;
 export default Navbar;
