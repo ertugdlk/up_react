@@ -1,19 +1,17 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import fetch from 'node-fetch'
-
+const Axios = require('axios')
 
 function LoginWindow() 
 {
-  const [username , setUsername] = useState('')
-  const [password , setPassword] = useState('')
+  const [nickname , setNickname] = useState("")
+  const [password , setPassword] = useState("")
 
   const handleLogin = async () => {
     try
     {
       const url = "http://localhost:5000/auth/login"
-      const body = { nickname: username , password: password}
-      const response = await fetch(url , { method: 'POST', body: JSON.stringify(body) })
+      const response = await Axios.post(url , {nickname , password})
       console.log(response)
     }
     catch(err)
@@ -30,23 +28,21 @@ function LoginWindow()
         <Title>
           <b>LOGIN</b>
         </Title>
-        <form>
-            <label>Email</label>
+        <label>Email</label>
             <input
-              onChange={e => setUsername(e.target.value)}
+              onChange={e => setNickname(e.target.value)}
               type="text"
-              name="email"
+              name="nickname"
               required
             />
             <label>Password</label>
             <input
               onChange={e => setPassword(e.target.value )}
-              type="text"
+              type="password"
               name="password"
               required
             />
             <Button onClick={handleLogin}>Login</Button>
-          </form>
         </Modal>  
         </Window>  
         </>
