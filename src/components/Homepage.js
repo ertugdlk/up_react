@@ -2,9 +2,17 @@ import React, { useState } from 'react';
 import { Button } from './Common/Button';
 import LoginWindow from './LoginWindow';
 import RegisterWindow from './RegisterWindow';
-import styled from 'styled-components'
+import styled , {createGlobalStyle} from 'styled-components'
 import Logo from '../logo.png'
 import { Grid } from '@material-ui/core';
+
+
+const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+  body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #010101;
+  }`
 
 function Homepage() {
   const [click, setClick] = useState(false);
@@ -29,15 +37,16 @@ const handleClickCreateAccount = ()=>
   
   return (
     <>
+    <GlobalStyle></GlobalStyle>
     <NavigationBar>
     <LogoSize>
             <img src={Logo}/>
       </LogoSize>
       <Grid>
       {click ? <RegisterWindow></RegisterWindow> : null}
-          <Button onClick={handleClickCreateAccount} buttonStyle='btn--navbar--createAccount'>Create Account</Button>
+          <Button onClick={handleClickCreateAccount} className='btn--navbar--createAccount'>Create <Span>Account</Span><GlobalStyle/></Button>
         {visible?<LoginWindow></LoginWindow>:null}
-          <Button onClick={handleClickLogin} buttonStyle='btn--navbar--login'>Login</Button>
+          <Button onClick={handleClickLogin} className='btn--navbar--login'>Login<GlobalStyle/></Button>
       </Grid>
       </NavigationBar>
     </>
@@ -48,7 +57,7 @@ const NavigationBar = styled.header`
     background-color: #16161b;
     height: 70px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     font-size: 1.2rem;
     position: fixed;
@@ -66,13 +75,8 @@ const LogoSize = styled.div`
   left:0;
 `;
 
-const Name = styled.div`
-
-    color:#fff;
-    display: fixed;
-    align-items: center;
-    height: 100%;
-    padding: 0 28rem;
-    cursor:pointer;   
+const Span = styled.span`
+color:#00FF60
 `;
+
 export default Homepage;

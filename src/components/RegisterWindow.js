@@ -1,5 +1,11 @@
 import React, {useState} from 'react'
-import styled from 'styled-components'
+import styled, {createGlobalStyle} from 'styled-components'
+
+const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+  body {
+    font-family: 'Raleway', sans-serif;
+  }`
 
 function RegisterWindow() 
 {
@@ -14,6 +20,7 @@ const handleClickRegister = ()=>
 }
     return(
         <>
+        <GlobalStyle></GlobalStyle>
         <Window>
         <Modal>
         <form>
@@ -61,15 +68,16 @@ const handleClickRegister = ()=>
 }
 //İçeriklerin cssi
 const Modal = styled.div`
-  color:#fff;
+   color:#fff;
   box-sizing: border-box;
   font-size: 14px;
-  width: 12px;
-  margin:25% 25%;
+  margin: 5% 25%;
   position: flex;
-  font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
+  display: grid;
+  justify-items:center;
+  align-items:center;
 `;
 //Popup'ın cssi
 const Window = styled.div`
@@ -79,35 +87,45 @@ const Window = styled.div`
     height: fit-content;
     top: 150px;
     left: 40%;
-    background: #161616;
+    background: #0b0b0b;
     border-radius: 12px;
     z-index: 3;
 `;
 
 const StyledInput = styled.input`
-  padding: 0.5em;
-  margin: 0.5em;
+  margin-top:0.5em;
+  padding: 0.5em; // Input Fieldların Boyutu
   color:#fff;
-  background-color: grey;
+  background-color: #1b1c23;
   border: none;
-  border-radius: 20px;
-`;
+  border-radius: 8px;
+    width: auto;
+    justify-self:center;
+  `;
 
-const Title = styled.h2`
-color: #fff;
-font-size: 1Sem;
-margin: 1em 1.5em;
-padding-bottom:0.5em;
-`;
+  const Title = styled.h2`
+  color: #fff;
+  font-size: 1Sem;
+  margin: 0.5em 1.5em;
+  padding-bottom:0.5em;
+  `;
 
-const Button = styled.button`
-color: #000;
-background-color: #00FF60;
-font-size: 1em;
-margin: 4em 1em;
-padding: 0.75em 3em;
-border: 2px solid #00ff60;
-border-radius: 3px;
+  const Button = styled.button`
+    color: #000;
+    background-color: #00FF60;
+    font-size: 1em;
+    margin-top:1.5em;
+    padding: 0.75em;
+    border: 2px solid #00ff60;
+    border-radius: 8px;
+    width: 75%;
+    margin-right:12.5%;
+    margin-left:12.5%;
+  &:hover {
+      background-color: #16161b;
+      color: #f1f1f1;
+      border-color: #f1f1f1;
+  }
 `;
 
 export default RegisterWindow
