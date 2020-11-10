@@ -1,14 +1,19 @@
 import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
+import Photo1 from '../Photo1.png'
 import {Grid , Button , Container} from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
 import {Menu, MenuItem} from '@material-ui/core'
+import Css from './Dashboard.css'
+import { useHistory } from "react-router-dom";  
 
 
 function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [menuBar, setmenuBar] = React.useState('')
+  const history = useHistory();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -18,6 +23,9 @@ function Dashboard() {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    history.push("/");
+  }
     return(
         <>
         <GlobalStyle></GlobalStyle>
@@ -42,10 +50,18 @@ function Dashboard() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Grid>
         </Header>
+
+        <div className='Container'>
+          <div className='Slider'>
+            <img src ={Photo1} className='img1'></img>
+          </div>
+          <div className='Games'>
+          </div>
+        </div>
 
         <MenuBar>
           <Grid
@@ -54,7 +70,8 @@ function Dashboard() {
               justify="space-evenly"
               alignItems="center">
           </Grid>
-          <PlayButton>Play</PlayButton>
+          <PlayButton >Play</PlayButton>
+          <button className='News'>News</button>
         </MenuBar> 
         </>
     )
@@ -68,14 +85,15 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const MenuBar = styled.div`
-  width: 150px;
-  height: 100%;
+  width: 140px;
+  height: 1200px;
   position: absolute;
   top:70px;
   left:0px;
   align-self:flex-start;
   justify-self:flex-start;
   background-color: #16161b;
+  z-index: 999;
 `;
 
 const Header = styled.div`
@@ -96,20 +114,20 @@ const LogoSize = styled.div`
 `;
 
 const PlayButton = styled.button`
-    width: 150px;
+    width: 140px;
     height: 50px;
-    z-index:1000;
-    background-color: #00ff60;
     border: none;
-    position:absolute;
+    position:relative;
     color: #000000;
     font-size: 17px;
     font-weight: 400;
     line-height: 40px;
+    color: #f1f1f1;
+    background-color: #16161b;
     &:hover {
-      background-color: #16161b;
-      color: #f1f1f1;
+      background-color: #00ff60;
       border-color: #f1f1f1;
+      color: #000000;
   }
 `;
 
