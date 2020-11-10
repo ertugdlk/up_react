@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import styled, {createGlobalStyle} from 'styled-components'
+const Axios = require('axios')
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -11,7 +12,24 @@ function RegisterWindow()
 {
   const [click, setClick] = useState(false);
   const [visible , setVisible] = useState(false);
-;
+  const [nickname, setNickname] = useState('')
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
+
+  const handleRegister = () => 
+  {
+    try
+    {
+      const url = "http://localhost:5000/auth/register"
+      const response = await Axios.post(url , {nickname , email , password})
+      console.log(response)
+    }
+    catch(err)
+    {
+      console.log(err)
+    }
+  }
+
 
 const handleClickRegister = ()=> 
 {
@@ -26,10 +44,11 @@ const handleClickRegister = ()=>
         <form>
           <Title><b>CREATE ACCOUNT</b></Title>
             <label>
-              Username
+              Nickname
               <StyledInput
                  type="text"
-                name="username"
+                name="nickname"
+                onChange={e => setNickname(e.target.value )}
                 required
               ></StyledInput>
             </label>
@@ -38,6 +57,7 @@ const handleClickRegister = ()=>
               <StyledInput
                  type="text"
                 name="email"
+                onChange={e => setEmail(e.target.value )}
                 required
               ></StyledInput>
             </label>
@@ -46,6 +66,7 @@ const handleClickRegister = ()=>
               <StyledInput
                  type="password"
                 name="password"
+                onChange={e => setPassword(e.target.value )}
                 required
               ></StyledInput>
             </label>
@@ -58,7 +79,7 @@ const handleClickRegister = ()=>
               ></StyledInput>
             </label>
             <div>
-                <Button buttonStyle='btn--register'>Register</Button>
+                <Button onClick={handleRegister} buttonStyle='btn--register'>Register</Button>
             </div>
           </form>
         </Modal>  
