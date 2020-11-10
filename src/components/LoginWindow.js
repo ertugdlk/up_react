@@ -1,18 +1,29 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
+import { useHistory } from "react-router-dom";  
 const Axios = require('axios')
+const Cookie = require('js-cookie')
+
 
 function LoginWindow() 
 {
   const [nickname , setNickname] = useState("")
   const [password , setPassword] = useState("")
+  const history = useHistory();
+
 
   const handleLogin = async () => {
     try
     {
       const url = "http://localhost:5000/auth/login"
-      const response = await Axios.post(url , {nickname , password})
-      console.log(response)
+      const response = await Axios.post(url , {nickname , password} , {withCredentials: true})
+      
+      if(response.status == 200){
+        history.push("/dashboard");
+      }
+      else{
+        console.log('invalid login')
+      }
     }
     catch(err)
     {
