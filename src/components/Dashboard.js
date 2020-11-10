@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
@@ -7,13 +7,20 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
 import {Menu, MenuItem} from '@material-ui/core'
 import Css from './Dashboard.css'
-import { useHistory } from "react-router-dom";  
+import { useHistory } from "react-router-dom"; 
+const Axios = require('axios')
 
 
 function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [menuBar, setmenuBar] = React.useState('')
   const history = useHistory();
+
+  useEffect( async ()=> {
+    const url = "http://localhost:5000/auth/me"
+    const response = await Axios.get(url)
+    console.log(response)
+  }, [])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

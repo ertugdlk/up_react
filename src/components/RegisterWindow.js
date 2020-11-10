@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import styled, {createGlobalStyle} from 'styled-components'
+import { useHistory } from "react-router-dom";  
 const Axios = require('axios')
 
 const GlobalStyle = createGlobalStyle`
@@ -15,14 +16,21 @@ function RegisterWindow()
   const [nickname, setNickname] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
+  const history = useHistory();
 
-  const handleRegister = () => 
+
+  const handleRegister = async () => 
   {
     try
     {
       const url = "http://localhost:5000/auth/register"
       const response = await Axios.post(url , {nickname , email , password})
-      console.log(response)
+      if(response.status == 200){
+        history.push("/");
+      }
+      else{
+        console.log('invalid register')
+      }
     }
     catch(err)
     {
@@ -41,7 +49,6 @@ const handleClickRegister = ()=>
         <GlobalStyle></GlobalStyle>
         <Window>
         <Modal>
-        <form>
           <Title><b>CREATE ACCOUNT</b></Title>
             <label>
               Nickname
@@ -81,7 +88,6 @@ const handleClickRegister = ()=>
             <div>
                 <Button onClick={handleRegister} buttonStyle='btn--register'>Register</Button>
             </div>
-          </form>
         </Modal>  
         </Window>  
         </>
