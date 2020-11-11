@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {Menu, MenuItem} from '@material-ui/core'
 import Css from './Dashboard.css'
 import { useHistory } from "react-router-dom"; 
+import GameRoomRow from './Common/GameRoomRow'
 const Axios = require('axios')
 
 
@@ -17,50 +18,6 @@ function Dashboard() {
   const [userName, setUsername] = React.useState('')
   const history = useHistory();
 
-  const GamesTable = () => {
-    const [games, setGames] = useState([])
-    /*
-    useEffect(() => {
-        getData()
-    }, [])
-
-    const getData = async () => {
-
-        const response = await axios.get(URL) 
-        setGames(response.data)
-    }
-
-    const JoinRoom = (id) => {
-        //
-        })
-    }
-*/
-    const Header = () => {
-        let headerElement = ['Game', 'Timestamp', 'Mode', 'Host', 'Map', 'Fee', 'Reward']
-
-        return headerElement.map((key, index) => {
-            return <th key={index}>{key.toUpperCase()}</th>
-        })
-    }
-
-    const Body = () => {
-        return games && games.map(({ Game, Timestamp, Mode, Host, Map, Fee, Reward }) => {
-            return (
-                <tr>
-                    <td>{Game}</td>
-                    <td>{Timestamp}</td>
-                    <td>{Mode}</td>
-                    <td>{Host}</td>
-                    <td>{Map}</td>
-                    <td>{Fee}</td>
-                    <td>{Reward}</td>
-                    <td className='opration'>
-                        <button className='button' /*onClick={() => removeData(id)}*/>Join Game</button>
-                    </td>
-                </tr>
-            )
-        })
-    }
 
   useEffect( async ()=> {
     const url = "http://localhost:5000/auth/me"
@@ -108,17 +65,6 @@ function Dashboard() {
               >
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
-
-                <table id='game'>
-                <thead>
-                    <tr>{Header()}</tr>
-                </thead>
-                <tbody>
-                    {Body()}
-                </tbody>
-            </table>
-
-
             </Menu>
           </Grid>
         </Header>
@@ -128,6 +74,10 @@ function Dashboard() {
             <img src ={Photo1} className='img1'></img>
           </div>
           <div className='Games'>
+              <GameRoomRow></GameRoomRow>
+              <GameRoomRow></GameRoomRow>
+              <GameRoomRow></GameRoomRow>
+              <GameRoomRow></GameRoomRow>
           </div>
         </div>
 
@@ -145,7 +95,6 @@ function Dashboard() {
     )
 
   }
-}
 const GlobalStyle = createGlobalStyle`
   body {
     background-color:#19191f;
