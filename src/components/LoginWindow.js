@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 const Axios = require('axios')
 const Cookie = require('js-cookie')
 
+//const URL = ''
 
 
 const GlobalStyle = createGlobalStyle`
@@ -17,7 +18,49 @@ function LoginWindow()
   const [nickname , setNickname] = useState("")
   const [password , setPassword] = useState("")
   const history = useHistory();
+  const [games, setGames] = useState([]);
+    /*
+    useEffect(() => {
+        getData()
+    }, [])
 
+    const getData = async () => {
+        let url = `URL${id}`
+        const response = await axios.get(URL) 
+        setGames(response.data)
+    }
+
+    const JoinRoom = (id) => {
+        //
+        })
+    }
+*/
+    const Header = () => {
+        let headerElement = ['Game', 'Timestamp', 'Mode', 'Host', 'Map', 'Fee', 'Reward']
+
+        return headerElement.map((key, index) => {
+            return <th key={index}>{key.toUpperCase()}</th>
+        })
+    }
+
+    const Body = () => {
+        return games && games.map(({ Game, Timestamp, Mode, Host, Map, Fee, Reward }) => {
+            return (
+                <tr>
+                    <td>{Game}</td>
+                    <td>{Timestamp}</td>
+                    <td>{Mode}</td>
+                    <td>{Host}</td>
+                    <td>{Map}</td>
+                    <td>{Fee}</td>
+                    <td>{Reward}</td>
+                    <td className='opration'>
+                        <button className='button' /*onClick={() => JoinRoom()}*/>Join Game</button>
+                    </td>
+                </tr>
+            )
+        })
+    }
 
 
   const handleSteam = async () => {
@@ -69,6 +112,15 @@ function LoginWindow()
             />
             <Button onClick={handleLogin}>Login</Button>
         </Modal>  
+
+        <table id='game'>
+                <thead>
+                    <tr>{Header()}</tr>
+                </thead>
+                <tbody>
+                    {Body()}
+                </tbody>
+            </table>
         </Window>  
         </>
     )
@@ -129,9 +181,9 @@ const Button = styled.button`
   padding: 0.75em ;
   border: 2px solid #00ff60;
   border-radius: 8px;
-  width: 250%;
-  margin-left:25%;
-  margin-right:25%;
+  width: fit-content;
+  margin-left:50px;
+
   &:hover {
       background-color: #16161b;
       color: #f1f1f1;

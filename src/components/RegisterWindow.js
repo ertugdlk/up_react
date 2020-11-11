@@ -13,9 +13,10 @@ function RegisterWindow()
 {
   const [click, setClick] = useState(false);
   const [visible , setVisible] = useState(false);
-  const [nickname, setNickname] = useState('')
-  const [password, setPassword] = useState('')
-  const [email, setEmail] = useState('')
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [secondPassword,setSecondPassword] = useState('');
+  const [email, setEmail] = useState('');
   const history = useHistory();
 
 
@@ -28,22 +29,18 @@ function RegisterWindow()
       if(response.status == 200){
         history.push("/");
       }
-      else{
-        console.log('invalid register')
+        // perform all neccassary validations
+        
+        if (password !== secondPassword) {
+            alert("Passwords don't match");
+        }
       }
-    }
     catch(err)
     {
       console.log(err)
     }
   }
 
-
-const handleClickRegister = ()=> 
-{
-  setClick(true);
-  setVisible(false);
-}
     return(
         <>
         <GlobalStyle></GlobalStyle>
@@ -80,8 +77,8 @@ const handleClickRegister = ()=>
             <label>
               Confirm Password
               <StyledInput
-                 type="password"
-                name="repassword"
+                 type="secondPassword"
+                name="secondPassword"
                 required
               ></StyledInput>
             </label>
@@ -145,9 +142,9 @@ const StyledInput = styled.input`
     padding: 0.75em;
     border: 2px solid #00ff60;
     border-radius: 8px;
-    width: 75%;
-    margin-right:12.5%;
-    margin-left:12.5%;
+    width: 100%;
+    margin-right:25%;
+    margin-left:auto;
   &:hover {
       background-color: #16161b;
       color: #f1f1f1;
