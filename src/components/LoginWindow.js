@@ -30,7 +30,7 @@ function LoginWindow()
     {
       const url = "http://localhost:5000/auth/login"
       const response = await Axios.post(url , {nickname , password} , {withCredentials: true})
-      
+
       if(response.status == 200){
         history.push("/dashboard");
       }

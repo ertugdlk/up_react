@@ -14,12 +14,16 @@ const Axios = require('axios')
 function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [menuBar, setmenuBar] = React.useState('')
+  const [userName, setUsername] = React.useState('')
   const history = useHistory();
 
   useEffect( async ()=> {
     const url = "http://localhost:5000/auth/me"
-    const response = await Axios.get(url)
-    console.log(response)
+    const response = await Axios.get(url , {withCredentials: true})
+    if(response.status == 200)
+    {
+      setUsername(response.data.nickname)
+    }
   }, [])
 
   const handleClick = (event) => {
@@ -43,6 +47,7 @@ function Dashboard() {
             </LogoSize>
             <div style={{alignSelf:"center"}}>
             <Avatar></Avatar>
+            <span className='Nickname'> {userName}</span>
             <ArrowMenu>
               <IconButton style={{ color: 'white' }} aria-label="menu" size="small" aria-haspopup="true" onClick={handleClick}>
                 <ArrowDownwardIcon fontSize="inherit" />
@@ -149,7 +154,7 @@ const Avatar = styled.div`
 `
 const ArrowMenu = styled.div`
   top:20px;
-  right:60px;
+  right:80px;
   position:absolute;
 `
 
