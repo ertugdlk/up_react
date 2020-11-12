@@ -49,7 +49,7 @@ function LoginWindow()
         <Window>
         <Modal>
         <Title>
-          <b>LOGIN</b>
+          Login
         </Title>
         <label>Username</label>
             <StyledInput
@@ -60,7 +60,7 @@ function LoginWindow()
             />
             <label>Password</label>
             <StyledInput
-              onChange={e => setPassword(e.target.value )}
+              onChange={e => setPassword(e.target.value)}
               type="password"
               name="password"
               required
@@ -96,6 +96,7 @@ const Window = styled.div`
     background: #0b0b0b;
     border-radius: 12px;
     z-index: 3;
+    box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
 `;
 
 
@@ -112,10 +113,11 @@ const StyledInput = styled.input`
 
 
 const Title = styled.h2`
-color: #fff;
-font-size: 1Sem;
-margin: 0.5em 1.5em;
-padding-bottom:0.5em;
+  color: #fff;
+  font-size:1Sem;
+  margin-left: 50px;
+  padding-bottom:0.5em;
+  
 `;
 
 
@@ -128,6 +130,7 @@ const Button = styled.button`
   border: 2px solid #00ff60;
   border-radius: 8px;
   width: fit-content;
+  height: fit-content;
   margin-left:50px;
 
   &:hover {
