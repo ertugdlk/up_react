@@ -15,13 +15,15 @@
 
 td{
     /* Text Styles */
-    width: 140px;
+    top: -31.4px;
+    width: 159px;
+    position: relative;
 }
 
 .GameRowButton{
     border: none;
-    width: 155px;
     height: 59px;
+    width: 155px;
     background-color: #272730;
     color: #00ff60;
     font-family: 'Raleway';
