@@ -23,7 +23,7 @@ const handleClickLogin = ()=>
 {
   setVisible(true);
   setClick(false);
-
+  
 }
 
 const handleClickCreateAccount = ()=> 
@@ -40,7 +40,7 @@ const handleClickCreateAccount = ()=>
     <GlobalStyle></GlobalStyle>
     <NavigationBar>
     <LogoSize>
-            <img src={Logo}/>
+    <a href="/"><img src={Logo} href='/'/> </a>
       </LogoSize>
       <Grid>
       {click ? <RegisterWindow></RegisterWindow> : null}
@@ -49,8 +49,7 @@ const handleClickCreateAccount = ()=>
           <Button onClick={handleClickLogin} className='btn--navbar--login'>Login<GlobalStyle/></Button>
       </Grid>
       </NavigationBar>
-      
-    </>
+      </>
   );
 }
 
@@ -60,7 +59,7 @@ const NavigationBar = styled.header`
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    font-size: 1.2rem;
+    font-size: 1rem;
     position: fixed;
     width:100%;
     top: 0;
@@ -71,13 +70,11 @@ const NavigationBar = styled.header`
 const LogoSize = styled.div`
   position: absolute;
   top:-40px;
-  width: 130px;
-  height: 40px;
   left:0;
 `;
 
 const Span = styled.span`
-color:#00FF60
+  color:#00FF60
 `;
 
 export default Homepage;

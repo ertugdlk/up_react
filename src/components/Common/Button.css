@@ -1,7 +1,3 @@
-:root {
-    --primary: #fff;
-  }
-  
   .btn {
     color:white;
     background-color: transparent;
@@ -13,56 +9,47 @@
     cursor: pointer;
   }
   
-  .btn--primary {
-    background-color: var(--primary);
-    color: #242424;
-    border: 1px solid var(--primary);
-  }
-  
 
   .btn--navbar--createAccount{
-    padding: 0 3rem;
-    transition: all 0.3s ease-out;
+    transition: all 0.01s ease-out;
     background-color: #242424;
-
+    display: block;
+    justify-content: center;
+    
   }
 
   .btn--navbar--login{
-    transition: all 0.3s ease-out;
-    padding:0 3rem;
-    
-  
+    transition: all 0.01s ease-out;
   }
   
   .btn--register{
     background-color: #00FF60;
-    color:#000;
     border-radius: 0 3rem;
-  
   }
 
   .btn--login{
     background-color: #00FF60;
-    color:#000; 
     border-radius: 3em;
   }
 
   .btn--medium {
-    padding: 8px 20px;
-    font-size: 18px;
+    padding: 20px;
+    font-size: 16px;
+    border: none;
   }
   
   .btn--large {
-    padding: 12px 26px;
-    font-size: 20px;
+    padding: 20px;
+    font-size: 16px;
     border: none;
   }
   
   .btn--large:hover,
   .btn--medium:hover {
-    transition: all 0.3s ease-out;
+    transition: all 0.01s ease-out;
     background: black;
     color: white;
     transition: 250ms;
     border: none;
+    height: 70px;
   }

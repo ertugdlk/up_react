@@ -46,7 +46,7 @@ function RegisterWindow()
         <GlobalStyle></GlobalStyle>
         <Window>
         <Modal>
-          <Title><b>CREATE ACCOUNT</b></Title>
+          <Title>Create Account</Title>
             <label>
               Nickname
               <StyledInput
@@ -114,6 +114,7 @@ const Window = styled.div`
     background: #0b0b0b;
     border-radius: 12px;
     z-index: 3;
+    box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
 `;
 
 const StyledInput = styled.input`
@@ -129,8 +130,8 @@ const StyledInput = styled.input`
 
   const Title = styled.h2`
   color: #fff;
-  font-size: 1Sem;
-  margin: 0.5em 1.5em;
+  font-size:1Sem;
+  margin: auto;
   padding-bottom:0.5em;
   `;
 
@@ -142,7 +143,8 @@ const StyledInput = styled.input`
     padding: 0.75em;
     border: 2px solid #00ff60;
     border-radius: 8px;
-    width: 100%;
+    width: fit-content;
+    height: fit-content;
     margin-right:25%;
     margin-left:auto;
   &:hover {
