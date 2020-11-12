@@ -20,20 +20,22 @@ function RegisterWindow()
   const history = useHistory();
 
 
-  const handleRegister = async () => 
+  const handleRegister = async (next) => 
   {
     try
-    {
+    {        
+      if (password !== secondPassword) {
+          alert("Passwords don't match");
+          next()
+      }
       const url = "http://localhost:5000/auth/register"
       const response = await Axios.post(url , {nickname , email , password})
       if(response.status == 200){
         history.push("/");
       }
-        // perform all neccassary validations
-        
-        if (password !== secondPassword) {
-            alert("Passwords don't match");
-        }
+      else if(response.data.status === 0){
+        alert(response.data.msg)
+      }
       }
     catch(err)
     {
@@ -68,7 +70,7 @@ function RegisterWindow()
             <label>
               Password
               <StyledInput
-                 type="password"
+                type="password"
                 name="password"
                 onChange={e => setPassword(e.target.value )}
                 required
@@ -77,8 +79,9 @@ function RegisterWindow()
             <label>
               Confirm Password
               <StyledInput
-                 type="secondPassword"
+                type="password"
                 name="secondPassword"
+                onChange={e => setSecondPassword(e.target.value )}
                 required
               ></StyledInput>
             </label>
