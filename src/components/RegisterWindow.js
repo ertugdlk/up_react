@@ -120,6 +120,7 @@ const Window = styled.div`
 
 const StyledInput = styled.input`
   margin-top:0.5em;
+  margin-bottom: 0.8em;
   padding: 0.5em; // Input Fieldların Boyutu
   color:#fff;
   background-color: #1b1c23;
@@ -134,6 +135,7 @@ const StyledInput = styled.input`
   font-size:1Sem;
   margin: auto;
   padding-bottom:0.5em;
+  text-align:center;
   `;
 
   const Button = styled.button`
@@ -146,8 +148,7 @@ const StyledInput = styled.input`
     border-radius: 8px;
     width: fit-content;
     height: fit-content;
-    margin-right:25%;
-    margin-left:auto;
+    margin-left:40%;
   &:hover {
       background-color: #16161b;
       color: #f1f1f1;

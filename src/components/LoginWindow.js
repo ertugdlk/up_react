@@ -72,7 +72,6 @@ function LoginWindow()
     )
 }
 
-
 //İçeriklerin cssi
 const Modal = styled.div`
   color: #fff;
@@ -101,14 +100,15 @@ const Window = styled.div`
 
 
 const StyledInput = styled.input`
-  margin-bottom: auto;
-  padding: 0.5em; //Boyut
-  color: #fff;
+  margin-top:0.5em;
+  margin-bottom: 0.8em;
+  padding: 0.5em; // Input Fieldların Boyutu
+  color:#fff;
   background-color: #1b1c23;
   border: none;
   border-radius: 8px;
-  width: auto;
-  justify-self: center;
+    width: auto;
+    justify-self:center;
 `;
 
 
