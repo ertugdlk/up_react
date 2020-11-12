@@ -18,7 +18,6 @@ function Dashboard() {
   const [userName, setUsername] = React.useState('')
   const history = useHistory();
 
-
   useEffect( async ()=> {
     const url = "http://localhost:5000/auth/me"
     const response = await Axios.get(url , {withCredentials: true})
