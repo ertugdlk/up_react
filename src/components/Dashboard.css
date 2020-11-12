@@ -62,3 +62,9 @@
     right:160px;
     margin-top: 12px;
 }
+
+@media only screen and (min-width: 1680px) {
+    .Container {
+      width: 93%;
+    }
+  }
