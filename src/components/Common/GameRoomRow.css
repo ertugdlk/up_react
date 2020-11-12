@@ -8,7 +8,7 @@
     line-height: 27.14px;
     text-align: center;
     color: white;
-    height: 59px;
+    height: 62px;
     position: relative;
     border: 1px solid white;
 }
@@ -17,12 +17,13 @@ td{
     /* Text Styles */
     top: -31.4px;
     width: 159px;
+    height: 57px;
     position: relative;
 }
 
 .GameRowButton{
     border: none;
-    height: 59px;
+    height: 57px;
     width: 155px;
     background-color: #272730;
     color: #00ff60;
