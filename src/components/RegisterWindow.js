@@ -50,12 +50,12 @@ function RegisterWindow()
             <label>
               Nickname
               <StyledInput
-                 type="text"
+                type="text"
                 name="nickname"
                 onChange={e => setNickname(e.target.value )}
                 required
               ></StyledInput>
-            </label>
+              </label>
             <label>
               Mail
               <StyledInput
@@ -100,8 +100,9 @@ const Modal = styled.div`
   line-height: 1.5715;
   list-style: none;
   display: grid;
-  justify-items:center;
-  align-items:center;
+  justify-items:flex-start;
+  text-align: left;
+
 `;
 //Popup'ın cssi
 const Window = styled.div`
