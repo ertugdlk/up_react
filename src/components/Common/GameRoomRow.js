@@ -22,8 +22,10 @@ function GameRoomRow(props){
         */
 
     return(
-                <tr className='GameRowContainer'>
+                <div className='GameRowContainer'>
+                    <td>
                     <img src ={Logo} className='minikLogo'></img>
+                    </td>
                     <td>{gameDetail.GameName}CSGO</td>
                     <td>{gameDetail.Time}13.05</td>
                     <td>{gameDetail.Mode}1v1</td>
@@ -34,7 +36,7 @@ function GameRoomRow(props){
                     <td className='operation'>
                         <button className='GameRowButton'>Join Game</button>
                     </td>
-                </tr>
+                </div>
         )
 }
 

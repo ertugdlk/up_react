@@ -9,6 +9,8 @@
     text-align: center;
     color: white;
     height: 59px;
+    position: relative;
+    border: 1px solid white;
 }
 
 td{
