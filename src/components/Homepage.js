@@ -45,7 +45,7 @@ const handleClickCreateAccount = ()=>
       <Grid>
       {click ? <RegisterWindow></RegisterWindow> : null}
           <Button onClick={handleClickCreateAccount} className='btn--navbar--createAccount'>Create <Span>Account</Span><GlobalStyle/></Button>
-        {visible?<LoginWindow></LoginWindow>:null}
+      {visible?<LoginWindow></LoginWindow>:null}
           <Button onClick={handleClickLogin} className='btn--navbar--login'>Login<GlobalStyle/></Button>
       </Grid>
       </NavigationBar>

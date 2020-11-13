@@ -9,6 +9,8 @@ import {Menu, MenuItem} from '@material-ui/core'
 import Css from './Dashboard.css'
 import { useHistory } from "react-router-dom"; 
 import GameRoomRow from './Common/GameRoomRow'
+import MyAccount from './MyAccount'
+
 const Axios = require('axios')
 
 
@@ -16,6 +18,7 @@ function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [menuBar, setmenuBar] = React.useState('')
   const [userName, setUsername] = React.useState('')
+  const [account, setAccount] = useState(false);
   const history = useHistory();
 
   useEffect( async ()=> {
@@ -33,6 +36,10 @@ function Dashboard() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleAccount = () =>{
+    setAccount(true)
   };
 
   const handleLogout = () => {
@@ -62,7 +69,7 @@ function Dashboard() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleAccount}>My account</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Grid>
@@ -78,6 +85,7 @@ function Dashboard() {
               <GameRoomRow></GameRoomRow>
               <GameRoomRow></GameRoomRow>
           </div>
+          {account ? <MyAccount></MyAccount> : null}
         </div>
 
         <MenuBar>
@@ -90,6 +98,7 @@ function Dashboard() {
           <PlayButton >Play</PlayButton>
           <button className='News'>News</button>
         </MenuBar> 
+        
         </>
     )
 

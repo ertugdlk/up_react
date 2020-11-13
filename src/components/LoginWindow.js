@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled, {createGlobalStyle} from 'styled-components'
-import { useHistory } from "react-router-dom";  
+import { useHistory } from "react-router-dom";
+
 const Axios = require('axios')
 const Cookie = require('js-cookie')
 
@@ -21,6 +22,7 @@ function LoginWindow()
 
   const handleSteam = async () => {
   }
+
 
 
   const handleLogin = async () => {
@@ -67,7 +69,7 @@ function LoginWindow()
             />
             <Button onClick={handleLogin}>Login</Button>
         </Modal>  
-        </Window>  
+        </Window> 
         </>
     )
 }
