@@ -40,9 +40,9 @@ const Modal = styled.div`
   color: #fff;
   box-sizing: content-box;
   font-size: 14px;
-  width: auto;
-  margin: 5% 25%;
-  position: relative;
+  width:min-content;
+  margin: 10% 20%;
+  position: fixed;
   justify-content:center;
   line-height: 1.5715;
   list-style: none;
@@ -50,11 +50,12 @@ const Modal = styled.div`
 
 //Popup'ın cssi
 const Window = styled.div`  
+    box-sizing:border-box;
     position: absolute;
-    width: 300px;
-    height: fit-content;
-    top: 200px;
-    left: 40%;
+    width: 800px;
+    height: 800px;
+    top:0;
+    left:20%;
     background: #0b0b0b;
     border-radius: 12px;
     z-index: 3;
