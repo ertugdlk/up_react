@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
 .Container{
     flex-direction: column;
@@ -61,6 +62,44 @@
     position: absolute;
     right:160px;
     margin-top: 12px;
+}
+
+.GameRoomHeader{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top:0;
+    height: 65px;
+    width: 78%;
+    background-color: #19191f;
+    float: right;
+    color: #606060;
+    font-family: Raleway;
+    font-size: 21px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: 23.94px;
+    text-transform: uppercase;
+}
+
+.Create{
+    width: 100%;
+    float: left;
+    height: 65px;
+    box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
+    background-color: #272730;
+    border: none;
+    color: #00ff60;
+    font-family: Raleway;
+    font-size: 31px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: 21.96px;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 @media only screen and (min-width: 1680px) {

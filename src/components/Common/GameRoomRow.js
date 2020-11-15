@@ -24,7 +24,7 @@ function GameRoomRow(props){
     return(
                 <div className='GameRowContainer'>
                     <td>
-                    <img src ={Logo} className='minikLogo'></img>
+                    Room
                     </td>
                     <td>{gameDetail.GameName}CSGO</td>
                     <td>{gameDetail.Time}13.05</td>
