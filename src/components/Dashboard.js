@@ -80,6 +80,18 @@ function Dashboard() {
             <img src ={Photo1} className='img1'></img>
           </div>
           <div className='Games'>
+              <button className='Create'> Create Game </button>
+              <div className='GameRoomHeader'>
+                <span >Room</span>
+                <span >Game</span>
+                <span >Time</span>
+                <span >Type</span>
+                <span >Host</span>
+                <span  >Map</span>
+                <span >Fee</span>
+                <span >Reward</span>
+                <span>denemee </span>
+              </div>
               <GameRoomRow></GameRoomRow>
               <GameRoomRow></GameRoomRow>
               <GameRoomRow></GameRoomRow>
@@ -95,7 +107,7 @@ function Dashboard() {
               justify="space-evenly"
               alignItems="center">
           </Grid>
-          <PlayButton >Play</PlayButton>
+          <PlayButton>Play</PlayButton>
           <button className='News'>News</button>
         </MenuBar> 
         
