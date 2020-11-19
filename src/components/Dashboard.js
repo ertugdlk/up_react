@@ -11,6 +11,8 @@ import { useHistory } from "react-router-dom";
 import GameRoomRow from './Common/GameRoomRow'
 import MyAccount from './MyAccount'
 
+const socketio = require('socket.io-client') 
+const socket = socketio('http://localhost:5000/', {transports: ['websocket']})
 const Axios = require('axios')
 
 
@@ -19,6 +21,7 @@ function Dashboard() {
   const [menuBar, setmenuBar] = React.useState('')
   const [userName, setUsername] = React.useState('')
   const [account, setAccount] = useState(false);
+  const [data, setData]  =  useState({})
   const history = useHistory();
 
   useEffect( async ()=> {
@@ -44,6 +47,11 @@ function Dashboard() {
 
   const handleLogout = () => {
     history.push("/");
+  }
+
+  const createRoom = () => {
+    const gameobject = { GameId: '123', GameName: 'CSGO', GameMap: 'DUST2', GameType: '1V1', EntryFee: '10USD', Reward: '15USD', CreatedAt: '12.11.2020', Host: 'ERCE' }
+    socket.emit("create" , gameobject )
   }
     return(
         <>
@@ -92,10 +100,7 @@ function Dashboard() {
                 <span >Reward</span>
                 <span>denemee </span>
               </div>
-              <GameRoomRow></GameRoomRow>
-              <GameRoomRow></GameRoomRow>
-              <GameRoomRow></GameRoomRow>
-              <GameRoomRow></GameRoomRow>
+              <GameRoomRow data= {data}></GameRoomRow>
           </div>
           {account ? <MyAccount></MyAccount> : null}
         </div>
