@@ -76,9 +76,8 @@
 
 .GameRoomHeader{
     position: relative;
-    display: flex;
-    justify-content: space-evenly;
     align-items: center;
+    display: flex;
     top:0;
     height: 65px;
     width: 78%;
@@ -92,6 +91,11 @@
     letter-spacing: normal;
     line-height: 23.94px;
     text-transform: uppercase;
+}
+
+.GRHeaderColumn{
+    width: 10%;
+    text-align: center;
 }
 
 .Create{

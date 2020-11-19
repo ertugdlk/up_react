@@ -23,16 +23,34 @@ function GameRoomRow(props){
 
     return(
                 <div className='GameRowContainer'>
-                    <td>
-                    Room
-                    </td>
+                    <div className='GRHeaderColumn' >
+                        <td>
+                        Room
+                        </td>
+                    </div>
+                    <div className='GRHeaderColumn' >
                     <td>{props.data.Name}CSGO</td>
+                    </div>
+                    <div className='GRHeaderColumn' >
+
                     <td>{props.data.Time}13.05</td>
+                    </div>
+                    <div className='GRHeaderColumn' >
                     <td>{props.data.Type}1v1</td>
+
+                    </div>
+                    <div className='GRHeaderColumn' >
                     <td>{props.data.Host}Phybarin</td>
+                    </div>
+                    <div className='GRHeaderColumn' >
                     <td>{props.data.Map}Dust2</td>
+                    </div>
+                    <div className='GRHeaderColumn' >
                     <td>{props.data.Fee}2</td>
+                    </div>
+                    <div className='GRHeaderColumn' >
                     <td>{props.data.Reward}4</td>
+                    </div>
                 </div>
         )
 }

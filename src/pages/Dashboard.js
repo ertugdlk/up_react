@@ -99,14 +99,46 @@ function Dashboard() {
           <div className='Games'>
               <button className='Create' onClick={createRoom}> Create Game </button>
               <div className='GameRoomHeader'>
-                <span >Room</span>
-                <span >Game</span>
-                <span >Time</span>
-                <span >Type</span>
-                <span >Host</span>
-                <span  >Map</span>
-                <span >Fee</span>
-                <span >Reward</span>
+                <div className='GRHeaderColumn' >
+                  <span>
+                  Room
+                </span>
+                </div>
+                <div className='GRHeaderColumn' >
+                  <span>
+                  Room
+                </span>
+                </div>
+                <div className='GRHeaderColumn' >
+                  <span>
+                  Room
+                </span>
+                </div>
+                <div className='GRHeaderColumn' >
+                  <span>
+                  Room
+                </span>
+                </div>
+                <div className='GRHeaderColumn' >
+                  <span>
+                  Room
+                </span>
+                </div>
+                <div className='GRHeaderColumn' >
+                  <span>
+                  Room
+                </span>
+                </div>
+                <div className='GRHeaderColumn' >
+                  <span>
+                  Room
+                </span>
+                </div>
+                <div className='GRHeaderColumn' >
+                  <span>
+                  Room
+                </span>
+                </div>
               </div>
                   <GameRoomRow data = {rooms}></GameRoomRow>
           </div>
