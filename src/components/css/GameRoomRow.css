@@ -6,7 +6,7 @@
     display: flex;
     align-items: center;
     text-align: center;
-    height: 59px;
+    height: 60px;
     width: 78%;
 }
 
@@ -62,19 +62,22 @@ td{
 
 @media only screen and (max-width: 1680px) {
     .GameRowContainer {
-        height: 60px;
-        width: 78%;
-        float: right;
+        left: 20%;
+        float: left;
+        width: 80%;
     }
-    td{ 
+    td{
+        /* Text Styles */
+        width: 159px;
+        position: relative;
     }
   }
 
 @media only screen and (min-width: 1680px) {
     .GameRowContainer {
-        float: right;
-        width: 78%;
-        height: 60px;
+        left: 20%;
+        float: left;
+        width: 80%;
     }
     td{
         /* Text Styles */

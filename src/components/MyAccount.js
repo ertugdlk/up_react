@@ -18,6 +18,9 @@ function MyAccount()
            <GlobalStyle></GlobalStyle>
           <div className='MyAccount'>
             <span>deneme</span>
+            <div>
+            <ClearIcon></ClearIcon>
+            </div>
           </div>
         </>
     )

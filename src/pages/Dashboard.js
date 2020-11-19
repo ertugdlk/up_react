@@ -2,7 +2,7 @@ import React, {useEffect,useState} from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
-import {Grid , Button , Container } from '@material-ui/core'
+import {Grid} from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
 import {Menu, MenuItem} from '@material-ui/core'
@@ -10,14 +10,15 @@ import Css from '../components/css/Dashboard.css'
 import { useHistory } from "react-router-dom"; 
 import GameRoomRow from '../components/Common/GameRoomRow'
 import MyAccount from '../components/MyAccount'
+import CreateGame from '../components/CreateGame'
 const Axios = require('axios')
 
 function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [menuBar, setmenuBar] = React.useState('')
   const [userName, setUsername] = React.useState('')
   const [account, setAccount] = useState(false);
   const [rooms, setRooms]  =  useState([])
+  const [create  ,  setCreate ] =  useState(false)
   const history = useHistory();
   const socketio = require('socket.io-client') 
   
@@ -58,12 +59,19 @@ function Dashboard() {
     history.push("/");
   }
 
+  const handleCreateClick  =  ()  => 
+  {
+    setCreate(true)
+  }
+
   const createRoom = () => {
     const gameobject = { GameId: '123', GameName: 'CSGO', GameMap: 'DUST2', GameType: '1V1', EntryFee: '10USD', Reward: '15USD', CreatedAt: '12.11.2020', Host: 'ERCE' }
     //socket.emit("create" , gameobject )
   }
     return(
         <>
+        {account ? <MyAccount></MyAccount> : null}
+        {create ? <CreateGame></CreateGame> : null}
         <GlobalStyle></GlobalStyle>
         <div className='Header'>
           <Grid zIndex={999} >
@@ -97,7 +105,7 @@ function Dashboard() {
             <img src ={Photo1} className='img1'></img>
           </div>
           <div className='Games'>
-              <button className='Create' onClick={createRoom}> Create Game </button>
+              <button className='Create' onClick={handleCreateClick}> Create Game </button>
               <div className='GameRoomHeader'>
                 <div className='GRHeaderColumn' >
                   <span>
@@ -142,7 +150,6 @@ function Dashboard() {
               </div>
                   <GameRoomRow data = {rooms}></GameRoomRow>
           </div>
-          {account ? <MyAccount></MyAccount> : null}
         </div>
 
         <div className='MenuBar'>

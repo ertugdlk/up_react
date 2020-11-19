@@ -1,17 +1,31 @@
 .MyAccount{
-  box-sizing:border-box;
   display: flex;
   position: absolute;
   width: 800px;
   height: 400px;
-  top:0;
+  top:10%;
   justify-content: center;
   align-content: center;
   left:15%;
-  background: white;
   border-radius: 12px;
-  z-index: 3;
+  z-index: 1200;
   box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
   background: #0b0b0b;
   color: white;
+  border: solid  1px  white;
+}
+
+
+@media only screen and (max-width: 1200px) {
+
+}
+
+@media only screen and (max-width: 1680px) {
+
+}
+
+@media only screen and (min-width: 1680px) {
+  .MyAccount{
+    left: 25%;
+  }
 }
