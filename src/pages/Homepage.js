@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Button } from './Common/Button';
-import LoginWindow from './LoginWindow';
-import RegisterWindow from './RegisterWindow';
+import { Button } from '../components/Common/Button';
+import LoginWindow from '../components/LoginWindow';
+import RegisterWindow from '../components/RegisterWindow';
 import styled , {createGlobalStyle} from 'styled-components'
 import Logo from '../logo.png'
 import { Grid } from '@material-ui/core';
-
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -14,11 +13,10 @@ const GlobalStyle = createGlobalStyle`
     background-color: #010101;
   }`
 
-function Homepage() {
+function Homepage(props) {
   const [click, setClick] = useState(false);
   const [visible , setVisible] = useState(false)
 
-;
 const handleClickLogin = ()=> 
 {
   setVisible(true);

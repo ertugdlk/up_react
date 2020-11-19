@@ -2,35 +2,40 @@ import React, {useEffect,useState} from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
-import {Grid , Button , Container} from '@material-ui/core'
+import {Grid , Button , Container } from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
 import {Menu, MenuItem} from '@material-ui/core'
-import Css from './Dashboard.css'
+import Css from '../components/css/Dashboard.css'
 import { useHistory } from "react-router-dom"; 
-import GameRoomRow from './Common/GameRoomRow'
-import MyAccount from './MyAccount'
-
-const socketio = require('socket.io-client') 
-const socket = socketio('http://localhost:5000/', {transports: ['websocket']})
+import GameRoomRow from '../components/Common/GameRoomRow'
+import MyAccount from '../components/MyAccount'
 const Axios = require('axios')
-
 
 function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [menuBar, setmenuBar] = React.useState('')
   const [userName, setUsername] = React.useState('')
   const [account, setAccount] = useState(false);
-  const [data, setData]  =  useState({})
+  const [rooms, setRooms]  =  useState([])
   const history = useHistory();
+  const socketio = require('socket.io-client') 
+  
+  const socket = socketio('http://localhost:5000/', {transports: ['websocket'], upgrade: false , autoConnect: false})
+
+  socket.open()
 
   useEffect( async ()=> {
+    const arr = [{ GameId: '123', GameName: 'CSGO', GameMap: 'DUST2', GameType: '1V1', EntryFee: '10USD', Reward: '15USD', CreatedAt: '12.11.2020', Host: 'ERCE' }]
+    setRooms(arr)
     const url = "http://localhost:5000/auth/me"
     const response = await Axios.get(url , {withCredentials: true})
     if(response.status == 200)
     {
       setUsername(response.data.nickname)
     }
+
+    socket.emit('client_info' , { id: userName })
   }, [])
 
   const handleClick = (event) => {
@@ -45,18 +50,22 @@ function Dashboard() {
     setAccount(true)
   };
 
+  const handleClickAway = () => {
+    setAccount(false)
+  }
+
   const handleLogout = () => {
     history.push("/");
   }
 
   const createRoom = () => {
     const gameobject = { GameId: '123', GameName: 'CSGO', GameMap: 'DUST2', GameType: '1V1', EntryFee: '10USD', Reward: '15USD', CreatedAt: '12.11.2020', Host: 'ERCE' }
-    socket.emit("create" , gameobject )
+    //socket.emit("create" , gameobject )
   }
     return(
         <>
         <GlobalStyle></GlobalStyle>
-        <Header>
+        <div className='Header'>
           <Grid zIndex={999} >
             <LogoSize>
             <img src={Logo}/>
@@ -81,14 +90,14 @@ function Dashboard() {
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </Grid>
-        </Header>
+        </div>
 
         <div className='Container'>
           <div className='Slider'>
             <img src ={Photo1} className='img1'></img>
           </div>
           <div className='Games'>
-              <button className='Create'> Create Game </button>
+              <button className='Create' onClick={createRoom}> Create Game </button>
               <div className='GameRoomHeader'>
                 <span >Room</span>
                 <span >Game</span>
@@ -98,14 +107,13 @@ function Dashboard() {
                 <span  >Map</span>
                 <span >Fee</span>
                 <span >Reward</span>
-                <span>denemee </span>
               </div>
-              <GameRoomRow data= {data}></GameRoomRow>
+                  <GameRoomRow data = {rooms}></GameRoomRow>
           </div>
           {account ? <MyAccount></MyAccount> : null}
         </div>
 
-        <MenuBar>
+        <div className='MenuBar'>
           <Grid
               container
               direction="column"
@@ -114,8 +122,7 @@ function Dashboard() {
           </Grid>
           <PlayButton>Play</PlayButton>
           <button className='News'>News</button>
-        </MenuBar> 
-        
+        </div> 
         </>
     )
 
@@ -125,28 +132,6 @@ const GlobalStyle = createGlobalStyle`
     background-color:#19191f;
   }
 `
-
-const MenuBar = styled.div`
-  width: 140px;
-  height: 1200px;
-  position: absolute;
-  top:70px;
-  left:0px;
-  align-self:flex-start;
-  justify-self:flex-start;
-  background-color: #16161b;
-  z-index: 999;
-`;
-
-const Header = styled.div`
-  height: 70px;
-  background-color: #16161b;
-  top:0;
-  position:absolute;
-  left:0;
-  width:100%;
-  z-index:998;
-`;
 
 const LogoSize = styled.div`
   position: absolute;

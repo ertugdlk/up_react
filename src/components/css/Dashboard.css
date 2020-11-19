@@ -4,10 +4,10 @@
     flex-direction: column;
     left: 0;
     left:140px;
-    width: 89%;
+    width: 89.5%;
     height: 900px;
     z-index: 997;
-    top: 70px;
+    top: 60px;
     position: relative;
     border: 3px solid #1e1e23;
     background-color: #16161b;
@@ -43,6 +43,16 @@
     line-height: 40px;
 }
 
+.Header {
+  height: 65px;
+  background-color: #16161b;
+  top:0;
+  position:absolute;
+  left:0;
+  width:100%;
+  z-index:998;
+}
+
 .News:hover{background-color: #00ff60;
     color: #000000;
 }
@@ -67,7 +77,7 @@
 .GameRoomHeader{
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     top:0;
     height: 65px;
@@ -85,7 +95,7 @@
 }
 
 .Create{
-    width: 100%;
+    width: 20%;
     float: left;
     height: 65px;
     box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
@@ -102,8 +112,38 @@
     text-transform: uppercase;
 }
 
+.MenuBar {
+  width: 140px;
+  height: 1200px;
+  position: absolute;
+  top:65px;
+  left:0px;
+  align-self:flex-start;
+  justify-self:flex-start;
+  background-color: #16161b;
+  z-index: 999;
+}
+
 @media only screen and (min-width: 1680px) {
     .Container {
       width: 93%;
     }
+  }
+
+@media only screen and (max-width: 1680px) {
+    .Container {
+    }
+
+    .MenuBar{
+    }
+
+    .Create{
+        height: 40px;
+        font-size: 20px;
+    }
+    .GameRoomHeader{
+        height: 40px;
+        width: 80%;
+    }
+
   }

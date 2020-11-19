@@ -5,7 +5,7 @@
     position: relative;
     border: 0.5px solid green;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     text-align: center;
     height: 59px;
@@ -40,6 +40,8 @@ td{
     font-style: normal;
     letter-spacing: normal;
     line-height: normal;
+    position: relative;
+    float: right;
 }
 
 .GameRowButton:hover{background-color: #383838;
