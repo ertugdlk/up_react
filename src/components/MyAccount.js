@@ -10,17 +10,14 @@ const GlobalStyle = createGlobalStyle`
   }`
 
 
-function MyAccount() 
+function MyAccount(props) 
 {
 
     return(
         <>
            <GlobalStyle></GlobalStyle>
           <div className='MyAccount'>
-            <span>deneme</span>
-            <div>
-            <ClearIcon></ClearIcon>
-            </div>
+            <div className='CloseButton1'> <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon> </div>
           </div>
         </>
     )

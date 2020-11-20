@@ -27,9 +27,8 @@ td{
 .GameRowButton{
     border: none;
     height: 59px;
-    width: 155px;
     background-color: #272730;
-    color: #00ff60;
+    color: white;
     font-family: 'Raleway';
     font-weight: 700;
     font-size: 12px;
@@ -41,10 +40,13 @@ td{
     letter-spacing: normal;
     line-height: normal;
     position: relative;
-    float: right;
+    width: 13%;
+    left: 7%;
+    text-align: center;
 }
 
-.GameRowButton:hover{background-color: #383838;
+.GameRowButton:hover{background-color: #00ff60;
+    color: black;
 }
 
 .minikLogo{

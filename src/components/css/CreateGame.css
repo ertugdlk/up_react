@@ -1,8 +1,10 @@
 .CreateWindow{
     box-sizing:border-box;
     display: flex;
-    justify-content: center;
-    align-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    justify-content: space-evenly;
+    align-items: center;
     position: absolute;
     width:  400px;
     height: 600px;
@@ -13,5 +15,19 @@
     box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
     background: #0b0b0b;
     color: white;
-    border: solid 1px  white;
+    border: 1px solid green;
+
+}
+
+.CreateRow{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.CloseButton1{
+    float: right;
+    position: absolute;
+    right: 5px;
+    top:5px;
 }

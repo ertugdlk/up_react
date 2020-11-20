@@ -1,56 +1,37 @@
-import { Table } from '@material-ui/core'
 import React, {useState} from 'react'
 import '../css/GameRoomRow.css';
-import Logo from './miniklogo.png'
 function GameRoomRow(props){
-    const [gameDetail, setGameDetail] = useState({})
-        /*
-        useEffect(() => {
-            getData()
-        }, [])
-
-        const getData = async () => {
-            let url = `URL${id}`
-            const response = await axios.get(URL) 
-            setGames(response.data)
-        }
-
-        const JoinRoom = (id) => {
-            //
-            })
-        }
-        */
-
+    //const [gameDetail, setGameDetail] = useState({})
     return(
                 <div className='GameRowContainer'>
                     <div className='GRHeaderColumn' >
                         <td>
-                        Room
+                        {props.data.room}
                         </td>
                     </div>
                     <div className='GRHeaderColumn' >
-                    <td>{props.data.Name}CSGO</td>
+                    <td> {props.data.name}</td>
                     </div>
                     <div className='GRHeaderColumn' >
 
-                    <td>{props.data.Time}13.05</td>
+                    <td>{props.data.time}</td>
                     </div>
                     <div className='GRHeaderColumn' >
-                    <td>{props.data.Type}1v1</td>
-
+                    <td>{props.data.type}</td>
                     </div>
                     <div className='GRHeaderColumn' >
-                    <td>{props.data.Host}Phybarin</td>
+                    <td>{props.data.host}</td>
                     </div>
                     <div className='GRHeaderColumn' >
-                    <td>{props.data.Map}Dust2</td>
+                    <td>{props.data.map}</td>
                     </div>
                     <div className='GRHeaderColumn' >
-                    <td>{props.data.Fee}2</td>
+                    <td>{props.data.fee}</td>
                     </div>
                     <div className='GRHeaderColumn' >
-                    <td>{props.data.Reward}4</td>
+                    <td>{props.data.fee * 2}</td>
                     </div>
+                    <button className='GameRowButton'> Join Game</button>
                 </div>
         )
 }
