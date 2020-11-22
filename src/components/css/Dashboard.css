@@ -9,20 +9,20 @@
     z-index: 997;
     top: 60px;
     position: relative;
-    border: 3px solid #1e1e23;
     background-color: #16161b;
 }
 
 .Slider{
     position: relative;
+    top: 10px;
     width: 100%;
     height: 170px;
-    border: 3px solid #1e1e23;
-    border-radius: 2px;
+
     align-items: center;
 }
 
 .Games{
+    top:20px;
     position: relative;
     width: 100%;
     height: 500px;
@@ -45,7 +45,7 @@
 
 .Header {
   height: 65px;
-  background-color: #16161b;
+  background-color:#353539;
   top:0;
   position:absolute;
   left:0;
@@ -126,13 +126,25 @@
   left:0px;
   align-self:flex-start;
   justify-self:flex-start;
-  background-color: #16161b;
+  background-color: #353539;
   z-index: 999;
+}
+
+.SocialBar{
+    background-color: #27272b;
+    z-index: 999;
+    width: 140px;
+    height: 1200px;
+    position: absolute;
+    top:65px;
+    right: 0;
 }
 
 @media only screen and (min-width: 1680px) {
     .Container {
-      width: 92%;
+      width: 86%;
+      margin-left:40px;
+      margin-top: 40px;
     }
   }
 

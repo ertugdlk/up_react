@@ -153,15 +153,7 @@ function Dashboard() {
         </div>
 
         <div className='MenuBar'>
-          <Grid
-              container
-              direction="column"
-              justify="space-evenly"
-              alignItems="center">
-          </Grid>
-          <PlayButton>Play</PlayButton>
-          <button className='News'>News</button>
-        </div> 
+        </div>
         </>
     )
 
