@@ -27,8 +27,6 @@ function Dashboard() {
   socket.open()
 
   useEffect( async ()=> {
-    const arr = [{ GameId: '123', GameName: 'CSGO', GameMap: 'DUST2', GameType: '1V1', EntryFee: '10USD', Reward: '15USD', CreatedAt: '12.11.2020', Host: 'ERCE' }]
-    setRooms(arr)
     const url = "http://localhost:5000/auth/me"
     const response = await Axios.get(url , {withCredentials: true})
     if(response.status == 200)
@@ -48,21 +46,35 @@ function Dashboard() {
   };
 
   const handleAccount = () =>{
+    setAnchorEl(null)
     setAccount(true)
   };
 
-  const handleClickAway = () => {
+  const handleAccountClose = () => {
     setAccount(false)
   }
-
-  const handleLogout = () => {
-    history.push("/");
+  const handleCreateClose = () => {
+    setCreate(false)
   }
 
-  const handleCreateClick  =  ()  => 
+  const handleCreateClick = ()  => 
   {
     setCreate(true)
   }
+
+  const handleCreateRoom = (data) => {
+    data.host = 'phybarin'
+    setCreate(false)
+    const newArr = rooms
+    newArr.push(data)
+    setRooms(newArr)
+  }
+
+  const handleLogout = () => {
+    setAnchorEl(null)
+    history.push("/");
+  }
+
 
   const createRoom = () => {
     const gameobject = { GameId: '123', GameName: 'CSGO', GameMap: 'DUST2', GameType: '1V1', EntryFee: '10USD', Reward: '15USD', CreatedAt: '12.11.2020', Host: 'ERCE' }
@@ -70,8 +82,8 @@ function Dashboard() {
   }
     return(
         <>
-        {account ? <MyAccount></MyAccount> : null}
-        {create ? <CreateGame></CreateGame> : null}
+        {account ? <MyAccount onClose={handleAccountClose}></MyAccount> : null}
+        {create ? <CreateGame onCreate={handleCreateRoom} onClose={handleCreateClose}></CreateGame> : null}
         <GlobalStyle></GlobalStyle>
         <div className='Header'>
           <Grid zIndex={999} >
@@ -114,41 +126,45 @@ function Dashboard() {
                 </div>
                 <div className='GRHeaderColumn' >
                   <span>
-                  Room
+                  Game
                 </span>
                 </div>
                 <div className='GRHeaderColumn' >
                   <span>
-                  Room
+                  Time
                 </span>
                 </div>
                 <div className='GRHeaderColumn' >
                   <span>
-                  Room
+                  Type
                 </span>
                 </div>
                 <div className='GRHeaderColumn' >
                   <span>
-                  Room
+                  Host
                 </span>
                 </div>
                 <div className='GRHeaderColumn' >
                   <span>
-                  Room
+                  Map
                 </span>
                 </div>
                 <div className='GRHeaderColumn' >
                   <span>
-                  Room
+                  Fee
                 </span>
                 </div>
                 <div className='GRHeaderColumn' >
                   <span>
-                  Room
+                  Reward
                 </span>
                 </div>
               </div>
-                  <GameRoomRow data = {rooms}></GameRoomRow>
+                {
+                  rooms.map( room => 
+                    <GameRoomRow data={room}></GameRoomRow>
+                    )
+                }
           </div>
         </div>
 
