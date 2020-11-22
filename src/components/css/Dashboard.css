@@ -2,33 +2,30 @@
 
 .Container{
     flex-direction: column;
-    left: 0;
-    left:140px;
     width: 89.5%;
     height: 900px;
     z-index: 997;
-    top: 60px;
+    top: 40px;
     position: relative;
     background-color: #16161b;
+    border: 3px solid #1e1e23;
 }
 
 .Slider{
     position: relative;
-    top: 10px;
-    width: 100%;
-    height: 170px;
-
+    width: 80%;
+    height: 300px;
     align-items: center;
+    left: 10%;
 }
 
 .Games{
-    top:20px;
+    top: 50px;
     position: relative;
     width: 100%;
-    height: 500px;
+    height:700px;
     border-radius: 2px;
     background-color: #16161b;
-    border: 3px solid #1e1e23;
 }
 
 .News{
@@ -53,14 +50,61 @@
   z-index:998;
 }
 
+.GameFilter {
+    position: relative;
+    align-items: center;
+    display: flex;
+    top: 50px;
+    height: 55px;
+    width: 100%;
+    background-color: #19191f;
+    color: #606060;
+    font-family: Raleway;
+    font-size: 21px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: 23.94px;
+    text-transform: uppercase;
+}
+
+
+.Create{
+    position: absolute;
+    right: 0;
+    width: 140px;
+    height: 35px;
+    margin-right: 20px;
+    box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
+    background-color: #272730;
+    border: none;
+    color: #00ff60;
+    font-family: Raleway;
+    font-size: 15px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: 21.96px;
+    text-align: center;
+    text-transform: uppercase;
+    outline : none;
+
+}
+
 .News:hover{background-color: #00ff60;
     color: #000000;
 }
 
 .img1{
+    position: relative;
     width: 100%;
     height: 100%;
-    display: inline-block
+    top: 20px;
+}
+
+.LogoLink{
+    outline : none;
+
 }
 
 .Nickname{
@@ -79,8 +123,8 @@
     align-items: center;
     display: flex;
     top:0;
-    height: 65px;
-    width: 80%;
+    height: 45px;
+    width: 100%;
     background-color: #19191f;
     float: right;
     color: #606060;
@@ -91,8 +135,8 @@
     letter-spacing: normal;
     line-height: 23.94px;
     text-transform: uppercase;
-    left: 3%;
     float: left;
+    border-top: 1px solid white;
 }
 
 .GRHeaderColumn{
@@ -100,40 +144,23 @@
     text-align: center;
 }
 
-.Create{
-    width: 17%;
-    float: left;
-    height: 65px;
-    box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
-    background-color: #272730;
-    border: none;
-    color: #00ff60;
-    font-family: Raleway;
-    font-size: 31px;
-    font-weight: 700;
-    font-style: normal;
-    letter-spacing: normal;
-    line-height: 21.96px;
-    text-align: center;
-    text-transform: uppercase;
-}
 
 .MenuBar {
-  width: 140px;
+  width: 180px;
   height: 1200px;
   position: absolute;
   top:65px;
   left:0px;
   align-self:flex-start;
   justify-self:flex-start;
-  background-color: #353539;
+  background-color: #27272b;
   z-index: 999;
 }
 
 .SocialBar{
     background-color: #27272b;
     z-index: 999;
-    width: 140px;
+    width: 160px;
     height: 1200px;
     position: absolute;
     top:65px;
@@ -142,26 +169,25 @@
 
 @media only screen and (min-width: 1680px) {
     .Container {
-      width: 86%;
-      margin-left:40px;
+      width: 80%;
+      margin-left:200px;
       margin-top: 40px;
     }
   }
 
 @media only screen and (max-width: 1680px) {
     .Container {
+        width: 77%;
+        margin-left:170px;
+        margin-top: 50px;
     }
 
-    .MenuBar{
-    }
-
-    .Create{
-        height: 40px;
-        font-size: 20px;
-    }
-    .GameRoomHeader{
-        height: 40px;
-        width: 80%;
-    }
+    .MenuBar {
+        width: 150px;
+      }
+      
+      .SocialBar{
+          width: 150px;
+      }
 
   }

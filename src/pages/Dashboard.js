@@ -88,7 +88,7 @@ function Dashboard() {
         <div className='Header'>
           <Grid zIndex={999} >
             <LogoSize>
-            <img src={Logo}/>
+            <a  className='LogoLink'  href='/dashboard' ><img src={Logo} /></a>
             </LogoSize>
             <div style={{alignSelf:"center"}}>
             <Avatar></Avatar>
@@ -114,10 +114,12 @@ function Dashboard() {
 
         <div className='Container'>
           <div className='Slider'>
-            <img src ={Photo1} className='img1'></img>
+            <img src ={Photo1}   className='img1'></img>
+          </div>
+          <div className='GameFilter'>
+            <button className='Create' onClick={handleCreateClick}> Create Game </button>
           </div>
           <div className='Games'>
-              <button className='Create' onClick={handleCreateClick}> Create Game </button>
               <div className='GameRoomHeader'>
                 <div className='GRHeaderColumn' >
                   <span>
@@ -170,6 +172,8 @@ function Dashboard() {
 
         <div className='MenuBar'>
         </div>
+
+        <div  className= 'SocialBar'></div>
         </>
     )
 
