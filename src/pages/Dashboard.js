@@ -2,6 +2,7 @@ import React, {useEffect,useState} from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
+import Bag from '../bag_icon.png'
 import {Grid} from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
@@ -101,7 +102,7 @@ function Dashboard() {
         <div className='Header'>
           <Grid zIndex={999} >
             <LogoSize>
-            <img src={Logo}/>
+            <a href="/dashboard"><img src={Logo} href='/dashboard'/> </a>
             </LogoSize>
             <div style={{alignSelf:"center"}}>
             <Avatar></Avatar>
@@ -191,6 +192,8 @@ function Dashboard() {
             <Avatar></Avatar>
             <span className='Nickname'> {userName}</span>
             <span className='Email'> {email}</span>
+            <img className='BagIcon' src={Bag}/>
+            
             
             </div> 
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
