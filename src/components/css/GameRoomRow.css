@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
 .GameRowContainer{
-    height: auto;
     position: relative;
     border: 0.5px solid green;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     text-align: center;
-    height: 59px;
+    height: 60px;
+    width: 78%;
 }
+
 
 td{
     /* Text Styles */
@@ -27,9 +27,8 @@ td{
 .GameRowButton{
     border: none;
     height: 59px;
-    width: 155px;
     background-color: #272730;
-    color: #00ff60;
+    color: white;
     font-family: 'Raleway';
     font-weight: 700;
     font-size: 12px;
@@ -40,9 +39,14 @@ td{
     font-style: normal;
     letter-spacing: normal;
     line-height: normal;
+    position: relative;
+    width: 13%;
+    left: 7%;
+    text-align: center;
 }
 
-.GameRowButton:hover{background-color: #383838;
+.GameRowButton:hover{background-color: #00ff60;
+    color: black;
 }
 
 .minikLogo{
@@ -60,19 +64,22 @@ td{
 
 @media only screen and (max-width: 1680px) {
     .GameRowContainer {
-        height: 60px;
-        width: 78%;
-        float: right;
+        left: 20%;
+        float: left;
+        width: 80%;
     }
-    td{ 
+    td{
+        /* Text Styles */
+        width: 159px;
+        position: relative;
     }
   }
 
 @media only screen and (min-width: 1680px) {
     .GameRowContainer {
-        float: right;
-        width: 78%;
-        height: 60px;
+        left: 20%;
+        float: left;
+        width: 80%;
     }
     td{
         /* Text Styles */

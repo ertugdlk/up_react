@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 //import './index.css';
-import App from './App';
 import { BrowserRouter as Router,
   Switch ,
   Route} from "react-router-dom";
-import Dashboard from './components/Dashboard';
+import Dashboard from './pages/Dashboard';
+import Homepage from './pages/Homepage'
 
 
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route path="/" exact component={App} />
-      <Route path="/dashboard" exact component= {Dashboard} />
+      <Route path="/" exact component={ () => <Homepage/>} />
+      <Route path="/dashboard" exact component= { () => <Dashboard/>} />
     </Switch>
   </Router>,
   document.getElementById('root')
