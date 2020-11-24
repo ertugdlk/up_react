@@ -189,21 +189,31 @@ function Dashboard() {
               justify="space-evenly"
               alignItems="center">
           </Grid>
-          <div style={{alignSelf:"center"}}>
-            <Avatar></Avatar>
-            <span className='Nickname'> {userName}</span>
-            <span className='Email'> {email}</span>
-            <img className='BagIcon' src={Bag}/>
-            
-            
-            </div> 
+				<div class="menubar-user">
+        <div class="menubar-userpic">
+					<img src={Logo} class="img-responsive" alt=""></img>
+				</div>
+					<div class="menubar-nickname">
+						{userName}
+					</div>
+					<div class="menubar-mail">
+						{email}
+					</div>
+          <div class="balance"><img src={Bag} class="menubar-icon"></img>123,456</div>
+          <div class="menubar-buttons">
+					<div class="btn-container"><button onClick={handleAccount}>Deposit</button></div>
+					<div class="btn-container"><button onClick={handleAccount}>Withdraw</button></div>
+				</div>
+				</div>
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
         </div>
         <div  className= 'SocialBar'></div>
         </>
     )
-      //Line 193'teki kod için mail classı oluştur veya inline css yap
-  }
+      //deposit ve withdraw butonlarına geçici olarak handleAccount fonksiyonu atandı, para işlemleri entegre edilince düzeltilmeli.
+      //sidebar menüde username gösteriliyor olmalı ama maili tutmadığımız için o gözükmüyor, düzeltilmeli.
+      //balance'a şimdilik kendim bir değer girdim ama daha sonra kullanıcının değeri {balance} veya başka bir şekilde gösterilmeli.
+    }
 const GlobalStyle = createGlobalStyle`
   body {
     background-color:#19191f;

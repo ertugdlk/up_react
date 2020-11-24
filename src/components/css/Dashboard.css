@@ -156,6 +156,76 @@
   background-color: #27272b;
   z-index: 999;
 }
+  
+  .menubar-user {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .menubar-userpic img {
+    float: none;
+    margin: 0 auto;
+    width: 50%;
+    height: 50%;
+    border:1px solid;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+    border-color: #00ff60;
+  }
+  
+  .menubar-nickname {
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+  
+  .menubar-mail{
+    text-align: center;
+    text-transform: lowercase;
+    color: #989aa0;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .balance{
+    color: white;
+    font-size: 15px;
+    margin-bottom: 5px;
+    border-bottom: 1px outset white;
+    padding-bottom: 10px;
+  }
+  
+  .menubar-icon{
+    height:15px;
+    margin-right: 5px;
+
+  }
+
+  .menubar-buttons{
+    display: flex; 
+    width: 100%;
+    justify-content: center;
+  }
+
+  button {
+    background: transparent;
+    color: white;
+    border: 0;
+    padding: 3px 6px;
+    outline: none;
+  }
+
+  .btn-container{
+    padding: 1px 8px;
+  }
+      
+  .btn-container:not(:last-child) {
+    border-right: 1px solid #989aa0;
+  }
 
 .SocialBar{
     background-color: #27272b;
@@ -167,9 +237,6 @@
     right: 0;
 }
 
-.BagIcon{
-    height:20px;
-}
 
 .AddGame{
     width: 140px;
@@ -182,6 +249,7 @@
     font-size: 17px;
     font-weight: 400;
     line-height: 40px;
+    margin-top: 10px;
 }
 
 .AddGame:hover{background-color: #00ff60;
