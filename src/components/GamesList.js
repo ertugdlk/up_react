@@ -22,21 +22,21 @@ function GamesList(props)
             <div className='CloseButton1'> <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon> </div>
             <div class="wrapper">
 
-<div class="cards">
+<div className="cards">
 
-  <figure class="card">
+  <figure className="card">
 
     <img src="https://steamcdn-a.akamaihd.net/steam/apps/730/library_600x900.jpg?t=1604621079" />
 
   </figure>
 
-  <figure class="card">
+  <figure className="card">
 
     <img src="https://steamcdn-a.akamaihd.net/steam/apps/252950/library_600x900.jpg?t=1600797256" />
 
   </figure>
 
-  <figure class="card">
+  <figure className="card">
 
     <img src="https://steamcdn-a.akamaihd.net/steam/apps/578080/library_600x900.jpg?t=1603246099" />
 

@@ -33,14 +33,14 @@ function CreateGame(props)
             <div className=  'CreateWindow'>
             <div className='CloseButton1'> <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon> </div>
                 <label>CreateGame</label>
-                <div class='CreateRow'>
+                <div className='CreateRow'>
                 <label>Map</label>
                     <select onChange={ (e) => onMapChange(e)}>
                         <option value="0">Dust2</option>
                         <option value="1">Mirrage</option>
                     </select>
                 </div>
-                <div class='CreateRow'>
+                <div className='CreateRow'>
                 <label>Type</label>
                 <select onChange={ (e) => onTypeChange(e)}>
                         <option value="0">1v1</option>

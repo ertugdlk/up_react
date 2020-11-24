@@ -14,6 +14,8 @@ import MyAccount from '../components/MyAccount'
 import GamesList from '../components/GamesList'
 import CreateGame from '../components/CreateGame'
 const Axios = require('axios')
+const socketio = require('socket.io-client')
+const socket = socketio('http://localhost:5000/', {transports: ['websocket'] })
 
 function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -24,21 +26,22 @@ function Dashboard() {
   const [rooms, setRooms]  =  useState([])
   const [create  ,  setCreate ] =  useState(false)
   const history = useHistory();
-  const socketio = require('socket.io-client') 
-  
-  const socket = socketio('http://localhost:5000/', {transports: ['websocket'], upgrade: false , autoConnect: false})
 
-  socket.open()
+  useEffect(()=> {
+    async function userInfo(){
+      const url = "http://localhost:5000/auth/me"
+      const response = await Axios.get(url , {withCredentials: true})
 
-  useEffect( async ()=> {
-    const url = "http://localhost:5000/auth/me"
-    const response = await Axios.get(url , {withCredentials: true})
-    if(response.status == 200)
-    {
-      setUsername(response.data.nickname)
+      if(response.status == 200)
+      {
+        setUsername(response.data.nickname)
+      }
+      console.log(userName)
+      socket.emit("login" , "ertugdilek")
     }
+    
 
-    socket.emit('client_info' , { id: userName })
+    userInfo()
   }, [])
 
   const handleClick = (event) => {
@@ -99,7 +102,7 @@ function Dashboard() {
         {create ? <CreateGame onCreate={handleCreateRoom} onClose={handleCreateClose}></CreateGame> : null}
         <GlobalStyle></GlobalStyle>
         <div className='Header'>
-          <Grid zIndex={999} >
+          <Grid zindex={999} >
             <LogoSize>
             <a  className='LogoLink'  href='/dashboard' ><img src={Logo} /></a>
             </LogoSize>
@@ -183,27 +186,21 @@ function Dashboard() {
           </div>
         </div>
         <div className='MenuBar'>
-          <Grid
-              container
-              direction="column"
-              justify="space-evenly"
-              alignItems="center">
-          </Grid>
-				<div class="menubar-user">
-        <div class="menubar-userpic">
-					<img src={Logo} class="img-responsive" alt=""></img>
-				</div>
-					<div class="menubar-nickname">
-						{userName}
-					</div>
-					<div class="menubar-mail">
-						{email}
-					</div>
-          <div class="balance"><img src={Bag} class="menubar-icon"></img>123,456</div>
-          <div class="menubar-buttons">
-					<div class="btn-container"><button onClick={handleAccount}>Deposit</button></div>
-					<div class="btn-container"><button onClick={handleAccount}>Withdraw</button></div>
-				</div>
+				  <div className="menubar-user">
+            <div className="menubar-userpic">
+              <img src={Logo} className="img-responsive" alt=""></img>
+            </div>
+            <div class="menubar-nickname">
+              {userName}
+            </div>
+            <div className="menubar-mail">
+              {email}
+            </div>
+            <div className="balance"><img src={Bag} className="menubar-icon"></img>123,456</div>
+            <div className="menubar-buttons">
+            <div className="btn-container"><button onClick={handleAccount}>Deposit</button></div>
+            <div className="btn-container"><button onClick={handleAccount}>Withdraw</button></div>
+				  </div>
 				</div>
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
         </div>
