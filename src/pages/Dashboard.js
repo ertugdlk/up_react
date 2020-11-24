@@ -2,6 +2,7 @@ import React, {useEffect,useState} from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
+import Bag from '../bag_icon.png'
 import {Grid} from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,12 +11,15 @@ import Css from '../components/css/Dashboard.css'
 import { useHistory } from "react-router-dom"; 
 import GameRoomRow from '../components/Common/GameRoomRow'
 import MyAccount from '../components/MyAccount'
+import GamesList from '../components/GamesList'
 import CreateGame from '../components/CreateGame'
 const Axios = require('axios')
 
 function Dashboard() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [userName, setUsername] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [gamesList, setGamesList] = useState(false);
   const [account, setAccount] = useState(false);
   const [rooms, setRooms]  =  useState([])
   const [create  ,  setCreate ] =  useState(false)
@@ -50,11 +54,19 @@ function Dashboard() {
     setAccount(true)
   };
 
+  const handleAddGame = () => {
+    setGamesList(true)
+  }
+
   const handleAccountClose = () => {
     setAccount(false)
   }
   const handleCreateClose = () => {
     setCreate(false)
+  }
+
+  const handleListClose = () => {
+    setGamesList(false)
   }
 
   const handleCreateClick = ()  => 
@@ -82,6 +94,7 @@ function Dashboard() {
   }
     return(
         <>
+        {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
         {account ? <MyAccount onClose={handleAccountClose}></MyAccount> : null}
         {create ? <CreateGame onCreate={handleCreateRoom} onClose={handleCreateClose}></CreateGame> : null}
         <GlobalStyle></GlobalStyle>
@@ -114,7 +127,7 @@ function Dashboard() {
 
         <div className='Container'>
           <div className='Slider'>
-            <img src ={Photo1}   className='img1'></img>
+            <img className='img1' src={Photo1}></img>
           </div>
           <div className='GameFilter'>
             <button className='Create' onClick={handleCreateClick}> Create Game </button>
@@ -169,14 +182,27 @@ function Dashboard() {
                 }
           </div>
         </div>
-
         <div className='MenuBar'>
+          <Grid
+              container
+              direction="column"
+              justify="space-evenly"
+              alignItems="center">
+          </Grid>
+          <div style={{alignSelf:"center"}}>
+            <Avatar></Avatar>
+            <span className='Nickname'> {userName}</span>
+            <span className='Email'> {email}</span>
+            <img className='BagIcon' src={Bag}/>
+            
+            
+            </div> 
+          <button className='AddGame' onClick={handleAddGame}>Add Game</button>
         </div>
-
         <div  className= 'SocialBar'></div>
         </>
     )
-
+      //Line 193'teki kod için mail classı oluştur veya inline css yap
   }
 const GlobalStyle = createGlobalStyle`
   body {
@@ -189,24 +215,6 @@ const LogoSize = styled.div`
   top:-40px;
   width: 130px;
   height: 40px;
-`;
-
-const PlayButton = styled.button`
-    width: 140px;
-    height: 50px;
-    border: none;
-    position:relative;
-    color: #000000;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 40px;
-    color: #f1f1f1;
-    background-color: #16161b;
-    &:hover {
-      background-color: #00ff60;
-      border-color: #f1f1f1;
-      color: #000000;
-  }
 `;
 
 const Avatar = styled.div`
