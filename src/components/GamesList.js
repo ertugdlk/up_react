@@ -10,12 +10,13 @@ const [games, setGames] = React.useState([])
 
   useEffect(()=> {
     async function GameCards(){
-      const url = "http://localhost:5000//detail/allgames"
+      const url = "http://localhost:5000/detail/allgames"
       const response = await Axios.get(url, {withCredentials:true})
+      if(response.data){
         setGames(response.data)
+      }
     }
     
-
     GameCards()
   }, [])
 
@@ -23,19 +24,19 @@ const [games, setGames] = React.useState([])
         <>
           <div className='GamesList'>
             <div className='CloseButton1'> <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon> </div>
-            <div class="wrapper">
+              <div class="wrapper">
 
-<div className="cards">
-<div className="card">
-          {games.map(game => (
-            <figure key={game.name}>
-            <img src={game.img}/>
-            </figure>
-          ))}
-         </div>
-</div>
-</div>
-    </div>
+                <div className="cards">
+                          {games.map(game => (
+                            <div className="card">
+                              <figure key={game.name}>
+                              <img src={game.img}/>
+                              </figure>
+                            </div>
+                          ))}
+                </div>
+              </div>
+          </div>
         </>
     )
 }
