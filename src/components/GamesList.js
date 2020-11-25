@@ -29,11 +29,10 @@ const [games, setGames] = React.useState([])
 <div className="card">
           {games.map(game => (
             <figure key={game.name}>
-               { game.name == 'CSGO' ? <img src="https://steamcdn-a.akamaihd.net/steam/apps/578080/library_600x900.jpg"/> : null }
-               { game.name == 'PUBG' ? <img src="https://steamcdn-a.akamaihd.net/steam/apps/578080/library_600x900.jpg"/> : null }
+            <img src={game.img}/>
             </figure>
           ))}
- </div>
+         </div>
 </div>
 </div>
     </div>
