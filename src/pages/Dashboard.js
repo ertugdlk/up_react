@@ -36,8 +36,7 @@ function Dashboard() {
       {
         setUsername(response.data.nickname)
       }
-      console.log(userName)
-      socket.emit("login" , "ertugdilek")
+      socket.emit("login" , 'ertugdilek')
     }
     
 
