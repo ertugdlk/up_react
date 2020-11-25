@@ -13,6 +13,7 @@ import GameRoomRow from '../components/Common/GameRoomRow'
 import MyAccount from '../components/MyAccount'
 import GamesList from '../components/GamesList'
 import CreateGame from '../components/CreateGame'
+import { NavigateBefore } from '@material-ui/icons'
 const Axios = require('axios')
 const socketio = require('socket.io-client')
 const socket = socketio('http://localhost:5000/', {transports: ['websocket'] })
@@ -36,7 +37,7 @@ function Dashboard() {
       {
         setUsername(response.data.nickname)
       }
-      socket.emit("login" , 'ertugdilek')
+      socket.emit("login" , response.data.nickname)
     }
     
 
