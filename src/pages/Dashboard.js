@@ -89,6 +89,13 @@ function Dashboard() {
     setAnchorEl(null)
     history.push("/");
   }
+  const handleSteam = () => {
+    async function steamauth(){
+        window.open("http://localhost:5000/steam/auth");
+    }
+    steamauth()
+
+  }
 
 
   const createRoom = () => {
@@ -204,7 +211,10 @@ function Dashboard() {
 				</div>
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
         </div>
-        <div  className= 'SocialBar'></div>
+        <div  className= 'SocialBar'>
+        <button onClick={handleSteam}> steam auth</button>
+
+        </div>
         </>
     )
       //deposit ve withdraw butonlarına geçici olarak handleAccount fonksiyonu atandı, para işlemleri entegre edilince düzeltilmeli.
