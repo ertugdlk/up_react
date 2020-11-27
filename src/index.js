@@ -13,6 +13,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/" exact component={ () => <Homepage/>} />
       <Route path="/dashboard" exact component= { () => <Dashboard/>} />
+      <Route path="/dashboard/steam/:name" exact component = { () => <Dashboard/>} />
     </Switch>
   </Router>,
   document.getElementById('root')
