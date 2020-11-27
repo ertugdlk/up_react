@@ -18,7 +18,7 @@ const Axios = require('axios')
 const socketio = require('socket.io-client')
 const socket = socketio('http://localhost:5000/', {transports: ['websocket'] })
 
-function Dashboard() {
+function Dashboard(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [userName, setUsername] = React.useState('')
   const [email, setEmail] = React.useState('')
@@ -35,13 +35,26 @@ function Dashboard() {
 
       if(response.status == 200)
       {
-        setUsername(response.data.nickname)
+        if(response.data.nickname){
+          setUsername(response.data.nickname)
+        }
+        else{
+          if(response.data.output.statusCode == 401){
+            history.push("/");
+          }
+        }
       }
+  
       socket.emit("login" , response.data.nickname)
     }
-    
 
-    userInfo()
+    async function userSteam() {
+
+    }
+
+    //userInfo()
+    //userSteam() => eğer if(!props.match.params.name) =>  steam bilgilerini çeker  eğer else{ if(props.match.params.name) { bilgileri çekip
+    // matchleşirse notification çıkar.}}
   }, [])
 
   const handleClick = (event) => {
@@ -86,7 +99,13 @@ function Dashboard() {
   }
 
   const handleLogout = () => {
+    async function logout() {
+      const url = "http://localhost:5000/auth/logout"
+      await Axios.get(url , {withCredentials: true})
+    }
+
     setAnchorEl(null)
+    logout()
     history.push("/");
   }
   const handleSteam = () => {
