@@ -26,6 +26,7 @@ function Dashboard(props) {
   const [account, setAccount] = useState(false);
   const [rooms, setRooms]  =  useState([])
   const [create  ,  setCreate ] =  useState(false)
+  const [menubarGames,setMenubarGames] = useState([])
   const history = useHistory();
 
   useEffect(()=> {
@@ -49,10 +50,17 @@ function Dashboard(props) {
     }
 
     async function userSteam() {
+      const url = "http://localhost:5000/detail/games"
+      const response = await Axios.get(url, {withCredentials:true})
 
+      if(!props.match.params.name==response.data){
+        alert("No games found")
+      } else if(props.match.params.name==response.data){
+        setMenubarGames(props.matchparams.name)
+      }
     }
 
-    //userInfo()
+    userInfo()
     //userSteam() => eğer if(!props.match.params.name) =>  steam bilgilerini çeker  eğer else{ if(props.match.params.name) { bilgileri çekip
     // matchleşirse notification çıkar.}}
   }, [])
@@ -230,11 +238,19 @@ function Dashboard(props) {
 				</div>
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
         </div>
+        <div className="menubarGames">
+                          {menubarGames.map(credentials => (
+                            <div className="menubarGame">
+                              <div key={credentials.name}>
+                              </div>
+                            </div>
+                          ))}
         <div  className= 'SocialBar'>
         <button onClick={handleSteam}> steam auth</button>
-
+        </div>
         </div>
         </>
+   
     )
       //deposit ve withdraw butonlarına geçici olarak handleAccount fonksiyonu atandı, para işlemleri entegre edilince düzeltilmeli.
       //sidebar menüde username gösteriliyor olmalı ama maili tutmadığımız için o gözükmüyor, düzeltilmeli.
