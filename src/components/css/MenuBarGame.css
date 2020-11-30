@@ -1,0 +1,65 @@
+.MenuBarGame{ 
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    color: white;
+  }
+
+  .MenuBarGame ul{ /*Oyun tablerinin içinde olduğu alanın özellikleri*/
+  padding: 0px 1.5em 0px 1.5em;
+  height: 15px;
+  }
+
+  .MenuBarGame ul li { /*Oyunların birbirlerine göre özellikleri*/
+    display:flex;
+    margin-bottom: 10px;
+  }
+  
+  .MenuBarGame ul li img { /*Resimlerin cssi*/
+    border: 1px solid #0ab74c;
+    border-radius: 100%;
+    width:2em;
+    height:2em;
+    margin-right: 15px;
+    vertical-align: middle;
+  }
+
+  .gameButton { /*Oyun butonlarının özellikleri*/
+    color: white;
+    border: 1px solid transparent;
+    height: fit-content;
+    width: 150px;
+    padding: 10px;
+    cursor: pointer;
+    display: table-cell;
+    font-size: 14px;
+    background-color: #1c3527;
+  }
+/*
+  .dropdown {
+    position: relative;
+    display: flex;
+  }
+ */ 
+  .dropdown-content {
+    display: flex;
+    position: absolute;
+    margin-top: 60px; 
+    width: 100%;   
+    background-color:#343438;
+    flex-flow: column nowrap;
+  }
+  
+  .dropdown-content a {
+    display: flex;
+    color: white;
+    padding: 16px 4px;
+    text-decoration: none;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+  
+  .dropdown-content a:hover {cursor: pointer;}
+
+  

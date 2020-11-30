@@ -11,8 +11,6 @@ const GlobalStyle = createGlobalStyle`
 
 function RegisterWindow() 
 {
-  const [click, setClick] = useState(false);
-  const [visible , setVisible] = useState(false);
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [secondPassword,setSecondPassword] = useState('');

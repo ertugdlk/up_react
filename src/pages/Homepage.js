@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
 function Homepage(props) {
   const [click, setClick] = useState(false);
-  const [visible , setVisible] = useState(false)
+  const [visible , setVisible] = useState(false);
 
 const handleClickLogin = ()=> 
 {

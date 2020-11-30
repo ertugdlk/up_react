@@ -165,8 +165,8 @@
   .menubar-userpic img {
     float: none;
     margin: 0 auto;
-    width: 50%;
-    height: 50%;
+    width: 5em;
+    height: 5em;
     border:1px solid;
     -webkit-border-radius: 50% !important;
     -moz-border-radius: 50% !important;

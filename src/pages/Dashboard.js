@@ -253,11 +253,11 @@ function Dashboard(props) {
 				    </div>
 				  </div>
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
-          <div className="menubarGames">
+          <div className="MenuBarGame">
                           { menubarGames.map(game => (
                             <MenuBarGame data={game}></MenuBarGame>
                           )) }
-            <MenuBarGame data={{name:"deneme"}}></MenuBarGame>
+            <MenuBarGame data={{name:"CSGO"}}></MenuBarGame>
           </div>
         </div>
         
