@@ -13,6 +13,7 @@ import GameRoomRow from '../components/Common/GameRoomRow'
 import MyAccount from '../components/MyAccount'
 import GamesList from '../components/GamesList'
 import CreateGame from '../components/CreateGame'
+import MenuBarGame from '../components/MenuBarGame'
 import { NavigateBefore } from '@material-ui/icons'
 const Axios = require('axios')
 const socketio = require('socket.io-client')
@@ -50,10 +51,17 @@ function Dashboard(props) {
         socket.emit("login" , response.data.nickname)
       }
       catch(error){
-        history.push("/")
+        throw error
+        //history.push("/")
       }
     }
 
+    async function userGames(){
+      const url = "http://localhost:5000/detail/games"
+      const response = await Axios.get(url, {withCredentials:true})
+
+      setMenubarGames(response.data)
+    }
     async function userSteam() {
       const url = "http://localhost:5000/detail/games"
       const response = await Axios.get(url, {withCredentials:true})
@@ -65,7 +73,9 @@ function Dashboard(props) {
       }
     }
 
-    userInfo()
+    //userInfo()
+    //userGames()
+    //userSteam()
     //userSteam() => eğer if(!props.match.params.name) =>  steam bilgilerini çeker  eğer else{ if(props.match.params.name) { bilgileri çekip
     // matchleşirse notification çıkar.}}
   }, [])
@@ -224,6 +234,7 @@ function Dashboard(props) {
                 }
           </div>
         </div>
+
         <div className='MenuBar'>
 				  <div className="menubar-user">
             <div className="menubar-userpic">
@@ -235,24 +246,23 @@ function Dashboard(props) {
             <div className="menubar-mail">
               {email}
             </div>
-            <div className="balance"><img src={Bag} className="menubar-icon"></img>123,456</div>
-            <div className="menubar-buttons">
-            <div className="btn-container"><button onClick={handleAccount}>Deposit</button></div>
-            <div className="btn-container"><button onClick={handleAccount}>Withdraw</button></div>
+              <div className="balance"><img src={Bag} className="menubar-icon"></img>123,456</div>
+              <div className="menubar-buttons">
+              <div className="btn-container"><button onClick={handleAccount}>Deposit</button></div>
+              <div className="btn-container"><button onClick={handleAccount}>Withdraw</button></div>
+				    </div>
 				  </div>
-				</div>
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
+          <div className="menubarGames">
+                          { menubarGames.map(game => (
+                            <MenuBarGame data={game}></MenuBarGame>
+                          )) }
+            <MenuBarGame data={{name:"deneme"}}></MenuBarGame>
+          </div>
         </div>
-        <div className="menubarGames">
-                          {menubarGames.map(credentials => (
-                            <div className="menubarGame">
-                              <div key={credentials.name}>
-                              </div>
-                            </div>
-                          ))}
+        
         <div  className= 'SocialBar'>
-        <button onClick={handleSteam}> steam auth</button>
-        </div>
+          <button onClick={handleSteam}> steam auth</button>
         </div>
         </>
    
