@@ -158,8 +158,8 @@ const SteamButton = styled.button`
   width: 250px;
   height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items:center;
+  justify-content:center;
   &:hover {
       background-color: #16161b;
       color: #f1f1f1;

@@ -31,22 +31,27 @@ function Dashboard(props) {
 
   useEffect(()=> {
     async function userInfo(){
-      const url = "http://localhost:5000/auth/me"
-      const response = await Axios.get(url , {withCredentials: true})
+      try{
+        const url = "http://localhost:5000/auth/me"
+        const response = await Axios.get(url , {withCredentials: true})
 
-      if(response.status == 200)
-      {
-        if(response.data.nickname){
-          setUsername(response.data.nickname)
-        }
-        else{
-          if(response.data.output.statusCode == 401){
-            history.push("/");
+        if(response.status == 200)
+        {
+          if(response.data.nickname){
+            setUsername(response.data.nickname)
+          }
+          else{
+            if(response.data.output.statusCode == 401){
+              history.push("/");
+            }
           }
         }
+    
+        socket.emit("login" , response.data.nickname)
       }
-  
-      socket.emit("login" , response.data.nickname)
+      catch(error){
+        history.push("/")
+      }
     }
 
     async function userSteam() {
