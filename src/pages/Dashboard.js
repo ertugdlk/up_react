@@ -52,7 +52,7 @@ function Dashboard(props) {
 
     }
 
-    //userInfo()
+    userInfo()
     //userSteam() => eğer if(!props.match.params.name) =>  steam bilgilerini çeker  eğer else{ if(props.match.params.name) { bilgileri çekip
     // matchleşirse notification çıkar.}}
   }, [])
