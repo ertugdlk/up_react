@@ -6,23 +6,18 @@
     const [click, setClick] = useState(false);
 
      function handleDropdown() {
-        setClick(true); 
+        if(click == false){
+         setClick(true); 
+        }
+        else{
+           setClick(false)
+        }
       }
 
     return(
         <>
         <div>
             <ul>
-                <li>
-                     <button className="gameButton" onClick={handleDropdown}><img src={Logo}/> {props.data.name}</button>
-                     {click?
-                     <div class="dropdown-content">
-                        <a href="#">Duel</a>
-                        <a href="#">Events</a>
-                        <a href="#">Leaderboards</a>
-                     </div>:null}
-                </li> 
-
                 <li>
                      <button className="gameButton" onClick={handleDropdown}><img src={Logo}/> {props.data.name}</button>
                      {click?

@@ -254,9 +254,6 @@ function Dashboard(props) {
 				  </div>
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
           <div className="MenuBarGame">
-                          { menubarGames.map(game => (
-                            <MenuBarGame data={game}></MenuBarGame>
-                          )) }
             <MenuBarGame data={{name:"CSGO"}}></MenuBarGame>
           </div>
         </div>
