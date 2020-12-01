@@ -17,17 +17,15 @@
     return(
         <>
         <div>
-            <ul>
                 <li>
                      <button className="gameButton" onClick={handleDropdown}><img src={Logo}/> {props.data.name}</button>
                      {click?
                      <div class="dropdown-content">
-                        <a href="#">Duel</a>
-                        <a href="#">Events</a>
-                        <a href="#">Leaderboards</a>
+                        <button>* Duel</button>
+                        <button>* Events</button>
+                        <button>* Leaderboard</button>
                      </div>:null}
                 </li> 
-            </ul>
         </div>
 
         </>

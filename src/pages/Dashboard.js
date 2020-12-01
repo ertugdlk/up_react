@@ -73,7 +73,7 @@ function Dashboard(props) {
       }
     }
 
-    //userInfo()
+    userInfo()
     //userGames()
     //userSteam()
     //userSteam() => eğer if(!props.match.params.name) =>  steam bilgilerini çeker  eğer else{ if(props.match.params.name) { bilgileri çekip
@@ -254,7 +254,10 @@ function Dashboard(props) {
 				  </div>
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
           <div className="MenuBarGame">
-            <MenuBarGame data={{name:"CSGO"}}></MenuBarGame>
+            <ul>
+              <MenuBarGame data={{name:"CSGO"}}></MenuBarGame>
+              <MenuBarGame data={{name:"CSGO"}}></MenuBarGame>
+            </ul>
           </div>
         </div>
         
