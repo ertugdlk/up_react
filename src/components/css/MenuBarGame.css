@@ -7,9 +7,9 @@
   }
 
   .MenuBarGame ul{ /*Oyun tablerinin içinde olduğu alanın özellikleri*/
-  padding: 0px 1.5em 0px 1.5em;
-  height: 15px;
-  margin-top: -45px;
+    padding: 0px 1.5em 0px 1.5em;
+    height: 15px;
+    margin-top: -45px;
   }
 
   .MenuBarGame ul li { /*Oyunların birbirlerine göre özellikleri*/
