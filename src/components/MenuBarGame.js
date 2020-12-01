@@ -6,12 +6,7 @@
     const [click, setClick] = useState(false);
 
      function handleDropdown() {
-        if(click == false){
-         setClick(true); 
-        }
-        else{
-           setClick(false)
-        }
+        setClick(!click)
       }
 
     return(
