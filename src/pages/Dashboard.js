@@ -149,7 +149,7 @@ function Dashboard(props) {
         <>
         {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
         {account ? <MyAccount onClose={handleAccountClose}></MyAccount> : null}
-        {create ? <CreateGame onCreate={handleCreateRoom} onClose={handleCreateClose}></CreateGame> : null}
+        {create ? <CreateGame onCreate={handleCreateRoom} onClose={handleCreateClose} games={menubarGames}></CreateGame> : null}
         <GlobalStyle></GlobalStyle>
         <div className='Header'>
           <Grid zindex={999} >

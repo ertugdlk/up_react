@@ -9,11 +9,13 @@
   .MenuBarGame ul{ /*Oyun tablerinin içinde olduğu alanın özellikleri*/
   padding: 0px 1.5em 0px 1.5em;
   height: 15px;
+  margin-top: -45px;
   }
 
   .MenuBarGame ul li { /*Oyunların birbirlerine göre özellikleri*/
     display:flex;
     margin-bottom: 10px;
+    margin-top:  60px;
   }
   
   .MenuBarGame ul li img { /*Resimlerin cssi*/
@@ -28,7 +30,7 @@
   .gameButton { /*Oyun butonlarının özellikleri*/
     color: white;
     border: 1px solid transparent;
-    height: fit-content;
+    height: 50px;
     width: 150px;
     padding: 10px;
     cursor: pointer;
@@ -46,7 +48,7 @@
   .dropdown-content {
     display: flex;
     position: absolute;
-    margin-top: 60px; 
+    margin-top: 50px; 
     width: 100%;   
     background-color:#343438;
     flex-flow: column nowrap;
