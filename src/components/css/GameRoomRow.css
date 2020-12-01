@@ -64,9 +64,8 @@ td{
 
 @media only screen and (max-width: 1680px) {
     .GameRowContainer {
-        left: 20%;
         float: left;
-        width: 80%;
+        width: 100%;
     }
     td{
         /* Text Styles */

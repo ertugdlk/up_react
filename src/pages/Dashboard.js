@@ -62,6 +62,7 @@ function Dashboard(props) {
 
       setMenubarGames(response.data)
     }
+
     async function userSteam() {
       const url = "http://localhost:5000/detail/games"
       const response = await Axios.get(url, {withCredentials:true})
@@ -74,7 +75,7 @@ function Dashboard(props) {
     }
 
     userInfo()
-    //userGames()
+    userGames()
     //userSteam()
     //userSteam() => eğer if(!props.match.params.name) =>  steam bilgilerini çeker  eğer else{ if(props.match.params.name) { bilgileri çekip
     // matchleşirse notification çıkar.}}
@@ -255,8 +256,9 @@ function Dashboard(props) {
           <button className='AddGame' onClick={handleAddGame}>Add Game</button>
           <div className="MenuBarGame">
             <ul>
-              <MenuBarGame data={{name:"CSGO"}}></MenuBarGame>
-              <MenuBarGame data={{name:"CSGO"}}></MenuBarGame>
+              {menubarGames.map(game =>
+                  <MenuBarGame data={game}></MenuBarGame>
+                )}
             </ul>
           </div>
         </div>
