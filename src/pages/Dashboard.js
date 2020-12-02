@@ -65,21 +65,21 @@ function Dashboard(props) {
     }
 
     async function userSteam() {
-      const url = "http://localhost:5000/detail/games"
+      const url = "http://localhost:5000/detail/info"
       const response = await Axios.get(url, {withCredentials:true})
 
-      if(!props.match.params.name==response.data){
-        alert("No games found")
-      } else if(props.match.params.name==response.data){
-        setMenubarGames(props.matchparams.name)
+      if(props.steam){
+        if(props.steam== response.data){
+          alert("Your Steam Integrated to our system")
+        } else{
+          alert("no match")
+        }
       }
     }
 
     userInfo()
     userGames()
-    //userSteam()
-    //userSteam() => eğer if(!props.match.params.name) =>  steam bilgilerini çeker  eğer else{ if(props.match.params.name) { bilgileri çekip
-    // matchleşirse notification çıkar.}}
+    userSteam()
   }, [])
 
   const handleClick = (event) => {
@@ -135,7 +135,7 @@ function Dashboard(props) {
   }
   const handleSteam = () => {
     async function steamauth(){
-        window.open("http://localhost:5000/steam/auth");
+        window.open("http://localhost:5000/steam/auth" , "_self");
     }
     steamauth()
 
