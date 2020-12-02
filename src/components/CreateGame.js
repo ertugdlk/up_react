@@ -1,7 +1,15 @@
 import React, {useState, useEffect}  from  'react'
 import css  from './css/CreateGame.css'
 import ClearIcon from '@material-ui/icons/Clear';
+import {createGlobalStyle} from 'styled-components'
 const _ = require('lodash')
+
+const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+  body {
+    font-family: 'Raleway', sans-serif;
+  }`
+
 
 function CreateGame(props)
 {
@@ -54,39 +62,39 @@ function CreateGame(props)
     }
 
     return(
-        <> 
+        <> <GlobalStyle></GlobalStyle>
             <div className=  'CreateWindow'>
             <div className='CloseButton1'> <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon> </div>
-                <label>CreateGame</label>
+            <header className="header">Create Game</header>
                 <div className='CreateRow'>
-                    <label>Game Selection</label>
-                    <select onChange= { (e) => onGameChange(e)}> 
+                    <label className="labels">Game Selection</label>
+                    <select className="create-select" onChange= { (e) => onGameChange(e)}> 
                         {props.games.map( (game, index) =>
-                            <option value= {index} > {game.name}</option>)
+                            <option className="create-option" value= {index} > {game.name}</option>)
                         }
                     </select>
                 </div>
                 <div className='CreateRow'>
-                <label>Map</label>
-                    <select onChange={ (e) => onMapChange(e)}>
+                <label className="labels">Map</label>
+                    <select className="create-select" onChange={ (e) => onMapChange(e)}>
                         {selectedGame.maps.map( (map, index )=> 
-                            <option value={index}> {map}</option>
+                            <option className="create-option" value={index}> {map}</option>
                             )}
                     </select>
                 </div>
                 <div className='CreateRow'>
-                <label>Type</label>
-                <select onChange={ (e) => onTypeChange(e)}>
+                <label className="labels">Type</label>
+                <select className="create-select" onChange={ (e) => onTypeChange(e)}>
                     {selectedGame.types.map( (type, index) => 
-                            <option value={index}> {type}</option>
+                            <option className="create-option" value={index}> {type}</option>
                             )}
                     </select>
                 </div>
                 <div className='CreateRow'>
-                <label>Fee</label>
-                    <input onChange={(e) => onFeeChange(e)}></input>
+                <label className="labels">Fee</label>
+                    <input className="create-input" onChange={(e) => onFeeChange(e)}></input>
                 </div>
-                <button onClick= { () => props.onCreate(data)}>Create Game</button>
+                <button class="button" onClick= { () => props.onCreate(data)}>Create Game</button>
             </div>
         </>
     )

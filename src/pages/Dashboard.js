@@ -141,7 +141,6 @@ function Dashboard(props) {
 
   }
 
-
   const createRoom = () => {
     const gameobject = { GameId: '123', GameName: 'CSGO', GameMap: 'DUST2', GameType: '1V1', EntryFee: '10USD', Reward: '15USD', CreatedAt: '12.11.2020', Host: 'ERCE' }
     //socket.emit("create" , gameobject )
