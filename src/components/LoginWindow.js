@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
-import styled, {createGlobalStyle} from 'styled-components'
+import {createGlobalStyle} from 'styled-components'
 import { useHistory } from "react-router-dom";
+import css from '../components/css/LoginWindow.css'
 
 const Axios = require('axios')
 const Cookie = require('js-cookie')
@@ -48,98 +49,31 @@ function LoginWindow()
     return(
         <>
         <GlobalStyle></GlobalStyle>
-        <Window>
-        <Modal>
-        <Title>
+        <div className="login-window">
+        <div className="login-modal">
+        <h2 className="login-title">
           Login
-        </Title>
+        </h2>
         <label>Username</label>
-            <StyledInput
+            <input className="login-input"
               onChange={e => setNickname(e.target.value)}
               type="text"
               name="username"
               required
             />
             <label>Password</label>
-            <StyledInput
+            <input className="login-input"
               onChange={e => setPassword(e.target.value)}
               type="password"
               name="password"
               required
             />
-            <Button onClick={handleLogin}>Login</Button>
-        </Modal>  
-        </Window> 
+            <button className="login-button" onClick={handleLogin}>Login</button>
+            <button className="login-steam-button"><img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg"  height="20px"/>Login with Steam</button>
+        </div>  
+        </div> 
         </>
     )
 }
-
-//İçeriklerin cssi
-const Modal = styled.div`
-  color: #fff;
-  box-sizing: content-box;
-  font-size: 14px;
-  width: 50px;
-  margin: 5% 25%;
-  position: relative;
-  justify-content:center;
-  line-height: 1.5715;
-  list-style: none;
-`;
-
-//Popup'ın cssi
-const Window = styled.div`  
-    position: absolute;
-    width: 300px;
-    height: fit-content;
-    top: 200px;
-    left: 40%;
-    background: #0b0b0b;
-    border-radius: 12px;
-    z-index: 3;
-    box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
-`;
-
-
-const StyledInput = styled.input`
-  margin-top:0.5em;
-  margin-bottom: 0.8em;
-  padding: 0.5em; // Input Fieldların Boyutu
-  color:#fff;
-  background-color: #1b1c23;
-  border: none;
-  border-radius: 8px;
-    width: auto;
-    justify-self:center;
-`;
-
-
-const Title = styled.h2`
-  color: #fff;
-  font-size:1Sem;
-  margin-left: 50px;
-  padding-bottom:0.5em;
-  
-`;
-
-
-const Button = styled.button`
-  color: #000;
-  background-color: #00FF60;
-  font-size: 1em;
-  margin-top:1.5em;
-  padding: 0.75em ;
-  border: 2px solid #00ff60;
-  border-radius: 8px;
-  width: fit-content;
-  height: fit-content;
-  margin-left:50px;
-
-  &:hover {
-      background-color: #16161b;
-      color: #f1f1f1;
-      border-color: #f1f1f1;
-  }
-`;
 
 export default LoginWindow

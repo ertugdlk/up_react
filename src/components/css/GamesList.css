@@ -17,7 +17,6 @@
     box-sizing: border-box; 
 }
 
-.cards .card figcaption,
 .cards .card:after
 {
   position: absolute;
@@ -53,21 +52,10 @@ body {
   transition: 0.3s;
 }
 .cards .card img{
+  max-height: 100%;
   width: 100%;
-  min-height: 100%;
 }
-.cards .card figcaption {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  padding-bottom: 10px;
-  font-size: 20px;
-  background: none;
-  color: #fff;
-  transform: translateY(100%);
-  transition: 0.3s;
-}
+
 .cards .card:after {
   content: '';
   z-index: 10;

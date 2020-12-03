@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import styled, {createGlobalStyle} from 'styled-components'
+import React from 'react'
+import {createGlobalStyle} from 'styled-components'
 import ClearIcon from '@material-ui/icons/Clear';
 import css from '../components/css/MyAccount.css'
 
@@ -18,9 +18,19 @@ function MyAccount(props)
            <GlobalStyle></GlobalStyle>
           <div className='MyAccount'>
             <div className='CloseButton1'> <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon> </div>
-          </div>
+      <div className="account-emailbox">
+        <label className="myaccount-email">Email</label>
+          <button className="myaccount-button">Edit</button>
+      </div>
+      <div className="account-usernamebox">
+        <label className="myaccount-username">Username</label>
+            <button className="myaccount-button">Edit</button>
+      </div>
+        </div>
         </>
     )
 }
+
+
 
 export default MyAccount

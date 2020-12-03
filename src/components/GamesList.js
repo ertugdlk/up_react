@@ -20,6 +20,16 @@ const [games, setGames] = React.useState([])
     GameCards()
   }, [])
 
+  const handlePlatformIntegration = (platform) =>{
+    //check user's exist steam account 
+    
+
+    //If platform is steam redirect to steam authentication
+    if(platform == "5f9a84fca1f0c0b83de7d696"){
+      window.open("http://localhost:5000/steam/auth" , "_self");
+    }
+  }
+
     return(
         <>
           <div className='GamesList'>
@@ -28,11 +38,11 @@ const [games, setGames] = React.useState([])
 
                 <div className="cards">
                           {games.map(game => (
-                            <div className="card">
-                              <figure key={game.name}>
-                              <img src={game.img}/>
-                              </figure>
-                            </div>
+                              <div className="card" onClick={() => handlePlatformIntegration(game.platform)}>
+                                <figure key={game.name}>
+                                <img src={game.img}/>
+                                </figure>
+                              </div>
                           ))}
                 </div>
               </div>

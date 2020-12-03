@@ -107,6 +107,29 @@
 
 }
 
+.dashboard-logo{
+  position: absolute;
+  top:-40px;
+  width: 130px;
+  height: 40px;
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  position:absolute;
+  top:10px;
+  right:250px;
+  border-radius: 50px;
+  border: 3px solid #00ff60;
+}
+
+.arrow-menu{
+  top:20px;
+  right:80px;
+  position:absolute;
+}
+
 .Nickname{
     color: #f1f1f1;
     font-size: 17px;
@@ -165,8 +188,8 @@
   .menubar-userpic img {
     float: none;
     margin: 0 auto;
-    width: 50%;
-    height: 50%;
+    width: 5em;
+    height: 5em;
     border:1px solid;
     -webkit-border-radius: 50% !important;
     -moz-border-radius: 50% !important;
@@ -239,11 +262,10 @@
 
 
 .AddGame{
-    width: 140px;
+    width: 100%;
     height: 50px;
     background-color: #16161b;
     border: none;
-    left: 4px;
     position:relative;
     color: #f1f1f1;
     font-size: 17px;
@@ -268,6 +290,7 @@
     .Container {
         width: 77%;
         margin-left:170px;
+        right: 5px;
         margin-top: 50px;
     }
 
