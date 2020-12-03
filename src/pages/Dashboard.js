@@ -1,5 +1,5 @@
 import React, {useEffect,useState} from 'react'
-import styled, { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
 import Bag from '../bag_icon.png'
@@ -7,7 +7,7 @@ import {Grid} from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
 import {Menu, MenuItem} from '@material-ui/core'
-import Css from '../components/css/Dashboard.css'
+import css from '../components/css/Dashboard.css'
 import { useHistory } from "react-router-dom"; 
 import GameRoomRow from '../components/Common/GameRoomRow'
 import MyAccount from '../components/MyAccount'
@@ -15,9 +15,17 @@ import GamesList from '../components/GamesList'
 import CreateGame from '../components/CreateGame'
 import MenuBarGame from '../components/MenuBarGame'
 import { NavigateBefore } from '@material-ui/icons'
+
 const Axios = require('axios')
 const socketio = require('socket.io-client')
 const socket = socketio('http://localhost:5000/', {transports: ['websocket'] })
+
+const GlobalStyle = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+  body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #010101;
+  }`
 
 function Dashboard(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -154,17 +162,17 @@ function Dashboard(props) {
         <GlobalStyle></GlobalStyle>
         <div className='Header'>
           <Grid zindex={999} >
-            <LogoSize>
+            <div className="dashboard-logo">
             <a  className='LogoLink'  href='/dashboard' ><img src={Logo} /></a>
-            </LogoSize>
+            </div>
             <div style={{alignSelf:"center"}}>
-            <Avatar></Avatar>
+            <div className="avatar"></div>
             <span className='Nickname'> {userName}</span>
-            <ArrowMenu>
+            <div className="arrow-menu">
               <IconButton style={{ color: 'white' }} aria-label="menu" size="small" aria-haspopup="true" onClick={handleClick}>
                 <ArrowDownwardIcon fontSize="inherit" />
               </IconButton>
-            </ArrowMenu> 
+            </div> 
             </div> 
              <Menu
                 id="simple-menu"
@@ -274,32 +282,6 @@ function Dashboard(props) {
       //sidebar menüde username gösteriliyor olmalı ama maili tutmadığımız için o gözükmüyor, düzeltilmeli.
       //balance'a şimdilik kendim bir değer girdim ama daha sonra kullanıcının değeri {balance} veya başka bir şekilde gösterilmeli.
     }
-const GlobalStyle = createGlobalStyle`
-  body {
-    background-color:#19191f;
-  }
-`
 
-const LogoSize = styled.div`
-  position: absolute;
-  top:-40px;
-  width: 130px;
-  height: 40px;
-`;
-
-const Avatar = styled.div`
-  width:40px;
-  height:40px;
-  position:absolute;
-  top:10px;
-  right:250px;
-  border-radius: 50px;
-  border: 3px solid #00ff60;
-`
-const ArrowMenu = styled.div`
-  top:20px;
-  right:80px;
-  position:absolute;
-`
 
 export default Dashboard

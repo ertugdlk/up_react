@@ -1,0 +1,23 @@
+.header{
+    background-color: #16161b;
+    height: 70px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 1rem;
+    position: fixed;
+    width:100%;
+    top: 0;
+    left:0;
+    z-index: 999;
+}
+
+.logo{
+    position: absolute;
+    top:-40px;
+    left:0;
+}
+
+.span{
+    color:#00FF60;
+}

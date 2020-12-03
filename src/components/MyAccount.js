@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import styled, {createGlobalStyle} from 'styled-components'
+import React from 'react'
+import {createGlobalStyle} from 'styled-components'
 import ClearIcon from '@material-ui/icons/Clear';
 import css from '../components/css/MyAccount.css'
 

@@ -107,6 +107,29 @@
 
 }
 
+.dashboard-logo{
+  position: absolute;
+  top:-40px;
+  width: 130px;
+  height: 40px;
+}
+
+.avatar{
+  width:40px;
+  height:40px;
+  position:absolute;
+  top:10px;
+  right:250px;
+  border-radius: 50px;
+  border: 3px solid #00ff60;
+}
+
+.arrow-menu{
+  top:20px;
+  right:80px;
+  position:absolute;
+}
+
 .Nickname{
     color: #f1f1f1;
     font-size: 17px;
