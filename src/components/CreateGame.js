@@ -20,7 +20,7 @@ function CreateGame(props)
         fee: 1,
         room: 1,
         host: '',
-        time: new Date().toLocaleTimeString(navigator.language, {
+        createdAt: new Date().toLocaleTimeString(navigator.language, {
             hour: '2-digit',
             minute:'2-digit'
           })

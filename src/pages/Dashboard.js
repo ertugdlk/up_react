@@ -116,11 +116,12 @@ function Dashboard(props) {
   }
 
   const handleCreateRoom = (data) => {
-    data.host = 'phybarin'
+    data.host = userName
     setCreate(false)
     const newArr = rooms
     newArr.push(data)
     setRooms(newArr)
+    socket.emit('create' , data)
   }
 
   const handleLogout = () => {
