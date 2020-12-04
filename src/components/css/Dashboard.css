@@ -68,17 +68,110 @@
     text-transform: uppercase;
 }
 
+.open-games{
+  font-size: 20px;
+  width: 200px;
+  border-right: 1px solid #989aa0;
+  font-family: Raleway;
+}
+
+.open-games:hover{
+  color:#00f85d;
+}
+
+.private-games{
+  font-size:20px;
+  width:200px;
+  font-family: Raleway;
+}
+
+.private-games:hover{
+  color:#00f85d;
+}
+
+.search-game{
+  position:relative;
+  padding:0;
+  margin-left: 20%;
+}
+
+.search-image{
+  position: absolute;
+  width:30px;
+  top:5px;
+}
+
+.search-gameID{
+  height:35px;
+  margin:0;
+  padding-left: 30px;
+  border:none;
+  border-radius: 6px;
+}
+
+.search-gameID::placeholder{
+  color: #9ea0a5
+}
+
+.search-gameID:focus{
+outline: none;
+}
+
+.filter-game{
+  position:relative;
+  padding:0;
+  margin-left: 20px;
+}
+
+.filter-image{
+  position: absolute;
+  width:20px;
+  left:8px;
+  top:8px;
+}
+
+.filter-games{
+border-radius: 4px;
+margin-left:3px;
+height: 35px;
+width: 80px;
+background-color: #fff;
+color:#9ea0a5;
+}
+
+.Random{
+  position: relative;
+  width: 140px;
+  height: 35px;
+  margin-left: 30px;
+  margin-right: 15px;
+  box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
+  background-color: #35ac45;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-family: Raleway;
+  font-size: 15px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 21.96px;
+  text-align: center;
+  text-transform: uppercase;
+  outline : none;
+}
 
 .Create{
-    position: absolute;
+    position: relative;
     right: 0;
     width: 140px;
-    height: 35px;
-    margin-right: 20px;
+    height: 35px; 
+    margin-right:25px;
     box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
-    background-color: #272730;
+    background-color: #35ac45;
     border: none;
-    color: #00ff60;
+    border-radius: 6px;
+    color: #fff;
     font-family: Raleway;
     font-size: 15px;
     font-weight: 700;
@@ -104,7 +197,6 @@
 
 .LogoLink{
     outline : none;
-
 }
 
 .dashboard-logo{

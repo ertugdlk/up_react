@@ -3,6 +3,8 @@ import { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
 import Bag from '../bag_icon.png'
+import searchicon from '../search_icon.png'
+import Filter from '../filter_icon.png'
 import {Grid} from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
@@ -159,7 +161,7 @@ function Dashboard(props) {
         <div className='Header'>
           <Grid zindex={999} >
             <div className="dashboard-logo">
-            <a  className='LogoLink'  href='/dashboard' ><img src={Logo} /></a>
+            <a  className='LogoLink'  href='/dashboard' ><img src={Logo}/></a>
             </div>
             <div style={{alignSelf:"center"}}>
             <div className="avatar"></div>
@@ -188,7 +190,18 @@ function Dashboard(props) {
             <img className='img1' src={Photo1}></img>
           </div>
           <div className='GameFilter'>
-            <button className='Create' onClick={handleCreateClick}> Create Game </button>
+            <button className="open-games">Open Games</button>
+            <button className="private-games">Private Games</button>
+            <div className="search-game">
+            <img src={searchicon} className="search-image"></img>
+                <input className="search-gameID" placeholder="Search Game ID"></input>
+            </div>
+            <div className="filter-game">
+            <img src={Filter} className="filter-image"></img>
+                <button className="filter-games">Filter</button>
+            </div>
+            <button className="Random">Random</button>
+            <button className='Create' onClick={handleCreateClick}> New Game </button>
           </div>
           <div className='Games'>
               <div className='GameRoomHeader'>
