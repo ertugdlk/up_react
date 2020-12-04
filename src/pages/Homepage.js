@@ -22,13 +22,12 @@ const handleClickLogin = ()=>
 {
   setVisible(true);
   setClick(false);
-  
 }
 
 const handleClickCreateAccount = ()=> 
 {
-  setClick(true);
   setVisible(false);
+  setClick(true);
 }
 
   //window.addEventListener('resize', showButton);

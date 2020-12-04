@@ -16,7 +16,9 @@ const OTP = () => {
     };
 
     return (
-        <>         
+        <>   
+        <div className="otp-window">
+            <div className="otp-modal"> 
             <div className="row">
                 <div className="col text-center">
                     <p>Enter the OTP sent to you to verify your identity</p>
@@ -55,6 +57,8 @@ const OTP = () => {
                     </p>
                 </div>
             </div>
+            </div>  
+        </div>  
         </>
     );
 };
