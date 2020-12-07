@@ -1,95 +1,100 @@
-.CreateWindow{
-    box-sizing:border-box;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-evenly;
-    align-items: center;
-    position: fixed;
-    width: 400px;
-    height: 600px;
-    top:10%;
-    left:40%;
-    border-radius: 12px;
-    z-index: 1200;
-    box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
-    background: #0b0b0b;
-    color: white;
-    border: 1px ridge #0ab74c;
+.CreateWindow {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  position: fixed;
+  width: 400px;
+  height: 600px;
+  top: 10%;
+  left: 40%;
+  border-radius: 12px;
+  z-index: 1200;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  background: #0b0b0b;
+  color: white;
+  border: 1px ridge #0ab74c;
 }
 
-.CreateRow{
-    position: relative;
-    display: flex;
-    flex-direction: column;
+.CreateRow {
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-.CloseButton1{
-    float: right;
-    position: absolute;
-    right: 5px;
-    top:5px;
+.CloseButton1 {
+  float: right;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
-.header{
-    font-size: 20px;
-    color:#0ab74c;
-}
-
-.labels{
-    color:#0ab74c;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.header {
+  font-size: 20px;
+  color: #0ab74c;
 }
 
-.create-select{
-    border-color: #0ab74c;
-    font-size: 14px;
-    margin-top: 3px;
-    background-color: transparent;
-    color: white;
-    text-align-last:center;
-    display: inline-block;
-    width: auto;
-    vertical-align: middle;
+.labels {
+  color: #0ab74c;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.create-option{
-    background-color: black;
-    color:#fff;
+.create-select {
+  border-color: #0ab74c;
+  font-size: 14px;
+  margin-top: 3px;
+  background-color: transparent;
+  color: white;
+  text-align-last: center;
+  display: inline-block;
+  width: auto;
+  vertical-align: middle;
 }
 
-.create-input{
-    border-image-source: linear-gradient(#0ab74c,#0b0b0b);
-    border-image-slice: 1;
-    background-color: transparent;
-    color: white;
+.create-option {
+  background-color: black;
+  color: #fff;
 }
 
-.create-input:focus,.create-input:hover{
-    outline: none;
-    border-image-source: linear-gradient(#0b0b0b,#0ab74c);
-    background-color: transparent;
-    color: white;
+.create-input {
+  border-image-source: linear-gradient(#0ab74c, #0b0b0b);
+  border-image-slice: 1;
+  background-color: transparent;
+  color: white;
+}
+
+.create-input:focus,
+.create-input:hover {
+  outline: none;
+  border-image-source: linear-gradient(#0b0b0b, #0ab74c);
+  background-color: transparent;
+  color: white;
 }
 
 .button.button {
-    border-radius: 100rem;
-    padding: .5rem 4rem;
-    color: white;
-    border: solid 3px transparent;
-    background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #242424, #0ab74c);
-    background-origin: border-box;
-    box-shadow: 2px 1000px 1px #000 inset;
+  border-radius: 100rem;
+  padding: 0.5rem 4rem;
+  color: white;
+  border: solid 3px transparent;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0)
+    ),
+    linear-gradient(101deg, #242424, #0ab74c);
+  background-origin: border-box;
+  box-shadow: 2px 1000px 1px #000 inset;
 }
 
 button.button:hover {
-    box-shadow: none;
-    color: white;
+  box-shadow: none;
+  color: white;
 }
 
 @media only screen and (min-width: 1680px) {
-    .CreateWindow{
-        left: 760px;
-    }
+  .CreateWindow {
+    left: 760px;
+  }
 }

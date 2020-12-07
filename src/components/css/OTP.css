@@ -1,26 +1,26 @@
 /*İçeriklerin cssi*/
-.otp-modal{
-    color:#fff;
-    box-sizing: border-box;
-    font-size: 14px;
-    margin: 5% 25%;
-    position: flex;
-    line-height: 1.5715;
-    list-style: none;
-    display: grid;
-    justify-items:flex-start;
-    text-align: left;
+.otp-modal {
+  color: #fff;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin: 5% 25%;
+  position: flex;
+  line-height: 1.5715;
+  list-style: none;
+  display: grid;
+  justify-items: flex-start;
+  text-align: left;
 }
 /*Popupın cssi*/
-.otp-window{
-    box-sizing: border-box;
-    position: absolute;
-    width: 300px;
-    height: fit-content;
-    top: 150px;
-    left: 40%;
-    background: #0b0b0b;
-    border-radius: 12px;
-    z-index: 5;
-    box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+.otp-window {
+  box-sizing: border-box;
+  position: absolute;
+  width: 300px;
+  height: fit-content;
+  top: 150px;
+  left: 40%;
+  background: #0b0b0b;
+  border-radius: 12px;
+  z-index: 5;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
 }

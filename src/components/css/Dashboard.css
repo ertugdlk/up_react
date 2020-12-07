@@ -1,145 +1,144 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
-.Container{
-    flex-direction: column;
-    width: 89.5%;
-    height: 900px;
-    z-index: 997;
-    top: 40px;
-    position: relative;
-    background-color: #16161b;
-
+.Container {
+  flex-direction: column;
+  width: 89.5%;
+  height: 900px;
+  z-index: 997;
+  top: 40px;
+  position: relative;
+  background-color: #16161b;
 }
 
-.Slider{
-    position: relative;
-    width: 80%;
-    height: 300px;
-    align-items: center;
-    left: 10%;
+.Slider {
+  position: relative;
+  width: 80%;
+  height: 300px;
+  align-items: center;
+  left: 10%;
 }
 
-.Games{
-    top: 50px;
-    position: relative;
-    width: 100%;
-    height:700px;
-    border-radius: 2px;
-    background-color: #16161b;
+.Games {
+  top: 50px;
+  position: relative;
+  width: 100%;
+  height: 700px;
+  border-radius: 2px;
+  background-color: #16161b;
 }
 
-.News{
-    width: 140px;
-    height: 50px;
-    background-color: #16161b;
-    border: none;
-    position:relative;
-    color: #f1f1f1;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 40px;
+.News {
+  width: 140px;
+  height: 50px;
+  background-color: #16161b;
+  border: none;
+  position: relative;
+  color: #f1f1f1;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 40px;
 }
 
 .Header {
   height: 65px;
-  background-color:#353539;
-  top:0;
-  position:absolute;
-  left:0;
-  width:100%;
-  z-index:998;
+  background-color: #353539;
+  top: 0;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 998;
 }
 
 .GameFilter {
-    position: relative;
-    align-items: center;
-    display: flex;
-    top: 50px;
-    height: 55px;
-    width: 100%;
-    background-color: #19191f;
-    color: #606060;
-    font-family: Raleway;
-    font-size: 21px;
-    font-weight: 700;
-    font-style: normal;
-    letter-spacing: normal;
-    line-height: 23.94px;
-    text-transform: uppercase;
+  position: relative;
+  align-items: center;
+  display: flex;
+  top: 50px;
+  height: 55px;
+  width: 100%;
+  background-color: #19191f;
+  color: #606060;
+  font-family: Raleway;
+  font-size: 21px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 23.94px;
+  text-transform: uppercase;
 }
 
-.open-games{
+.open-games {
   font-size: 20px;
   width: 200px;
   border-right: 1px solid #989aa0;
   font-family: Raleway;
 }
 
-.open-games:hover{
-  color:#00f85d;
+.open-games:hover {
+  color: #00f85d;
 }
 
-.private-games{
-  font-size:20px;
-  width:200px;
+.private-games {
+  font-size: 20px;
+  width: 200px;
   font-family: Raleway;
 }
 
-.private-games:hover{
-  color:#00f85d;
+.private-games:hover {
+  color: #00f85d;
 }
 
-.search-game{
-  position:relative;
-  padding:0;
+.search-game {
+  position: relative;
+  padding: 0;
   margin-left: 20%;
 }
 
-.search-image{
+.search-image {
   position: absolute;
-  width:30px;
-  top:5px;
+  width: 30px;
+  top: 5px;
 }
 
-.search-gameID{
-  height:35px;
-  margin:0;
+.search-gameID {
+  height: 35px;
+  margin: 0;
   padding-left: 30px;
-  border:none;
+  border: none;
   border-radius: 6px;
 }
 
-.search-gameID::placeholder{
-  color: #9ea0a5
+.search-gameID::placeholder {
+  color: #9ea0a5;
 }
 
-.search-gameID:focus{
-outline: none;
+.search-gameID:focus {
+  outline: none;
 }
 
-.filter-game{
-  position:relative;
-  padding:0;
+.filter-game {
+  position: relative;
+  padding: 0;
   margin-left: 20px;
 }
 
-.filter-image{
+.filter-image {
   position: absolute;
-  width:20px;
-  left:8px;
-  top:8px;
+  width: 20px;
+  left: 8px;
+  top: 8px;
 }
 
-.filter-games{
-border-radius: 4px;
-margin-left:3px;
-height: 35px;
-width: 80px;
-background-color: #fff;
-color:#9ea0a5;
+.filter-games {
+  border-radius: 4px;
+  margin-left: 3px;
+  height: 35px;
+  width: 80px;
+  background-color: #fff;
+  color: #9ea0a5;
 }
 
-.Random{
+.Random {
   position: relative;
   width: 140px;
   height: 35px;
@@ -158,240 +157,237 @@ color:#9ea0a5;
   line-height: 21.96px;
   text-align: center;
   text-transform: uppercase;
-  outline : none;
+  outline: none;
 }
 
-.Create{
-    position: relative;
-    right: 0;
-    width: 140px;
-    height: 35px; 
-    margin-right:25px;
-    box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
-    background-color: #35ac45;
-    border: none;
-    border-radius: 6px;
-    color: #fff;
-    font-family: Raleway;
-    font-size: 15px;
-    font-weight: 700;
-    font-style: normal;
-    letter-spacing: normal;
-    line-height: 21.96px;
-    text-align: center;
-    text-transform: uppercase;
-    outline : none;
-
+.Create {
+  position: relative;
+  right: 0;
+  width: 140px;
+  height: 35px;
+  margin-right: 25px;
+  box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
+  background-color: #35ac45;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-family: Raleway;
+  font-size: 15px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 21.96px;
+  text-align: center;
+  text-transform: uppercase;
+  outline: none;
 }
 
-.News:hover{background-color: #00ff60;
-    color: #000000;
+.News:hover {
+  background-color: #00ff60;
+  color: #000000;
 }
 
-.img1{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    top: 20px;
+.img1 {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 20px;
 }
 
-.LogoLink{
-    outline : none;
+.LogoLink {
+  outline: none;
 }
 
-.dashboard-logo{
+.dashboard-logo {
   position: absolute;
-  top:-40px;
+  top: -40px;
   width: 130px;
   height: 40px;
 }
 
-.avatar{
-  width:40px;
-  height:40px;
-  position:absolute;
-  top:10px;
-  right:250px;
+.avatar {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 10px;
+  right: 250px;
   border-radius: 50px;
   border: 3px solid #00ff60;
 }
 
-.arrow-menu{
-  top:20px;
-  right:80px;
-  position:absolute;
+.arrow-menu {
+  top: 20px;
+  right: 80px;
+  position: absolute;
 }
 
-.Nickname{
-    color: #f1f1f1;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 40px;
-    right:0;
-    position: absolute;
-    right:160px;
-    margin-top: 12px;
+.Nickname {
+  color: #f1f1f1;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 40px;
+  right: 0;
+  position: absolute;
+  right: 160px;
+  margin-top: 12px;
 }
 
-.GameRoomHeader{
-    position: relative;
-    align-items: center;
-    display: flex;
-    top:0;
-    height: 45px;
-    width: 100%;
-    background-color: #19191f;
-    float: right;
-    color: #606060;
-    font-family: Raleway;
-    font-size: 21px;
-    font-weight: 700;
-    font-style: normal;
-    letter-spacing: normal;
-    line-height: 23.94px;
-    text-transform: uppercase;
-    float: left;
-    border-top: 1px solid white;
+.GameRoomHeader {
+  position: relative;
+  align-items: center;
+  display: flex;
+  top: 0;
+  height: 45px;
+  width: 100%;
+  background-color: #19191f;
+  float: right;
+  color: #606060;
+  font-family: Raleway;
+  font-size: 21px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 23.94px;
+  text-transform: uppercase;
+  float: left;
+  border-top: 1px solid white;
 }
 
-.GRHeaderColumn{
-    width: 10%;
-    text-align: center;
+.GRHeaderColumn {
+  width: 10%;
+  text-align: center;
 }
-
 
 .MenuBar {
   width: 180px;
   height: 1200px;
   position: absolute;
-  top:65px;
-  left:0px;
-  align-self:flex-start;
-  justify-self:flex-start;
+  top: 65px;
+  left: 0px;
+  align-self: flex-start;
+  justify-self: flex-start;
   background-color: #27272b;
   z-index: 999;
 }
-  
-  .menubar-user {
-    text-align: center;
-    margin-top: 20px;
-  }
 
-  .menubar-userpic img {
-    float: none;
-    margin: 0 auto;
-    width: 5em;
-    height: 5em;
-    border:1px solid;
-    -webkit-border-radius: 50% !important;
-    -moz-border-radius: 50% !important;
-    border-radius: 50% !important;
-    border-color: #00ff60;
-  }
-  
-  .menubar-nickname {
-    text-align: center;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 7px;
-  }
-  
-  .menubar-mail{
-    text-align: center;
-    text-transform: lowercase;
-    color: #989aa0;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
-
-  .balance{
-    color: white;
-    font-size: 15px;
-    margin-bottom: 5px;
-    border-bottom: 1px outset white;
-    padding-bottom: 10px;
-  }
-  
-  .menubar-icon{
-    height:15px;
-    margin-right: 5px;
-
-  }
-
-  .menubar-buttons{
-    display: flex; 
-    width: 100%;
-    justify-content: center;
-  }
-
-  button {
-    background: transparent;
-    color: white;
-    border: 0;
-    padding: 3px 6px;
-    outline: none;
-  }
-
-  .btn-container{
-    padding: 1px 8px;
-  }
-      
-  .btn-container:not(:last-child) {
-    border-right: 1px solid #989aa0;
-  }
-
-.SocialBar{
-    background-color: #27272b;
-    z-index: 999;
-    width: 160px;
-    height: 1200px;
-    position: absolute;
-    top:65px;
-    right: 0;
+.menubar-user {
+  text-align: center;
+  margin-top: 20px;
 }
 
-
-.AddGame{
-    width: 100%;
-    height: 50px;
-    background-color: #16161b;
-    border: none;
-    position:relative;
-    color: #f1f1f1;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 40px;
-    margin-top: 10px;
+.menubar-userpic img {
+  float: none;
+  margin: 0 auto;
+  width: 5em;
+  height: 5em;
+  border: 1px solid;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+  border-color: #00ff60;
 }
 
-.AddGame:hover{background-color: #00ff60;
-    color: #000000;
+.menubar-nickname {
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.menubar-mail {
+  text-align: center;
+  text-transform: lowercase;
+  color: #989aa0;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.balance {
+  color: white;
+  font-size: 15px;
+  margin-bottom: 5px;
+  border-bottom: 1px outset white;
+  padding-bottom: 10px;
+}
+
+.menubar-icon {
+  height: 15px;
+  margin-right: 5px;
+}
+
+.menubar-buttons {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+button {
+  background: transparent;
+  color: white;
+  border: 0;
+  padding: 3px 6px;
+  outline: none;
+}
+
+.btn-container {
+  padding: 1px 8px;
+}
+
+.btn-container:not(:last-child) {
+  border-right: 1px solid #989aa0;
+}
+
+.SocialBar {
+  background-color: #27272b;
+  z-index: 999;
+  width: 160px;
+  height: 1200px;
+  position: absolute;
+  top: 65px;
+  right: 0;
+}
+
+.AddGame {
+  width: 100%;
+  height: 50px;
+  background-color: #16161b;
+  border: none;
+  position: relative;
+  color: #f1f1f1;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 40px;
+  margin-top: 10px;
+}
+
+.AddGame:hover {
+  background-color: #00ff60;
+  color: #000000;
 }
 
 @media only screen and (min-width: 1680px) {
-    .Container {
-      width: 80%;
-      margin-left:200px;
-      margin-top: 40px;
-    }
+  .Container {
+    width: 80%;
+    margin-left: 200px;
+    margin-top: 40px;
   }
+}
 
 @media only screen and (max-width: 1680px) {
-    .Container {
-        width: 77%;
-        margin-left:170px;
-        right: 5px;
-        margin-top: 50px;
-    }
-
-    .MenuBar {
-        width: 150px;
-      }
-      
-      .SocialBar{
-          width: 150px;
-      }
-
+  .Container {
+    width: 77%;
+    margin-left: 170px;
+    right: 5px;
+    margin-top: 50px;
   }
+
+  .MenuBar {
+    width: 150px;
+  }
+
+  .SocialBar {
+    width: 150px;
+  }
+}

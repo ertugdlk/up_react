@@ -1,13 +1,13 @@
-.MyAccount{
+.MyAccount {
   display: flex;
   flex-flow: column nowrap;
   position: fixed;
   width: 800px;
   height: 400px;
-  top:20%;
+  top: 20%;
   border-radius: 12px;
   z-index: 1000;
-  box-shadow: 0 0 0 9999px rgba(0,0,0,0.5);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
   background: #0b0b0b;
   color: white;
   border: 1px solid #0ab74c;
@@ -15,8 +15,8 @@
   align-items: center;
 }
 
-.account-emailbox{
-  border:none;
+.account-emailbox {
+  border: none;
 
   background-color: transparent;
   width: 50%;
@@ -26,8 +26,8 @@
   align-items: center;
   display: flex;
 }
-.account-usernamebox{
-  border:none;
+.account-usernamebox {
+  border: none;
   background-color: transparent;
   width: 50%;
   height: 50%;
@@ -36,38 +36,37 @@
   align-items: center;
   display: flex;
 }
-.myaccount-labels{
-font-size: 14px;
+.myaccount-labels {
+  font-size: 14px;
 }
 
-.myaccount-button{
-font-size: 14px;
-width:100px;
-height: 30px;
-margin-left: 5%;
-color: #fff;
-background-color: black;
-border: 2px solid #0ab740;
-border-radius: 8px;
+.myaccount-button {
+  font-size: 14px;
+  width: 100px;
+  height: 30px;
+  margin-left: 5%;
+  color: #fff;
+  background-color: black;
+  border: 2px solid #0ab740;
+  border-radius: 8px;
 }
 .myaccount-button:hover {
-  background-color:darkgreen;
+  background-color: darkgreen;
   color: white;
   border-color: #0ab740;
 }
 
 @media only screen and (max-width: 1200px) {
-
 }
 
 @media only screen and (max-width: 1680px) {
-  .MyAccount{
+  .MyAccount {
     left: 25%;
   }
 }
 
 @media only screen and (min-width: 1680px) {
-  .MyAccount{
+  .MyAccount {
     left: 560px;
   }
 }

@@ -1,88 +1,88 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 
-.GameRowContainer{
-    position: relative;
-    border: 0.5px solid green;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    height: 60px;
-    width: 78%;
+.GameRowContainer {
+  position: relative;
+  border: 0.5px solid green;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  height: 60px;
+  width: 78%;
 }
 
-
-td{
-    /* Text Styles */
-    color: white;
-    position: relative;
-    font-family: Raleway;
-    font-size: 17px;
-    font-weight: 400;
-    font-style: normal;
-    letter-spacing: normal;
-    line-height: 27.14px;
-    text-transform: uppercase;
+td {
+  /* Text Styles */
+  color: white;
+  position: relative;
+  font-family: Raleway;
+  font-size: 17px;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 27.14px;
+  text-transform: uppercase;
 }
 
-.GameRowButton{
-    border: none;
-    height: 59px;
-    background-color: #272730;
-    color: white;
-    font-family: 'Raleway';
-    font-weight: 700;
-    font-size: 12px;
-    font-style: normal;
-    letter-spacing: normal;
-    line-height: 40px;
-    text-align: center;
-    font-style: normal;
-    letter-spacing: normal;
-    line-height: normal;
-    position: relative;
-    width: 13%;
-    left: 7%;
-    text-align: center;
+.GameRowButton {
+  border: none;
+  height: 59px;
+  background-color: #272730;
+  color: white;
+  font-family: 'Raleway';
+  font-weight: 700;
+  font-size: 12px;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 40px;
+  text-align: center;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: normal;
+  position: relative;
+  width: 13%;
+  left: 7%;
+  text-align: center;
 }
 
-.GameRowButton:hover{background-color: #00ff60;
-    color: black;
+.GameRowButton:hover {
+  background-color: #00ff60;
+  color: black;
 }
 
-.minikLogo{
-    position: relative;
-    top:-30px;
-    height: 100px;
-    align-items: center;
+.minikLogo {
+  position: relative;
+  top: -30px;
+  height: 100px;
+  align-items: center;
 }
 
 @media only screen and (max-width: 1200px) {
-    .GameRowContainer {
-        float: left;
-    }
+  .GameRowContainer {
+    float: left;
   }
+}
 
 @media only screen and (max-width: 1680px) {
-    .GameRowContainer {
-        float: left;
-        width: 100%;
-    }
-    td{
-        /* Text Styles */
-        width: 159px;
-        position: relative;
-    }
+  .GameRowContainer {
+    float: left;
+    width: 100%;
   }
+  td {
+    /* Text Styles */
+    width: 159px;
+    position: relative;
+  }
+}
 
 @media only screen and (min-width: 1680px) {
-    .GameRowContainer {
-        left: 20%;
-        float: left;
-        width: 80%;
-    }
-    td{
-        /* Text Styles */
-        width: 159px;
-        position: relative;
-    }
+  .GameRowContainer {
+    left: 20%;
+    float: left;
+    width: 80%;
   }
+  td {
+    /* Text Styles */
+    width: 159px;
+    position: relative;
+  }
+}

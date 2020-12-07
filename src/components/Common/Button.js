@@ -13,9 +13,12 @@
 import React from 'react';
 import '../css/Button.css';
 
-
-
-const STYLES = ['btn--navbar-login','btn--navbar-createAccount','btn--register','btn--login'];
+const STYLES = [
+  'btn--navbar-login',
+  'btn--navbar-createAccount',
+  'btn--register',
+  'btn--login',
+];
 
 const SIZES = ['btn--medium', 'btn--large'];
 
@@ -24,7 +27,7 @@ export const Button = ({
   type,
   onClick,
   buttonStyle,
-  buttonSize
+  buttonSize,
 }) => {
   const checkButtonStyle = STYLES.includes(buttonStyle)
     ? buttonStyle
@@ -33,15 +36,14 @@ export const Button = ({
   const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
   return (
-      <button
-        className={`btn ${checkButtonStyle} ${checkButtonSize}`}
-        onClick={onClick}
-        type={type}
-      >
-        {children}
-      </button>
-
+    <button
+      className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+      onClick={onClick}
+      type={type}
+    >
+      {children}
+    </button>
   );
 };
 
-export default Button
+export default Button;
