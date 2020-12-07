@@ -60,6 +60,8 @@ function Dashboard(props) {
         }
     
         socket.emit("login" , response.data.nickname)
+
+
       }
       catch(error){
         throw error
@@ -131,6 +133,7 @@ function Dashboard(props) {
     const newArr = rooms
     newArr.push(data)
     setRooms(newArr)
+
     socket.emit('create' , data)
   }
 

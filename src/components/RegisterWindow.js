@@ -52,7 +52,7 @@ function RegisterWindow()
     return(
         <>
         <GlobalStyle></GlobalStyle>
-        {otp ? <OTP></OTP> : null}
+        <OTP></OTP>
 
         <div className="register-window">
         <div className="register-modal">
@@ -94,7 +94,7 @@ function RegisterWindow()
               ></input>
             </label>
             <div>
-                <button className="register-button" onClick={handleRegister,handleOTP} buttonStyle='btn--register'>Register</button>
+                <button className="register-button" onClick={handleRegister} buttonStyle='btn--register'>Register</button>
             </div>
         </div>  
         </div>  
