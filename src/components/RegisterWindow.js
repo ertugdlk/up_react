@@ -34,10 +34,10 @@ function RegisterWindow()
           alert("Passwords don't match");
           next()
       }
+      handleOTP()
       const url = "http://localhost:5000/auth/register"
       const response = await Axios.post(url , {nickname , email , password})
       if(response.status == 200){
-        handleOTP();
         //history.push("/");
       }
       else if(response.data.status === 0){
