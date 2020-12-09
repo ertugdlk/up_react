@@ -17,12 +17,18 @@ import GamesList from '../components/GamesList';
 import CreateGame from '../components/CreateGame';
 import MenuBarGame from '../components/MenuBarGame';
 import { NavigateBefore } from '@material-ui/icons';
+import { connect } from 'react-redux';
+import { getAllGameRooms } from '../actions/index';
 
 const Axios = require('axios');
 const socketio = require('socket.io-client');
 const socket = socketio('http://localhost:5000/', {
   transports: ['websocket'],
 });
+
+const mapStateToProps = (state) => {
+  return { rooms: state.rooms };
+};
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -43,6 +49,11 @@ function Dashboard(props) {
   const history = useHistory();
 
   useEffect(() => {
+    /* --------------------------- Redux Get All Rooms -------------------------- */
+    props.getAllGameRooms();
+    console.log(props.rooms);
+    /* -------------------------------------------------------------------------- */
+
     async function userInfo() {
       try {
         const url = 'http://localhost:5000/auth/me';
@@ -294,4 +305,4 @@ function Dashboard(props) {
   //balance'a şimdilik kendim bir değer girdim ama daha sonra kullanıcının değeri {balance} veya başka bir şekilde gösterilmeli.
 }
 
-export default Dashboard;
+export default connect(mapStateToProps, { getAllGameRooms })(Dashboard);

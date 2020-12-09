@@ -11,6 +11,7 @@ import thunk from 'redux-thunk';
 /* ------------------------------- App Imports ------------------------------ */
 import Dashboard from './pages/Dashboard';
 import Homepage from './pages/Homepage';
+import reducers from './reducers/index';
 /* -------------------------------------------------------------------------- */
 
 /* -- Creates a store for data. Applys middleware thunk for async fonctions - */
