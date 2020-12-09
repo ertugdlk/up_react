@@ -33,6 +33,7 @@ function GamesList(props) {
       <div className='GamesList'>
         <div className='CloseButton1'>
           {' '}
+          
           <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon>{' '}
         </div>
         <div class='wrapper'>
