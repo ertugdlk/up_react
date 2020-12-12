@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import roomReducer from './roomReducer';
+import roomsReducer from './roomsReducer';
 
 export default combineReducers({
-  rooms: roomReducer,
+  roomsRedux: roomsReducer,
+  // room: roomReducer,
 });

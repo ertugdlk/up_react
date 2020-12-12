@@ -1,34 +1,45 @@
 import React, { useState } from 'react';
 import '../css/GameRoomRow.css';
+import { Table, Button } from 'semantic-ui-react';
 function GameRoomRow(props) {
   //const [gameDetail, setGameDetail] = useState({})
+
+  const listRooms = () => {
+    return props.data.map((dat) => (
+      <Table.Row>
+        <Table.Cell>{dat.room}</Table.Cell>
+        <Table.Cell>{dat.name}</Table.Cell>
+        <Table.Cell>{dat.createdAt}</Table.Cell>
+        <Table.Cell>{dat.type}</Table.Cell>
+        <Table.Cell>{dat.host}</Table.Cell>
+        <Table.Cell>{dat.map}</Table.Cell>
+        <Table.Cell>{dat.fee}</Table.Cell>
+        <Table.Cell>{dat.fee * 2}</Table.Cell>
+        <Table.Cell>
+          <Button color='green'>Join game</Button>
+        </Table.Cell>
+      </Table.Row>
+    ));
+  };
+
   return (
-    <div className='GameRowContainer'>
-      <div className='GRHeaderColumn'>
-        <td>{props.data.room}</td>
-      </div>
-      <div className='GRHeaderColumn'>
-        <td> {props.data.name}</td>
-      </div>
-      <div className='GRHeaderColumn'>
-        <td>{props.data.time}</td>
-      </div>
-      <div className='GRHeaderColumn'>
-        <td>{props.data.type}</td>
-      </div>
-      <div className='GRHeaderColumn'>
-        <td>{props.data.host}</td>
-      </div>
-      <div className='GRHeaderColumn'>
-        <td>{props.data.map}</td>
-      </div>
-      <div className='GRHeaderColumn'>
-        <td>{props.data.fee}</td>
-      </div>
-      <div className='GRHeaderColumn'>
-        <td>{props.data.fee * 2}</td>
-      </div>
-      <button className='GameRowButton'> Join Game</button>
+    <div className='Games'>
+      <Table padded inverted selectable>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Room</Table.HeaderCell>
+            <Table.HeaderCell>Game</Table.HeaderCell>
+            <Table.HeaderCell>Time</Table.HeaderCell>
+            <Table.HeaderCell>Type</Table.HeaderCell>
+            <Table.HeaderCell>Host</Table.HeaderCell>
+            <Table.HeaderCell>Map</Table.HeaderCell>
+            <Table.HeaderCell>Fee</Table.HeaderCell>
+            <Table.HeaderCell>Reward</Table.HeaderCell>
+            <Table.HeaderCell></Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>{listRooms()}</Table.Body>
+      </Table>
     </div>
   );
 }

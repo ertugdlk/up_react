@@ -11,14 +11,14 @@ import IconButton from '@material-ui/core/IconButton';
 import { Menu, MenuItem } from '@material-ui/core';
 import css from '../components/css/Dashboard.css';
 import { useHistory } from 'react-router-dom';
-import GameRoomRow from '../components/Common/GameRoomRow';
-import MyAccount from '../components/MyAccount';
-import GamesList from '../components/GamesList';
-import CreateGame from '../components/CreateGame';
-import MenuBarGame from '../components/MenuBarGame';
-import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons';
+import GameRoomRow from '../src/components/Common/GameRoomRow';
+import MyAccount from '../src/components/MyAccount';
+import GamesList from '../src/components/GamesList';
+import CreateGame from '../src/components/CreateGame';
+import MenuBarGame from '../src/components/MenuBarGame';
+import { NavigateBefore } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import { getAllGameRooms, addNewGame } from '../actions/index';
+import { getAllGameRooms } from '../src/actions/index';
 import { Table } from 'semantic-ui-react';
 
 const Axios = require('axios');
@@ -49,16 +49,6 @@ function Dashboard(props) {
   useEffect(() => {
     /* --------------------------- Redux Get All Rooms -------------------------- */
     props.getAllGameRooms();
-    /* -------------------------------------------------------------------------- */
-
-    /* ------------------------------ New Room Test ----------------------------- */
-    socket.on('newRoom', (data) => {
-      console.log('====================================');
-      console.log('DashBoard', data);
-      console.log('====================================');
-      // redpanda
-      props.addNewGame(data);
-    });
     /* -------------------------------------------------------------------------- */
 
     async function userInfo() {
@@ -150,7 +140,7 @@ function Dashboard(props) {
     setRooms(newArr);
 
     socket.emit('create', data);
-    // props.getAllGameRooms();
+    props.getAllGameRooms();
   };
 
   const handleLogout = () => {
@@ -241,7 +231,37 @@ function Dashboard(props) {
             New Game{' '}
           </button>
         </div>
-        <GameRoomRow data={props.roomsRedux}></GameRoomRow>
+        <div className='Games'>
+          <div className='GameRoomHeader'>
+            <div className='GRHeaderColumn'>
+              <span>Room</span>
+            </div>
+            <div className='GRHeaderColumn'>
+              <span>Game</span>
+            </div>
+            <div className='GRHeaderColumn'>
+              <span>Time</span>
+            </div>
+            <div className='GRHeaderColumn'>
+              <span>Type</span>
+            </div>
+            <div className='GRHeaderColumn'>
+              <span>Host</span>
+            </div>
+            <div className='GRHeaderColumn'>
+              <span>Map</span>
+            </div>
+            <div className='GRHeaderColumn'>
+              <span>Fee</span>
+            </div>
+            <div className='GRHeaderColumn'>
+              <span>Reward</span>
+            </div>
+          </div>
+          {props.roomsRedux.map((room) => (
+            <GameRoomRow data={room}></GameRoomRow>
+          ))}
+        </div>
       </div>
 
       <div className='MenuBar'>
@@ -289,6 +309,4 @@ const mapStateToProps = (state) => {
   return { roomsRedux: state.roomsRedux };
 };
 
-export default connect(mapStateToProps, { getAllGameRooms, addNewGame })(
-  Dashboard
-);
+export default connect(mapStateToProps, { getAllGameRooms })(Dashboard);
