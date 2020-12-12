@@ -53,7 +53,6 @@ function Dashboard(props) {
     props.getAllGameRooms();
     console.log(props.rooms);
     /* -------------------------------------------------------------------------- */
-
     async function userInfo() {
       try {
         const url = 'http://localhost:5000/auth/me';
