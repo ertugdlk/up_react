@@ -12,6 +12,8 @@ import thunk from 'redux-thunk';
 import Dashboard from './pages/Dashboard';
 import Homepage from './pages/Homepage';
 import reducers from './reducers/index';
+import 'semantic-ui-css/semantic.min.css';
+import './components/css/index.css';
 /* -------------------------------------------------------------------------- */
 
 /* -- Creates a store for data. Applys middleware thunk for async fonctions - */

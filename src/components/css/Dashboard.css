@@ -130,10 +130,13 @@
 }
 
 .filter-games {
+  font-family: Raleway;
+  font-size: 0.8em;
   border-radius: 4px;
   margin-left: 3px;
   height: 35px;
   width: 80px;
+  padding-left: 8px;
   background-color: #fff;
   color: #9ea0a5;
 }
