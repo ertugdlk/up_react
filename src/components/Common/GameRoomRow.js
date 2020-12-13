@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import '../css/GameRoomRow.css';
 import { Table, Button } from 'semantic-ui-react';
+import GameRoom from '../Room'
 function GameRoomRow(props) {
   //const [gameDetail, setGameDetail] = useState({})
+
+  const [userRoom,setRoom] = useState(false);
+
+  const handleRoom = () => {
+    setRoom(true);
+  };
 
   const listRooms = () => {
     return props.data.map((dat) => (
@@ -16,7 +23,7 @@ function GameRoomRow(props) {
         <Table.Cell>{dat.fee}</Table.Cell>
         <Table.Cell>{dat.fee * 2}</Table.Cell>
         <Table.Cell>
-          <Button color='green'>Join game</Button>
+          <Button color='green' onClick={handleRoom}>Join game</Button>
         </Table.Cell>
       </Table.Row>
     ));
@@ -24,6 +31,7 @@ function GameRoomRow(props) {
 
   return (
     <div className='Games'>
+      {userRoom ? <GameRoom></GameRoom> : null}
       <Table padded inverted selectable>
         <Table.Header>
           <Table.Row>

@@ -1,0 +1,24 @@
+.room-window {
+  color: #fff;
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 1.5715;
+  list-style: none;
+  }
+  
+  .components{
+    box-sizing: border-box;
+    position: absolute;
+    width: 300px;
+    height: fit-content;
+    top: 150px;
+    background: #0b0b0b;
+    border-radius: 12px;
+    z-index: 3;
+    display: flex;
+    }
+
+
+  .gameDetails{
+    justify-content:flex-end;
+  }
