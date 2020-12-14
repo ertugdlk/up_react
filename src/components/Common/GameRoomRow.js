@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import '../css/GameRoomRow.css';
 import { Table, Button } from 'semantic-ui-react';
+import Room from '../Room';
 
 function GameRoomRow(props) {
   //const [gameDetail, setGameDetail] = useState({})
-  const [userRoom,setRoom] = useState(false);
-  const [selectedHost , setSelectedHost] = useState('')
+  const [userRoom, setRoom] = useState(false);
+  const [selectedHost, setSelectedHost] = useState('');
 
   const handleRoom = (host) => {
     setRoom(true);
-    //setSelectedHost(host)
+    setSelectedHost(host);
   };
 
   const listRooms = () => {
@@ -24,7 +25,9 @@ function GameRoomRow(props) {
         <Table.Cell>{dat.fee}</Table.Cell>
         <Table.Cell>{dat.fee * 2}</Table.Cell>
         <Table.Cell>
-          <Button color='green'>Join game</Button>
+          <Button color='green' onClick={() => handleRoom(dat.host)}>
+            Join game
+          </Button>
         </Table.Cell>
       </Table.Row>
     ));
@@ -32,6 +35,7 @@ function GameRoomRow(props) {
 
   return (
     <div className='Games'>
+      {userRoom ? <Room host={selectedHost}></Room> : null}
       <Table padded inverted selectable>
         <Table.Header>
           <Table.Row>
