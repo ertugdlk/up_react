@@ -251,7 +251,7 @@ function Dashboard(props) {
 
       {/* -------------------------------- LEFT PANE ------------------------------- */}
 
-      <LeftPane />
+      <LeftPane userName={userName} gamesList={gamesList} />
 
       {/* /* -------------------------------- LEFT PANE ------------------------------- */}
 

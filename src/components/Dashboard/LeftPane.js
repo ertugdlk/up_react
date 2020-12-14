@@ -12,6 +12,7 @@ import Bag from '../../bag_icon.png';
 /* ------------------------------- APP IMPORTS ------------------------------ */
 import MenuBarGame from '../../components/MenuBarGame';
 import { getAllUserGames } from '../../actions';
+import GamesList from '../GamesList';
 /* -------------------------------------------------------------------------- */
 
 /* --------------------------------- HELPERS -------------------------------- */
@@ -39,46 +40,8 @@ const LeftPane = (props) => {
   const history = useHistory();
 
   useEffect(() => {
+    userGames();
     props.getAllUserGames();
-  }, []);
-
-  useEffect(() => {
-    async function userInfo() {
-      try {
-        const url = 'auth/me';
-        const response = await axios.get(url, { withCredentials: true });
-
-        if (response.status == 200) {
-          if (response.data.nickname) {
-            setUsername(response.data.nickname);
-          } else {
-            if (response.data.output.statusCode == 401) {
-              history.push('/');
-            }
-          }
-        }
-
-        socket.emit('login', response.data.nickname);
-      } catch (error) {
-        throw error;
-      }
-    }
-
-    async function userSteam() {
-      const url = 'detail/info';
-      const response = await axios.get(url, { withCredentials: true });
-
-      if (props.steam) {
-        if (props.steam == response.data) {
-          alert('Your Steam Integrated to our system');
-        } else {
-          alert('no match');
-        }
-      }
-    }
-
-    userInfo();
-    userSteam();
   }, []);
 
   const handleAccount = () => {
@@ -86,17 +49,30 @@ const LeftPane = (props) => {
     setAccount(true);
   };
 
+  const handleListClose = () => {
+    console.log('Close');
+    setGamesList(false);
+  };
+
   const handleAddGame = () => {
     setGamesList(true);
   };
 
+  async function userGames() {
+    const url = 'detail/games';
+    const response = await axios.get(url, { withCredentials: true });
+    setMenubarGames(response.data);
+  }
+
   return (
     <div className='MenuBar'>
+      {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
+
       <div className='menubar-user'>
         <div className='menubar-userpic'>
           <img src={Logo} className='img-responsive' alt=''></img>
         </div>
-        <div class='menubar-nickname'>{userName}</div>
+        <div class='menubar-nickname'>{props.userName}</div>
         <div className='menubar-mail'>{email}</div>
         <div className='balance'>
           <img src={Bag} className='menubar-icon'></img>123,456
@@ -115,7 +91,7 @@ const LeftPane = (props) => {
       </button>
       <div className='MenuBarGame'>
         <ul>
-          {props.userGames.map((game) => (
+          {menubarGames.map((game) => (
             <MenuBarGame data={game}></MenuBarGame>
           ))}
         </ul>
