@@ -8,10 +8,14 @@ function Room(props) {
   useEffect(() => {
     async function RoomUsers() {
       const url = 'http://localhost:5000/room/getdata';
-      const body = { hosy: props.host };
+      const body = { host: props.host };
       const response = await Axios.post(url, body, { withCredentials: true });
-      setUsers(response.data.users);
-      console.log(response);
+      if(!response.data.users){
+        alert("no room with this host")
+      }
+      else{
+        setUsers(response.data.users);
+      }
     }
 
     RoomUsers();
