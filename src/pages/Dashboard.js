@@ -47,18 +47,20 @@ function Dashboard(props) {
   const history = useHistory();
 
   useEffect(() => {
-    /* --------------------------- Redux Get All Rooms -------------------------- */
-    props.getAllGameRooms();
-    /* -------------------------------------------------------------------------- */
-
-    /* ------------------------------ New Room Test ----------------------------- */
-    socket.on('newRoom', (data) => {
-      console.log('====================================');
-      console.log( data);
-      console.log('====================================');
-      // redpanda
-      //props.addNewGame(data);
-    }, []);
+        /* --------------------------- Redux Get All Rooms -------------------------- */
+        props.getAllGameRooms();
+        /* -------------------------------------------------------------------------- */
+    
+        /* ------------------------------ New Room Test ----------------------------- */
+        socket.on('newRoom', (data) => {
+          console.log('====================================');
+          console.log( data);
+          console.log('====================================');
+          // redpanda
+          //props.addNewGame(data);
+        })
+  }, [])
+  useEffect(() => {
     /* -------------------------------------------------------------------------- */
     async function userInfo() {
       try {
