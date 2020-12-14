@@ -58,7 +58,7 @@ function Dashboard(props) {
       console.log('====================================');
       // redpanda
       //props.addNewGame(data);
-    });
+    }, []);
     /* -------------------------------------------------------------------------- */
     async function userInfo() {
       try {

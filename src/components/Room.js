@@ -22,8 +22,8 @@ function Room(props) {
     <div className="components">
       <div className="team-1">
           <ul>
-           {users.map((host) => (
-              <li data={host} className="team-1_users"></li>
+           {users.map((user) => (
+              <li className="team-1_users">{user}</li>
             ))}
           </ul>
         </div>
@@ -33,9 +33,7 @@ function Room(props) {
         </div>
       <div className="team-2">
       <ul>
-            {users.map((host) => (
-              <li data={host} className="team-2_users"></li>
-            ))}
+           <li className="team-2_users">{props.host}</li>
           </ul>
       </div>
       <div className="gameDetails">
