@@ -11,9 +11,6 @@ export const getAllGameRooms = () => async (dispatch) => {
 export const addNewGame = (data) => async (dispatch, getState) => {
   // iki tür olsun ya mevcuttakilerden ayıklayıp getirsin veya gidip tek çeksin
   // const allRooms = [...getState().roomsRedux, data];
-  console.log('====================================');
-  console.log('Action:', data);
-  console.log('====================================');
 
   dispatch({ type: 'ADD_NEW_ROOM', payload: data });
 };
