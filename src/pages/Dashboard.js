@@ -19,11 +19,15 @@ import MenuBarGame from '../components/MenuBarGame';
 import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { getAllGameRooms, addNewGame } from '../actions/index';
-import { Table } from 'semantic-ui-react';
+/* --------------------------------- HELPERS -------------------------------- */
+import axios from '../utils';
+import { baseUrl } from '../utils/helpers';
+import LeftPane from '../components/Dashboard/LeftPane';
+/* -------------------------------------------------------------------------- */
 
 const Axios = require('axios');
 const socketio = require('socket.io-client');
-const socket = socketio('http://localhost:5000/', {
+const socket = socketio(baseUrl, {
   transports: ['websocket'],
 });
 
@@ -47,25 +51,25 @@ function Dashboard(props) {
   const history = useHistory();
 
   useEffect(() => {
-        /* --------------------------- Redux Get All Rooms -------------------------- */
-        props.getAllGameRooms();
-        /* -------------------------------------------------------------------------- */
-    
-        /* ------------------------------ New Room Test ----------------------------- */
-        socket.on('newRoom', (data) => {
-          console.log('====================================');
-          console.log( data);
-          console.log('====================================');
-          // redpanda
-          //props.addNewGame(data);
-        })
-  }, [])
+    /* --------------------------- Redux Get All Rooms -------------------------- */
+    props.getAllGameRooms();
+    /* -------------------------------------------------------------------------- */
+
+    /* ------------------------------ New Room Test ----------------------------- */
+    socket.on('newRoom', (data) => {
+      console.log('====================================');
+      console.log(data);
+      console.log('====================================');
+      // redpanda
+      //props.addNewGame(data);
+    });
+  }, []);
   useEffect(() => {
     /* -------------------------------------------------------------------------- */
     async function userInfo() {
       try {
-        const url = 'http://localhost:5000/auth/me';
-        const response = await Axios.get(url, { withCredentials: true });
+        const url = 'auth/me';
+        const response = await axios.get(url, { withCredentials: true });
 
         if (response.status == 200) {
           if (response.data.nickname) {
@@ -85,15 +89,15 @@ function Dashboard(props) {
     }
 
     async function userGames() {
-      const url = 'http://localhost:5000/detail/games';
-      const response = await Axios.get(url, { withCredentials: true });
+      const url = 'detail/games';
+      const response = await axios.get(url, { withCredentials: true });
 
       setMenubarGames(response.data);
     }
 
     async function userSteam() {
-      const url = 'http://localhost:5000/detail/info';
-      const response = await Axios.get(url, { withCredentials: true });
+      const url = 'detail/info';
+      const response = await axios.get(url, { withCredentials: true });
 
       if (props.steam) {
         if (props.steam == response.data) {
@@ -156,8 +160,8 @@ function Dashboard(props) {
 
   const handleLogout = () => {
     async function logout() {
-      const url = 'http://localhost:5000/auth/logout';
-      await Axios.get(url, { withCredentials: true });
+      const url = 'auth/logout';
+      await axios.get(url, { withCredentials: true });
     }
 
     setAnchorEl(null);
@@ -166,7 +170,7 @@ function Dashboard(props) {
   };
   const handleSteam = () => {
     async function steamauth() {
-      window.open('http://localhost:5000/steam/auth', '_self');
+      window.open(baseUrl + 'steam/auth', '_self');
     }
     steamauth();
   };
@@ -245,36 +249,11 @@ function Dashboard(props) {
         <GameRoomRow data={props.roomsRedux}></GameRoomRow>
       </div>
 
-      <div className='MenuBar'>
-        <div className='menubar-user'>
-          <div className='menubar-userpic'>
-            <img src={Logo} className='img-responsive' alt=''></img>
-          </div>
-          <div class='menubar-nickname'>{userName}</div>
-          <div className='menubar-mail'>{email}</div>
-          <div className='balance'>
-            <img src={Bag} className='menubar-icon'></img>123,456
-          </div>
-          <div className='menubar-buttons'>
-            <div className='btn-container'>
-              <button onClick={handleAccount}>Deposit</button>
-            </div>
-            <div className='btn-container'>
-              <button onClick={handleAccount}>Withdraw</button>
-            </div>
-          </div>
-        </div>
-        <button className='AddGame' onClick={handleAddGame}>
-          Add Game
-        </button>
-        <div className='MenuBarGame'>
-          <ul>
-            {menubarGames.map((game) => (
-              <MenuBarGame data={game}></MenuBarGame>
-            ))}
-          </ul>
-        </div>
-      </div>
+      {/* -------------------------------- LEFT PANE ------------------------------- */}
+
+      <LeftPane />
+
+      {/* /* -------------------------------- LEFT PANE ------------------------------- */}
 
       <div className='SocialBar'>
         <button onClick={handleSteam}> steam auth</button>

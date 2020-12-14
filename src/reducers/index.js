@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 import roomsReducer from './roomsReducer';
+import userGamesReducer from './userGamesReducer';
 
 export default combineReducers({
   roomsRedux: roomsReducer,
-  // room: roomReducer,
+  userGames: userGamesReducer,
 });

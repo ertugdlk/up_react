@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import css from '../components/css/RegisterWindow.css';
+import axios from '../utils';
+
 import OTP from '../components/OTP';
 const Axios = require('axios');
 
@@ -26,27 +28,26 @@ function RegisterWindow() {
   const handleRegister = async (next) => {
     try {
       if (password !== secondPassword) {
-          alert("Passwords don't match");
-          next()
+        alert("Passwords don't match");
+        next();
       }
-      handleOTP()
-      const url = "http://localhost:5000/auth/register"
-      const response = await Axios.post(url , {nickname , email , password})
-      if(response.status == 200){
+      handleOTP();
+      const url = 'auth/register';
+      const response = await axios.post(url, { nickname, email, password });
+      if (response.status == 200) {
         //history.push("/");
-      }
-      else if(response.data.status === 0){
-        alert(response.data.msg)
+      } else if (response.data.status === 0) {
+        alert(response.data.msg);
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-    return(
-        <>
-        <GlobalStyle></GlobalStyle>
-        {otp?<OTP></OTP>:null}
+  return (
+    <>
+      <GlobalStyle></GlobalStyle>
+      {otp ? <OTP></OTP> : null}
 
       <div className='register-window'>
         <div className='register-modal'>

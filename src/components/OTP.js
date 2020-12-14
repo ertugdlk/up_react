@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from '../utils';
+
 import css from '../components/css/OTP.css';
 const Axios = require('axios');
 
@@ -26,8 +28,8 @@ const OTP = () => {
 
   const checkOTP = async () => {
     try {
-      const url = 'http://localhost:5000/auth/otp';
-      const response = await Axios.post(
+      const url = 'auth/otp';
+      const response = await axios.post(
         url,
         { otp },
         { withCredentials: true }

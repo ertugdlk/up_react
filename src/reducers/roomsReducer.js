@@ -1,8 +1,10 @@
+import { fetchAllRooms, addNewRoom } from '../utils/helpers';
+
 export default (state = [], action) => {
   switch (action.type) {
-    case 'FETCH_ALL_ROOMS':
+    case fetchAllRooms:
       return action.payload;
-    case 'ADD_NEW_ROOM':
+    case addNewRoom:
       return [...state, action.payload];
     default:
       return state;

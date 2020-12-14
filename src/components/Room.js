@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from '../utils';
+
 import css from '../components/css/Room.css';
+
 const Axios = require('axios');
 
 function Room(props) {
@@ -7,13 +10,12 @@ function Room(props) {
 
   useEffect(() => {
     async function RoomUsers() {
-      const url = 'http://localhost:5000/room/getdata';
+      const url = 'room/getdata';
       const body = { host: props.host };
-      const response = await Axios.post(url, body, { withCredentials: true });
-      if(!response.data.users){
-        alert("no room with this host")
-      }
-      else{
+      const response = await axios.post(url, body, { withCredentials: true });
+      if (!response.data.users) {
+        alert('no room with this host');
+      } else {
         setUsers(response.data.users);
       }
     }

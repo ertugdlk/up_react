@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import axios from '../utils';
+
 import css from '../components/css/LoginWindow.css';
 
 const Axios = require('axios');
@@ -23,8 +25,8 @@ function LoginWindow() {
 
   const handleLogin = async () => {
     try {
-      const url = 'http://localhost:5000/auth/login';
-      const response = await Axios.post(
+      const url = 'auth/login';
+      const response = await axios.post(
         url,
         { nickname, password },
         { withCredentials: true }
