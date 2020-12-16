@@ -58,11 +58,11 @@ function Dashboard(props) {
 
     /* ------------------------------ New Room Test ----------------------------- */
     socket.on('newRoom', (data) => {
-      console.log('====================================');
-      console.log(data);
-      console.log('====================================');
+      // console.log('====================================');
+      // console.log(data);
+      // console.log('====================================');
       // redpanda
-      //props.addNewGame(data);
+      props.addNewGame(data);
     });
   }, []);
   useEffect(() => {
@@ -175,7 +175,7 @@ function Dashboard(props) {
     }
     steamauth();
   };
-  console.log(props.roomsRedux);
+  // console.log(props.roomsRedux);
   return (
     <>
       {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
