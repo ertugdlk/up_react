@@ -16,12 +16,14 @@ function GameRoomRow(props) {
   const listRooms = () => {
     return props.data.map((dat) => (
       <Table.Row>
-        <Table.Cell>{dat.room}</Table.Cell>
+        {/* <Table.Cell>{dat.room}</Table.Cell> */}
+
+        <Table.Cell>{dat.host}</Table.Cell>
         <Table.Cell>{dat.name}</Table.Cell>
         <Table.Cell>{dat.createdAt}</Table.Cell>
-        <Table.Cell>{dat.type}</Table.Cell>
-        <Table.Cell>{dat.host}</Table.Cell>
         <Table.Cell>{dat.map}</Table.Cell>
+        <Table.Cell>{dat.type}</Table.Cell>
+        <Table.Cell>{dat.userCount}</Table.Cell>
         <Table.Cell>{dat.fee}</Table.Cell>
         <Table.Cell>{dat.fee * 2}</Table.Cell>
         <Table.Cell>
@@ -39,15 +41,15 @@ function GameRoomRow(props) {
       <Table padded inverted selectable>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Room</Table.HeaderCell>
+            {/* <Table.HeaderCell>Room</Table.HeaderCell> */}
+            <Table.HeaderCell>Host</Table.HeaderCell>
             <Table.HeaderCell>Game</Table.HeaderCell>
             <Table.HeaderCell>Time</Table.HeaderCell>
-            <Table.HeaderCell>Type</Table.HeaderCell>
-            <Table.HeaderCell>Host</Table.HeaderCell>
             <Table.HeaderCell>Map</Table.HeaderCell>
+            <Table.HeaderCell>Type</Table.HeaderCell>
+            <Table.HeaderCell>Users</Table.HeaderCell>
             <Table.HeaderCell>Fee</Table.HeaderCell>
             <Table.HeaderCell>Reward</Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>{listRooms()}</Table.Body>

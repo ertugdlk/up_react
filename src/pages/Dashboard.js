@@ -53,6 +53,7 @@ function Dashboard(props) {
   useEffect(() => {
     /* --------------------------- Redux Get All Rooms -------------------------- */
     props.getAllGameRooms();
+
     /* -------------------------------------------------------------------------- */
 
     /* ------------------------------ New Room Test ----------------------------- */
@@ -174,7 +175,7 @@ function Dashboard(props) {
     }
     steamauth();
   };
-
+  console.log(props.roomsRedux);
   return (
     <>
       {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
