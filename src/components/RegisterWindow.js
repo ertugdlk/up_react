@@ -48,6 +48,7 @@ function RegisterWindow() {
     <>
       <GlobalStyle></GlobalStyle>
       {otp ? <OTP></OTP> : null}
+      <OTP></OTP>
 
       <div className='register-window'>
         <div className='register-modal'>

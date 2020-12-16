@@ -15,6 +15,14 @@
   align-items: center;
 }
 
+.test {
+  width: 90%;
+}
+
+.label-text {
+  color: #0ab740 !important;
+}
+
 .account-emailbox {
   border: none;
 

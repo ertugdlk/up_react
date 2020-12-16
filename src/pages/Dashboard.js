@@ -8,7 +8,7 @@ import Filter from '../filter_icon.png';
 import { Grid } from '@material-ui/core';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import IconButton from '@material-ui/core/IconButton';
-import { Menu, MenuItem } from '@material-ui/core';
+// import { Menu, MenuItem } from '@material-ui/core';
 import css from '../components/css/Dashboard.css';
 import { useHistory } from 'react-router-dom';
 import GameRoomRow from '../components/Common/GameRoomRow';
@@ -19,10 +19,12 @@ import MenuBarGame from '../components/MenuBarGame';
 import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { getAllGameRooms, addNewGame } from '../actions/index';
+import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from '../utils';
 import { baseUrl } from '../utils/helpers';
 import LeftPane from '../components/Dashboard/LeftPane';
+
 /* -------------------------------------------------------------------------- */
 
 const Axios = require('axios');
@@ -179,7 +181,9 @@ function Dashboard(props) {
   return (
     <>
       {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
-      {account ? <MyAccount onClose={handleAccountClose}></MyAccount> : null}
+      {account ? (
+        <MyAccount userName={userName} onClose={handleAccountClose}></MyAccount>
+      ) : null}
       {create ? (
         <CreateGame
           onCreate={handleCreateRoom}
@@ -195,30 +199,9 @@ function Dashboard(props) {
               <img src={Logo} />
             </a>
           </div>
-          <div style={{ alignSelf: 'center' }}>
-            <div className='avatar'></div>
-            <span className='Nickname'> {userName}</span>
-            <div className='arrow-menu'>
-              <IconButton
-                style={{ color: 'white' }}
-                aria-label='menu'
-                size='small'
-                aria-haspopup='true'
-                onClick={handleClick}
-              >
-                <ArrowDownwardIcon fontSize='inherit' />
-              </IconButton>
-            </div>
-          </div>
-          <Menu
-            id='simple-menu'
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleAccount}>My account</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <Menu compact>
+            <Menu.Item onClick={handleAccount}>My account</Menu.Item>
+            <Menu.Item onClick={handleLogout}>Logout</Menu.Item>
           </Menu>
         </Grid>
       </div>

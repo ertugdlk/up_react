@@ -19,6 +19,7 @@ function GameRoomRow(props) {
         <Table.Cell>{dat.host}</Table.Cell>
         <Table.Cell>
           {dat.userCount}/{dat.type.charAt(0) * 2}
+          {/* CS GO VE PUBG İF EKLE */}
         </Table.Cell>
         <Table.Cell>{dat.name}</Table.Cell>
         <Table.Cell>{dat.createdAt}</Table.Cell>

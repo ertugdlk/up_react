@@ -2,7 +2,16 @@ import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import css from '../components/css/MyAccount.css';
-import { Image, Button, Divider, Form, Grid, Segment } from 'semantic-ui-react';
+import {
+  Container,
+  Image,
+  Divider,
+  Input,
+  Button,
+  Grid,
+  Label,
+  Segment,
+} from 'semantic-ui-react';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -11,38 +20,77 @@ const GlobalStyle = createGlobalStyle`
   }`;
 
 function MyAccount(props) {
-  console.log(props);
+  const [passlo, setPassword] = React.useState(false);
+
+  const setPasswordLink = () => {
+    setPassword(!passlo);
+  };
+
   return (
     <>
       <GlobalStyle></GlobalStyle>
-      <Segment placeholder>
-        <Grid columns={2} relaxed='very' stackable>
-          <Grid.Column>
-            <Form>
-              <Form.Input
-                icon='user'
-                iconPosition='left'
-                label='Username'
-                placeholder='Username'
-              />
-              <Form.Input
-                icon='lock'
-                iconPosition='left'
-                label='Password'
-                type='password'
-              />
+      <div className='MyAccount'>
+        <div className='CloseButton1'>
+          <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon>{' '}
+        </div>
+        <div className='test'>
+          <Container textAlign='center'>
+            <Grid columns={2} relaxed='very'>
+              <Grid.Column>
+                <Grid.Row>
+                  <Label color='green'>{props.userName.toUpperCase()}</Label>
+                </Grid.Row>
+                <Grid.Row>
+                  <Image
+                    src='https://thumbs.dreamstime.com/b/default-avatar-photo-placeholder-profile-icon-eps-file-easy-to-edit-default-avatar-photo-placeholder-profile-icon-124557887.jpg'
+                    size='small'
+                    circular
+                  />
+                </Grid.Row>
+              </Grid.Column>
 
-              <Button content='Login' primary />
-            </Form>
-          </Grid.Column>
-
-          <Grid.Column verticalAlign='middle'>
-            <Button content='Sign up' icon='signup' size='big' />
-          </Grid.Column>
-        </Grid>
-
-        <Divider vertical>Or</Divider>
-      </Segment>
+              <Grid.Column>
+                {passlo ? (
+                  <Segment color='red'>
+                    <Label attached='top' color='red'>
+                      Type New Password
+                    </Label>
+                    <Input fluid placeholder='Type New Password' />
+                    <Input fluid placeholder='Re-Type New Password' />
+                    <Button.Group>
+                      <Button color='red' onClick={() => setPasswordLink()}>
+                        Cancel
+                      </Button>
+                      <Button.Or />
+                      <Button positive>Save</Button>
+                    </Button.Group>
+                  </Segment>
+                ) : (
+                  <Segment color='green'>
+                    <Label attached='top' color='green'>
+                      Password
+                    </Label>
+                    <Button
+                      animated='fade'
+                      fluid
+                      color='green'
+                      onClick={() => setPasswordLink()}
+                    >
+                      <Button.Content visible color='red'>
+                        *********
+                      </Button.Content>
+                      <Button.Content hidden color='red'>
+                        Edit
+                      </Button.Content>
+                    </Button>
+                  </Segment>
+                )}
+              </Grid.Column>
+            </Grid>
+            <Divider vertical />
+          </Container>
+        </div>
+      </div>
     </>
   );
 }
