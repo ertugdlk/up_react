@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import ClearIcon from '@material-ui/icons/Clear';
 import css from '../components/css/MyAccount.css';
@@ -20,10 +20,21 @@ const GlobalStyle = createGlobalStyle`
   }`;
 
 function MyAccount(props) {
-  const [passlo, setPassword] = React.useState(false);
+  const [passlo, setPasswordVis] = React.useState(false);
+  const [mailo, setMailVis] = React.useState(false);
 
   const setPasswordLink = () => {
-    setPassword(!passlo);
+    if (mailo) {
+      setMailVis(!mailo);
+    }
+    setPasswordVis(!passlo);
+  };
+
+  const setMailLink = () => {
+    if (passlo) {
+      setPasswordVis(!passlo);
+    }
+    setMailVis(!mailo);
   };
 
   return (
@@ -73,8 +84,38 @@ function MyAccount(props) {
                     <Button
                       animated='fade'
                       fluid
-                      color='green'
                       onClick={() => setPasswordLink()}
+                    >
+                      <Button.Content visible>*********</Button.Content>
+                      <Button.Content hidden>Edit</Button.Content>
+                    </Button>
+                  </Segment>
+                )}
+                {mailo ? (
+                  <Segment color='red'>
+                    <Label attached='top' color='red'>
+                      Type New Email
+                    </Label>
+                    <Input fluid placeholder='Type New Email' />
+                    <Input fluid placeholder='Re-Type New Email' />
+                    <Button.Group>
+                      <Button color='red' onClick={() => setMailLink()}>
+                        Cancel
+                      </Button>
+                      <Button.Or />
+                      <Button positive>Save</Button>
+                    </Button.Group>
+                  </Segment>
+                ) : (
+                  <Segment color='green'>
+                    <Label attached='top' color='green'>
+                      Email
+                    </Label>
+                    <Button
+                      animated='fade'
+                      fluid
+                      color='green'
+                      onClick={() => setMailLink()}
                     >
                       <Button.Content visible color='red'>
                         *********

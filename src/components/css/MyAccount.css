@@ -64,6 +64,28 @@
   border-color: #0ab740;
 }
 
+.ui.segment {
+  background-color: rgb(11, 11, 11) !important;
+}
+
+.ui.fade.animated.button .hidden.content {
+  color: #0ab740 !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.ui.green.segment:not(.inverted) {
+  border: none !important;
+}
+
+.ui.fluid.button {
+  color: #0ab740;
+  background-color: rgba(0, 0, 0, 0);
+}
+.ui.fade.animated.button .hidden.content {
+  color: #0ab740;
+  background-color: rgba(0, 0, 0, 0);
+}
+
 @media only screen and (max-width: 1200px) {
 }
 
