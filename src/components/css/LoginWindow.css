@@ -78,7 +78,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
+  }
 
 .login-steam-button:hover {
   background-color: #16161b;
