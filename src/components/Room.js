@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import css from '../components/css/Room.css';
 import Logo from '../logo.png';
 import ClearIcon from '@material-ui/icons/Clear';
+import Chatbox from '../components/Chatbox'
+
 const Axios = require('axios');
 
 function Room(props) {
   const [users, setUsers] = useState([]);
-
+  const [chat, setChat] = useState(true);
   useEffect(() => {
     async function RoomUsers() {
       const url = 'http://localhost:5000/room/getdata';
@@ -56,6 +58,7 @@ function Room(props) {
           <div className='gameDetails'>
             <span>Game Details</span>
           </div>
+          {chat ? (<Chatbox></Chatbox>) : null}
         </div>
       </div>
     </>
