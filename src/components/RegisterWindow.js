@@ -3,9 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import css from '../components/css/RegisterWindow.css';
 import axios from '../utils';
-
 import OTP from '../components/OTP';
-const Axios = require('axios');
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -22,6 +20,7 @@ function RegisterWindow() {
   const [otp, setOTP] = useState(false);
 
   const handleOTP = () => {
+    //mail gönderilcek
     setOTP(true);
   };
 
@@ -31,10 +30,10 @@ function RegisterWindow() {
         alert("Passwords don't match");
         next();
       }
-      handleOTP();
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
       if (response.status == 200) {
+        handleOTP()
         //history.push("/");
       } else if (response.data.status === 0) {
         alert(response.data.msg);

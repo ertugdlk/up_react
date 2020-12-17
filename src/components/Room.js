@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from '../utils';
 
 import css from '../components/css/Room.css';
-
+import Logo from '../logo.png';
+import ClearIcon from '@material-ui/icons/Clear';
 const Axios = require('axios');
 
 function Room(props) {
@@ -25,20 +26,32 @@ function Room(props) {
   return (
     <>
       <div className='room-window'>
+      <div className='CloseButton1'>
+          {' '}
+          <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon>{' '}
+        </div>
         <div className='components'>
           <div className='team-1'>
+            <h3 className="team-headers">TEAM 1</h3>
             <ul>
-              {users.map((user) => (
-                <li className='team-1_users'>{user}</li>
-              ))}
+                <li className='team-users'>{props.host}</li>
+                <li className='team-users'>{props.host}</li>
+                <li className='team-users'>{props.host}</li>
+                <li className='team-users'>{props.host}</li>
+                <li className='team-users'>{props.host}</li>
             </ul>
           </div>
           <div className='map-photo'>
-            <figure className='map'></figure>
+          <img src={Logo} />
           </div>
           <div className='team-2'>
+          <h3 className="team-headers">TEAM 2</h3>
             <ul>
-              <li className='team-2_users'>{props.host}</li>
+              <li className='team-users'>{props.host}</li>
+              <li className='team-users'>{props.host}</li>
+              <li className='team-users'>{props.host}</li>
+              <li className='team-users'>{props.host}</li>
+              <li className='team-users'>{props.host}</li>
             </ul>
           </div>
           <div className='gameDetails'>

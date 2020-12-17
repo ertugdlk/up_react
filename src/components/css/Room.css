@@ -1,24 +1,127 @@
+/*Room componentinin cssi*/
 .room-window {
-  color: #fff;
-  box-sizing: border-box;
-  font-size: 14px;
-  line-height: 1.5715;
-  list-style: none;
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  left: 15%;
+  background: #0b0b0b;
+  border-radius: 12px;
+  z-index: 3;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  border:1px solid green;
   }
-  
+  /*Bütün componentlerin yer aldığı divin cssi*/
   .components{
-    box-sizing: border-box;
-    position: absolute;
-    width: 300px;
-    height: fit-content;
-    top: 150px;
-    background: #0b0b0b;
-    border-radius: 12px;
-    z-index: 3;
+    height: 700px;
+    color: #fff;
+    font-size: 14px;
+    margin: 5% 12.5%;
+    line-height: 1.5715;
     display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    border:1px solid red;
     }
 
+    .CloseButton1{
+      color: #0ab74c;
+    }
 
   .gameDetails{
-    justify-content:flex-end;
+    border:1px solid blue;
+    width: 528px;
+    height: fit-content;
+    text-align: center;
+    margin-bottom: 75%;
+  }
+
+  .team-1{
+    top: 10px;
+    border:1px solid yellow;
+    position: relative;
+    height: 200px;
+    width: 150px;
+  }
+
+  .team-1 ul{
+    background-color: transparent;
+    padding-left: 0px;
+    list-style: none;
+    height: fit-content;
+    text-align: center;
+  }
+
+  
+  .team-1 ul li{
+    border: 1px groove gray;
+    width: 100%;
+    margin:2px;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+  .team-1 ul li:last-child{
+    border-bottom: 1px groove gray;
+    width: 100%;
+    margin:2px;
+  }
+
+  .map-photo{
+    margin-top: 10px;
+    border:1px solid pink;
+    height: 200px;
+    width: 250px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+  }
+
+  .team-2{
+    top: 10px;
+    border:1px groove gold;
+    position: relative;
+    height: 200px;
+    width: 150px;
+  }
+
+  .team-2 ul{
+    background-color: transparent;
+    padding-left: 0px;
+    list-style: none;
+    height: fit-content;
+    text-align: center;
+  }
+
+  .team-2 ul li{
+    border: 1px groove gray;
+    width: 100%;
+    margin:2px;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+  .team-2 ul li:last-child{
+    border-bottom: 1px groove gray;
+    width: 100%;
+    margin:2px;
+  }
+
+  .team-headers{
+    background-color: #0b0b00;
+    color: #35ac45;
+    text-align: center;
+    border-bottom: 1px groove #35ac45;
+  }
+
+  .team-users{
+    color:#fff;
+  }
+  .team-users:hover{
+    color:#35ac45;
+    cursor: crosshair;
+  }
+  .gameDetails span{
+    align-self: center;
+    color:#fff;
+    font-size: 12px;
   }
