@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import axios from '../utils';
+import OtpInput from 'react-otp-input';
 
 import css from '../components/css/OTP.css';
 const Axios = require('axios');
 
 const OTP = () => {
-  const [otp, setOtp] = useState(new Array(4).fill(''));
+  const [otp, setOtp] = useState('');
 
   const handleChange = (element, index) => {
     /* -------------------- Uygun olmayan karakter engelleme ekleyelim -------------------- */
 
     if (isNaN(element.value)) return false;
 
-    setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
+    // setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
 
     //Focus next input
     if (element.value !== '') {
@@ -23,6 +24,8 @@ const OTP = () => {
       // console.log(element);
     }
   };
+
+  const handleChango = (e) => setOtp(e);
 
   //eğer girilen OTP backendden gelen OTP ile aynıysa matchleştiğini göster ve kullanıcıyı verifike et daha sonra dashboarda aktar.
 
@@ -54,33 +57,25 @@ const OTP = () => {
               <p className='otp-info'>
                 Please enter the OTP sent to your email
               </p>
-
-              {otp.map((data, index) => {
-                return (
-                  <input
-                    className='otp-field'
-                    type='text'
-                    name='otp'
-                    maxLength='1'
-                    key={index}
-                    value={data}
-                    onChange={(e) => handleChange(e.target, index)}
-                    onFocus={(e) => e.target.select()}
-                  />
-                );
-              })}
-
-              <p className='otp-entered'>OTP : {otp.join('')}</p>
+              <OtpInput
+                value={otp}
+                onChange={handleChango}
+                numInputs={4}
+                separator={<span></span>}
+                className='otp-field'
+              />
+              <br />
+              <p className='otp-entered'>OTP : {otp}</p>
               <p>
                 <button
                   className='clear-button'
-                  onClick={(e) => setOtp([...otp.map((v) => '')])}
+                  onClick={(e) => setOtp((otp) => '')}
                 >
                   Clear
                 </button>
                 <button
                   className='verify-button'
-                  onClick={(e) => alert('Entered OTP is ' + otp.join(''))}
+                  onClick={(e) => alert('Entered OTP is ' + otp)}
                   onClick={checkOTP}
                 >
                   Verify OTP

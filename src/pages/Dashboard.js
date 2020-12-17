@@ -19,10 +19,12 @@ import MenuBarGame from '../components/MenuBarGame';
 import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { getAllGameRooms, addNewGame } from '../actions/index';
+// import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from '../utils';
 import { baseUrl } from '../utils/helpers';
 import LeftPane from '../components/Dashboard/LeftPane';
+
 /* -------------------------------------------------------------------------- */
 
 const Axios = require('axios');
@@ -39,11 +41,11 @@ const GlobalStyle = createGlobalStyle`
   }`;
 
 function Dashboard(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [anchorEl, setAnchorEl] = React.useState(null);
   const [userName, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [gamesList, setGamesList] = useState(false);
-  const [account, setAccount] = useState(false);
+  const [account, setAccount] = useState(true);
   const [rooms, setRooms] = useState([]);
   const [create, setCreate] = useState(false);
   const [menubarGames, setMenubarGames] = useState([]);
@@ -57,11 +59,7 @@ function Dashboard(props) {
 
     /* ------------------------------ New Room Test ----------------------------- */
     socket.on('newRoom', (data) => {
-      console.log('====================================');
-      console.log(data);
-      console.log('====================================');
-      // redpanda
-      //props.addNewGame(data);
+      props.addNewGame(data);
     });
   }, []);
   useEffect(() => {
@@ -114,15 +112,15 @@ function Dashboard(props) {
   }, []);
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    // setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    // setAnchorEl(null);
   };
 
   const handleAccount = () => {
-    setAnchorEl(null);
+    // setAnchorEl(null);
     setAccount(true);
   };
 
@@ -164,7 +162,7 @@ function Dashboard(props) {
       await axios.get(url, { withCredentials: true });
     }
 
-    setAnchorEl(null);
+    // setAnchorEl(null);
     logout();
     history.push('/');
   };
@@ -174,11 +172,13 @@ function Dashboard(props) {
     }
     steamauth();
   };
-
+  // console.log(props.roomsRedux);
   return (
     <>
       {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
-      {account ? <MyAccount onClose={handleAccountClose}></MyAccount> : null}
+      {account ? (
+        <MyAccount userName={userName} onClose={handleAccountClose}></MyAccount>
+      ) : null}
       {create ? (
         <CreateGame
           onCreate={handleCreateRoom}
@@ -188,34 +188,13 @@ function Dashboard(props) {
       ) : null}
       <GlobalStyle></GlobalStyle>
       <div className='Header'>
-        <Grid zindex={999}>
+        <Grid>
           <div className='dashboard-logo'>
             <a className='LogoLink' href='/dashboard'>
               <img src={Logo} />
             </a>
           </div>
-          <div style={{ alignSelf: 'center' }}>
-            <div className='avatar'></div>
-            <span className='Nickname'> {userName}</span>
-            <div className='arrow-menu'>
-              <IconButton
-                style={{ color: 'white' }}
-                aria-label='menu'
-                size='small'
-                aria-haspopup='true'
-                onClick={handleClick}
-              >
-                <ArrowDownwardIcon fontSize='inherit' />
-              </IconButton>
-            </div>
-          </div>
-          <Menu
-            id='simple-menu'
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
+          <Menu>
             <MenuItem onClick={handleAccount}>My account</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
