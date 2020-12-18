@@ -54,7 +54,7 @@ function Room(props) {
             </ul>
           </div>
           <div className='map-photo'>
-          <img src={Logo} />
+          <img className="map" src={Logo} />
           </div>
           <div className='team-2'>
           <h3 className="team-headers">TEAM 2</h3>
@@ -67,6 +67,12 @@ function Room(props) {
           <div className='gameDetails'>
             <span>Game Details</span>
           </div>
+          <div className="chat">
+            <span className="chat-field">chat alanı olacak</span>
+            <input className="chat-input"></input>
+            <button className="chat-send">SEND</button>
+          </div>
+          <button className="ready-button">READY</button>
         </div>
       </div>
     </>

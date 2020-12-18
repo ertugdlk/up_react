@@ -237,7 +237,6 @@ function Dashboard(props) {
           </button>
         </div>
         <GameRoomRow data={props.roomsRedux} onJoin={(host) => handleGameRoom(host)}></GameRoomRow>
-         }
       </div>
 
       {/* -------------------------------- LEFT PANE ------------------------------- */}
