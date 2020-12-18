@@ -1,29 +1,13 @@
 import React, { useState } from 'react';
 import axios from '../utils';
 import OtpInput from 'react-otp-input';
-
+import { useHistory } from 'react-router-dom';
 import css from '../components/css/OTP.css';
 const Axios = require('axios');
 
 const OTP = () => {
   const [otp, setOtp] = useState('');
-
-  const handleChange = (element, index) => {
-    /* -------------------- Uygun olmayan karakter engelleme ekleyelim -------------------- */
-
-    if (isNaN(element.value)) return false;
-
-    // setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
-
-    //Focus next input
-    if (element.value !== '') {
-      element.nextSibling.focus();
-      // console.log(element);
-    } else if (element.value === '') {
-      element.previousSibling.focus();
-      // console.log(element);
-    }
-  };
+  const history = useHistory();
 
   const handleChango = (e) => setOtp(e);
 
@@ -42,6 +26,7 @@ const OTP = () => {
         alert('Invalid OTP entry');
       } else {
         alert('OTP successful!');
+        history.push('/dashboard')
       }
     } catch (err) {
       console.log(err);

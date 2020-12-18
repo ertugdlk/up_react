@@ -7,6 +7,7 @@ function GameRoomRow(props) {
   //const [gameDetail, setGameDetail] = useState({})
   const [userRoom, setRoom] = useState(false);
   const [selectedHost, setSelectedHost] = useState('');
+  
   const handleRoom = (host) => {
     setRoom(true);
     setSelectedHost(host);
@@ -28,7 +29,7 @@ function GameRoomRow(props) {
         <Table.Cell>{dat.fee}</Table.Cell>
         <Table.Cell>{dat.fee * 2}</Table.Cell>
         <Table.Cell>
-          <Button color='green' onClick={() => handleRoom(dat.host)}>
+          <Button color='green' onClick={() => props.onJoin(dat.host)}>
             Join game
           </Button>
         </Table.Cell>
@@ -38,7 +39,6 @@ function GameRoomRow(props) {
 
   return (
     <div className='Games'>
-      {userRoom ? <Room host={selectedHost}></Room> : null}
       <Table padded inverted selectable>
         <Table.Header>
           <Table.Row>

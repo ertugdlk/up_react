@@ -11,6 +11,9 @@ const Axios = require('axios');
 function Room(props) {
   const [users, setUsers] = useState([]);
   const [chat, setChat] = useState(true);
+  const [messages, setMessages] = useState([])
+  const [message, setMessage] = useState('')
+
   useEffect(() => {
     async function RoomUsers() {
       const url = 'room/getdata';
@@ -25,12 +28,12 @@ function Room(props) {
 
     RoomUsers();
   }, []);
+
   return (
     <>
       <div className='room-window'>
       <div className='CloseButton1'>
           {' '}
-          <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon>{' '}
         </div>
         <div className='components'>
           <div className='team-1'>
@@ -59,7 +62,6 @@ function Room(props) {
           <div className='gameDetails'>
             <span>Game Details</span>
           </div>
-          {chat ? (<Chatbox></Chatbox>) : null}
         </div>
       </div>
     </>

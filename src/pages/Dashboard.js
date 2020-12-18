@@ -19,6 +19,7 @@ import MenuBarGame from '../components/MenuBarGame';
 import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { getAllGameRooms, addNewGame } from '../actions/index';
+import Room from '../components/Room';
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from '../utils';
@@ -49,6 +50,8 @@ function Dashboard(props) {
   const [rooms, setRooms] = useState([]);
   const [create, setCreate] = useState(false);
   const [menubarGames, setMenubarGames] = useState([]);
+  const [gameRoom, setGameRoom] = useState(false);
+  const [selectedHost , setSelectedHost] = useState('')
   // const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
@@ -110,6 +113,12 @@ function Dashboard(props) {
     userGames();
     userSteam();
   }, []);
+
+  const handleGameRoom = (host) => {
+    setSelectedHost(host);
+    setGameRoom(true);
+  };
+
 
   const handleClick = (event) => {
     // setAnchorEl(event.currentTarget);
@@ -186,6 +195,8 @@ function Dashboard(props) {
           games={menubarGames}
         ></CreateGame>
       ) : null}
+
+      {gameRoom ? <Room host={selectedHost}></Room> : null}
       <GlobalStyle></GlobalStyle>
       <div className='Header'>
         <Grid>
@@ -225,7 +236,8 @@ function Dashboard(props) {
             New Game{' '}
           </button>
         </div>
-        <GameRoomRow data={props.roomsRedux}></GameRoomRow>
+        <GameRoomRow data={props.roomsRedux} onJoin={(host) => handleGameRoom(host)}></GameRoomRow>
+         }
       </div>
 
       {/* -------------------------------- LEFT PANE ------------------------------- */}
