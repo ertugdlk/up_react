@@ -13,8 +13,7 @@ function Room(props) {
   const [chat, setChat] = useState(true);
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState('')
-  const [team1,setTeam1] = useState([])
-  const [team2,setTeam2] = useState([])
+  const [team1, setTeam1] = useState([]);
 
   useEffect(() => {
     async function RoomUsers() {
@@ -39,31 +38,29 @@ function Room(props) {
         </div>
         <div className='components'>
           <div className='team-1'>
-            <h3 className="team-1-members">TEAM 1</h3>
+            <h3 className="team-headers">TEAM 1</h3>
             <ul>
-            {team1.map((team1user) => (
-              <li
-                className='team-1-member'
-              >{team1user.data}
-              </li>))}
+            <li className='team-users'>{props.host}</li>
             </ul>
           </div>
           <div className='map-photo'>
-          <img src={Logo} />
+          <img className="map" src={Logo} />
           </div>
           <div className='team-2'>
-          <h3 className="team-2-members">TEAM 2</h3>
+          <h3 className="team-headers">TEAM 2</h3>
             <ul>
-            {team2.map((team2user) => (
-              <li
-                className='team-2-member'
-              >{team2user.data}
-              </li>))}
+              <li className='team-users'>{props.host}</li>
             </ul>
           </div>
           <div className='gameDetails'>
             <span>Game Details</span>
           </div>
+          <div className="chat">
+            <span className="chat-field">chat alanı olacak</span>
+            <input className="chat-input"></input>
+            <button className="chat-send">SEND</button>
+          </div>
+          <button className="ready-button">READY</button>
         </div>
       </div>
     </>

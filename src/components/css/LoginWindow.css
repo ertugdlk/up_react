@@ -13,7 +13,6 @@
 /*İçeriklerin cssi*/
 .login-modal {
   color: #fff;
-  box-sizing: content-box;
   font-size: 14px;
   width: 50px;
   margin: 5% 25%;
@@ -65,21 +64,26 @@
 }
 
 .login-steam-button {
+  position: relative;
   color: #fff;
   background-color: #1b1c23;
   font-size: 1em;
   margin-top: 1.5em;
+  left:-50px;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border: 1px solid #1b1c23;
   border-radius: 8px;
   width: 250px;
-  height: 100%;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   }
 
+.steam-logo{
+  margin-right: 10px;
+}
 .login-steam-button:hover {
   background-color: #16161b;
   color: #f1f1f1;

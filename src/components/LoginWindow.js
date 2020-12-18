@@ -68,7 +68,7 @@ function LoginWindow() {
             Login
           </button>
           <button className='login-steam-button'>
-            <img
+            <img className="steam-logo"
               src='https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg'
               height='20px'
             />
