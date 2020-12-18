@@ -34,9 +34,21 @@ function Room(props) {
         setTeam2(team2users)
       }
     }
-
+    props.socket.on("newMessage" , (data) => {
+      try{
+        setMessages(messages => messages.concat({nickname: data.nickname,  msg:data.message}))
+      }
+      catch(err){
+        throw err
+      }
+    })
     RoomUsers();
   }, []);
+
+  const handleSendMessage = () => {
+    const data = {host: props.host, nickname: props.nickname, msg: message}
+    props.socket.emit("message", (data))
+  }
 
   return (
     <>
@@ -68,9 +80,13 @@ function Room(props) {
             <span>Game Details</span>
           </div>
           <div className="chat">
-            <span className="chat-field">chat alanı olacak</span>
-            <input className="chat-input"></input>
-            <button className="chat-send">SEND</button>
+            <div className= "chat-field">
+                  {messages.map((message) => {
+                    return <span>{message.nickname}: {message.msg}</span>
+                  })}
+            </div>
+            <input className="chat-input" onChange={ (e) => setMessage(e.target.value)}></input>
+            <button className="chat-send" onClick={handleSendMessage}>SEND</button>
           </div>
           <button className="ready-button">READY</button>
         </div>
