@@ -49,6 +49,17 @@
   z-index: 998;
 }
 
+.HeaderRightMenu{
+  position: absolute;
+  display: flex;
+  height: 65px;
+  justify-content: space-evenly;
+  width: 250px;
+  align-content: center;
+  right: 0;
+  margin-right: 140px;
+}
+
 .GameFilter {
   position: relative;
   align-items: center;
@@ -106,6 +117,7 @@
   padding-left: 30px;
   border: none;
   border-radius: 6px;
+  font-size: 15px;
 }
 
 .search-gameID::placeholder {
@@ -153,7 +165,7 @@
   border-radius: 4px;
   color: #fff;
   font-family: Raleway;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 700;
   font-style: normal;
   letter-spacing: normal;
@@ -175,7 +187,7 @@
   border-radius: 6px;
   color: #fff;
   font-family: Raleway;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 700;
   font-style: normal;
   letter-spacing: normal;
