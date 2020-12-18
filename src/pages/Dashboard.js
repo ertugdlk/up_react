@@ -38,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
   body {
     font-family: 'Raleway', sans-serif;
-    background-color: #010101;
+    background-color: #16161b;
   }`;
 
 function Dashboard(props) {
@@ -46,7 +46,7 @@ function Dashboard(props) {
   const [userName, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [gamesList, setGamesList] = useState(false);
-  const [account, setAccount] = useState(true);
+  const [account, setAccount] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [create, setCreate] = useState(false);
   const [menubarGames, setMenubarGames] = useState([]);
@@ -117,15 +117,6 @@ function Dashboard(props) {
   const handleGameRoom = (host) => {
     setSelectedHost(host);
     setGameRoom(true);
-  };
-
-
-  const handleClick = (event) => {
-    // setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    // setAnchorEl(null);
   };
 
   const handleAccount = () => {
@@ -205,10 +196,10 @@ function Dashboard(props) {
               <img src={Logo} />
             </a>
           </div>
-          <Menu>
-            <MenuItem onClick={handleAccount}>My account</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </Menu>
+          <div className='HeaderRightMenu'>
+            <button onClick={handleAccount}>Account Settings</button>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
         </Grid>
       </div>
 
@@ -246,7 +237,6 @@ function Dashboard(props) {
       {/* /* -------------------------------- LEFT PANE ------------------------------- */}
 
       <div className='SocialBar'>
-        <button onClick={handleSteam}> steam auth</button>
       </div>
     </>
   );

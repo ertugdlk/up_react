@@ -12,12 +12,8 @@ function Room(props) {
   const [chat, setChat] = useState(true);
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState('')
-<<<<<<< HEAD
-  const [team1, setTeam1] = useState([]);
-=======
   const [team1, setTeam1] = useState([])
   const [team2,setTeam2] = useState([])
->>>>>>> b9883926dd29458e038df26bf2f7cdf0c11bb8b9
 
   useEffect(() => {
     async function RoomUsers() {

@@ -52,7 +52,7 @@
   display: flex;
   position: absolute;
   margin-top: 50px;
-  width: 100%;
+  width: 83%;
   background-color: #343438;
   flex-flow: column nowrap;
 }
