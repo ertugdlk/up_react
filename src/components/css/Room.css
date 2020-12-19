@@ -108,11 +108,13 @@
     margin:2px;
   }
 
-  .team-headers{
+  .team-buttons{
+    width: 148px;
     background-color: #0b0b00;
     color: #35ac45;
     text-align: center;
     border-bottom: 1px groove #35ac45;
+    cursor: pointer;
   }
 
   .team-users{

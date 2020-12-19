@@ -47,6 +47,7 @@ function Room(props) {
     props.socket.emit("message", (data))
   }
 
+
   return (
     <>
       <div className='room-window'>
@@ -55,7 +56,7 @@ function Room(props) {
         </div>
         <div className='components'>
           <div className='team-1'>
-            <h3 className="team-headers">TEAM 1</h3>
+            <button className="team-buttons">TEAM 1</button>
             <ul>
                 {team1.map((member) => {
                 return <li className='team-users'>{member.nickname}</li>
@@ -66,7 +67,7 @@ function Room(props) {
           <img className="map" src={Logo} />
           </div>
           <div className='team-2'>
-          <h3 className="team-headers">TEAM 2</h3>
+          <button className="team-buttons">TEAM 2</button>
             <ul>
               {team2.map((member) => {
                 return <li className='team-users'>{member.nickname}</li>
