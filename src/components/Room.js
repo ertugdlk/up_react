@@ -3,6 +3,7 @@ import axios from '../utils';
 import css from '../components/css/Room.css';
 import Logo from '../logo.png';
 import ClearIcon from '@material-ui/icons/Clear';
+import { Segment, SegmentGroup } from 'semantic-ui-react';
 
 const Axios = require('axios');
 const _ = require('lodash')
@@ -105,15 +106,20 @@ function Room(props) {
           <div className='gameDetails'>
             <span>Game Details</span>
           </div>
-          <div className="chat">
+          <SegmentGroup>
+            <Segment>
+            <div className="chat">
             <div className= "chat-field">
                   {messages.map((message) => {
                     return <span className="chat-message">{message.nickname}: {message.msg}</span>
                   })}
             </div>
-            <input className="chat-input" onChange={ (e) => setMessage(e.target.value)}></input>
-            <button className="chat-send" onClick={handleSendMessage}>SEND</button>
           </div>
+          </Segment>
+          <input className="chat-input" onChange={ (e) => setMessage(e.target.value)}></input>
+            <button className="chat-send" onClick={handleSendMessage}>SEND</button>
+          </SegmentGroup>
+    
           <button className="ready-button">READY</button>
         </div>
       </div>

@@ -34,7 +34,9 @@
     height: fit-content;
     text-align: center;
     margin-top: 5px;
+    margin-left: 16px;
     margin-bottom: 60%;
+    clear: both;
   }
 
   .team-1{
@@ -130,21 +132,25 @@
     color:#fff;
     font-size: 12px;
   }
-
+  
   .chat{
+    overflow-y: scroll;
+    overflow-x: hidden;
     display: flex;
+    flex-flow: row wrap;
     width: 500px;
     height: 300px;
     position: absolute;
-    margin-top: 40%;
-    margin-bottom: 10px;
-    align-items:flex-end;
+    margin-top: 10px;
+    margin-left: -530px;
     border: 1px solid green;
   }
 
   .chat-field{
-    align-self: flex-start;
-    width: auto;
+    display: inline;
+    flex-flow: row wrap;
+    width: fit-content;
+    align-items: stretch;
   }
 
   .chat-message{
@@ -157,21 +163,22 @@
     color: #fff;
   }
 
-
   .chat-input{
+    margin-top: 300px;
     position: absolute;
-    float: left;
-    width: 400px;
+    width: 386px;
     background-color: #000;
     color:#fff;
+    margin-left: -517px;
   }
 
   .chat-send{
-    left: 80%;
+    margin-top: 300px;
     position: absolute;
     background-color: #35ac45;
-    width: 100px;
+    width: 115px;
     border-color: #35ac45;
+    margin-left: -131px;
   }
 
   .ready-button{
