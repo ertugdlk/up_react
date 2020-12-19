@@ -62,7 +62,7 @@ function Room(props) {
     })
 
     props.socket.on("newUserJoined", (data) => {
-      if(data.nickname == props.nickname)
+      if(data.nickname != props.nickname)
       {
         if(data.team == 1){
           setTeam1(team1 => team1.concat({nickname: data.nickname,  team:data.team, readyStatus: data.readyStatus}))
