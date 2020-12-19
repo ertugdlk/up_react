@@ -3,7 +3,8 @@ import axios from '../utils';
 import css from '../components/css/Room.css';
 import Logo from '../logo.png';
 import ClearIcon from '@material-ui/icons/Clear';
-import Chatbox from '../components/Chatbox'
+import { Segment, SegmentGroup } from 'semantic-ui-react';
+import Countdown from 'react-countdown'
 
 const Axios = require('axios');
 const _ = require('lodash')
@@ -15,6 +16,8 @@ function Room(props) {
   const [team1, setTeam1] = useState([])
   const [team2,setTeam2] = useState([])
   const [startButton , setStartButton] = useState(false)
+  const [start , setStart] = useState(false)
+  const [gameInformation , setGameInformation] = useState('')
 
   useEffect(() => {
     async function RoomUsers() {
@@ -47,6 +50,16 @@ function Room(props) {
       }
     })
 
+    props.socket.on("countdownStart", (data)=> {
+      try{
+        setStart(true)
+      }
+      catch(error)
+      {
+        throw error
+      }
+    })
+
     props.socket.on("GameReadyStatus" , (data)=> {
       if(props.nickname == props.host)
       {
@@ -55,8 +68,16 @@ function Room(props) {
           alert(data)
         }
         else{
+          setStart(false)
           setStartButton(false)
           alert(data)
+        }
+      }
+      else{
+        if(data == 'all_ready'){
+        }
+        else{
+          setStart(false)
         }
       }
     })
@@ -148,6 +169,31 @@ function Room(props) {
     props.socket.emit("ready" , (data))
   }
 
+  const handleStart = () =>{
+    const data = {host: props.host}
+    props.socket.emit("countdown", (data))
+  }
+
+  const handleStartMatch = async () => {
+    const url = 'rcon/setupmatch'
+    const response = await axios.post(url, {host:props.host} , {withCredentials: true })
+    setGameInformation(response.data.server)
+  }
+
+  const checkGameInformation = () => {
+    if(gameInformation !== ''){
+      return gameInformation
+    }
+    if(start)
+    {
+      return <Countdown  date={Date.now() + 10000} onComplete={ () => handleStartMatch()} />
+    }
+    else{
+      return <img className='map' src={Logo}></img>
+    }
+
+  }
+
   return (
     <>
       <div className='room-window'>
@@ -164,7 +210,7 @@ function Room(props) {
             </ul>
           </div>
           <div className='map-photo'>
-          <img className="map" src={Logo} />
+              {checkGameInformation()}
           </div>
           <div className='team-2'>
           <button onClick={handleTeamSwap} className="team-buttons">TEAM 2</button>
@@ -177,17 +223,21 @@ function Room(props) {
           <div className='gameDetails'>
             <span>Game Details</span>
           </div>
-          <div className="chat">
+          <SegmentGroup>
+            <Segment>
+            <div className="chat">
             <div className= "chat-field">
                   {messages.map((message) => {
-                    return <span>{message.nickname}: {message.msg}</span>
+                    return <span className="chat-message">{message.nickname}: {message.msg}</span>
                   })}
             </div>
-            <input className="chat-input" onChange={ (e) => setMessage(e.target.value)}></input>
-            <button className="chat-send" onClick={handleSendMessage}>SEND</button>
           </div>
+          </Segment>
+          <input className="chat-input" onChange={ (e) => setMessage(e.target.value)}></input>
+            <button className="chat-send" onClick={handleSendMessage}>SEND</button>
+          </SegmentGroup>
           {props._host ? null : <button onClick={handleReady} className="ready-button">READY</button> }
-          {startButton ? <button className="ready-button">START</button> : null }
+          {startButton ? <button className="ready-button" onClick={handleStart}>START</button> : null }
         </div>
       </div>
     </>

@@ -3,13 +3,13 @@
   position: absolute;
   width: 800px;
   height: 800px;
-  top:67.5%;
+  top: 85px;
   left: 22.5%;
   background: #0b0b0b;
   border-radius: 12px;
   z-index: 3000;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
-  border:1px solid green;
+  border:1px solid gray;
   }
   /*Bütün componentlerin yer aldığı divin cssi*/
   .components{
@@ -21,7 +21,6 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
-    border:1px solid red;
     }
 
     .CloseButton1{
@@ -34,7 +33,9 @@
     height: fit-content;
     text-align: center;
     margin-top: 5px;
+    margin-left: 16px;
     margin-bottom: 60%;
+    clear: both;
   }
 
   .team-1{
@@ -130,36 +131,53 @@
     color:#fff;
     font-size: 12px;
   }
-
+  
   .chat{
+    overflow-y: scroll;
+    overflow-x: hidden;
     display: flex;
+    flex-flow: row wrap;
     width: 500px;
     height: 300px;
     position: absolute;
-    margin-top: 40%;
-    margin-bottom: 10px;
-    align-items:flex-end;
+    margin-top: 10px;
+    margin-left: -530px;
     border: 1px solid green;
   }
 
   .chat-field{
-    align-self: flex-start;
+    display: inline;
+    flex-flow: row wrap;
+    width: fit-content;
+    align-items: stretch;
+  }
+
+  .chat-message{
+    display: flex;
+    flex-flow: column wrap;
+    margin-bottom: 5px;
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+    color: #fff;
   }
 
   .chat-input{
+    margin-top: 300px;
     position: absolute;
-    float: left;
-    width: 400px;
+    width: 386px;
     background-color: #000;
     color:#fff;
+    margin-left: -517px;
   }
 
   .chat-send{
-    left: 80%;
+    margin-top: 300px;
     position: absolute;
     background-color: #35ac45;
-    width: 100px;
+    width: 115px;
     border-color: #35ac45;
+    margin-left: -131px;
   }
 
   .ready-button{
