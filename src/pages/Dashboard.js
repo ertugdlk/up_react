@@ -54,6 +54,7 @@ function Dashboard(props) {
   const [selectedHost , setSelectedHost] = useState('')
   const [roomResponse, setRoomResponse] = useState({})
   const [returnButton , setReturnButton] = useState(false)
+  const [_host , setHost] = useState(false)
   // const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
@@ -73,7 +74,7 @@ function Dashboard(props) {
     })
 
     socket.on("roomCreated", (data) => {
-      setSelectedHost(userName)
+      setSelectedHost(data.host)
       setRoomResponse(data)
       setGameRoom(true)
     })
@@ -83,8 +84,12 @@ function Dashboard(props) {
     })
 
     socket.on("openedRoom", (data) => {
-      setSelectedHost(data.host)
-      setRoomResponse(data)
+      setSelectedHost(data.room.host)
+      if(data.room.host == data.nickname)
+      {
+        setHost(true)
+      }
+      setRoomResponse(data.room)
       setReturnButton(true)
     })
 
@@ -175,12 +180,7 @@ function Dashboard(props) {
   const handleCreateRoom = (data) => {
     data.host = userName;
     setCreate(false);
-    const newArr = rooms;
-    newArr.push(data);
-    // newArr = [newArr, ...props.rooms];
-    // console.log('LOG:', newArr);
-    setRooms(newArr);
-
+    setHost(true)
     socket.emit('create', data);
     // props.getAllGameRooms();
   };
@@ -216,7 +216,7 @@ function Dashboard(props) {
         ></CreateGame>
       ) : null}
 
-      {gameRoom ? <Room host={selectedHost} socket={socket} nickname={userName} roomResponse={roomResponse}></Room> : null}
+      {gameRoom ? <Room host={selectedHost} socket={socket} nickname={userName} roomResponse={roomResponse} _host={_host}></Room> : null}
       <GlobalStyle></GlobalStyle>
       <div className='Header'>
         <Grid>
