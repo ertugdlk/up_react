@@ -3,7 +3,6 @@ import axios from '../utils';
 import css from '../components/css/Room.css';
 import Logo from '../logo.png';
 import ClearIcon from '@material-ui/icons/Clear';
-import Chatbox from '../components/Chatbox'
 
 const Axios = require('axios');
 const _ = require('lodash')
@@ -109,7 +108,7 @@ function Room(props) {
           <div className="chat">
             <div className= "chat-field">
                   {messages.map((message) => {
-                    return <span>{message.nickname}: {message.msg}</span>
+                    return <span className="chat-message">{message.nickname}: {message.msg}</span>
                   })}
             </div>
             <input className="chat-input" onChange={ (e) => setMessage(e.target.value)}></input>

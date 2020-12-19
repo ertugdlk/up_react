@@ -382,6 +382,28 @@ button {
   color: #000000;
 }
 
+.return-button{
+    position: relative;
+    right: 0;
+    width: 140px;
+    height: 35px;
+    margin-right: 25px;
+    box-shadow: -1px 0 17px 1px rgba(0, 0, 0, 0.5);
+    background-color: #35ac45;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-family: Raleway;
+    font-size: 12px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: 21.96px;
+    text-align: center;
+    text-transform: uppercase;
+    outline: none;
+}
+
 @media only screen and (min-width: 1680px) {
   .Container {
     width: 80%;

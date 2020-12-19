@@ -255,7 +255,7 @@ function Dashboard(props) {
             {' '}
             New Game{' '}
           </button>
-          { returnButton ? <button onClick={handleReturnGame}>Return to Exist Game</button>: null}
+          { returnButton ? <button  className="return-button" onClick={handleReturnGame}>Return to Existing Game</button>: null}
         </div>
         <GameRoomRow data={props.roomsRedux} onJoin={(host) => handleGameRoom(host)}></GameRoomRow>
       </div>

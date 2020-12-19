@@ -144,7 +144,19 @@
 
   .chat-field{
     align-self: flex-start;
+    width: auto;
   }
+
+  .chat-message{
+    display: flex;
+    flex-flow: column wrap;
+    margin-bottom: 5px;
+    position: relative;
+    height: fit-content;
+    width: fit-content;
+    color: #fff;
+  }
+
 
   .chat-input{
     position: absolute;
