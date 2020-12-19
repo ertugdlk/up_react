@@ -79,7 +79,7 @@ function CreateGame(props) {
           <label className='labels'>Map</label>
           <select className='create-select' onChange={(e) => onMapChange(e)}>
             {selectedGame.maps.map((map, index) => (
-              <option className='create-option' value={index}>
+              <option className='create-option' value={map}>
                 {' '}
                 {map}
               </option>
@@ -89,12 +89,14 @@ function CreateGame(props) {
         <div className='CreateRow'>
           <label className='labels'>Type</label>
           <select className='create-select' onChange={(e) => onTypeChange(e)}>
-            {selectedGame.types.map((type, index) => (
-              <option className='create-option' value={index}>
-                {' '}
-                {type}
-              </option>
-            ))}
+            {selectedGame.types.map((type, index) => {
+              return(
+                          <option className='create-option' value={type}>
+                            {' '}
+                            {type}
+                          </option>)
+            }
+            )}
           </select>
         </div>
         <div className='CreateRow'>

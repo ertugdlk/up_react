@@ -52,6 +52,7 @@ function Dashboard(props) {
   const [menubarGames, setMenubarGames] = useState([]);
   const [gameRoom, setGameRoom] = useState(false);
   const [selectedHost , setSelectedHost] = useState('')
+  const [roomResponse, setRoomResponse] = useState({})
   // const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
@@ -64,6 +65,11 @@ function Dashboard(props) {
     socket.on('newRoom', (data) => {
       props.addNewGame(data);
     });
+
+    socket.on("roomData" , (data) => {
+      setRoomResponse(data)
+      setGameRoom(true);
+    })
   }, []);
   useEffect(() => {
     /* -------------------------------------------------------------------------- */
@@ -82,7 +88,7 @@ function Dashboard(props) {
           }
         }
 
-        socket.emit('login', response.data.nickname);
+        socket.emit('login', (response.data.nickname));
       } catch (error) {
         throw error;
         //history.push("/")
@@ -114,9 +120,10 @@ function Dashboard(props) {
     userSteam();
   }, []);
 
-  const handleGameRoom = (host) => {
+  const handleGameRoom = async (host) => {
+    const data = {host: host, nickname: userName}
+    socket.emit("join", (data))
     setSelectedHost(host);
-    setGameRoom(true);
   };
 
   const handleAccount = () => {
@@ -187,7 +194,7 @@ function Dashboard(props) {
         ></CreateGame>
       ) : null}
 
-      {gameRoom ? <Room host={selectedHost}></Room> : null}
+      {gameRoom ? <Room host={selectedHost} socket={socket} nickname={userName} roomResponse={roomResponse}></Room> : null}
       <GlobalStyle></GlobalStyle>
       <div className='Header'>
         <Grid>
