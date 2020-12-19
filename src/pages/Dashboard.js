@@ -53,6 +53,7 @@ function Dashboard(props) {
   const [gameRoom, setGameRoom] = useState(false);
   const [selectedHost , setSelectedHost] = useState('')
   const [roomResponse, setRoomResponse] = useState({})
+  const [returnButton , setReturnButton] = useState(false)
   // const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
@@ -70,6 +71,23 @@ function Dashboard(props) {
       setRoomResponse(data)
       setGameRoom(true);
     })
+
+    socket.on("roomCreated", (data) => {
+      setSelectedHost(userName)
+      setRoomResponse(data)
+      setGameRoom(true)
+    })
+
+    socket.on('Error', msg => {
+      alert(msg)
+    })
+
+    socket.on("openedRoom", (data) => {
+      setSelectedHost(data.host)
+      setRoomResponse(data)
+      setReturnButton(true)
+    })
+
   }, []);
   useEffect(() => {
     /* -------------------------------------------------------------------------- */
@@ -149,6 +167,10 @@ function Dashboard(props) {
   const handleCreateClick = () => {
     setCreate(true);
   };
+
+  const handleReturnGame = () => {
+    setGameRoom(true)
+  }
 
   const handleCreateRoom = (data) => {
     data.host = userName;
@@ -233,6 +255,7 @@ function Dashboard(props) {
             {' '}
             New Game{' '}
           </button>
+          { returnButton ? <button onClick={handleReturnGame}>Return to Exist Game</button>: null}
         </div>
         <GameRoomRow data={props.roomsRedux} onJoin={(host) => handleGameRoom(host)}></GameRoomRow>
       </div>

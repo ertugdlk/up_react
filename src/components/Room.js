@@ -39,12 +39,41 @@ function Room(props) {
         throw err
       }
     })
+
+    props.socket.on("teamChange", (data) => {
+      try{
+        if(data.oldTeam == 1)
+        {
+          var tempTeam = team1
+          var removedTeam = _.remove(tempTeam, (teamMember) => {
+            return teamMember == data.nickname
+          })
+
+          setTeam1(tempTeam)
+
+          setTeam2(team2 => team2.concat(data.nickname))
+        }
+        else{
+
+        }
+      }
+      catch(err)
+      {
+        throw err
+      }
+    })
+
     RoomUsers();
   }, []);
 
   const handleSendMessage = () => {
     const data = {host: props.host, nickname: props.nickname, msg: message}
     props.socket.emit("message", (data))
+  }
+
+  const handleTeamSwap = () => {
+    const data = {host: props.host, nickname: props.nickname}
+    props.socket.emit("changeTeam" , (data))
   }
 
 
@@ -56,7 +85,7 @@ function Room(props) {
         </div>
         <div className='components'>
           <div className='team-1'>
-            <button className="team-buttons">TEAM 1</button>
+            <button onClick={handleTeamSwap} className="team-buttons">TEAM 1</button>
             <ul>
                 {team1.map((member) => {
                 return <li className='team-users'>{member.nickname}</li>
@@ -67,7 +96,7 @@ function Room(props) {
           <img className="map" src={Logo} />
           </div>
           <div className='team-2'>
-          <button className="team-buttons">TEAM 2</button>
+          <button onClick={handleTeamSwap} className="team-buttons">TEAM 2</button>
             <ul>
               {team2.map((member) => {
                 return <li className='team-users'>{member.nickname}</li>

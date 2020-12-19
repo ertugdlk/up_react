@@ -115,6 +115,7 @@
     text-align: center;
     border-bottom: 1px groove #35ac45;
     cursor: pointer;
+    pointer-events: 'none';
   }
 
   .team-users{
