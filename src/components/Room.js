@@ -17,13 +17,10 @@ function Room(props) {
 
   useEffect(() => {
     async function RoomUsers() {
-      const url = 'room/getdata';
-      const body = { host: props.host };
-      const response = await axios.post(url, body, { withCredentials: true });
-      if (!response.data.users) {
+      if (!props.roomResponse.users) {
         alert('no room with this host');
       } else {
-        const allusers = response.data.users;
+        const allusers = props.roomResponse.users;
         const team1users = _.filter(allusers, function(user){
           return user.team == 1
         })

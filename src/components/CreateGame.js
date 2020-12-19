@@ -68,7 +68,7 @@ function CreateGame(props) {
           <label className='labels'>Game Selection</label>
           <select className='create-select' onChange={(e) => onGameChange(e)}>
             {props.games.map((game, index) => (
-              <option className='create-option' value={game.name}>
+              <option className='create-option' value={index}>
                 {' '}
                 {game.name}
               </option>
