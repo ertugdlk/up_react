@@ -33,6 +33,8 @@ function RegisterWindow() {
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
       if (response.status == 200) {
+        const url = 'auth/sendotp';
+        const response = await axios.post(url, {email});
         handleOTP()
         //history.push("/");
       } else if (response.data.status === 0) {
@@ -46,7 +48,7 @@ function RegisterWindow() {
   return (
     <>
       <GlobalStyle></GlobalStyle>
-      {otp ? <OTP></OTP> : null}
+      {otp ? <OTP email={email}></OTP> : null}
 
       <div className='register-window'>
         <div className='register-modal'>

@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from '../utils';
 import OtpInput from 'react-otp-input';
 import { useHistory } from 'react-router-dom';
 import css from '../components/css/OTP.css';
 const Axios = require('axios');
 
-const OTP = () => {
+const OTP = (props) => {
   const [otp, setOtp] = useState('');
   const history = useHistory();
 
   const handleChango = (e) => setOtp(e);
 
   //eğer girilen OTP backendden gelen OTP ile aynıysa matchleştiğini göster ve kullanıcıyı verifike et daha sonra dashboarda aktar.
-
   const checkOTP = async () => {
     try {
-      const url = 'auth/otp';
+      const url = 'auth/verifyotp';
       const response = await axios.post(
         url,
-        { otp },
+        { otp, email:props.email },
         { withCredentials: true }
       );
 
