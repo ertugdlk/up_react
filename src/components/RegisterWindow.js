@@ -48,7 +48,7 @@ function RegisterWindow() {
   return (
     <>
       <GlobalStyle></GlobalStyle>
-      {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> : null}
+      {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> : 
 
       <div className='register-window'>
         <div className='register-modal'>
@@ -103,7 +103,7 @@ function RegisterWindow() {
             </button>
           </div>
         </div>
-      </div>
+      </div>}
     </>
   );
 }

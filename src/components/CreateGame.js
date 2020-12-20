@@ -78,7 +78,7 @@ function CreateGame(props) {
         <div className='CreateRow'>
           <label className='labels'>Map</label>
           <select className='create-select' onChange={(e) => onMapChange(e)}>
-            {selectedGame.maps.map((map, index) => (
+            {selectedGame.maps.map((map) => (
               <option className='create-option' value={map}>
                 {' '}
                 {map}
