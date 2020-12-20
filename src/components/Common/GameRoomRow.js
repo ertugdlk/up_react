@@ -14,6 +14,10 @@ function GameRoomRow(props) {
   };
 
   const listRooms = () => {
+    if(!props.data)
+    {
+      return
+    }
     return props.data.map((dat) => (
       <Table.Row>
         {/* <Table.Cell>{dat.room}</Table.Cell> */}
