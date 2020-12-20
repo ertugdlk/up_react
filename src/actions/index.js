@@ -3,9 +3,7 @@ import axios from '../utils';
 import { addNewRoom, fetchAllRooms, getUserGames } from '../utils/helpers';
 
 export const getAllGameRooms = () => async (dispatch) => {
-  const response = await axios.get('room/getall', {
-    withCredentials: true,
-  });
+  const response = await axios.get('room/getall', {withCredentials: true});
   // console.log(response.data);
   dispatch({ type: fetchAllRooms, payload: response.data });
 };
