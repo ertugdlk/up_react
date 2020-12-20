@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import axios from '../utils';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import css from '../components/css/LoginWindow.css';
 
@@ -16,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Raleway', sans-serif;
   }`;
 
-function LoginWindow() {
+function LoginWindow(props) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -46,6 +47,12 @@ function LoginWindow() {
     <>
       <GlobalStyle></GlobalStyle>
       <div className='login-window'>
+        <div className='CloseButton1'>
+          <ClearIcon
+            fontSize='large'
+            onClick={props.handleLoginClose}
+          ></ClearIcon>{' '}
+        </div>
         <div className='login-modal'>
           <h2 className='login-title'>Login</h2>
           <label>Username</label>

@@ -28,6 +28,14 @@ function Homepage(props) {
     setClick(true);
   };
 
+  const closeLogin = () => {
+    setVisible(false);
+  };
+
+  const closeRegister = () => {
+    setClick(false);
+  };
+
   //window.addEventListener('resize', showButton);
 
   return (
@@ -40,7 +48,11 @@ function Homepage(props) {
           </a>
         </div>
         <Grid>
-          {click ? <RegisterWindow></RegisterWindow> : null}
+          {click ? (
+            <RegisterWindow
+              handlecloseRegister={closeRegister}
+            ></RegisterWindow>
+          ) : null}
           <Button
             onClick={handleClickCreateAccount}
             className='btn--navbar--createAccount'
@@ -48,7 +60,9 @@ function Homepage(props) {
             Create <span className='span'>Account</span>
             <GlobalStyle />
           </Button>
-          {visible ? <LoginWindow></LoginWindow> : null}
+          {visible ? (
+            <LoginWindow handleLoginClose={closeLogin}></LoginWindow>
+          ) : null}
           <Button onClick={handleClickLogin} className='btn--navbar--login'>
             Login
             <GlobalStyle />

@@ -12,6 +12,10 @@ function GameRoomRow(props) {
     setSelectedHost(host);
   };
 
+  const closeRoom = () => {
+    setRoom(false);
+  };
+
   const listRooms = () => {
     return props.data.map((dat) => (
       <Table.Row>
@@ -38,7 +42,7 @@ function GameRoomRow(props) {
 
   return (
     <div className='Games'>
-      {userRoom ? <Room host={selectedHost}></Room> : null}
+      {userRoom ? <Room handleCloseRoom={setRoom} host={selectedHost}></Room> : null}
       <Table padded inverted selectable>
         <Table.Header>
           <Table.Row>
