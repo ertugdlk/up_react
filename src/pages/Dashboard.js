@@ -170,8 +170,7 @@ function Dashboard(props) {
   };
 
   const handleCreateClick = () => {
-    console.log(menubarGames)
-    if(menubarGames == []){
+    if(menubarGames.length == 0){
       alert('Add some Games First')
     }
     else{
