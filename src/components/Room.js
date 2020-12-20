@@ -177,12 +177,18 @@ function Room(props) {
   const handleStartMatch = async () => {
     const url = 'rcon/setupmatch'
     const response = await axios.post(url, {host:props.host} , {withCredentials: true })
-    setGameInformation(response.data.server)
+    const url2 = 'rcon/startmatch'
+    const response2 = await axios.post(url2, {} , {withCredentials:true})
+    setGameInformation(response2.data.ip)
   }
 
   const checkGameInformation = () => {
     if(gameInformation !== ''){
-      return gameInformation
+      return(
+        <> 
+        <span>{gameInformation}</span>
+        <a href={`steam://connect/${gameInformation}`}  >Go to the game server</a>
+        </>)
     }
     if(start)
     {
