@@ -24,7 +24,18 @@ const OTP = (props) => {
       if (response.status !== 200) {
         alert('Invalid OTP entry');
       } else {
+
         alert('OTP successful!');
+        const url2 = 'auth/login';
+        const response2 = await axios.post(
+          url2,
+          { nickname:props.nickname, password: props.password },
+          { withCredentials: true }
+        );
+  
+        if (response2.status == 200) {
+          history.push('/dashboard');
+        }
         history.push('/dashboard')
       }
     } catch (err) {
