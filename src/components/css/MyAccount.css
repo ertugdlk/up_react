@@ -19,6 +19,10 @@
   width: 90%;
 }
 
+.image-label-dist {
+  margin-bottom: 5px !important;
+}
+
 .label-text {
   color: #0ab740 !important;
 }

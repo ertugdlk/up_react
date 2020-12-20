@@ -37,6 +37,8 @@ function MyAccount(props) {
     setMailVis(!mailo);
   };
 
+  const Test = () => {};
+
   return (
     <>
       <GlobalStyle></GlobalStyle>
@@ -49,13 +51,16 @@ function MyAccount(props) {
             <Grid columns={2} relaxed='very'>
               <Grid.Column>
                 <Grid.Row>
-                  <Label color='green'>{props.userName.toUpperCase()}</Label>
+                  <Label className='image-label-dist' color='green'>
+                    {props.userName.toUpperCase()}
+                  </Label>
                 </Grid.Row>
                 <Grid.Row>
                   <Image
                     src='https://thumbs.dreamstime.com/b/default-avatar-photo-placeholder-profile-icon-eps-file-easy-to-edit-default-avatar-photo-placeholder-profile-icon-124557887.jpg'
                     size='small'
                     circular
+                    centered
                   />
                 </Grid.Row>
               </Grid.Column>
@@ -87,7 +92,13 @@ function MyAccount(props) {
                       onClick={() => setPasswordLink()}
                     >
                       <Button.Content visible>*********</Button.Content>
-                      <Button.Content hidden>Edit</Button.Content>
+                      <Button.Content
+                        onMouseEnter={() => console.log('test')}
+                        style={{ backgroundColor: '#0b0b0b' }}
+                        hidden
+                      >
+                        Edit
+                      </Button.Content>
                     </Button>
                   </Segment>
                 )}
@@ -111,16 +122,12 @@ function MyAccount(props) {
                     <Label attached='top' color='green'>
                       Email
                     </Label>
-                    <Button
-                      animated='fade'
-                      fluid
-                      color='green'
-                      onClick={() => setMailLink()}
-                    >
-                      <Button.Content visible color='red'>
-                        *********
-                      </Button.Content>
-                      <Button.Content hidden color='red'>
+                    <Button animated='fade' fluid onClick={() => setMailLink()}>
+                      <Button.Content visible>*********</Button.Content>
+                      <Button.Content
+                        style={{ backgroundColor: '#0b0b0b' }}
+                        hidden
+                      >
                         Edit
                       </Button.Content>
                     </Button>
