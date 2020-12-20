@@ -177,9 +177,7 @@ function Room(props) {
   const handleStartMatch = async () => {
     const url = 'rcon/setupmatch'
     const response = await axios.post(url, {host:props.host} , {withCredentials: true })
-    const url2 = 'rcon/startmatch'
-    const response2 = await axios.post(url2, {} , {withCredentials:true})
-    setGameInformation(response2.data.ip)
+    setGameInformation('213.243.44.6')
   }
 
   const checkGameInformation = () => {
