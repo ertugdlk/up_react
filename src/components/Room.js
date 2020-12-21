@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ClearIcon from '@material-ui/icons/Clear';
 import axios from '../utils';
 import css from '../components/css/Room.css';
 import Logo from '../logo.png';

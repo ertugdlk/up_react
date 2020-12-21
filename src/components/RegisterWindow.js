@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import css from '../components/css/RegisterWindow.css';
 import axios from '../utils';
-import ClearIcon from '@material-ui/icons/Clear';
+import CloseIcon from '@material-ui/icons/Clear';
 
 import OTP from '../components/OTP';
 
@@ -31,7 +31,7 @@ function RegisterWindow(props) {
       if (password !== secondPassword) {
         alert("Passwords don't match");
         next();
-        
+
       }
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
@@ -55,10 +55,10 @@ function RegisterWindow(props) {
 
       <div className='register-window'>
         <div className='CloseButton1'>
-          <ClearIcon
+          <CloseIcon
             fontSize='large'
             onClick={props.handlecloseRegister}
-          ></ClearIcon>{' '}
+          ></CloseIcon>{' '}
         </div>
         <div className='register-modal'>
           <h2 className='register-title'>Create Account</h2>
