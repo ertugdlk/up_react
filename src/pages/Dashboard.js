@@ -60,10 +60,14 @@ function Dashboard(props) {
 
   useEffect(() => {
     /* --------------------------- Redux Get All Rooms -------------------------- */
-    props.getAllGameRooms();
+    props.getAllGameRooms( );
     /* -------------------------------------------------------------------------- */
-    props.getMatchData('test');
-    /* ------------------------------ New Room Test ----------------------------- */
+
+    socket.on('userCountChange', (data) => {
+      console.log(data);
+      props.getMatchData(data.host, data.positive);
+    });
+
     socket.on('newRoom', (data) => {
       props.addNewGame(data);
     });
@@ -92,8 +96,8 @@ function Dashboard(props) {
       setReturnButton(true);
     });
   }, []);
+  /* -------------------------------------------------------------------------- */
   useEffect(() => {
-    /* -------------------------------------------------------------------------- */
     async function userInfo() {
       try {
         const url = 'auth/me';

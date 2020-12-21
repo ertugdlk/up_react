@@ -6,11 +6,21 @@ import {
   getUserGames,
   getMatchDataText,
 } from '../utils/helpers';
+import _ from 'lodash';
 
-export const getAllGameRooms = () => async (dispatch) => {
-  const response = await axios.get('room/getall', { withCredentials: true });
-  // console.log(response.data);
-  dispatch({ type: fetchAllRooms, payload: response.data });
+export const getAllGameRooms = (rooms = [], isChangeHost = false) => async (
+  dispatch
+) => {
+  if (isChangeHost) {
+    console.log('Action Rooms', rooms);
+    dispatch({ type: fetchAllRooms, payload: [...rooms] });
+  }
+
+  if (!isChangeHost) {
+    const response = await axios.get('room/getall', { withCredentials: true });
+    // console.log(response.data);
+    dispatch({ type: fetchAllRooms, payload: response.data });
+  }
 };
 
 export const addNewGame = (data) => async (dispatch, getState) => {
@@ -26,9 +36,29 @@ export const getAllUserGames = () => async (dispatch) => {
   dispatch({ type: getUserGames, payload: response.data });
 };
 
-export const getMatchData = (user) => async (dispatch, getState) => {
-  const rooms = getState().roomsRedux;
-  const gameObject = rooms.filter((item) => item.name === user);
-  console.log(user);
-  dispatch({ type: getMatchDataText, payload: gameObject });
+export const getMatchData = (host, isPositive) => async (
+  dispatch,
+  getState
+) => {
+  const rooms = [...getState().roomsRedux];
+  console.log('Rooms:', rooms);
+
+  const index = _.findIndex(getState().roomsRedux, function (room) {
+    return room.host == host;
+  });
+  console.log('Rooms Array', rooms[index]);
+  // getState().roomsRedux[index].usersCount += 1;
+
+  switch (isPositive) {
+    case true:
+      rooms[index].userCount += 1;
+      break;
+    case false:
+      rooms[index].userCount += 1;
+      break;
+  }
+
+ dispatch(getAllGameRooms(rooms, true));
+
+  // dispatch({ type: getMatchDataText, payload: singleRoom });
 };

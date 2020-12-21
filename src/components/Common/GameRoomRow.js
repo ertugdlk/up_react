@@ -7,7 +7,7 @@ function GameRoomRow(props) {
   //const [gameDetail, setGameDetail] = useState({})
   const [userRoom, setRoom] = useState(false);
   const [selectedHost, setSelectedHost] = useState('');
-  
+
   const handleRoom = (host) => {
     setRoom(true);
     setSelectedHost(host);
@@ -18,9 +18,12 @@ function GameRoomRow(props) {
   };
 
   const listRooms = () => {
-    if(!props.data)
-    {
-      return
+    if (props.data === []) {
+      return (
+        <Table.Row>
+          <Table.Cell>No Game</Table.Cell>
+        </Table.Row>
+      );
     }
     return props.data.map((dat) => (
       <Table.Row>
@@ -47,7 +50,9 @@ function GameRoomRow(props) {
 
   return (
     <div className='Games'>
-      {userRoom ? <Room handleCloseRoom={closeRoom} host={selectedHost}></Room> : null}
+      {userRoom ? (
+        <Room handleCloseRoom={closeRoom} host={selectedHost}></Room>
+      ) : null}
       <Table padded inverted selectable>
         <Table.Header>
           <Table.Row>
