@@ -212,6 +212,15 @@ function Room(props) {
 
   }
 
+  const handleHost = (member) => {
+    if(props.host === member.nickname){
+      return 'HOST'
+    }
+    else{
+      return ''
+    }
+  }
+
   return (
     <>
       <div className='room-window'>
@@ -226,7 +235,7 @@ function Room(props) {
             <button onClick={handleTeamSwap} className="team-buttons">TEAM 1</button>
             <ul>
                 {team1.map((member) => {
-                return <li className='team-users'>{member.nickname} {member.readyStatus ? 'Ready' : 'Unready'}</li>
+                return <li className='team-users'> {handleHost(member)} {member.nickname} {member.readyStatus ? 'Ready' : 'Unready'}</li>
               })}
             </ul>
           </div>
@@ -237,7 +246,7 @@ function Room(props) {
           <button onClick={handleTeamSwap} className="team-buttons">TEAM 2</button>
             <ul>
               {team2.map((member) => {
-                return <li className='team-users'>{member.nickname} {member.readyStatus ? 'Ready' : 'Unready'}</li>
+                return <li className='team-users'>{handleHost(member)} {member.nickname} {member.readyStatus ? 'Ready' : 'Unready'}</li>
                   })}
             </ul>
           </div>
