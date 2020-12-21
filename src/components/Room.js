@@ -36,7 +36,17 @@ function Room(props) {
       }
     }
 
+    async function CheckReadyStatus() {
+      const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2
+      if(props.roomResponse.readyCount ===  limit)
+      {
+        setStartButton(true)
+        alert("All players are Ready")
+      }
+    }
+
     RoomUsers();
+    CheckReadyStatus()
   }, []);
 
   useEffect(() => {
@@ -221,6 +231,13 @@ function Room(props) {
     }
   }
 
+  const handleLeaveRoom = () => {
+    /*
+    const data = {nickname:props.nickname}
+    props.socket.leave("leave", (data))
+    */
+  }
+
   return (
     <>
       <div className='room-window'>
@@ -250,8 +267,12 @@ function Room(props) {
                   })}
             </ul>
           </div>
+          {props._host ? null : <button onClick={handleReady} className="ready-button">READY</button> }
+          {startButton ? <button className="ready-button" onClick={handleStart}>START</button> : null }
+          <button className ="ready-button" onClick={handleLeaveRoom}>LEAVE</button>
           <div className='gameDetails'>
-            <span>Game Details</span>
+            <span>Game Details </span>
+            <span>=> {props.roomResponse.settings.map}  {props.roomResponse.settings.type}</span>
           </div>
           <SegmentGroup>
             <Segment>
@@ -266,8 +287,6 @@ function Room(props) {
           <input className="chat-input" onChange={ (e) => setMessage(e.target.value)}></input>
             <button className="chat-send" onClick={handleSendMessage}>SEND</button>
           </SegmentGroup>
-          {props._host ? null : <button onClick={handleReady} className="ready-button">READY</button> }
-          {startButton ? <button className="ready-button" onClick={handleStart}>START</button> : null }
         </div>
       </div>
     </>

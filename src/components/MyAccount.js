@@ -123,7 +123,7 @@ function MyAccount(props) {
                       Email
                     </Label>
                     <Button animated='fade' fluid onClick={() => setMailLink()}>
-                      <Button.Content visible>*********</Button.Content>
+                      <Button.Content visible>{props.email}</Button.Content>
                       <Button.Content
                         style={{ backgroundColor: '#0b0b0b' }}
                         hidden

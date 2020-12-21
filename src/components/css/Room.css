@@ -28,7 +28,6 @@
     }
 
   .gameDetails{
-    border:1px solid blue;
     width: 550px;
     height: fit-content;
     text-align: center;
@@ -39,8 +38,9 @@
   }
 
   .team-1{
+    border-radius: 5px;
     top: 10px;
-    border:1px solid yellow;
+    border:3px groove green;
     position: relative;
     height: 200px;
     width: 150px;
@@ -80,8 +80,9 @@
   }
 
   .team-2{
+    border-radius: 5px;
     top: 10px;
-    border:1px groove gold;
+    border:3px groove green;
     position: relative;
     height: 200px;
     width: 150px;

@@ -104,6 +104,7 @@ function Dashboard(props) {
         if (response.status == 200) {
           if (response.data.nickname) {
             setUsername(response.data.nickname);
+            setEmail(response.data.email)
           } else {
             if (response.data.output.statusCode == 401) {
               history.push('/');
@@ -215,7 +216,7 @@ function Dashboard(props) {
     <>
       {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
       {account ? (
-        <MyAccount userName={userName} onClose={handleAccountClose}></MyAccount>
+        <MyAccount userName={userName} onClose={handleAccountClose} email={email}></MyAccount>
       ) : null}
       {create ? (
         <CreateGame
