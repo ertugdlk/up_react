@@ -18,7 +18,7 @@ import CreateGame from '../components/CreateGame';
 import MenuBarGame from '../components/MenuBarGame';
 import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import { getAllGameRooms, addNewGame } from '../actions/index';
+import { getAllGameRooms, addNewGame, getMatchData } from '../actions/index';
 import Room from '../components/Room';
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
@@ -51,10 +51,10 @@ function Dashboard(props) {
   const [create, setCreate] = useState(false);
   const [menubarGames, setMenubarGames] = useState([]);
   const [gameRoom, setGameRoom] = useState(false);
-  const [selectedHost , setSelectedHost] = useState('')
-  const [roomResponse, setRoomResponse] = useState({})
-  const [returnButton , setReturnButton] = useState(false)
-  const [_host , setHost] = useState(false)
+  const [selectedHost, setSelectedHost] = useState('');
+  const [roomResponse, setRoomResponse] = useState({});
+  const [returnButton, setReturnButton] = useState(false);
+  const [_host, setHost] = useState(false);
   // const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
@@ -62,37 +62,35 @@ function Dashboard(props) {
     /* --------------------------- Redux Get All Rooms -------------------------- */
     props.getAllGameRooms();
     /* -------------------------------------------------------------------------- */
-
+    props.getMatchData('test');
     /* ------------------------------ New Room Test ----------------------------- */
     socket.on('newRoom', (data) => {
       props.addNewGame(data);
     });
 
-    socket.on("roomData" , (data) => {
-      setRoomResponse(data)
+    socket.on('roomData', (data) => {
+      setRoomResponse(data);
       setGameRoom(true);
-    })
+    });
 
-    socket.on("roomCreated", (data) => {
-      setSelectedHost(data.host)
-      setRoomResponse(data)
-      setGameRoom(true)
-    })
+    socket.on('roomCreated', (data) => {
+      setSelectedHost(data.host);
+      setRoomResponse(data);
+      setGameRoom(true);
+    });
 
-    socket.on('Error', msg => {
-      alert(msg)
-    })
+    socket.on('Error', (msg) => {
+      alert(msg);
+    });
 
-    socket.on("openedRoom", (data) => {
-      setSelectedHost(data.room.host)
-      if(data.room.host == data.nickname)
-      {
-        setHost(true)
+    socket.on('openedRoom', (data) => {
+      setSelectedHost(data.room.host);
+      if (data.room.host == data.nickname) {
+        setHost(true);
       }
-      setRoomResponse(data.room)
-      setReturnButton(true)
-    })
-
+      setRoomResponse(data.room);
+      setReturnButton(true);
+    });
   }, []);
   useEffect(() => {
     /* -------------------------------------------------------------------------- */
@@ -111,7 +109,7 @@ function Dashboard(props) {
           }
         }
 
-        socket.emit('login', (response.data.nickname));
+        socket.emit('login', response.data.nickname);
       } catch (error) {
         throw error;
         //history.push("/")
@@ -144,8 +142,8 @@ function Dashboard(props) {
   }, []);
 
   const handleGameRoom = async (host) => {
-    const data = {host: host, nickname: userName}
-    socket.emit("join", (data))
+    const data = { host: host, nickname: userName };
+    socket.emit('join', data);
     setSelectedHost(host);
   };
 
@@ -170,22 +168,21 @@ function Dashboard(props) {
   };
 
   const handleCreateClick = () => {
-    if(menubarGames.length == 0){
-      alert('Add some Games First')
-    }
-    else{
+    if (menubarGames.length == 0) {
+      alert('Add some Games First');
+    } else {
       setCreate(true);
     }
   };
 
   const handleReturnGame = () => {
-    setGameRoom(true)
-  }
+    setGameRoom(true);
+  };
 
   const handleCreateRoom = (data) => {
     data.host = userName;
     setCreate(false);
-    setHost(true)
+    setHost(true);
     socket.emit('create', data);
     // props.getAllGameRooms();
   };
@@ -206,10 +203,10 @@ function Dashboard(props) {
     }
     steamauth();
   };
-  
+
   const handleCloseRoom = () => {
-    setGameRoom(false)
-  }
+    setGameRoom(false);
+  };
   // console.log(props.roomsRedux);
   return (
     <>
@@ -225,7 +222,16 @@ function Dashboard(props) {
         ></CreateGame>
       ) : null}
 
-      {gameRoom ? <Room host={selectedHost} socket={socket} nickname={userName} roomResponse={roomResponse} _host={_host} handleCloseRoom={handleCloseRoom}></Room> : null}
+      {gameRoom ? (
+        <Room
+          host={selectedHost}
+          socket={socket}
+          nickname={userName}
+          roomResponse={roomResponse}
+          _host={_host}
+          handleCloseRoom={handleCloseRoom}
+        ></Room>
+      ) : null}
       <GlobalStyle></GlobalStyle>
       <div className='Header'>
         <Grid>
@@ -264,9 +270,16 @@ function Dashboard(props) {
             {' '}
             New Game{' '}
           </button>
-          { returnButton ? <button  className="return-button" onClick={handleReturnGame}>Return to Existing Game</button>: null}
+          {returnButton ? (
+            <button className='return-button' onClick={handleReturnGame}>
+              Return to Existing Game
+            </button>
+          ) : null}
         </div>
-        <GameRoomRow data={props.roomsRedux} onJoin={(host) => handleGameRoom(host)}></GameRoomRow>
+        <GameRoomRow
+          data={props.roomsRedux}
+          onJoin={(host) => handleGameRoom(host)}
+        ></GameRoomRow>
       </div>
 
       {/* -------------------------------- LEFT PANE ------------------------------- */}
@@ -275,8 +288,7 @@ function Dashboard(props) {
 
       {/* /* -------------------------------- LEFT PANE ------------------------------- */}
 
-      <div className='SocialBar'>
-      </div>
+      <div className='SocialBar'></div>
     </>
   );
   //deposit ve withdraw butonlarına geçici olarak handleAccount fonksiyonu atandı, para işlemleri entegre edilince düzeltilmeli.
@@ -285,9 +297,14 @@ function Dashboard(props) {
 }
 
 const mapStateToProps = (state) => {
-  return { roomsRedux: state.roomsRedux };
+  return {
+    roomsRedux: state.roomsRedux,
+    matchData: state.matchInfo,
+  };
 };
 
-export default connect(mapStateToProps, { getAllGameRooms, addNewGame })(
-  Dashboard
-);
+export default connect(mapStateToProps, {
+  getAllGameRooms,
+  addNewGame,
+  getMatchData,
+})(Dashboard);
