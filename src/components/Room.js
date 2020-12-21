@@ -222,6 +222,11 @@ function Room(props) {
 
   }
 
+  const handleLeaveRoom = () => {
+    const data = {nickname:props.nickname}
+    props.socket.leave("leave", (data))
+  }
+  
   const handleHost = (member) => {
     if(props.host === member.nickname){
       return 'HOST'
@@ -272,7 +277,7 @@ function Room(props) {
           <button className ="ready-button" onClick={handleLeaveRoom}>LEAVE</button>
           <div className='gameDetails'>
             <span>Game Details </span>
-            <span>=> {props.roomResponse.settings.map}  {props.roomResponse.settings.type}</span>
+            <span> {props.roomResponse.settings.map}  {props.roomResponse.settings.type}</span>
           </div>
           <SegmentGroup>
             <Segment>
