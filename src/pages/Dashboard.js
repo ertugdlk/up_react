@@ -206,6 +206,10 @@ function Dashboard(props) {
     }
     steamauth();
   };
+  
+  const handleCloseRoom = () => {
+    setGameRoom(false)
+  }
   // console.log(props.roomsRedux);
   return (
     <>
@@ -221,7 +225,7 @@ function Dashboard(props) {
         ></CreateGame>
       ) : null}
 
-      {gameRoom ? <Room host={selectedHost} socket={socket} nickname={userName} roomResponse={roomResponse} _host={_host}></Room> : null}
+      {gameRoom ? <Room host={selectedHost} socket={socket} nickname={userName} roomResponse={roomResponse} _host={_host} handleCloseRoom={handleCloseRoom}></Room> : null}
       <GlobalStyle></GlobalStyle>
       <div className='Header'>
         <Grid>

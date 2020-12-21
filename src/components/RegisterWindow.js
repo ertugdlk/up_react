@@ -3,6 +3,11 @@ import { createGlobalStyle } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import css from '../components/css/RegisterWindow.css';
 import axios from '../utils';
+<<<<<<< HEAD
+=======
+import ClearIcon from '@material-ui/icons/Clear';
+
+>>>>>>> 344373166957623b4c54d66d278f065ade06c9bf
 import OTP from '../components/OTP';
 
 const GlobalStyle = createGlobalStyle`
@@ -11,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Raleway', sans-serif;
   }`;
 
-function RegisterWindow() {
+function RegisterWindow(props) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [secondPassword, setSecondPassword] = useState('');
@@ -51,6 +56,12 @@ function RegisterWindow() {
       {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> : 
 
       <div className='register-window'>
+        <div className='CloseButton1'>
+          <ClearIcon
+            fontSize='large'
+            onClick={props.handlecloseRegister}
+          ></ClearIcon>{' '}
+        </div>
         <div className='register-modal'>
           <h2 className='register-title'>Create Account</h2>
           <label>

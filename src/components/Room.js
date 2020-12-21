@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ClearIcon from '@material-ui/icons/Clear';
 import axios from '../utils';
 import css from '../components/css/Room.css';
 import Logo from '../logo.png';
@@ -201,8 +202,11 @@ function Room(props) {
   return (
     <>
       <div className='room-window'>
-      <div className='CloseButton1'>
-          {' '}
+        <div className='CloseButton1'>
+          <ClearIcon
+            fontSize='large'
+            onClick={props.handleCloseRoom}
+          ></ClearIcon>{' '}
         </div>
         <div className='components'>
           <div className='team-1'>
