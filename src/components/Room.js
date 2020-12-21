@@ -94,6 +94,20 @@ function Room(props) {
       }
     })
 
+    props.socket.on("UserLeft" , (user) => {
+      if(user.team === 1)
+      {
+        _.remove(team1 , (team1member) => {
+          return team1member.nickname == user.nickname
+        })
+      }
+      else{
+        _.remove(team2 , (team2member) => {
+          return team2member.nickname == user.nickname
+        })
+      }
+    })
+
     props.socket.on("readyChange", async(data) => {
       console.log(data)
       const url = 'room/getdata';

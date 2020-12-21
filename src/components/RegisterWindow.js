@@ -38,6 +38,7 @@ function RegisterWindow(props) {
       if (response.status == 200) {
         const url = 'auth/sendotp';
         const response = await axios.post(url, {email});
+        props.handlecloseRegister()
         handleOTP()
         //history.push("/");
       } else if (response.data.status === 0) {
