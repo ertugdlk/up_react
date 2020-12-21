@@ -28,7 +28,7 @@ export const getAllUserGames = () => async (dispatch) => {
 
 export const getMatchData = (user) => async (dispatch, getState) => {
   const rooms = getState().roomsRedux;
-  const gameObject = rooms.filter((item) => item.user === user);
+  const gameObject = rooms.filter((item) => item.name === user);
   console.log(user);
   dispatch({ type: getMatchDataText, payload: gameObject });
 };
