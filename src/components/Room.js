@@ -221,11 +221,6 @@ function Room(props) {
     }
 
   }
-
-  const handleLeaveRoom = () => {
-    const data = {nickname:props.nickname}
-    props.socket.leave("leave", (data))
-  }
   
   const handleHost = (member) => {
     if(props.host === member.nickname){
