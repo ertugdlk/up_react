@@ -3,11 +3,8 @@ import { createGlobalStyle } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import css from '../components/css/RegisterWindow.css';
 import axios from '../utils';
-<<<<<<< HEAD
-=======
 import ClearIcon from '@material-ui/icons/Clear';
 
->>>>>>> 344373166957623b4c54d66d278f065ade06c9bf
 import OTP from '../components/OTP';
 
 const GlobalStyle = createGlobalStyle`
@@ -34,6 +31,7 @@ function RegisterWindow(props) {
       if (password !== secondPassword) {
         alert("Passwords don't match");
         next();
+        
       }
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
