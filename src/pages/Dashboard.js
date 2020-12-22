@@ -47,7 +47,6 @@ function Dashboard(props) {
   const [email, setEmail] = React.useState('');
   const [gamesList, setGamesList] = useState(false);
   const [account, setAccount] = useState(false);
-  const [rooms, setRooms] = useState([]);
   const [create, setCreate] = useState(false);
   const [menubarGames, setMenubarGames] = useState([]);
   const [gameRoom, setGameRoom] = useState(false);
@@ -55,6 +54,7 @@ function Dashboard(props) {
   const [roomResponse, setRoomResponse] = useState({});
   const [returnButton, setReturnButton] = useState(false);
   const [_host, setHost] = useState(false);
+  const [session , setSession] = useState(false)
   // const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
@@ -97,7 +97,7 @@ function Dashboard(props) {
     });
   }, []);
   /* -------------------------------------------------------------------------- */
-  useEffect(() => {
+  useEffect( () => {
     async function userInfo() {
       try {
         const url = 'auth/me';
@@ -107,10 +107,16 @@ function Dashboard(props) {
           if (response.data.nickname) {
             setUsername(response.data.nickname);
             setEmail(response.data.email)
+            setSession(true)
           } else {
             if (response.data.output.statusCode == 401) {
-              history.push('/');
+              return history.push('/');
             }
+          }
+        }
+        else{
+          if(response.data.output.statusCode){
+            return history.push('/');
           }
         }
 
@@ -124,8 +130,12 @@ function Dashboard(props) {
     async function userGames() {
       const url = 'detail/games';
       const response = await axios.get(url, { withCredentials: true });
-
-      setMenubarGames(response.data);
+      if(!response.data.output){
+        setMenubarGames(response.data);
+      }
+      else{
+        return history.push('/');
+      } 
     }
 
     async function userSteam() {
@@ -213,8 +223,10 @@ function Dashboard(props) {
     setGameRoom(false);
   };
   // console.log(props.roomsRedux);
-  return (
+  return ( 
     <>
+    { session ? 
+    <div>
       {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
       {account ? (
         <MyAccount userName={userName} onClose={handleAccountClose} email={email}></MyAccount>
@@ -294,6 +306,7 @@ function Dashboard(props) {
       {/* /* -------------------------------- LEFT PANE ------------------------------- */}
 
       <div className='SocialBar'></div>
+      </div> : null }
     </>
   );
   //deposit ve withdraw butonlarına geçici olarak handleAccount fonksiyonu atandı, para işlemleri entegre edilince düzeltilmeli.

@@ -30,13 +30,13 @@ function LoginWindow(props) {
       const response = await axios.post(
         url,
         { nickname, password },
-        { withCredentials: true }
+        {withCredentials: true}
       );
 
       if (response.status == 200) {
         history.push('/dashboard');
       } else {
-        console.log('invalid login');
+        alert('Invalid Login')
       }
     } catch (err) {
       console.log(err);
