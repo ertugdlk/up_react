@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import css from '../components/css/RegisterWindow.css';
 import axios from '../utils';
 import CloseIcon from '@material-ui/icons/Clear';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import OTP from '../components/OTP';
 
@@ -20,18 +21,23 @@ function RegisterWindow(props) {
   const [email, setEmail] = useState('');
   const history = useHistory();
   const [otp, setOTP] = useState(false);
-
+  const [open, setOpen] = useState(true);
+  const [ErrorMessage,setErrorMessage] = useState('');
   const handleOTP = () => {
     //mail gönderilcek
     setOTP(true);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const handleRegister = async (next) => {
     try {
       if (password !== secondPassword) {
-        alert("Passwords don't match");
-        next();
-
+        setOpen(true)
+        setErrorMessage("Password don't match")
+        next()
       }
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
@@ -41,18 +47,20 @@ function RegisterWindow(props) {
         handleOTP()
         //history.push("/");
       } else if (response.data.status === 0) {
-        alert(response.data.msg);
+        setErrorMessage(response.data.msg)
+
       }
     } catch (err) {
       console.log(err);
     }
   };
 
+
   return (
     <>
-      <GlobalStyle></GlobalStyle>
+      <GlobalStyle></GlobalStyle>      
+      <Snackbar open={open} autoHideDuration={1000} message={ErrorMessage} onClose={handleClose} />
       {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> : 
-
       <div className='register-window'>
         <div className='CloseButton1'>
           <CloseIcon
