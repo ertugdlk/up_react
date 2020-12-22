@@ -20,6 +20,7 @@ import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { getAllGameRooms, addNewGame, getMatchData } from '../actions/index';
 import Room from '../components/Room';
+import Snackbar from '@material-ui/core/Snackbar';
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from '../utils';
@@ -55,6 +56,9 @@ function Dashboard(props) {
   const [returnButton, setReturnButton] = useState(false);
   const [_host, setHost] = useState(false);
   const [session , setSession] = useState(false)
+  const [snack, setSnack] = useState(false);
+  const [ErrorMessage,setErrorMessage] = useState('');
+
   // const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
@@ -84,7 +88,8 @@ function Dashboard(props) {
     });
 
     socket.on('Error', (msg) => {
-      alert(msg);
+      setErrorMessage(msg);
+      setSnack(true);
     });
 
     socket.on('openedRoom', (data) => {
@@ -144,9 +149,11 @@ function Dashboard(props) {
 
       if (props.steam) {
         if (props.steam == response.data) {
-          alert('Your Steam Integrated to our system');
+          setErrorMessage('Your Steam Integrated to our system');
+          setSnack(true);
         } else {
-          alert('no match');
+          setErrorMessage('no match');
+          setSnack(true);
         }
       }
     }
@@ -184,7 +191,8 @@ function Dashboard(props) {
 
   const handleCreateClick = () => {
     if (menubarGames.length == 0) {
-      alert('Add some Games First');
+      setErrorMessage('Add some Games First');
+      setSnack(true);
     } else {
       setCreate(true);
     }
@@ -225,6 +233,8 @@ function Dashboard(props) {
   // console.log(props.roomsRedux);
   return ( 
     <>
+    <Snackbar open={snack} autoHideDuration={10000} message={ErrorMessage} />
+
     { session ? 
     <div>
       {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}

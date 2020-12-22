@@ -5,6 +5,7 @@ import Logo from '../logo.png';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Segment, SegmentGroup } from 'semantic-ui-react';
 import Countdown from 'react-countdown'
+import Snackbar from '@material-ui/core/Snackbar';
 
 const Axios = require('axios');
 const _ = require('lodash')
@@ -18,11 +19,14 @@ function Room(props) {
   const [startButton , setStartButton] = useState(false)
   const [start , setStart] = useState(false)
   const [gameInformation , setGameInformation] = useState('')
+  const [snackbar, setSnackbar] = useState(false)
+  const [ErrorMessage,setErrorMessage] = useState('');
 
   useEffect(() => {
     async function RoomUsers() {
       if (!props.roomResponse.users) {
-        alert('no room with this host');
+        setErrorMessage('no room with this host')
+        setSnackbar(true)
       } else {
         const allusers = props.roomResponse.users;
         const team1users = _.filter(allusers, function(user){
@@ -41,7 +45,8 @@ function Room(props) {
       if(props.roomResponse.readyCount ===  limit)
       {
         setStartButton(true)
-        alert("All players are Ready")
+        setErrorMessage("All players are Ready")
+        setSnackbar(true)
       }
     }
 
@@ -75,12 +80,14 @@ function Room(props) {
       {
         if(data == 'all_ready'){
           setStartButton(true)
-          alert(data)
+          setErrorMessage(data)
+          setSnackbar(true)
         }
         else{
           setStart(false)
           setStartButton(false)
-          alert(data)
+          setErrorMessage(data)
+          setSnackbar(true)
         }
       }
       else{
@@ -240,6 +247,8 @@ function Room(props) {
 
   return (
     <>
+      <Snackbar open={snackbar} autoHideDuration={10000} message={ErrorMessage} />
+
       <div className='room-window'>
         <div className='CloseButton1'>
           <ClearIcon

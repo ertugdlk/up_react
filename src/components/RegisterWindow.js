@@ -21,22 +21,19 @@ function RegisterWindow(props) {
   const [email, setEmail] = useState('');
   const history = useHistory();
   const [otp, setOTP] = useState(false);
-  const [open, setOpen] = useState(true);
+  const [state, setState] = useState(false);
   const [ErrorMessage,setErrorMessage] = useState('');
   const handleOTP = () => {
     //mail gönderilcek
     setOTP(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleRegister = async (next) => {
     try {
       if (password !== secondPassword) {
-        setOpen(true)
-        setErrorMessage("Password don't match")
+        setErrorMessage("Passwords don't match")
+        setState(true)
         next()
       }
       const url = 'auth/register';
@@ -48,7 +45,7 @@ function RegisterWindow(props) {
         //history.push("/");
       } else if (response.data.status === 0) {
         setErrorMessage(response.data.msg)
-
+        setState(true)
       }
     } catch (err) {
       console.log(err);
@@ -58,9 +55,9 @@ function RegisterWindow(props) {
 
   return (
     <>
-      <GlobalStyle></GlobalStyle>      
-      <Snackbar open={open} autoHideDuration={1000} message={ErrorMessage} onClose={handleClose} />
-      {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> : 
+      <Snackbar open={state} autoHideDuration={10000} message={ErrorMessage} />
+      <GlobalStyle></GlobalStyle>  
+      {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> :
       <div className='register-window'>
         <div className='CloseButton1'>
           <CloseIcon
@@ -120,7 +117,8 @@ function RegisterWindow(props) {
             </button>
           </div>
         </div>
-      </div>}
+      </div>
+      }
     </>
   );
 }
