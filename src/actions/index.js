@@ -54,11 +54,12 @@ export const getMatchData = (host, isPositive) => async (
       rooms[index].userCount += 1;
       break;
     case false:
-      rooms[index].userCount += 1;
+      rooms[index].userCount -= 1;
       break;
   }
+  // host ile nickname yerni değiştir
 
- dispatch(getAllGameRooms(rooms, true));
+  dispatch(getAllGameRooms(rooms, true));
 
   // dispatch({ type: getMatchDataText, payload: singleRoom });
 };
