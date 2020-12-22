@@ -105,16 +105,37 @@ function Room(props) {
     })
 
     props.socket.on("UserLeft" , (user) => {
+      var teamArr
       if(user.team === 1)
       {
-        _.remove(team1 , (team1member) => {
+        teamArr = team1
+        _.remove(teamArr , (team1member) => {
           return team1member.nickname == user.nickname
         })
+        setTeam1(teamArr)
+      }
+      else{
+        teamArr = team2
+        _.remove(teamArr , (team2member) => {
+          return team2member.nickname == user.nickname
+        })
+        setTeam2(teamArr)
+      }
+    })
+
+    props.socket.on("HostLeft" , ({host , newHost}) => {
+      if(host.team === 1)
+      {
+        _.remove(team1 , (team1member) => {
+          return team1member.nickname == host.nickname
+        })
+        props.host = newHost.nickname
       }
       else{
         _.remove(team2 , (team2member) => {
-          return team2member.nickname == user.nickname
+          return team2member.nickname == host.nickname
         })
+        props.host = newHost.nickname
       }
     })
 
@@ -232,10 +253,30 @@ function Room(props) {
   }
 
   const handleLeaveRoom = () => {
-    /*
-    const data = {nickname:props.nickname}
-    props.socket.leave("leave", (data))
-    */
+    if(props.nickname == props.host)
+      {
+        alert('şimdilik devre dışı')
+      }
+      else{
+        const user1 = _.find(team1 , (member) => {
+          return member.nickname == props.nickname
+        })
+    
+        const user2 = _.find(team2 , (member) => {
+          return member.nickname == props.nickname
+        })
+    
+        const temp = !user1 ? user2 : user1
+    
+        if(temp.readyStatus === true){
+          alert('Before quit, change your ready status')
+        }
+        else{
+          const data = {nickname:props.nickname, host: props.host}
+          props.socket.emit("leave", (data))
+          props.handleCloseRoom()
+        }
+      }
   }
 
   return (

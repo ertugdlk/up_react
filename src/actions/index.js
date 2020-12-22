@@ -41,12 +41,10 @@ export const getMatchData = (host, isPositive) => async (
   getState
 ) => {
   const rooms = [...getState().roomsRedux];
-  console.log('Rooms:', rooms);
 
   const index = _.findIndex(getState().roomsRedux, function (room) {
     return room.host == host;
   });
-  console.log('Rooms Array', rooms[index]);
   // getState().roomsRedux[index].usersCount += 1;
 
   switch (isPositive) {
@@ -54,7 +52,7 @@ export const getMatchData = (host, isPositive) => async (
       rooms[index].userCount += 1;
       break;
     case false:
-      rooms[index].userCount += 1;
+      rooms[index].userCount -= 1;
       break;
   }
 
