@@ -18,6 +18,7 @@ function Room(props) {
   const [startButton , setStartButton] = useState(false)
   const [start , setStart] = useState(false)
   const [gameInformation , setGameInformation] = useState('')
+  const [host , setHost] = useState('')
 
   useEffect(() => {
     async function RoomUsers() {
@@ -44,6 +45,8 @@ function Room(props) {
         alert("All players are Ready")
       }
     }
+
+    setHost(props.host)
 
     RoomUsers();
     CheckReadyStatus()
@@ -124,18 +127,23 @@ function Room(props) {
     })
 
     props.socket.on("HostLeft" , ({host , newHost}) => {
+      var teamArr
       if(host.team === 1)
       {
+        teamArr = team1
         _.remove(team1 , (team1member) => {
           return team1member.nickname == host.nickname
         })
-        props.host = newHost.nickname
+        setTeam1(teamArr)
+        setHost(newHost.nickname)
       }
       else{
+        teamArr = team2
         _.remove(team2 , (team2member) => {
           return team2member.nickname == host.nickname
         })
-        props.host = newHost.nickname
+        setTeam2(teamArr)
+        setHost(newHost.nickname)
       }
     })
 
@@ -247,17 +255,16 @@ function Room(props) {
     if(props.host === member.nickname){
       return 'HOST'
     }
+    else if(host === member.nickname){
+      return 'HOST'
+    }
     else{
       return ''
     }
   }
 
   const handleLeaveRoom = () => {
-    if(props.nickname == props.host)
-      {
-        alert('şimdilik devre dışı')
-      }
-      else{
+
         const user1 = _.find(team1 , (member) => {
           return member.nickname == props.nickname
         })
@@ -269,14 +276,20 @@ function Room(props) {
         const temp = !user1 ? user2 : user1
     
         if(temp.readyStatus === true){
-          alert('Before quit, change your ready status')
+          if(host === props.nickname){
+            const data = {nickname:props.nickname, host: props.host}
+            props.socket.emit("leave", (data))
+            props.handleCloseRoom()
+          }
+          else{
+            alert('Before quit, change your ready status')
+          }
         }
         else{
           const data = {nickname:props.nickname, host: props.host}
           props.socket.emit("leave", (data))
           props.handleCloseRoom()
         }
-      }
   }
 
   return (

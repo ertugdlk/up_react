@@ -18,7 +18,12 @@ import CreateGame from '../components/CreateGame';
 import MenuBarGame from '../components/MenuBarGame';
 import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons';
 import { connect } from 'react-redux';
-import { getAllGameRooms, addNewGame, getMatchData } from '../actions/index';
+import {
+  getAllGameRooms,
+  addNewGame,
+  getMatchData,
+  changeGameHost,
+} from '../actions/index';
 import Room from '../components/Room';
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
@@ -60,8 +65,12 @@ function Dashboard(props) {
 
   useEffect(() => {
     /* --------------------------- Redux Get All Rooms -------------------------- */
-    props.getAllGameRooms( );
+    props.getAllGameRooms();
     /* -------------------------------------------------------------------------- */
+
+    socket.on('hostChanged' , ({host, newHost}) => {
+      props.changeGameHost(host, newHost);
+    })
 
     socket.on('userCountChange', (data) => {
       console.log(data);
@@ -325,4 +334,5 @@ export default connect(mapStateToProps, {
   getAllGameRooms,
   addNewGame,
   getMatchData,
+  changeGameHost,
 })(Dashboard);

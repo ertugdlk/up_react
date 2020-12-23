@@ -12,20 +12,17 @@ export const getAllGameRooms = (rooms = [], isChangeHost = false) => async (
   dispatch
 ) => {
   if (isChangeHost) {
-    console.log('Action Rooms', rooms);
     dispatch({ type: fetchAllRooms, payload: [...rooms] });
   }
 
   if (!isChangeHost) {
     const response = await axios.get('room/getall', { withCredentials: true });
-    // console.log(response.data);
     dispatch({ type: fetchAllRooms, payload: response.data });
   }
 };
 
 export const addNewGame = (data) => async (dispatch, getState) => {
   // iki tür olsun ya mevcuttakilerden ayıklayıp getirsin veya gidip tek çeksin
-  // const allRooms = [...getState().roomsRedux, data];
 
   dispatch({ type: addNewRoom, payload: data });
 };
@@ -45,7 +42,6 @@ export const getMatchData = (host, isPositive) => async (
   const index = _.findIndex(getState().roomsRedux, function (room) {
     return room.host == host;
   });
-  // getState().roomsRedux[index].usersCount += 1;
 
   switch (isPositive) {
     case true:
@@ -56,7 +52,16 @@ export const getMatchData = (host, isPositive) => async (
       break;
   }
 
- dispatch(getAllGameRooms(rooms, true));
+  dispatch(getAllGameRooms(rooms, true));
+};
 
-  // dispatch({ type: getMatchDataText, payload: singleRoom });
+export const changeGameHost = (host, newHost) => async (dispatch, getState) => {
+  const rooms = [...getState().roomsRedux];
+  const index = _.findIndex(getState().roomsRedux, function (room) {
+    return room.host == host;
+  });
+
+  rooms[index].host = newHost;
+
+  dispatch(getAllGameRooms(rooms, true));
 };
