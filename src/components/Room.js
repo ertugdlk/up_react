@@ -245,9 +245,13 @@ function Room(props) {
     */
   }
 
+  const handleSnack = () => {
+    setSnackbar(false);
+  }
+
   return (
     <>
-      <Snackbar open={snackbar} autoHideDuration={10000} message={ErrorMessage} />
+      <Snackbar open={snackbar} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}/>
 
       <div className='room-window'>
         <div className='CloseButton1'>

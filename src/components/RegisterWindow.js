@@ -21,7 +21,7 @@ function RegisterWindow(props) {
   const [email, setEmail] = useState('');
   const history = useHistory();
   const [otp, setOTP] = useState(false);
-  const [state, setState] = useState(false);
+  const [open, setOpen] = useState(false);
   const [ErrorMessage,setErrorMessage] = useState('');
   const handleOTP = () => {
     //mail gönderilcek
@@ -29,13 +29,12 @@ function RegisterWindow(props) {
   };
 
 
-  const handleRegister = async (next) => {
+  const handleRegister = async () => {
     try {
       if (password !== secondPassword) {
         setErrorMessage("Passwords don't match")
-        setState(true)
-        next()
-      }
+        setOpen(true)
+      }else{
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
       if (response.status == 200) {
@@ -45,8 +44,9 @@ function RegisterWindow(props) {
         //history.push("/");
       } else if (response.data.status === 0) {
         setErrorMessage(response.data.msg)
-        setState(true)
+        setOpen(true)
       }
+    }
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +55,7 @@ function RegisterWindow(props) {
 
   return (
     <>
-      <Snackbar open={state} autoHideDuration={10000} message={ErrorMessage} />
+      <Snackbar anchorOrigin={{vertical: 'top',horizontal: 'center'}} open={open} autoHideDuration={1000} message={ErrorMessage}/>
       <GlobalStyle></GlobalStyle>  
       {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> :
       <div className='register-window'>

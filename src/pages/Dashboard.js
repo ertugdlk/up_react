@@ -230,10 +230,14 @@ function Dashboard(props) {
   const handleCloseRoom = () => {
     setGameRoom(false);
   };
+
+  const handleSnack = () => {
+    setSnack(false);
+  };
   // console.log(props.roomsRedux);
   return ( 
     <>
-    <Snackbar open={snack} autoHideDuration={10000} message={ErrorMessage} />
+    <Snackbar open={snack} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}/>
 
     { session ? 
     <div>

@@ -49,8 +49,8 @@ function LoginWindow(props) {
 
   return (
     <>
+      <Snackbar open={open} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message="Login Failed" onClose={handleClose} />
       <GlobalStyle></GlobalStyle>
-      <Snackbar open={open} autoHideDuration={1000} message="Login Failed" onClose={handleClose} />
       <div className='login-window'>
         <div className='CloseButton1'>
           <ClearIcon

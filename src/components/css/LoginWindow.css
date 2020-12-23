@@ -89,9 +89,3 @@
   color: #f1f1f1;
   border-color: #f1f1f1;
 }
-
-.snackbar{
-  flex-flow: column nowrap;
-  display: flex;
-  align-self: flex-start;
-}
