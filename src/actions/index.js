@@ -22,9 +22,10 @@ export const getAllGameRooms = (rooms = [], isChangeHost = false) => async (
 };
 
 export const addNewGame = (data) => async (dispatch, getState) => {
-  // iki tür olsun ya mevcuttakilerden ayıklayıp getirsin veya gidip tek çeksin
-
   dispatch({ type: addNewRoom, payload: data });
+};
+export const removeGameRoom = (data) => async (dispatch, getState) => {
+  dispatch({ type: removeRoom, payload: data });
 };
 
 export const getAllUserGames = () => async (dispatch) => {

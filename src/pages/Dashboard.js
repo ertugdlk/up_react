@@ -324,4 +324,5 @@ export default connect(mapStateToProps, {
   addNewGame,
   getMatchData,
   changeGameHost,
+  removeRoom,
 })(Dashboard);
