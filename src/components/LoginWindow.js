@@ -22,9 +22,9 @@ function LoginWindow(props) {
   const [password, setPassword] = useState('');
   const history = useHistory();
   const [open, setOpen] = useState(false);
-  
+
   const handleSteam = async () => {};
-  
+
   const handleClose = () => {
     setOpen(false);
   };

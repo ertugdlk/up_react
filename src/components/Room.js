@@ -19,7 +19,8 @@ function Room(props) {
   const [startButton , setStartButton] = useState(false)
   const [start , setStart] = useState(false)
   const [gameInformation , setGameInformation] = useState('')
-  const [snackbar, setSnackbar] = useState(false)
+  const [host , setHost] = useState('')
+  const [snackbar, setSnackbar] = useState(false);
   const [ErrorMessage,setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -49,6 +50,8 @@ function Room(props) {
         setSnackbar(true)
       }
     }
+
+    setHost(props.host)
 
     RoomUsers();
     CheckReadyStatus()
@@ -112,16 +115,42 @@ function Room(props) {
     })
 
     props.socket.on("UserLeft" , (user) => {
+      var teamArr
       if(user.team === 1)
       {
-        _.remove(team1 , (team1member) => {
+        teamArr = team1
+        _.remove(teamArr , (team1member) => {
           return team1member.nickname == user.nickname
         })
+        setTeam1(teamArr)
       }
       else{
-        _.remove(team2 , (team2member) => {
+        teamArr = team2
+        _.remove(teamArr , (team2member) => {
           return team2member.nickname == user.nickname
         })
+        setTeam2(teamArr)
+      }
+    })
+
+    props.socket.on("HostLeft" , ({host , newHost}) => {
+      var teamArr
+      if(host.team === 1)
+      {
+        teamArr = team1
+        _.remove(team1 , (team1member) => {
+          return team1member.nickname == host.nickname
+        })
+        setTeam1(teamArr)
+        setHost(newHost.nickname)
+      }
+      else{
+        teamArr = team2
+        _.remove(team2 , (team2member) => {
+          return team2member.nickname == host.nickname
+        })
+        setTeam2(teamArr)
+        setHost(newHost.nickname)
       }
     })
 
@@ -233,16 +262,41 @@ function Room(props) {
     if(props.host === member.nickname){
       return 'HOST'
     }
+    else if(host === member.nickname){
+      return 'HOST'
+    }
     else{
       return ''
     }
   }
 
   const handleLeaveRoom = () => {
-    /*
-    const data = {nickname:props.nickname}
-    props.socket.leave("leave", (data))
-    */
+
+        const user1 = _.find(team1 , (member) => {
+          return member.nickname == props.nickname
+        })
+    
+        const user2 = _.find(team2 , (member) => {
+          return member.nickname == props.nickname
+        })
+    
+        const temp = !user1 ? user2 : user1
+    
+        if(temp.readyStatus === true){
+          if(host === props.nickname){
+            const data = {nickname:props.nickname, host: props.host}
+            props.socket.emit("leave", (data))
+            props.handleCloseRoom()
+          }
+          else{
+            alert('Before quit, change your ready status')
+          }
+        }
+        else{
+          const data = {nickname:props.nickname, host: props.host}
+          props.socket.emit("leave", (data))
+          props.handleCloseRoom()
+        }
   }
 
   const handleSnack = () => {
@@ -251,9 +305,10 @@ function Room(props) {
 
   return (
     <>
-      <Snackbar open={snackbar} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}/>
 
       <div className='room-window'>
+      <Snackbar open={snackbar} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}/>
+
         <div className='CloseButton1'>
           <ClearIcon
             fontSize='large'
