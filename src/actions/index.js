@@ -5,6 +5,7 @@ import {
   fetchAllRooms,
   getUserGames,
   getMatchDataText,
+  removeRoom,
 } from '../utils/helpers';
 import _ from 'lodash';
 
@@ -22,9 +23,11 @@ export const getAllGameRooms = (rooms = [], isChangeHost = false) => async (
 };
 
 export const addNewGame = (data) => async (dispatch, getState) => {
-  // iki tür olsun ya mevcuttakilerden ayıklayıp getirsin veya gidip tek çeksin
-
   dispatch({ type: addNewRoom, payload: data });
+};
+export const removeGameRoom = (host) => async (dispatch, getState) => {
+
+  dispatch({ type: removeRoom, payload: host });
 };
 
 export const getAllUserGames = () => async (dispatch) => {

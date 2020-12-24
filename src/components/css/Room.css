@@ -149,7 +149,6 @@
   .chat-field{
     display: inline;
     flex-flow: row wrap;
-    width: fit-content;
     align-items: stretch;
   }
 
