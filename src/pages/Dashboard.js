@@ -26,6 +26,7 @@ import {
 } from '../actions/index';
 import Room from '../components/Room';
 import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from '../utils';
@@ -246,7 +247,15 @@ function Dashboard(props) {
   // console.log(props.roomsRedux);
   return ( 
     <>
-    <Snackbar open={snack} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}/>
+     <Snackbar open={snack} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} onClose={handleSnack} ><SnackbarContent style={{
+      backgroundColor:'#00ff60',
+      color:'black',
+      justifyContent:'center',
+      fontWeight:'bolder',
+      fontSize:'14px'
+    }}
+    message={<span id="client-snackbar">{ErrorMessage}</span>}
+  /></Snackbar>
 
     { session ? 
     <div>

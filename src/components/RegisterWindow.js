@@ -5,6 +5,7 @@ import css from '../components/css/RegisterWindow.css';
 import axios from '../utils';
 import CloseIcon from '@material-ui/icons/Clear';
 import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 
 import OTP from '../components/OTP';
 
@@ -55,7 +56,15 @@ function RegisterWindow(props) {
 
   return (
     <>
-      <Snackbar anchorOrigin={{vertical: 'top',horizontal: 'center'}} open={open} autoHideDuration={1000} message={ErrorMessage}/>
+      <Snackbar anchorOrigin={{vertical: 'top',horizontal: 'center'}} open={open} autoHideDuration={1000}><SnackbarContent style={{
+      backgroundColor:'#00ff60',
+      color:'black',
+      justifyContent:'center',
+      fontWeight:'bolder',
+      fontSize:'14px'
+    }}
+    message={<span id="client-snackbar">{ErrorMessage}</span>}
+  /></Snackbar>
       <GlobalStyle></GlobalStyle>  
       {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> :
       <div className='register-window'>

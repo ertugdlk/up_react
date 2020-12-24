@@ -6,6 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { Segment, SegmentGroup } from 'semantic-ui-react';
 import Countdown from 'react-countdown'
 import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 
 const Axios = require('axios');
 const _ = require('lodash')
@@ -307,7 +308,15 @@ function Room(props) {
     <>
 
       <div className='room-window'>
-      <Snackbar open={snackbar} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}/>
+      <Snackbar open={snackbar} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}><SnackbarContent style={{
+      backgroundColor:'#00ff60',
+      color:'black',
+      justifyContent:'center',
+      fontWeight:'bolder',
+      fontSize:'14px'
+    }}
+    message={<span id="client-snackbar">{ErrorMessage}</span>}
+  /></Snackbar>
 
         <div className='CloseButton1'>
           <ClearIcon

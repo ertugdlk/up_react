@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import axios from '../utils';
 import ClearIcon from '@material-ui/icons/Clear';
 import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 import css from '../components/css/LoginWindow.css';
 
 const Axios = require('axios');
@@ -49,7 +50,15 @@ function LoginWindow(props) {
 
   return (
     <>
-      <Snackbar open={open} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message="Login Failed" onClose={handleClose} />
+      <Snackbar open={open} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} onClose={handleClose} ><SnackbarContent style={{
+      backgroundColor:'#00ff60',
+      color:'black',
+      justifyContent:'center',
+      fontWeight:'bolder',
+      fontSize:'14px'
+    }}
+    message={<span id="client-snackbar">Login Failed</span>}
+  /></Snackbar>
       <GlobalStyle></GlobalStyle>
       <div className='login-window'>
         <div className='CloseButton1'>
