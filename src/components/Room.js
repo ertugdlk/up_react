@@ -6,6 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import { Segment, SegmentGroup } from 'semantic-ui-react';
 import Countdown from 'react-countdown'
 
+
 const Axios = require('axios');
 const _ = require('lodash')
 
@@ -45,7 +46,6 @@ function Room(props) {
         alert("All players are Ready")
       }
     }
-
     setHost(props.host)
 
     RoomUsers();
@@ -74,7 +74,7 @@ function Room(props) {
     })
 
     props.socket.on("GameReadyStatus" , (data)=> {
-      if(props.nickname == props.host)
+      if(props.nickname == host)
       {
         if(data == 'all_ready'){
           setStartButton(true)
@@ -148,9 +148,8 @@ function Room(props) {
     })
 
     props.socket.on("readyChange", async(data) => {
-      console.log(data)
       const url = 'room/getdata';
-      const response = await axios.post(url, {host: props.host},{ withCredentials: true });
+      const response = await axios.post(url, {host: data.host},{ withCredentials: true });
       const allusers = response.data.users;
       const team1users = _.filter(allusers, function(user){
         return user.team == 1
@@ -228,18 +227,19 @@ function Room(props) {
   }
 
   const handleStartMatch = async () => {
-    const url = 'rcon/setupmatch'
-    const response = await axios.post(url, {host:props.host} , {withCredentials: true })
-    setGameInformation('213.243.44.6')
+    try{
+      setGameInformation('213.243.44.6')
+      const url = 'rcon/setupmatch'
+      const response = await axios.post(url, {host:props.host} , {withCredentials: true })
+    }
+    catch(error){
+      throw error
+    }
   }
 
   const checkGameInformation = () => {
-    if(gameInformation !== ''){
-      return(
-        <> 
-        <span>{gameInformation}</span>
-        <a href={`steam://connect/${gameInformation}`}  >Go to the game server</a>
-        </>)
+    if(gameInformation != ''){
+      return <span>{gameInformation}</span>
     }
     if(start)
     {
@@ -252,10 +252,7 @@ function Room(props) {
   }
   
   const handleHost = (member) => {
-    if(props.host === member.nickname){
-      return 'HOST'
-    }
-    else if(host === member.nickname){
+    if(host === member.nickname){
       return 'HOST'
     }
     else{
@@ -279,7 +276,7 @@ function Room(props) {
           if(host === props.nickname){
             const data = {nickname:props.nickname, host: props.host}
             props.socket.emit("leave", (data))
-            props.handleCloseRoom()
+            window.location.reload();
           }
           else{
             alert('Before quit, change your ready status')
@@ -288,8 +285,21 @@ function Room(props) {
         else{
           const data = {nickname:props.nickname, host: props.host}
           props.socket.emit("leave", (data))
-          props.handleCloseRoom()
+          window.location.reload();
         }
+  }
+
+  const checkHostOrNot = () => {
+    if(props._host == true)
+    {
+      return true
+    }
+    if(host == props.nickname){
+      return true
+    }
+    else{
+      return false
+    }
   }
 
   return (
@@ -321,7 +331,7 @@ function Room(props) {
                   })}
             </ul>
           </div>
-          {props._host ? null : <button onClick={handleReady} className="ready-button">READY</button> }
+          {checkHostOrNot() ? null : <button onClick={handleReady} className="ready-button">READY</button> }
           {startButton ? <button className="ready-button" onClick={handleStart}>START</button> : null }
           <button className ="ready-button" onClick={handleLeaveRoom}>LEAVE</button>
           <div className='gameDetails'>
