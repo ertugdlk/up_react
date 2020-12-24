@@ -5,6 +5,7 @@ import {
   fetchAllRooms,
   getUserGames,
   getMatchDataText,
+  removeRoom,
 } from '../utils/helpers';
 import _ from 'lodash';
 
@@ -62,7 +63,7 @@ export const changeGameHost = (host, newHost) => async (dispatch, getState) => {
     return room.host == host;
   });
 
-  room[index].host = newHost;
+  rooms[index].host = newHost;
 
   dispatch(getAllGameRooms(rooms, true));
 };

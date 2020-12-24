@@ -22,6 +22,7 @@ import {
   getAllGameRooms,
   addNewGame,
   getMatchData,
+  changeGameHost,
   removeGameRoom,
 } from '../actions/index';
 import Room from '../components/Room';
@@ -69,10 +70,10 @@ function Dashboard(props) {
     /* -------------------------------------------------------------------------- */
 
     /* ------------------------------- CHANGE HOST ------------------------------ */
-    props.changeGameHost('paramHost', 'paramNewHost');
+    // props.changeGameHost('paramHost', 'paramNewHost');
     /* -------------------------------------------------------------------------- */
     /* ------------------------------- REMOVE ROOM ------------------------------ */
-    props.removeGameRoom('game room data');
+    // props.removeGameRoom('game room data');
     /* -------------------------------------------------------------------------- */
 
     socket.on('userCountChange', (data) => {
@@ -324,5 +325,5 @@ export default connect(mapStateToProps, {
   addNewGame,
   getMatchData,
   changeGameHost,
-  removeRoom,
+  removeGameRoom,
 })(Dashboard);
