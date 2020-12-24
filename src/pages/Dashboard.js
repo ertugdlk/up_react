@@ -22,7 +22,7 @@ import {
   getAllGameRooms,
   addNewGame,
   getMatchData,
-  changeGameHost,
+  removeGameRoom,
 } from '../actions/index';
 import Room from '../components/Room';
 // import { Menu } from 'semantic-ui-react';
@@ -70,6 +70,9 @@ function Dashboard(props) {
 
     /* ------------------------------- CHANGE HOST ------------------------------ */
     props.changeGameHost('paramHost', 'paramNewHost');
+    /* -------------------------------------------------------------------------- */
+    /* ------------------------------- REMOVE ROOM ------------------------------ */
+    props.removeGameRoom('game room data');
     /* -------------------------------------------------------------------------- */
 
     socket.on('userCountChange', (data) => {
