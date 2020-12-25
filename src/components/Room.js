@@ -78,24 +78,11 @@ function Room(props) {
     });
 
     props.socket.on("GameReadyStatus" , (data)=> {
-      if(props.nickname == host && host != '')
+      if(props.nickname == data.host)
       {
-        if(data == 'all_ready'){
+        if(data.msg == 'all_ready'){
           setStartButton(true)
-          setErrorMessage(data)
-          setSnackbar(true)
-        }
-        else{
-          setStart(false)
-          setStartButton(false)
-          setErrorMessage(data)
-          setSnackbar(true)
-        }
-      }
-      else if(host == '' && props.nickname == props.host){
-        if(data == 'all_ready'){
-          setStartButton(true)
-          setErrorMessage(data)
+          setErrorMessage('all_ready')
           setSnackbar(true)
         }
         else{
@@ -106,7 +93,7 @@ function Room(props) {
         }
       }
       else{
-        if(data == 'all_ready'){
+        if(data.msg == 'all_ready'){
         }
         else{
           setStart(false)
@@ -314,7 +301,7 @@ function Room(props) {
     
         if(temp.readyStatus === true){
           if(host === props.nickname){
-            const data = {nickname:props.nickname, host: props.host}
+            const data = {nickname:props.nickname, host: host}
             props.socket.emit("leave", (data))
             window.location.reload();
           }
@@ -324,7 +311,7 @@ function Room(props) {
           }
         }
         else{
-          const data = {nickname:props.nickname, host: props.host}
+          const data = {nickname:props.nickname, host: host}
           props.socket.emit("leave", (data))
           window.location.reload();
         }

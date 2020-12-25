@@ -82,8 +82,13 @@ function Dashboard(props) {
     })
 
 
-    socket.on("HostLeft" , ({host , newHost}) => {
+    socket.on("HostLeft" , async ({host , newHost}) => {
         setSelectedHost(newHost.nickname)
+        if(userName == newHost){
+          const url = 'room/getdata';
+          const response = await axios.post(url, {host: selectedHost},{ withCredentials: true });
+          setRoomResponse(response.data)
+        }
     });
 
     socket.on('roomDeleted', ({host}) => {
