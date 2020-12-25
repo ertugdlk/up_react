@@ -1,15 +1,13 @@
 /*Room componentinin cssi*/
 .room-window {
   position: absolute;
-  width: 800px;
+  width: 79%;
   height: 800px;
-  top: 85px;
-  left: 22.5%;
+  top: 70px;
+  left: 150px;
   background: #0b0b0b;
   border-radius: 12px;
   z-index: 3000;
-  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
-  border:1px solid gray;
   }
   /*Bütün componentlerin yer aldığı divin cssi*/
   .components{

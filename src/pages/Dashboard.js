@@ -275,7 +275,7 @@ function Dashboard(props) {
 
     { session ? 
     <div>
-      {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
+      {gamesList ? <GamesList onClose={handleListClose} ></GamesList> : null}
       {account ? (
         <MyAccount userName={userName} onClose={handleAccountClose} email={email}></MyAccount>
       ) : null}
@@ -349,7 +349,7 @@ function Dashboard(props) {
 
       {/* -------------------------------- LEFT PANE ------------------------------- */}
 
-      <LeftPane userName={userName} gamesList={gamesList} />
+      <LeftPane userName={userName} handleAddGame={handleAddGame} />
 
       {/* /* -------------------------------- LEFT PANE ------------------------------- */}
 
