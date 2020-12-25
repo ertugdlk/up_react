@@ -1,7 +1,7 @@
 /*Room componentinin cssi*/
 .room-window {
   position: absolute;
-  width: 800px;
+  width: 850px;
   height: 800px;
   top: 85px;
   left: 22.5%;
@@ -9,182 +9,182 @@
   border-radius: 12px;
   z-index: 3000;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
-  border:1px solid gray;
-  }
-  /*Bütün componentlerin yer aldığı divin cssi*/
-  .components{
-    height: 700px;
-    color: #fff;
-    font-size: 14px;
-    margin: 5% 12.5%;
-    line-height: 1.5715;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
-    }
+  border: 1px solid gray;
+}
 
-    .CloseButton1{
-      color: #0ab74c;
-    }
+.room-div {
+  position: relative;
+}
+/*Bütün componentlerin yer aldığı divin cssi*/
+.components {
+  height: 700px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.5715;
+}
 
-  .gameDetails{
-    width: 550px;
-    height: fit-content;
-    text-align: center;
-    margin-top: 5px;
-    margin-left: 16px;
-    margin-bottom: 60%;
-    clear: both;
-  }
+.CloseButton1 {
+  color: #0ab74c;
+}
 
-  .team-1{
-    border-radius: 5px;
-    top: 10px;
-    border:3px groove green;
-    position: relative;
-    height: 200px;
-    width: 150px;
-  }
+.buttons-group {
+  position: relative;
+  float: left;
+  margin-left: 130px;
+}
 
-  .team-1 ul{
-    background-color: transparent;
-    padding-left: 0px;
-    list-style: none;
-    height: fit-content;
-    text-align: center;
-  }
+.clear {
+  clear: both;
+}
 
-  
-  .team-1 ul li{
-    border: 1px groove gray;
-    width: 100%;
-    margin:2px;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-  }
-  .team-1 ul li:last-child{
-    border-bottom: 1px groove gray;
-    width: 100%;
-    margin:2px;
-  }
+.teams-container {
+  position: relative;
+  margin-left: 10px;
+  margin-top: 35px;
+  float: left;
+  width: 100%;
+}
+.gameDetails {
+  height: fit-content;
+  text-align: center;
+  clear: both;
+}
 
-  .map-photo{
-    margin-top: 10px;
-    border:1px solid pink;
-    height: 200px;
-    width: 250px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-  }
+.game-teams {
+  position: relative;
+  float: left;
+}
 
-  .team-2{
-    border-radius: 5px;
-    top: 10px;
-    border:3px groove green;
-    position: relative;
-    height: 200px;
-    width: 150px;
-  }
+.team-1 {
+  position: relative;
+  float: left;
+  border-radius: 5px;
+  border: 3px groove green;
+  position: relative;
+  height: 200px;
+}
 
-  .team-2 ul{
-    background-color: transparent;
-    padding-left: 0px;
-    list-style: none;
-    height: fit-content;
-    text-align: center;
-  }
+.team-1 ul {
+  background-color: transparent;
+  padding-left: 0px;
+  list-style: none;
+  height: fit-content;
+  text-align: center;
+}
 
-  .team-2 ul li{
-    border: 1px groove gray;
-    width: 100%;
-    margin:2px;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-  }
-  .team-2 ul li:last-child{
-    border-bottom: 1px groove gray;
-    width: 100%;
-    margin:2px;
-  }
+.team-1 ul li {
+  border: 1px groove gray;
+  width: 100%;
+  margin: 2px;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+.team-1 ul li:last-child {
+  border-bottom: 1px groove gray;
+  width: 100%;
+  margin: 2px;
+}
 
-  .team-buttons{
-    width: 148px;
-    background-color: #0b0b00;
-    color: #35ac45;
-    text-align: center;
-    border-bottom: 1px groove #35ac45;
-    cursor: pointer;
-    pointer-events: 'none';
-  }
+.map-photo {
+  position: relative;
+  float: left;
+  border: 1px solid pink;
+  height: 200px;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .team-users{
-    color:#fff;
-  }
-  .team-users:hover{
-    color:#35ac45;
-    cursor: crosshair;
-  }
-  .gameDetails span{
-    align-self: center;
-    color:#fff;
-    font-size: 12px;
-  }
-  
-  .chat{
-    overflow-y: scroll;
-    overflow-x: hidden;
-    display: flex;
-    flex-flow: row wrap;
-    width: 500px;
-    height: 300px;
-    position: absolute;
-    margin-top: 10px;
-    margin-left: -530px;
-    border: 1px solid green;
-  }
+.team-2 {
+  position: relative;
+  float: left;
+  border-radius: 5px;
+  border: 3px groove green;
+  position: relative;
+  height: 200px;
+}
 
-  .chat-field{
-    display: inline;
-    flex-flow: row wrap;
-    width: fit-content;
-    align-items: stretch;
-  }
+.team-2 ul {
+  background-color: transparent;
+  padding-left: 0px;
+  list-style: none;
+  height: fit-content;
+  text-align: center;
+}
 
-  .chat-message{
-    display: flex;
-    flex-flow: column wrap;
-    margin-bottom: 5px;
-    position: relative;
-    height: fit-content;
-    width: fit-content;
-    color: #fff;
-  }
+.team-2 ul li {
+  border: 1px groove gray;
+  width: 100%;
+  margin: 2px;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+.team-2 ul li:last-child {
+  border-bottom: 1px groove gray;
+  width: 100%;
+  margin: 2px;
+}
 
-  .chat-input{
-    margin-top: 300px;
-    position: absolute;
-    width: 386px;
-    background-color: #000;
-    color:#fff;
-    margin-left: -517px;
-  }
+.team-buttons {
+  width: 148px;
+  background-color: #0b0b00;
+  color: #35ac45;
+  text-align: center;
+  border-bottom: 1px groove #35ac45;
+  cursor: pointer;
+  pointer-events: 'none';
+}
 
-  .chat-send{
-    margin-top: 300px;
-    position: absolute;
-    background-color: #35ac45;
-    width: 115px;
-    border-color: #35ac45;
-    margin-left: -131px;
-  }
+.team-users {
+  color: #fff;
+}
+.team-users:hover {
+  color: #35ac45;
+  cursor: crosshair;
+}
+.gameDetails span {
+  align-self: center;
+  color: #fff;
+  font-size: 12px;
+}
 
-  .ready-button{
-  margin-top: 10px;
-  color:#000;
+.chat-holder {
+  width: 30%;
+  position: relative;
+  float: left;
+}
+
+.chat {
+  border: 1px solid green;
+  width: 100%;
+}
+
+.chat-field {
+  width: 100%;
+  height: 100vh;
+}
+
+.chat-message {
+  color: #fff;
+}
+
+.chat-input {
+  background-color: #000;
+  color: #fff;
+}
+
+.chat-send {
+  background-color: #35ac45;
+  border-color: #35ac45;
+}
+
+.ready-button {
+  color: #000;
   background-color: #00ff60;
   border-radius: 8px;
-  margin-bottom: 10px;
-  }
+  padding: 5px 20px;
+  margin: 10px;
+}
