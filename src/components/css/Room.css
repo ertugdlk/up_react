@@ -99,7 +99,6 @@
   .team-2 ul li{
     border: 1px groove gray;
     width: 100%;
-    margin:2px;
     border-left: none;
     border-right: none;
     border-bottom: none;
@@ -111,13 +110,14 @@
   }
 
   .team-buttons{
-    width: 148px;
+    width: 100%;
     background-color: #0b0b00;
     color: #35ac45;
     text-align: center;
     border-bottom: 1px groove #35ac45;
     cursor: pointer;
     pointer-events: 'none';
+    
   }
 
   .team-users{
@@ -169,6 +169,7 @@
     background-color: #000;
     color:#fff;
     margin-left: -517px;
+    outline: none;
   }
 
   .chat-send{
@@ -186,4 +187,9 @@
   background-color: #00ff60;
   border-radius: 8px;
   margin-bottom: 10px;
+  border:1px solid #0ab74c;
+  }
+
+  .nickname{
+    color:#00ff60;
   }

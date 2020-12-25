@@ -61,7 +61,8 @@ function RegisterWindow(props) {
       color:'black',
       justifyContent:'center',
       fontWeight:'bolder',
-      fontSize:'14px'
+      fontSize:'14px',
+      borderRadius:'10px'
     }}
     message={<span id="client-snackbar">{ErrorMessage}</span>}
   /></Snackbar>
@@ -76,8 +77,7 @@ function RegisterWindow(props) {
         </div>
         <div className='register-modal'>
           <h2 className='register-title'>Create Account</h2>
-          <label>
-            Nickname
+          <label className='labels'>Nickname</label>
             <input
               className='register-input'
               type='text'
@@ -85,9 +85,8 @@ function RegisterWindow(props) {
               onChange={(e) => setNickname(e.target.value)}
               required
             ></input>
-          </label>
-          <label>
-            Mail
+     
+          <label className='labels'>Mail</label>
             <input
               className='register-input'
               type='text'
@@ -95,9 +94,7 @@ function RegisterWindow(props) {
               onChange={(e) => setEmail(e.target.value)}
               required
             ></input>
-          </label>
-          <label>
-            Password
+          <label className='labels'>Password</label>
             <input
               className='register-input'
               type='password'
@@ -105,9 +102,7 @@ function RegisterWindow(props) {
               onChange={(e) => setPassword(e.target.value)}
               required
             ></input>
-          </label>
-          <label>
-            Confirm Password
+          <label className='labels'> Confirm Password</label>
             <input
               className='register-input'
               type='password'
@@ -115,7 +110,6 @@ function RegisterWindow(props) {
               onChange={(e) => setSecondPassword(e.target.value)}
               required
             ></input>
-          </label>
           <div>
             <button
               className='register-button'

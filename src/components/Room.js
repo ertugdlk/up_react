@@ -352,11 +352,12 @@ function Room(props) {
 
       <div className='room-window'>
       <Snackbar open={snackbar} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}><SnackbarContent style={{
-      backgroundColor:'#00ff60',
-      color:'black',
-      justifyContent:'center',
-      fontWeight:'bolder',
-      fontSize:'14px'
+            backgroundColor:'#00ff60',
+            color:'black',
+            justifyContent:'center',
+            fontWeight:'bolder',
+            fontSize:'14px',
+            borderRadius:'10px'
     }}
     message={<span id="client-snackbar">{ErrorMessage}</span>}
   /></Snackbar>
