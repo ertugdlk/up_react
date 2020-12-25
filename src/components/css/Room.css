@@ -2,7 +2,7 @@
 .room-window {
   position: absolute;
   width: 850px;
-  height: 800px;
+  height: 600px;
   top: 85px;
   left: 22.5%;
   background: #0b0b0b;
@@ -17,7 +17,6 @@
 }
 /*Bütün componentlerin yer aldığı divin cssi*/
 .components {
-  height: 700px;
   color: #fff;
   font-size: 14px;
   line-height: 1.5715;
@@ -43,6 +42,7 @@
   margin-top: 35px;
   float: left;
   width: 100%;
+  height: 100vh;
 }
 .gameDetails {
   height: fit-content;
@@ -164,21 +164,31 @@
 
 .chat-field {
   width: 100%;
-  height: 100vh;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .chat-message {
   color: #fff;
+  clear: both;
+  width: 100%;
+  float: left;
 }
 
 .chat-input {
   background-color: #000;
   color: #fff;
+  float: left;
+  position: relative;
+  width: 80%;
 }
 
 .chat-send {
   background-color: #35ac45;
   border-color: #35ac45;
+  float: left;
+  width: 20%;
 }
 
 .ready-button {
@@ -187,4 +197,10 @@
   border-radius: 8px;
   padding: 5px 20px;
   margin: 10px;
+}
+
+.chat-utils {
+  float: left;
+  position: relative;
+  width: 100%;
 }

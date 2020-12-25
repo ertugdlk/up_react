@@ -19,6 +19,7 @@ function Room(props) {
   const [start, setStart] = useState(false);
   const [gameInformation, setGameInformation] = useState('');
   const [host, setHost] = useState('');
+  let chatRef = useRef();
 
   useEffect(() => {
     async function RoomUsers() {
@@ -213,6 +214,9 @@ function Room(props) {
   }, []);
 
   const handleSendMessage = () => {
+    if (message === '') return;
+    chatRef.current.value = '';
+    setMessage('');
     const data = { host: props.host, nickname: props.nickname, msg: message };
     props.socket.emit('message', data);
   };
@@ -389,13 +393,16 @@ function Room(props) {
                       );
                     })}
                   </div>
-                  <input
-                    className='chat-input'
-                    onChange={(e) => setMessage(e.target.value)}
-                  ></input>
-                  <button className='chat-send' onClick={handleSendMessage}>
-                    SEND
-                  </button>
+                  <div className='chat-utils'>
+                    <input
+                      className='chat-input'
+                      ref={chatRef}
+                      onChange={(e) => setMessage(e.target.value)}
+                    ></input>
+                    <button className='chat-send' onClick={handleSendMessage}>
+                      SEND
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
