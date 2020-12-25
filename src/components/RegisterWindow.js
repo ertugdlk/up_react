@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import css from '../components/css/RegisterWindow.css';
 import axios from '../utils';
 import CloseIcon from '@material-ui/icons/Clear';
+import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 
 import OTP from '../components/OTP';
 
@@ -20,19 +22,20 @@ function RegisterWindow(props) {
   const [email, setEmail] = useState('');
   const history = useHistory();
   const [otp, setOTP] = useState(false);
-
+  const [open, setOpen] = useState(false);
+  const [ErrorMessage,setErrorMessage] = useState('');
   const handleOTP = () => {
     //mail gönderilcek
     setOTP(true);
   };
 
-  const handleRegister = async (next) => {
+
+  const handleRegister = async () => {
     try {
       if (password !== secondPassword) {
-        alert("Passwords don't match");
-        next();
-
-      }
+        setErrorMessage("Passwords don't match")
+        setOpen(true)
+      }else{
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
       if (response.status == 200) {
@@ -41,18 +44,29 @@ function RegisterWindow(props) {
         handleOTP()
         //history.push("/");
       } else if (response.data.status === 0) {
-        alert(response.data.msg);
+        setErrorMessage(response.data.msg)
+        setOpen(true)
       }
+    }
     } catch (err) {
       console.log(err);
     }
   };
 
+
   return (
     <>
-      <GlobalStyle></GlobalStyle>
-      {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> : 
-
+      <Snackbar anchorOrigin={{vertical: 'top',horizontal: 'center'}} open={open} autoHideDuration={1000}><SnackbarContent style={{
+      backgroundColor:'#00ff60',
+      color:'black',
+      justifyContent:'center',
+      fontWeight:'bolder',
+      fontSize:'14px'
+    }}
+    message={<span id="client-snackbar">{ErrorMessage}</span>}
+  /></Snackbar>
+      <GlobalStyle></GlobalStyle>  
+      {otp ? <OTP email={email} nickname={nickname} password={password}></OTP> :
       <div className='register-window'>
         <div className='CloseButton1'>
           <CloseIcon
@@ -112,7 +126,8 @@ function RegisterWindow(props) {
             </button>
           </div>
         </div>
-      </div>}
+      </div>
+      }
     </>
   );
 }

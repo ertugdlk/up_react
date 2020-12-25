@@ -4,8 +4,9 @@ import css from '../components/css/Room.css';
 import Logo from '../logo.png';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Segment, SegmentGroup } from 'semantic-ui-react';
-import Countdown from 'react-countdown';
-
+import Countdown from 'react-countdown'
+import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 
 const Axios = require('axios');
 const _ = require('lodash');
@@ -21,12 +22,14 @@ function Room(props) {
   const [gameInformation , setGameInformation] = useState('')
   const [host , setHost] = useState('')
   let chatRef = useRef();
-
+  const [snackbar, setSnackbar] = useState(false);
+  const [ErrorMessage,setErrorMessage] = useState('');
 
   useEffect(() => {
     async function RoomUsers() {
       if (!props.roomResponse.users) {
-        alert('no room with this host');
+        setErrorMessage('no room with this host')
+        setSnackbar(true)
       } else {
         const allusers = props.roomResponse.users;
         const team1users = _.filter(allusers, function (user) {
@@ -45,7 +48,8 @@ function Room(props) {
       if(props.roomResponse.readyCount ===  limit)
       {
         setStartButton(true)
-        alert("All players are Ready")
+        setErrorMessage("All players are Ready")
+        setSnackbar(true)
       }
     }
     setHost(props.host)
@@ -74,16 +78,31 @@ function Room(props) {
     });
 
     props.socket.on("GameReadyStatus" , (data)=> {
-      if(props.nickname == host)
+      if(props.nickname == host && host != '')
       {
         if(data == 'all_ready'){
           setStartButton(true)
-          alert(data)
+          setErrorMessage(data)
+          setSnackbar(true)
         }
         else{
           setStart(false)
           setStartButton(false)
-          alert(data)
+          setErrorMessage(data)
+          setSnackbar(true)
+        }
+      }
+      else if(host == '' && props.nickname == props.host){
+        if(data == 'all_ready'){
+          setStartButton(true)
+          setErrorMessage(data)
+          setSnackbar(true)
+        }
+        else{
+          setStart(false)
+          setStartButton(false)
+          setErrorMessage(data)
+          setSnackbar(true)
         }
       }
       else{
@@ -136,25 +155,20 @@ function Room(props) {
       }
     })
 
-    props.socket.on("HostLeft" , ({host , newHost}) => {
-      var teamArr
-      if(host.team === 1)
-      {
-        teamArr = team1
-        _.remove(team1 , (team1member) => {
-          return team1member.nickname == host.nickname
-        })
-        setTeam1(teamArr)
-        setHost(newHost.nickname)
-      }
-      else{
-        teamArr = team2
-        _.remove(team2 , (team2member) => {
-          return team2member.nickname == host.nickname
-        })
-        setTeam2(teamArr)
-        setHost(newHost.nickname)
-      }
+    props.socket.on("HostLeft" , async ({host , newHost}) => {
+      const url = 'room/getdata';
+      const response = await axios.post(url, {host: newHost.nickname},{ withCredentials: true });
+      const allusers = response.data.users;
+      const team1users = _.filter(allusers, function (user) {
+        return user.team == 1;
+      });
+      setTeam1(team1users);
+      const team2users = _.filter(allusers, function (user) {
+        return user.team == 2;
+      });
+      setTeam2(team2users);
+        
+      setHost(newHost.nickname)
     });
 
     props.socket.on("readyChange", async(data) => {
@@ -305,7 +319,8 @@ function Room(props) {
             window.location.reload();
           }
           else{
-            alert('Before quit, change your ready status')
+            setErrorMessage('Before quit, change your ready status')
+            setSnackbar(true)
           }
         }
         else{
@@ -328,9 +343,24 @@ function Room(props) {
     }
   }
 
+  const handleSnack = () => {
+    setSnackbar(false);
+  }
+
   return (
     <>
+
       <div className='room-window'>
+      <Snackbar open={snackbar} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}><SnackbarContent style={{
+      backgroundColor:'#00ff60',
+      color:'black',
+      justifyContent:'center',
+      fontWeight:'bolder',
+      fontSize:'14px'
+    }}
+    message={<span id="client-snackbar">{ErrorMessage}</span>}
+  /></Snackbar>
+
         <div className='CloseButton1'>
           <ClearIcon
             fontSize='large'

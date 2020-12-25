@@ -26,6 +26,8 @@ import {
   removeGameRoom,
 } from '../actions/index';
 import Room from '../components/Room';
+import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from '../utils';
@@ -61,6 +63,9 @@ function Dashboard(props) {
   const [returnButton, setReturnButton] = useState(false);
   const [_host, setHost] = useState(false);
   const [session , setSession] = useState(false)
+  const [snack, setSnack] = useState(false);
+  const [ErrorMessage,setErrorMessage] = useState('');
+
   // const [rooms, setRooms] = useState([]);
   const history = useHistory();
 
@@ -71,7 +76,15 @@ function Dashboard(props) {
 
     socket.on('hostChanged' , ({host, newHost}) => {
       props.changeGameHost(host, newHost);
+      if(selectedHost == host){
+        setSelectedHost(newHost)
+      }
     })
+
+
+    socket.on("HostLeft" , ({host , newHost}) => {
+        setSelectedHost(newHost.nickname)
+    });
 
     socket.on('roomDeleted', ({host}) => {
       props.removeGameRoom(host);
@@ -98,7 +111,8 @@ function Dashboard(props) {
     });
 
     socket.on('Error', (msg) => {
-      alert(msg);
+      setErrorMessage(msg);
+      setSnack(true);
     });
 
     socket.on('openedRoom', (data) => {
@@ -158,9 +172,11 @@ function Dashboard(props) {
 
       if (props.steam) {
         if (props.steam == response.data) {
-          alert('Your Steam Integrated to our system');
+          setErrorMessage('Your Steam Integrated to our system');
+          setSnack(true);
         } else {
-          alert('no match');
+          setErrorMessage('no match');
+          setSnack(true);
         }
       }
     }
@@ -198,13 +214,17 @@ function Dashboard(props) {
 
   const handleCreateClick = () => {
     if (menubarGames.length == 0) {
-      alert('Add some Games First');
+      setErrorMessage('Add some Games First');
+      setSnack(true);
     } else {
       setCreate(true);
     }
   };
 
-  const handleReturnGame = () => {
+  const handleReturnGame = async () => {
+    const url = 'room/getdata';
+    const response = await axios.post(url, {host: selectedHost},{ withCredentials: true });
+    setRoomResponse(response.data)
     setGameRoom(true);
   };
 
@@ -236,9 +256,23 @@ function Dashboard(props) {
   const handleCloseRoom = () => {
     setGameRoom(false);
   };
+
+  const handleSnack = () => {
+    setSnack(false);
+  };
   // console.log(props.roomsRedux);
   return ( 
     <>
+     <Snackbar open={snack} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} onClose={handleSnack} ><SnackbarContent style={{
+      backgroundColor:'#00ff60',
+      color:'black',
+      justifyContent:'center',
+      fontWeight:'bolder',
+      fontSize:'14px'
+    }}
+    message={<span id="client-snackbar">{ErrorMessage}</span>}
+  /></Snackbar>
+
     { session ? 
     <div>
       {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}

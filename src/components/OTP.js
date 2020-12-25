@@ -3,10 +3,14 @@ import axios from '../utils';
 import OtpInput from 'react-otp-input';
 import { useHistory } from 'react-router-dom';
 import css from '../components/css/OTP.css';
+import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 const Axios = require('axios');
 
 const OTP = (props) => {
   const [otp, setOtp] = useState('');
+  const [open, setOpen] = useState(false);
+  const [ErrorMessage,setErrorMessage] = useState('');
   const history = useHistory();
 
   const handleChango = (e) => setOtp(e);
@@ -22,10 +26,11 @@ const OTP = (props) => {
       );
 
       if (response.status !== 200) {
-        alert('Invalid OTP entry');
+        setErrorMessage('Invalid OTP entry')
+        setOpen(true)
       } else {
-
-        alert('OTP successful!');
+        setErrorMessage('OTP successful!')
+        setOpen(true)
         const url2 = 'auth/login';
         const response2 = await axios.post(
           url2,
@@ -45,6 +50,15 @@ const OTP = (props) => {
 
   return (
     <>
+    <Snackbar anchorOrigin={{vertical: 'top',horizontal: 'center'}} open={open} autoHideDuration={1000}><SnackbarContent style={{
+      backgroundColor:'#00ff60',
+      color:'black',
+      justifyContent:'center',
+      fontWeight:'bolder',
+      fontSize:'14px'
+    }}
+    message={<span id="client-snackbar">{ErrorMessage}</span>}
+  /></Snackbar>
       <div className='otp-window'>
         <div className='otp-modal'>
           <div className='row'>
