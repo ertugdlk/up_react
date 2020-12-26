@@ -5,6 +5,8 @@ import Logo from '../logo.png';
 import ClearIcon from '@material-ui/icons/Clear';
 import { Segment, SegmentGroup } from 'semantic-ui-react';
 import Countdown from 'react-countdown';
+import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
 
 const Axios = require('axios');
 const _ = require('lodash');
@@ -20,11 +22,14 @@ function Room(props) {
   const [gameInformation, setGameInformation] = useState('');
   const [host, setHost] = useState('');
   let chatRef = useRef();
+  const [snackbar, setSnackbar] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     async function RoomUsers() {
       if (!props.roomResponse.users) {
-        alert('no room with this host');
+        setErrorMessage('no room with this host');
+        setSnackbar(true);
       } else {
         const allusers = props.roomResponse.users;
         const team1users = _.filter(allusers, function (user) {
@@ -42,10 +47,10 @@ function Room(props) {
       const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2;
       if (props.roomResponse.readyCount === limit) {
         setStartButton(true);
-        alert('All players are Ready');
+        setErrorMessage('All players are Ready');
+        setSnackbar(true);
       }
     }
-
     setHost(props.host);
 
     RoomUsers();
@@ -72,17 +77,19 @@ function Room(props) {
     });
 
     props.socket.on('GameReadyStatus', (data) => {
-      if (props.nickname == props.host) {
-        if (data == 'all_ready') {
+      if (props.nickname == data.host) {
+        if (data.msg == 'all_ready') {
           setStartButton(true);
-          alert(data);
+          setErrorMessage('all_ready');
+          setSnackbar(true);
         } else {
           setStart(false);
           setStartButton(false);
-          alert(data);
+          setErrorMessage(data);
+          setSnackbar(true);
         }
       } else {
-        if (data == 'all_ready') {
+        if (data.msg == 'all_ready') {
         } else {
           setStart(false);
         }
@@ -128,31 +135,31 @@ function Room(props) {
       }
     });
 
-    props.socket.on('HostLeft', ({ host, newHost }) => {
-      var teamArr;
-      if (host.team === 1) {
-        teamArr = team1;
-        _.remove(team1, (team1member) => {
-          return team1member.nickname == host.nickname;
-        });
-        setTeam1(teamArr);
-        setHost(newHost.nickname);
-      } else {
-        teamArr = team2;
-        _.remove(team2, (team2member) => {
-          return team2member.nickname == host.nickname;
-        });
-        setTeam2(teamArr);
-        setHost(newHost.nickname);
-      }
-    });
-
-    props.socket.on('readyChange', async (data) => {
-      console.log(data);
+    props.socket.on('HostLeft', async ({ host, newHost }) => {
       const url = 'room/getdata';
       const response = await axios.post(
         url,
-        { host: props.host },
+        { host: newHost.nickname },
+        { withCredentials: true }
+      );
+      const allusers = response.data.users;
+      const team1users = _.filter(allusers, function (user) {
+        return user.team == 1;
+      });
+      setTeam1(team1users);
+      const team2users = _.filter(allusers, function (user) {
+        return user.team == 2;
+      });
+      setTeam2(team2users);
+
+      setHost(newHost.nickname);
+    });
+
+    props.socket.on('readyChange', async (data) => {
+      const url = 'room/getdata';
+      const response = await axios.post(
+        url,
+        { host: data.host },
         { withCredentials: true }
       );
       const allusers = response.data.users;
@@ -213,12 +220,16 @@ function Room(props) {
     });
   }, []);
 
+  const handleEnterPressed = (e) => {
+    if (e.charCode === 13 || e.keyCode === 13) {
+      handleSendMessage();
+    }
+  };
+
   const handleSendMessage = () => {
-    if (message === '') return;
-    chatRef.current.value = '';
-    setMessage('');
     const data = { host: props.host, nickname: props.nickname, msg: message };
     props.socket.emit('message', data);
+    chatRef.current.value = '';
   };
 
   const handleTeamSwap = () => {
@@ -237,24 +248,29 @@ function Room(props) {
   };
 
   const handleStartMatch = async () => {
-    const url = 'rcon/setupmatch';
-    const response = await axios.post(
-      url,
-      { host: props.host },
-      { withCredentials: true }
-    );
-    setGameInformation('213.243.44.6');
+    try {
+      setGameInformation('213.243.44.6');
+      const url = 'rcon/setupmatch';
+      const response = await axios.post(
+        url,
+        { host: props.host },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      throw error;
+    }
   };
 
   const checkGameInformation = () => {
-    if (gameInformation !== '') {
+    if (gameInformation != '') {
+      return <span>{gameInformation}</span>;
+    }
+    if (start) {
       return (
-        <>
-          <span>{gameInformation}</span>
-          <a href={`steam://connect/${gameInformation}`}>
-            Go to the game server
-          </a>
-        </>
+        <Countdown
+          date={Date.now() + 10000}
+          onComplete={() => handleStartMatch()}
+        />
       );
     }
     if (start) {
@@ -270,9 +286,7 @@ function Room(props) {
   };
 
   const handleHost = (member) => {
-    if (props.host === member.nickname) {
-      return 'HOST';
-    } else if (host === member.nickname) {
+    if (host === member.nickname) {
       return 'HOST';
     } else {
       return '';
@@ -292,22 +306,56 @@ function Room(props) {
 
     if (temp.readyStatus === true) {
       if (host === props.nickname) {
-        const data = { nickname: props.nickname, host: props.host };
+        const data = { nickname: props.nickname, host: host };
         props.socket.emit('leave', data);
-        props.handleCloseRoom();
+        window.location.reload();
       } else {
-        alert('Before quit, change your ready status');
+        setErrorMessage('Before quit, change your ready status');
+        setSnackbar(true);
       }
     } else {
-      const data = { nickname: props.nickname, host: props.host };
+      const data = { nickname: props.nickname, host: host };
       props.socket.emit('leave', data);
-      props.handleCloseRoom();
+      window.location.reload();
     }
+  };
+
+  const checkHostOrNot = () => {
+    if (props._host == true) {
+      return true;
+    }
+    if (host == props.nickname) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleSnack = () => {
+    setSnackbar(false);
   };
 
   return (
     <>
       <div className='room-window'>
+        <Snackbar
+          open={snackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          autoHideDuration={1000}
+          message={ErrorMessage}
+          onClose={handleSnack}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: '#00ff60',
+              color: 'black',
+              justifyContent: 'center',
+              fontWeight: 'bolder',
+              fontSize: '14px',
+            }}
+            message={<span id='client-snackbar'>{ErrorMessage}</span>}
+          />
+        </Snackbar>
         <div className='room-div'>
           <div className='CloseButton1'>
             <ClearIcon
@@ -406,8 +454,6 @@ function Room(props) {
                 </div>
               </div>
             </div>
-
-            <div className='clear'></div>
           </div>
         </div>
       </div>
