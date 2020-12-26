@@ -409,7 +409,7 @@ function Room(props) {
                 </div>
                 <div className='clear'></div>
                 <div className='buttons-group'>
-                  {/* {props._host ? null : (
+                  {props._host ? null : (
                     <button onClick={handleReady} className='ready-button'>
                       READY
                     </button>
@@ -418,13 +418,13 @@ function Room(props) {
                     <button className='ready-button' onClick={handleStart}>
                       START
                     </button>
-                  ) : null} */}
-                  <button className='ready-button' onClick={handleLeaveRoom}>
+                  ) : null}
+                  {/* <button className='ready-button' onClick={handleLeaveRoom}>
                     LEAVE
                   </button>
                   <button className='ready-button' onClick={handleLeaveRoom}>
                     LEAVE
-                  </button>
+                  </button> */}
                   <button className='ready-button' onClick={handleLeaveRoom}>
                     LEAVE
                   </button>
