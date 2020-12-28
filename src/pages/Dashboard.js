@@ -82,8 +82,13 @@ function Dashboard(props) {
     })
 
 
-    socket.on("HostLeft" , ({host , newHost}) => {
+    socket.on("HostLeft" , async ({host , newHost}) => {
         setSelectedHost(newHost.nickname)
+        if(userName == newHost){
+          const url = 'room/getdata';
+          const response = await axios.post(url, {host: selectedHost},{ withCredentials: true });
+          setRoomResponse(response.data)
+        }
     });
 
     socket.on('roomDeleted', ({host}) => {
@@ -276,7 +281,7 @@ function Dashboard(props) {
 
     { session ? 
     <div>
-      {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
+      {gamesList ? <GamesList onClose={handleListClose} ></GamesList> : null}
       {account ? (
         <MyAccount userName={userName} onClose={handleAccountClose} email={email}></MyAccount>
       ) : null}
@@ -350,7 +355,7 @@ function Dashboard(props) {
 
       {/* -------------------------------- LEFT PANE ------------------------------- */}
 
-      <LeftPane userName={userName} gamesList={gamesList} />
+      <LeftPane userName={userName} handleAddGame={handleAddGame} />
 
       {/* /* -------------------------------- LEFT PANE ------------------------------- */}
 

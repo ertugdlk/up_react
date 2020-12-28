@@ -47,15 +47,17 @@ function Room(props) {
       const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2
       if(props.roomResponse.readyCount ===  limit)
       {
+        if(props.nickname == props.host){
         setStartButton(true)
         setErrorMessage("All players are Ready")
         setSnackbar(true)
+      }
       }
     }
     setHost(props.host)
 
     RoomUsers();
-    CheckReadyStatus()
+    CheckReadyStatus();
   }, []);
 
   useEffect(() => {
@@ -77,42 +79,25 @@ function Room(props) {
       }
     });
 
-    props.socket.on("GameReadyStatus" , (data)=> {
-      if(props.nickname == host && host != '')
-      {
-        if(data == 'all_ready'){
-          setStartButton(true)
-          setErrorMessage(data)
-          setSnackbar(true)
+    props.socket.on('GameReadyStatus', (data) => {
+      if (props.nickname == data.host) {
+        if (data.msg == 'all_ready') {
+          setStartButton(true);
+          setErrorMessage('all_ready');
+          setSnackbar(true);
+        } else {
+          setStart(false);
+          setStartButton(false);
+          setErrorMessage(data.msg);
+          setSnackbar(true);
         }
-        else{
-          setStart(false)
-          setStartButton(false)
-          setErrorMessage(data)
-          setSnackbar(true)
-        }
-      }
-      else if(host == '' && props.nickname == props.host){
-        if(data == 'all_ready'){
-          setStartButton(true)
-          setErrorMessage(data)
-          setSnackbar(true)
-        }
-        else{
-          setStart(false)
-          setStartButton(false)
-          setErrorMessage(data)
-          setSnackbar(true)
+      } else {
+        if (data.msg == 'all_ready') {
+        } else {
+          setStart(false);
         }
       }
-      else{
-        if(data == 'all_ready'){
-        }
-        else{
-          setStart(false)
-        }
-      }
-    })
+    });
 
     props.socket.on('newUserJoined', (data) => {
       if (data.nickname != props.nickname) {
@@ -136,28 +121,30 @@ function Room(props) {
       }
     });
 
-    props.socket.on("UserLeft" , (user) => {
-      var teamArr
-      if(user.team === 1)
-      {
-        teamArr = team1
-        _.remove(teamArr , (team1member) => {
-          return team1member.nickname == user.nickname
-        })
-        setTeam1(teamArr)
+    props.socket.on('UserLeft', (user) => {
+      var teamArr;
+      if (user.team === 1) {
+        teamArr = team1;
+        _.remove(teamArr, (team1member) => {
+          return team1member.nickname == user.nickname;
+        });
+        setTeam1(teamArr);
+      } else {
+        teamArr = team2;
+        _.remove(teamArr, (team2member) => {
+          return team2member.nickname == user.nickname;
+        });
+        setTeam2(teamArr);
       }
-      else{
-        teamArr = team2
-        _.remove(teamArr , (team2member) => {
-          return team2member.nickname == user.nickname
-        })
-        setTeam2(teamArr)
-      }
-    })
+    });
 
-    props.socket.on("HostLeft" , async ({host , newHost}) => {
+    props.socket.on('HostLeft', async ({ host, newHost }) => {
       const url = 'room/getdata';
-      const response = await axios.post(url, {host: newHost.nickname},{ withCredentials: true });
+      const response = await axios.post(
+        url,
+        { host: newHost.nickname },
+        { withCredentials: true }
+      );
       const allusers = response.data.users;
       const team1users = _.filter(allusers, function (user) {
         return user.team == 1;
@@ -167,13 +154,17 @@ function Room(props) {
         return user.team == 2;
       });
       setTeam2(team2users);
-        
-      setHost(newHost.nickname)
+
+      setHost(newHost.nickname);
     });
 
-    props.socket.on("readyChange", async(data) => {
+    props.socket.on('readyChange', async (data) => {
       const url = 'room/getdata';
-      const response = await axios.post(url, {host: data.host},{ withCredentials: true });
+      const response = await axios.post(
+        url,
+        { host: data.host },
+        { withCredentials: true }
+      );
       const allusers = response.data.users;
       const team1users = _.filter(allusers, function (user) {
         return user.team == 1;
@@ -260,23 +251,30 @@ function Room(props) {
   };
 
   const handleStartMatch = async () => {
-    try{
-      setGameInformation('213.243.44.6')
-      const url = 'rcon/setupmatch'
-      const response = await axios.post(url, {host:props.host} , {withCredentials: true })
+    try {
+      setGameInformation('213.243.44.6');
+      const url = 'rcon/setupmatch';
+      const response = await axios.post(
+        url,
+        { host: props.host },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      throw error;
     }
-    catch(error){
-      throw error
-    }
-  }
+  };
 
   const checkGameInformation = () => {
-    if(gameInformation != ''){
-      return <span>{gameInformation}</span>
+    if (gameInformation != '') {
+      return <span>{gameInformation}</span>;
     }
-    if(start)
-    {
-      return <Countdown  date={Date.now() + 10000} onComplete={ () => handleStartMatch()} />
+    if (start) {
+      return (
+        <Countdown
+          date={Date.now() + 10000}
+          onComplete={() => handleStartMatch()}
+        />
+      );
     }
     if (start) {
       return (
@@ -288,53 +286,53 @@ function Room(props) {
     } else {
       return <img className='map' src={Logo}></img>;
     }
+  };
 
-  }
-  
   const handleHost = (member) => {
-    if(host === member.nickname){
-      return 'HOST'
+    if (host === member.nickname) {
+      return 'HOST';
+    } else {
+      return '';
     }
-    else{
-      return ''
-    }
-  }
+  };
 
   const handleLeaveRoom = () => {
+    const user1 = _.find(team1, (member) => {
+      return member.nickname == props.nickname;
+    });
 
-        const user1 = _.find(team1 , (member) => {
-          return member.nickname == props.nickname
-        })
-    
-        const user2 = _.find(team2 , (member) => {
-          return member.nickname == props.nickname
-        })
-    
-        const temp = !user1 ? user2 : user1
-    
-        if(temp.readyStatus === true){
-          if(host === props.nickname){
-            const data = {nickname:props.nickname, host: props.host}
-            props.socket.emit("leave", (data))
-            window.location.reload();
-          }
-          else{
-            setErrorMessage('Before quit, change your ready status')
-            setSnackbar(true)
-          }
-        }
-        else{
-          const data = {nickname:props.nickname, host: props.host}
-          props.socket.emit("leave", (data))
-          window.location.reload();
-        }
-  }
+    const user2 = _.find(team2, (member) => {
+      return member.nickname == props.nickname;
+    });
+
+    const temp = !user1 ? user2 : user1;
+
+    if (temp.readyStatus === true) {
+      if (host === props.nickname) {
+        const data = { nickname: props.nickname, host: host };
+        props.socket.emit('leave', data);
+        window.location.reload();
+      } else {
+        setErrorMessage('Before quit, change your ready status');
+        setSnackbar(true);
+      }
+    } else {
+      const data = { nickname: props.nickname, host: host };
+      props.socket.emit('leave', data);
+      window.location.reload();
+    }
+  };
+
+  const handleSnack = () => {
+    setSnackbar(false);
+  };
 
   const checkHostOrNot = () => {
     if(props._host == true)
     {
       return true
     }
+
     if(host == props.nickname){
       return true
     }
@@ -343,90 +341,121 @@ function Room(props) {
     }
   }
 
-  const handleSnack = () => {
-    setSnackbar(false);
-  }
-
   return (
     <>
 
       <div className='room-window'>
-      <Snackbar open={snackbar} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} message={ErrorMessage} onClose={handleSnack}><SnackbarContent style={{
-            backgroundColor:'#00ff60',
-            color:'black',
-            justifyContent:'center',
-            fontWeight:'bolder',
-            fontSize:'14px',
-            borderRadius:'10px'
-    }}
-    message={<span id="client-snackbar">{ErrorMessage}</span>}
-  /></Snackbar>
+        <Snackbar
+          open={snackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          autoHideDuration={1000}
+          message={ErrorMessage}
+          onClose={handleSnack}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: '#00ff60',
+              color: 'black',
+              justifyContent: 'center',
+              fontWeight: 'bolder',
+              fontSize: '14px',
+            }}
+            message={<span id='client-snackbar'>{ErrorMessage}</span>}
+          />
+        </Snackbar>
+        <div className='room-div'>
+          <div className='CloseButton1'>
+            <ClearIcon
+              fontSize='large'
+              onClick={props.handleCloseRoom}
+            ></ClearIcon>{' '}
+          </div>
+          <div className='components'>
+            <div className='teams-container'>
+              <div className='game-teams'>
+                <div className='team-1'>
+                  <button onClick={handleTeamSwap} className='team-buttons'>
+                    TEAM 1
+                  </button>
+                  <ul>
+                    {team1.map((member) => {
+                      return (
+                        <li className='team-users'>
+                          {' '}
+                          {handleHost(member)} {member.nickname}{' '}
+                          {member.readyStatus ? 'Ready' : 'Unready'}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className='map-photo'>{checkGameInformation()}</div>
+                <div className='team-2'>
+                  <button onClick={handleTeamSwap} className='team-buttons'>
+                    TEAM 2
+                  </button>
+                  <ul>
+                    {team2.map((member) => {
+                      return (
+                        <li className='team-users'>
+                          {handleHost(member)} {member.nickname}{' '}
+                          {member.readyStatus ? 'Ready' : 'Unready'}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
 
-        <div className='CloseButton1'>
-          <ClearIcon
-            fontSize='large'
-            onClick={props.handleCloseRoom}
-          ></ClearIcon>{' '}
-        </div>
-        <div className='components'>
-          <div className='team-1'>
-            <button onClick={handleTeamSwap} className='team-buttons'>
-              TEAM 1
-            </button>
-            <ul>
-                {team1.map((member) => {
-                return <li className='team-users'> {handleHost(member)} {member.nickname} {member.readyStatus ? 'Ready' : 'Unready'}</li>
-              })}
-            </ul>
-          </div>
-          <div className='map-photo'>{checkGameInformation()}</div>
-          <div className='team-2'>
-            <button onClick={handleTeamSwap} className='team-buttons'>
-              TEAM 2
-            </button>
-            <ul>
-              {team2.map((member) => {
-                return <li className='team-users'>{handleHost(member)} {member.nickname} {member.readyStatus ? 'Ready' : 'Unready'}</li>
-                  })}
-            </ul>
-          </div>
-          {checkHostOrNot() ? null : <button onClick={handleReady} className="ready-button">READY</button> }
-          {startButton ? <button className="ready-button" onClick={handleStart}>START</button> : null }
-          <button className ="ready-button" onClick={handleLeaveRoom}>LEAVE</button>
-          <div className='gameDetails'>
-            <span>Game Details </span>
-            <span> {props.roomResponse.settings.map}  {props.roomResponse.settings.type}</span>
-          </div>
-          <SegmentGroup>
-            <Segment>
-              <div className='chat'>
-                <div className='chat-field'>
-                  {messages.map((message) => {
-                    return (
-                      <span className='chat-message'>
-                        {message.nickname}: {message.msg}
-                      </span>
-                    );
-                  })}
+                <div className='gameDetails'>
+                  <span>Game Details </span>
+                  <span>
+                    {' '}
+                    {props.roomResponse.settings.map}{' '}
+                    {props.roomResponse.settings.type}
+                  </span>
+                </div>
+                <div className='clear'></div>
+                <div className='buttons-group'>
+                  {checkHostOrNot() ? null : (
+                    <button onClick={handleReady} className='ready-button'>
+                      READY
+                    </button>
+                  )}
+                  {startButton ? (
+                    <button className='ready-button' onClick={handleStart}>
+                      START
+                    </button>
+                  ) : null}
+                  <button className='ready-button' onClick={handleLeaveRoom}>
+                    LEAVE
+                  </button>
                 </div>
               </div>
-            </Segment>
-            <div tabIndex='0'>
-              <input
-                ref={chatRef}
-                className='chat-input'
-                onChange={(e) => setMessage(e.target.value)}
-                onKeyPress={(e) => handleEnterPressed(e)}
-              ></input>
-              <button
-                className='chat-send'
-                onClick={handleSendMessage}
-                onKeyPress={(e) => handleEnterPressed(e)}
-              >
-                SEND
-              </button>
+              <div className='chat-holder'>
+                <div className='chat'>
+                  <div className='chat-field'>
+                    {messages.map((message) => {
+                      return (
+                        <span className='chat-message'>
+                          {message.nickname}: {message.msg}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <div className='chat-utils'>
+                    <input
+                      className='chat-input'
+                      ref={chatRef}
+                      onChange={(e) => setMessage(e.target.value)}
+                    ></input>
+                    <button className='chat-send' onClick={handleSendMessage}>
+                      SEND
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-          </SegmentGroup>
+          </div>
         </div>
       </div>
     </>

@@ -49,11 +49,6 @@ const LeftPane = (props) => {
     setAccount(true);
   };
 
-  const handleListClose = () => {
-    console.log('Close');
-    setGamesList(false);
-  };
-
   const handleAddGame = () => {
     setGamesList(true);
   };
@@ -66,8 +61,6 @@ const LeftPane = (props) => {
 
   return (
     <div className='MenuBar'>
-      {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
-
       <div className='menubar-user'>
         <div className='menubar-userpic'>
           <img src={Logo} className='img-responsive' alt=''></img>
@@ -86,7 +79,7 @@ const LeftPane = (props) => {
           </div>
         </div>
       </div>
-      <button className='AddGame' onClick={handleAddGame}>
+      <button className='AddGame' onClick={props.handleAddGame}>
         Add Game
       </button>
       <div className='MenuBarGame'>
