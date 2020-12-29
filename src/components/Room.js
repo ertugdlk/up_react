@@ -46,9 +46,11 @@ function Room(props) {
     async function CheckReadyStatus() {
       const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2;
       if (props.roomResponse.readyCount === limit) {
-        setStartButton(true);
-        setErrorMessage('All players are Ready');
-        setSnackbar(true);
+        if (props.nickname == props.host) {
+          setStartButton(true);
+          setErrorMessage('All players are Ready');
+          setSnackbar(true);
+        }
       }
     }
     setHost(props.host);
@@ -85,7 +87,7 @@ function Room(props) {
         } else {
           setStart(false);
           setStartButton(false);
-          setErrorMessage(data);
+          setErrorMessage(data.msg);
           setSnackbar(true);
         }
       } else {
@@ -320,19 +322,20 @@ function Room(props) {
     }
   };
 
+  const handleSnack = () => {
+    setSnackbar(false);
+  };
+
   const checkHostOrNot = () => {
     if (props._host == true) {
       return true;
     }
+
     if (host == props.nickname) {
       return true;
     } else {
       return false;
     }
-  };
-
-  const handleSnack = () => {
-    setSnackbar(false);
   };
 
   return (
@@ -409,7 +412,7 @@ function Room(props) {
                 </div>
                 <div className='clear'></div>
                 <div className='buttons-group'>
-                  {props._host ? null : (
+                  {checkHostOrNot() ? null : (
                     <button onClick={handleReady} className='ready-button'>
                       READY
                     </button>
@@ -418,14 +421,11 @@ function Room(props) {
                     <button className='ready-button' onClick={handleStart}>
                       START
                     </button>
-                  ) : (
-                    <button
-                      className='ready-button-start-disabled'
-                      disabled
-                    >
+                  ) : host === props.userName ? (
+                    <button className='ready-button-start-disabled' disabled>
                       START
                     </button>
-                  )}
+                  ) : null}
                   {/* <button className='ready-button' onClick={handleLeaveRoom}>
                     LEAVE
                   </button>

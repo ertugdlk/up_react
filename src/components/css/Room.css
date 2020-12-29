@@ -1,15 +1,13 @@
 /*Room componentinin cssi*/
 .room-window {
   position: absolute;
-  width: 60%;
+  width: 79%;
   height: 600px;
   top: 85px;
-  left: 20%;
-  background: #0b0b0b;
+  left: 150px;
+  background: #16161b;
   border-radius: 12px;
   z-index: 3000;
-  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
-  border: 1px solid gray;
 }
 
 .room-div {
