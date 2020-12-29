@@ -269,11 +269,12 @@ function Dashboard(props) {
   return ( 
     <>
      <Snackbar open={snack} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} onClose={handleSnack} ><SnackbarContent style={{
-      backgroundColor:'#00ff60',
-      color:'black',
-      justifyContent:'center',
-      fontWeight:'bolder',
-      fontSize:'14px'
+            backgroundColor:'#00ff60',
+            color:'black',
+            justifyContent:'center',
+            fontWeight:'bolder',
+            fontSize:'14px',
+            borderRadius:'10px'
     }}
     message={<span id="client-snackbar">{ErrorMessage}</span>}
   /></Snackbar>

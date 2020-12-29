@@ -30,6 +30,7 @@
   border:1px solid #050505;
   display: flex;
   margin-top:4.7%;
+  height: fit-content;
 }
 
 .text-1{
@@ -40,7 +41,7 @@
     line-height: 0;
     position: absolute;
     left: 214.588px;
-    top: 285.5px;
+    top: 185.5px;
     z-index: 73;
   }
   
@@ -52,7 +53,7 @@
   line-height: 0;
   position: absolute;
   left: 214.937px;
-  top: 330px;
+  top: 230px;
   z-index: 74;
 }
 
@@ -61,7 +62,7 @@
     background-color: rgb(0, 255, 96);
     position: absolute;
     left: 276px;
-    top: 381px;
+    top: 281px;
     width: 257px;
     height: 45px;
     z-index: 75;
@@ -73,7 +74,7 @@
     }
 
 .join{
-  margin-top: 100px;
+  margin-top: 50px;
   margin-right: 10%;
   height: 300px;
   align-self: flex-end;
@@ -87,7 +88,7 @@
   line-height: 1.333;
   position: absolute;
   left: 910.964px;
-  top: 911.505px;
+  top: 511.505px;
   z-index: 68;
 }
 
@@ -101,13 +102,13 @@
     -ms-transform: matrix( 0.70999573822839,0,0,0.70999573822839,0,0);
     position: absolute;
     left: 654.105px;
-    top: 986.202px;
+    top: 586.202px;
     z-index: 67;
   }
 
 
 .thumbs{
-  margin-top: 30%;
+  margin-top: 2.5%;
   margin-left: 12.5%;
   height: 200px;
   align-self: flex-start;
@@ -121,7 +122,7 @@
   line-height: 1.333;
   position: absolute;
   left: 916.844px;
-  top: 1777.005px;
+  top: 877.005px;
   z-index: 48;
 }
 
@@ -135,13 +136,13 @@
   -ms-transform: matrix( 0.70999573822839,0,0,0.70999573822839,0,0);
   position: absolute;
   left: 757.429px;
-  top: 1825.203px;
+  top: 925.203px;
   z-index: 47;
 }
 
 
 .vs{
-  margin-top: 40%;
+  margin-top:10%;
   margin-left: 10%;
   height: 300px;
   align-self: flex-start;
@@ -156,12 +157,12 @@
     line-height: 0.889;
     position: absolute;
     left: 572.937px;
-    top: 3065.998px;
+    top: 1795.998px;
     z-index: 4;
   }
 
 .footer{
-  margin-top: -75%;
+  margin-top: -100%;
   width: 100%;
   align-self: flex-end;
 }
@@ -172,7 +173,7 @@
     background-color: rgb(0, 255, 96);
     position: absolute;
     left: 643px;
-    top: 3156px;
+    top: 1886px;
     width: 234px;
     height: 40px;
     z-index: 5; 

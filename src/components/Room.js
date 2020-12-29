@@ -193,29 +193,6 @@ function Room(props) {
         });
         setTeam2(team2users);
 
-        /*
-        if(data.oldTeam == 1)
-        {
-          var tempTeam = team1
-          var removedTeam = _.remove(tempTeam, (teamMember) => {
-            return teamMember == data.nickname
-          })
-
-          setTeam1(tempTeam)
-
-          setTeam2(team2 => team2.concat(data.nickname))
-        }
-        else{
-          var tempTeam = team2
-          var removedTeam = _.remove(tempTeam, (teamMember) => {
-            return teamMember == data.nickname
-          })
-
-          setTeam1(tempTeam)
-
-          setTeam1(team1 => team1.concat(data.nickname))
-        }
-        */
       } catch (err) {
         throw err;
       }

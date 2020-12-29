@@ -6,6 +6,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Snackbar from '@material-ui/core/Snackbar';
 import { SnackbarContent } from '@material-ui/core';
 import css from '../components/css/LoginWindow.css';
+import { BorderAllRounded } from '@material-ui/icons';
 
 const Axios = require('axios');
 const Cookie = require('js-cookie');
@@ -22,7 +23,7 @@ function LoginWindow(props) {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleSteam = async () => {};
 
@@ -50,12 +51,13 @@ function LoginWindow(props) {
 
   return (
     <>
-      <Snackbar open={open} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={1000} onClose={handleClose} ><SnackbarContent style={{
-      backgroundColor:'#00ff60',
-      color:'black',
-      justifyContent:'center',
-      fontWeight:'bolder',
-      fontSize:'14px'
+      <Snackbar open={open} anchorOrigin={{vertical: 'top',horizontal: 'center'}} autoHideDuration={10000000} onClose={handleClose} ><SnackbarContent style={{
+            backgroundColor:'#00ff60',
+            color:'black',
+            justifyContent:'center',
+            fontWeight:'bolder',
+            fontSize:'14px',
+            borderRadius:'10px'
     }}
     message={<span id="client-snackbar">Login Failed</span>}
   /></Snackbar>
@@ -69,7 +71,7 @@ function LoginWindow(props) {
         </div>
         <div className='login-modal'>
           <h2 className='login-title'>Login</h2>
-          <label>Username</label>
+          <label className='labels'>Username</label>
           <input
             className='login-input'
             onChange={(e) => setNickname(e.target.value)}
@@ -77,7 +79,7 @@ function LoginWindow(props) {
             name='username'
             required
           />
-          <label>Password</label>
+          <label className='labels'>Password</label>
           <input
             className='login-input'
             onChange={(e) => setPassword(e.target.value)}

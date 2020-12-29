@@ -60,7 +60,7 @@ export const getMatchData = (host, isPositive) => async (
 
 export const changeGameHost = (host, newHost) => async (dispatch, getState) => {
   const rooms = getState().roomsRedux
-  const index = _.findIndex(getState().roomsRedux, function (room) {
+  const index = _.findIndex(rooms, function (room) {
     return room.host == host;
   });
 
