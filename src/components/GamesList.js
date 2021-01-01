@@ -8,6 +8,7 @@ import { baseUrl } from '../utils/helpers'
 
 import Logo from '../logo.png'
 import css from '../components/css/GamesList.css'
+import CenterModal from './UI/CenterModal'
 // const Axios = require('axios');
 
 function GamesList(props) {
@@ -36,35 +37,31 @@ function GamesList(props) {
 
   return (
     <>
-      <div class='outer'>
-        <div class='middle'>
-          <div class='inner'>
-            <div className='GamesList'>
-              <div className='CloseButton1'>
-                {' '}
-                <ClearIcon
-                  fontSize='large'
-                  onClick={props.onClose}
-                ></ClearIcon>{' '}
-              </div>
-              <div class='wrapper'>
-                <div className='cards'>
-                  {games.map((game) => (
-                    <div
-                      className='card'
-                      onClick={() => handlePlatformIntegration(game.platform)}
-                    >
-                      <figure key={game.name}>
-                        <img src={game.img} />
-                      </figure>
-                    </div>
-                  ))}
+      <CenterModal>
+        <div className='GamesList'>
+          <div className='CloseButton1'>
+            {' '}
+            <ClearIcon
+              fontSize='large'
+              onClick={props.onClose}
+            ></ClearIcon>{' '}
+          </div>
+          <div class='wrapper'>
+            <div className='cards'>
+              {games.map((game) => (
+                <div
+                  className='card'
+                  onClick={() => handlePlatformIntegration(game.platform)}
+                >
+                  <figure key={game.name}>
+                    <img src={game.img} />
+                  </figure>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
+      </CenterModal>
     </>
   )
 }
