@@ -6,7 +6,8 @@ import axios from '../utils';
 import CloseIcon from '@material-ui/icons/Clear';
 import Snackbar from '@material-ui/core/Snackbar';
 import { SnackbarContent } from '@material-ui/core';
-
+import { TextField } from '@material-ui/core';
+import {makeStyles,createStyles} from "@material-ui/core/styles";
 import OTP from '../components/OTP';
 
 const GlobalStyle = createGlobalStyle`
@@ -14,6 +15,28 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Raleway', sans-serif;
   }`;
+
+const useStyles = makeStyles(theme =>
+  createStyles({
+    root: {
+      color: "white",
+      "&.Mui-focused": {
+        color:'white',
+        borderColor: 'green'
+      },
+      "& .MuiInput-underline:after": {
+        borderBottomColor: "green"
+      },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "red",
+        color:"green"
+      },
+    }
+  }
+    },
+  )
+);
 
 function RegisterWindow(props) {
   const [nickname, setNickname] = useState('');
@@ -24,6 +47,17 @@ function RegisterWindow(props) {
   const [otp, setOTP] = useState(false);
   const [open, setOpen] = useState(false);
   const [ErrorMessage,setErrorMessage] = useState('');
+  const [passwordError,setPasswordError] = useState(false);
+  const [nicknameError,setNicknameError] = useState(false);
+  const [emailError,setEmailError] = useState(false);
+  const [secondPasswordError,setSecondPasswordError] = useState(false);
+  const [passwordHelperText,setPasswordHelperText] = useState('');
+  const [secondPasswordHelperText,setSecondPasswordHelperText] = useState('');
+  const [nicknameHelperText,setNicknameHelperText] = useState('');
+  const [emailHelperText,setEmailHelperText] = useState ('');
+  const classes = useStyles();
+
+
   const handleOTP = () => {
     //mail gönderilcek
     setOTP(true);
@@ -33,19 +67,34 @@ function RegisterWindow(props) {
   const handleRegister = async () => {
     try {
       if (password !== secondPassword) {
-        setErrorMessage("Passwords don't match")
-        setOpen(true)
-      }else if(nickname===''){
-        setErrorMessage("Nickname field is missing")
-        setOpen(true)
-      }else if(password===''){
-        setErrorMessage("Password field is missing")
-        setOpen(true)
-      }else if(email===''){
-        setErrorMessage("Email field is missing")
-        setOpen(true)
-      }
-      else{
+        setPasswordHelperText("Passwords don't match!")
+        setSecondPasswordHelperText("Passwords don't match!")
+        setSecondPasswordError(true)
+        setPasswordError(true)
+      }if(nickname===''){
+        setNicknameHelperText("Nickname field is empty!")
+        setNicknameError(true)
+      }if(password===''){
+        setPasswordHelperText("Password field is empty!")
+        setPasswordError(true)
+      }if(secondPassword===''){
+          setSecondPasswordHelperText("Second Password field is empty!")
+          setSecondPasswordError(true)
+      }if(email===''){
+        setEmailHelperText("Email field is empty!")
+        setEmailError(true)
+      }if (password===secondPassword && password.length>0 && secondPassword.length>0){
+        setSecondPasswordError(false)
+        setPasswordError(false)
+        setSecondPasswordHelperText('')
+        setPasswordHelperText('')
+      }if(nickname!==''){
+        setNicknameError(false)
+        setNicknameHelperText('')
+      }if(email!==''){
+        setEmailHelperText('')
+        setEmailError(false)
+      }else{
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
       if (response.status == 200) {
@@ -88,38 +137,13 @@ function RegisterWindow(props) {
         <div className='register-modal'>
           <h2 className='register-title'>Create Account</h2>
           <label className='labels'>Nickname</label>
-            <input
-              className='register-input'
-              type='text'
-              name='nickname'
-              onChange={(e) => setNickname(e.target.value)}
-              required
-            ></input>
-     
+          <TextField id="standard-basic" onChange={(e)=> setNickname(e.target.value)} required error={nicknameError} helperText={nicknameHelperText} className={classes.root} InputProps={{className: classes.root}}/>
           <label className='labels'>Mail</label>
-            <input
-              className='register-input'
-              type='text'
-              name='email'
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            ></input>
+          <TextField id="standard-basic" onChange={(e)=> setEmail(e.target.value)} required error={emailError} helperText={emailHelperText} className={classes.root} InputProps={{className: classes.root}}/>
           <label className='labels'>Password</label>
-            <input
-              className='register-input'
-              type='password'
-              name='password'
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            ></input>
+          <TextField id="standard-basic" onChange={(e)=> setPassword(e.target.value)}   type="password" required error={passwordError} helperText={passwordHelperText}  className={classes.root} InputProps={{className: classes.root}}/>
           <label className='labels'> Confirm Password</label>
-            <input
-              className='register-input'
-              type='password'
-              name='secondPassword'
-              onChange={(e) => setSecondPassword(e.target.value)}
-              required
-            ></input>
+          <TextField id="standard-basic" onChange={(e)=> setSecondPassword(e.target.value)}   type="password" required error={secondPasswordError} helperText={secondPasswordHelperText} className={classes.root} InputProps={{className: classes.root}}/>
           <div>
             <button
               className='register-button'
