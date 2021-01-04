@@ -20,6 +20,7 @@ function RegisterWindow(props) {
   const [password, setPassword] = useState('');
   const [secondPassword, setSecondPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [registeredEmail,setRegisteredEmail] = useState('');
   const history = useHistory();
   const [otp, setOTP] = useState(false);
   const [open, setOpen] = useState(false);
@@ -28,12 +29,18 @@ function RegisterWindow(props) {
     //mail gönderilcek
     setOTP(true);
   };
-
+  
 
   const handleRegister = async () => {
+  const url = 'auth/register'
+  const resp = await axios.post(url, {email}, {withCredentials: true});
+  setRegisteredEmail(resp.data.email)
     try {
       if (password !== secondPassword) {
         setErrorMessage("Passwords don't match")
+        setOpen(true)
+      }else if(email==registeredEmail){
+        setErrorMessage("Email already registered")
         setOpen(true)
       }else{
       const url = 'auth/register';
