@@ -1,9 +1,10 @@
 .GamesList {
   display: flex;
   position: absolute;
-  width: 800px;
+  padding: 10px 80px;
   height: auto;
-  top: 20%;
+  top: 30%;
+  left: 35%;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
@@ -31,7 +32,7 @@
 
 body {
   background: #24282f;
-  font-family: "Alegreya Sans";
+  font-family: 'Alegreya Sans';
 }
 .wrapper {
   padding: 15px;
@@ -56,7 +57,7 @@ body {
 }
 
 .cards .card:after {
-  content: "";
+  content: '';
   z-index: 10;
   width: 200%;
   height: 100%;
@@ -90,6 +91,29 @@ body {
   top: -40%;
   opacity: 0.15;
 }
+
+/* -------------------------------- New Added ------------------------------- */
+.outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  /*whatever width you want*/
+}
+/* -------------------------------------------------------------------------- */
 
 @media (max-width: 1080px) {
   .image {

@@ -18,6 +18,7 @@ import './components/css/index.css';
 
 /* -- Creates a store for data. Applys middleware thunk for async fonctions - */
 const store = createStore(reducers, applyMiddleware(thunk));
+// Buraya bir fonksiyon gelecek
 
 ReactDOM.render(
   <Provider store={store}>

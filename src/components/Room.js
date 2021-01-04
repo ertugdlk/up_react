@@ -397,6 +397,10 @@ function Room(props) {
                     <button className="ready-button" onClick={handleStart}>
                       START
                     </button>
+                  ) : host === props.userName ? (
+                    <button className="ready-button-start-disabled" disabled>
+                      START
+                    </button>
                   ) : null}
                   <button className="ready-button" onClick={handleLeaveRoom}>
                     LEAVE
