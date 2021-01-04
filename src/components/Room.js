@@ -339,7 +339,7 @@ function Room(props) {
           <div className="CloseButton1">
             <ClearIcon
               fontSize="large"
-              onClick={props.handleCloseRoom}
+              onClick={() => props.handleCloseRoom()}
             ></ClearIcon>{" "}
           </div>
           <div className="components">

@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import '../css/GameRoomRow.css';
-import { Table, Button } from 'semantic-ui-react';
-import Room from '../Room';
+import React, { useState } from "react"
+import "../css/GameRoomRow.css"
+import { Table, Button } from "semantic-ui-react"
+import Room from "../Room"
 
 function GameRoomRow(props) {
   //const [gameDetail, setGameDetail] = useState({})
-  const [userRoom, setRoom] = useState(false);
-  const [selectedHost, setSelectedHost] = useState('');
+  const [userRoom, setRoom] = useState(false)
+  const [selectedHost, setSelectedHost] = useState("")
 
   const handleRoom = (host) => {
-    setRoom(true);
-    setSelectedHost(host);
-  };
+    setRoom(true)
+    setSelectedHost(host)
+  }
 
   const closeRoom = () => {
-    setRoom(false);
-  };
+    setRoom(false)
+  }
 
   const listRooms = () => {
     if (props.data === []) {
@@ -23,33 +23,34 @@ function GameRoomRow(props) {
         <Table.Row>
           <Table.Cell>No Game</Table.Cell>
         </Table.Row>
-      );
+      )
+    } else {
+      return props.data.map((dat) => (
+        <Table.Row>
+          {/* <Table.Cell>{dat.room}</Table.Cell> */}
+          <Table.Cell>{dat.host}</Table.Cell>
+          <Table.Cell>
+            {dat.userCount}/{dat.type.charAt(0) * 2}
+            {/* CS GO VE PUBG İF EKLE */}
+          </Table.Cell>
+          <Table.Cell>{dat.name}</Table.Cell>
+          <Table.Cell>{dat.createdAt}</Table.Cell>
+          <Table.Cell>{dat.map}</Table.Cell>
+          <Table.Cell>{dat.type}</Table.Cell>
+          <Table.Cell>{dat.fee}</Table.Cell>
+          <Table.Cell>{dat.fee * 2}</Table.Cell>
+          <Table.Cell>
+            <Button color="green" onClick={() => props.onJoin(dat.host)}>
+              Join game
+            </Button>
+          </Table.Cell>
+        </Table.Row>
+      ))
     }
-    return props.data.map((dat) => (
-      <Table.Row>
-        {/* <Table.Cell>{dat.room}</Table.Cell> */}
-        <Table.Cell>{dat.host}</Table.Cell>
-        <Table.Cell>
-          {dat.userCount}/{dat.type.charAt(0) * 2}
-          {/* CS GO VE PUBG İF EKLE */}
-        </Table.Cell>
-        <Table.Cell>{dat.name}</Table.Cell>
-        <Table.Cell>{dat.createdAt}</Table.Cell>
-        <Table.Cell>{dat.map}</Table.Cell>
-        <Table.Cell>{dat.type}</Table.Cell>
-        <Table.Cell>{dat.fee}</Table.Cell>
-        <Table.Cell>{dat.fee * 2}</Table.Cell>
-        <Table.Cell>
-          <Button color='green' onClick={() => props.onJoin(dat.host)}>
-            Join game
-          </Button>
-        </Table.Cell>
-      </Table.Row>
-    ));
-  };
+  }
 
   return (
-    <div className='Games'>
+    <div className="Games">
       {userRoom ? (
         <Room handleCloseRoom={closeRoom} host={selectedHost}></Room>
       ) : null}
@@ -70,7 +71,7 @@ function GameRoomRow(props) {
         <Table.Body>{listRooms()}</Table.Body>
       </Table>
     </div>
-  );
+  )
 }
 
-export default GameRoomRow;
+export default GameRoomRow
