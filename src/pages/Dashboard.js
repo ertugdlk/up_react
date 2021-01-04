@@ -265,6 +265,7 @@ function Dashboard(props) {
   }
 
   const handleCloseRoom = () => {
+    console.log('patease')
     setGameRoom(false)
   }
 

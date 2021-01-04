@@ -27,6 +27,7 @@
 
 .CloseButton1 {
   color: #0ab74c;
+  z-index: 1000;
 }
 
 .buttons-group {
