@@ -18,7 +18,8 @@ function GameRoomRow(props) {
   }
 
   const listRooms = () => {
-    if (props.data === []) {
+    const checkArray = Array.isArray(props.data)
+    if (checkArray == false) {
       return (
         <Table.Row>
           <Table.Cell>No Game</Table.Cell>
