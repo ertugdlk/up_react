@@ -41,7 +41,10 @@ function GameRoomRow(props) {
           <Table.Cell>{dat.fee}</Table.Cell>
           <Table.Cell>{dat.fee * 2}</Table.Cell>
           <Table.Cell>
-            <Button color="green" onClick={() => props.onJoin(dat.host)}>
+            <Button
+              color="green"
+              onClick={() => props.onJoin(dat.host, dat.name)}
+            >
               Join game
             </Button>
           </Table.Cell>
