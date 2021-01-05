@@ -197,11 +197,11 @@ function Dashboard(props) {
     const result = _.find(menubarGames, (game) => {
       return game.name == gameName
     })
-
     if (result === undefined) {
-      setErrorMessage("You don't have " + gameName)
       setSnack(true)
-    } else {
+      setErrorMessage("You don't have " + gameName)
+     
+    }else {
       const data = { host: host, nickname: userName }
       socket.emit("join", data)
       setSelectedHost(host)
@@ -274,7 +274,6 @@ function Dashboard(props) {
   }
 
   const handleCloseRoom = () => {
-    console.log("patease")
     setGameRoom(false)
   }
 
@@ -287,8 +286,8 @@ function Dashboard(props) {
       <Snackbar
         open={snack}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={1000}
-        onClose={handleSnack}
+        autoHideDuration={30000}
+       //onClose={handleSnack}
       >
         <SnackbarContent
           style={{
