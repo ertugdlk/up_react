@@ -139,7 +139,7 @@ function RegisterWindow(props) {
           <label className='labels'>Nickname</label>
           <TextField id="standard-basic" onChange={(e)=> setNickname(e.target.value)} required error={nicknameError} helperText={nicknameHelperText} className={classes.root} InputProps={{className: classes.root}}/>
           <label className='labels'>Mail</label>
-          <TextField id="standard-basic" onChange={(e)=> setEmail(e.target.value)} required error={emailError} helperText={emailHelperText} className={classes.root} InputProps={{className: classes.root}}/>
+          <TextField id="standard-basic" onChange={(e)=> setEmail(e.target.value)} type="email" required error={emailError} helperText={emailHelperText} className={classes.root} InputProps={{className: classes.root}}/>
           <label className='labels'>Password</label>
           <TextField id="standard-basic" onChange={(e)=> setPassword(e.target.value)}   type="password" required error={passwordError} helperText={passwordHelperText}  className={classes.root} InputProps={{className: classes.root}}/>
           <label className='labels'> Confirm Password</label>

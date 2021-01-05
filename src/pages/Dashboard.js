@@ -168,13 +168,13 @@ function Dashboard(props) {
       }
       else{
         return history.push('/');
-      } 
+      }
+
     }
 
     async function userSteam() {
       const url = 'detail/info';
       const response = await axios.get(url, { withCredentials: true });
-
       if (props.steam) {
         if (props.steam == response.data) {
           setErrorMessage('Your Steam Integrated to our system');
@@ -185,15 +185,19 @@ function Dashboard(props) {
         }
       }
     }
-
     userInfo();
     userGames();
     userSteam();
   }, []);
-
+  
   const handleGameRoom = async (host) => {
+    if(menubarGames[0].appID !== 730){
+      setErrorMessage("You don't have CS:GO")
+      setSnack(true)
+    }else{
     const data = { host: host, nickname: userName };
     socket.emit('join', data);
+    }
     setSelectedHost(host);
   };
 
