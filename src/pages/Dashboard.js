@@ -278,7 +278,7 @@ function Dashboard(props) {
   }
 
   const handleSnack = () => {
-    setSnack(false)
+      setSnack(false)
   }
   // console.log(props.roomsRedux);
   return (
@@ -286,8 +286,8 @@ function Dashboard(props) {
       <Snackbar
         open={snack}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={30000}
-       //onClose={handleSnack}
+        autoHideDuration={1000}
+        //onClose={handleSnack}
       >
         <SnackbarContent
           style={{

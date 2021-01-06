@@ -63,9 +63,22 @@ function RegisterWindow(props) {
     setOTP(true);
   };
 
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const check = re.test(String(email).toLowerCase())
+    console.log(check);
+    console.log(email);
+    if(check){
+    }else{
+      setEmailError(true)
+      console.log(emailError);
+      setEmailHelperText("Not valid email")
+    }
+}
 
   const handleRegister = async () => {
     try {
+      validateEmail(email)
       if (password !== secondPassword) {
         setPasswordHelperText("Passwords don't match!")
         setSecondPasswordHelperText("Passwords don't match!")
@@ -78,7 +91,7 @@ function RegisterWindow(props) {
         setPasswordHelperText("Password field is empty!")
         setPasswordError(true)
       }if(secondPassword===''){
-          setSecondPasswordHelperText("Second Password field is empty!")
+          setSecondPasswordHelperText("Password field is empty!")
           setSecondPasswordError(true)
       }if(email===''){
         setEmailHelperText("Email field is empty!")
