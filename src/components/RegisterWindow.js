@@ -56,7 +56,7 @@ function RegisterWindow(props) {
   const [nicknameHelperText,setNicknameHelperText] = useState('');
   const [emailHelperText,setEmailHelperText] = useState ('');
   const classes = useStyles();
-
+  const filter =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const handleOTP = () => {
     //mail gönderilcek
@@ -78,7 +78,7 @@ function RegisterWindow(props) {
         setPasswordHelperText("Password field is empty!")
         setPasswordError(true)
       }if(secondPassword===''){
-          setSecondPasswordHelperText("Second Password field is empty!")
+          setSecondPasswordHelperText("Password field is empty!")
           setSecondPasswordError(true)
       }if(email===''){
         setEmailHelperText("Email field is empty!")
@@ -91,10 +91,17 @@ function RegisterWindow(props) {
       }if(nickname!==''){
         setNicknameError(false)
         setNicknameHelperText('')
-      }if(email!==''){
+      }
+      if (!filter.test(email.value)) {
+
+        console.log(!filter.test(email))
+        setEmailHelperText("Invalid Email")
+        setEmailError(true)
+      }if(email!=='' && filter.test(email)){
         setEmailHelperText('')
         setEmailError(false)
-      }else{
+      }
+      else{
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
       if (response.status == 200) {
