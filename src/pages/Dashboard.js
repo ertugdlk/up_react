@@ -64,7 +64,7 @@ function Dashboard(props) {
   const [returnButton, setReturnButton] = useState(false)
   const [_host, setHost] = useState(false)
   const [session, setSession] = useState(false)
-  const [snack, setSnack] = useState(false)
+  const [notificationStatus, setNotificationStatus] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState("")
 
   // const [rooms, setRooms] = useState([]);
@@ -121,7 +121,7 @@ function Dashboard(props) {
 
     socket.on("Error", (msg) => {
       setErrorMessage(msg)
-      setSnack(true)
+      setNotificationStatus(true)
     })
 
     socket.on("openedRoom", (data) => {
@@ -180,10 +180,10 @@ function Dashboard(props) {
       if (props.steam) {
         if (props.steam == response.data) {
           setErrorMessage("Your Steam Integrated to our system")
-          setSnack(true)
+          setNotificationStatus(true)
         } else {
           setErrorMessage("no match")
-          setSnack(true)
+          setNotificationStatus(true)
         }
       }
     }
@@ -199,8 +199,8 @@ function Dashboard(props) {
     })
 
     if (result === undefined) {
-      setErrorMessage("You don't have " + gameName)
-      setSnack(true)
+      setErrorMessage("You don't have this game")
+      setNotificationStatus(true)
     } else {
       const data = { host: host, nickname: userName }
       socket.emit("join", data)
@@ -231,7 +231,7 @@ function Dashboard(props) {
   const handleCreateClick = () => {
     if (menubarGames.length == 0) {
       setErrorMessage("Add some Games First")
-      setSnack(true)
+      setNotificationStatus(true)
     } else {
       setCreate(true)
     }
@@ -278,16 +278,16 @@ function Dashboard(props) {
     setGameRoom(false)
   }
 
-  const handleSnack = () => {
-    setSnack(false)
+  function handleSnack() {
+    setNotificationStatus(false)
   }
   // console.log(props.roomsRedux);
   return (
     <>
       <Snackbar
-        open={snack}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={notificationStatus}
         autoHideDuration={1000}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         onClose={handleSnack}
       >
         <SnackbarContent
