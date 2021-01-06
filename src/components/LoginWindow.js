@@ -101,7 +101,7 @@ function LoginWindow(props) {
       <Snackbar
         open={open}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={10000000}
+        autoHideDuration={1000}
         onClose={handleClose}
       >
         <SnackbarContent
