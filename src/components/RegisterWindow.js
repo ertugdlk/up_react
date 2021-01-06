@@ -56,29 +56,16 @@ function RegisterWindow(props) {
   const [nicknameHelperText,setNicknameHelperText] = useState('');
   const [emailHelperText,setEmailHelperText] = useState ('');
   const classes = useStyles();
-
+  const filter =/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const handleOTP = () => {
     //mail gönderilcek
     setOTP(true);
   };
 
-  function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const check = re.test(String(email).toLowerCase())
-    console.log(check);
-    console.log(email);
-    if(check){
-    }else{
-      setEmailError(true)
-      console.log(emailError);
-      setEmailHelperText("Not valid email")
-    }
-}
 
   const handleRegister = async () => {
     try {
-      validateEmail(email)
       if (password !== secondPassword) {
         setPasswordHelperText("Passwords don't match!")
         setSecondPasswordHelperText("Passwords don't match!")
@@ -104,10 +91,17 @@ function RegisterWindow(props) {
       }if(nickname!==''){
         setNicknameError(false)
         setNicknameHelperText('')
-      }if(email!==''){
+      }
+      if (!filter.test(email.value)) {
+
+        console.log(!filter.test(email))
+        setEmailHelperText("Invalid Email")
+        setEmailError(true)
+      }if(email!=='' && filter.test(email)){
         setEmailHelperText('')
         setEmailError(false)
-      }else{
+      }
+      else{
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
       if (response.status == 200) {

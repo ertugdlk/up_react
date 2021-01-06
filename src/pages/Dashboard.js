@@ -26,8 +26,6 @@ import {
   removeGameRoom,
 } from "../actions/index"
 import Room from "../components/Room"
-import Snackbar from "@material-ui/core/Snackbar"
-import { SnackbarContent } from "@material-ui/core"
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from "../utils"
@@ -64,8 +62,12 @@ function Dashboard(props) {
   const [returnButton, setReturnButton] = useState(false)
   const [_host, setHost] = useState(false)
   const [session, setSession] = useState(false)
-  const [snack, setSnack] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState("")
+  const [errorbar,setErrorBar] = useState(false)
+
+  useEffect(() => {
+    setTimeout(() => setErrorBar(), 5000);
+  });
 
   // const [rooms, setRooms] = useState([]);
   const history = useHistory()
@@ -121,7 +123,7 @@ function Dashboard(props) {
 
     socket.on("Error", (msg) => {
       setErrorMessage(msg)
-      setSnack(true)
+      setErrorBar(true)
     })
 
     socket.on("openedRoom", (data) => {
@@ -180,10 +182,10 @@ function Dashboard(props) {
       if (props.steam) {
         if (props.steam == response.data) {
           setErrorMessage("Your Steam Integrated to our system")
-          setSnack(true)
+          setErrorBar(true)
         } else {
           setErrorMessage("no match")
-          setSnack(true)
+          setErrorBar(true)
         }
       }
     }
@@ -198,9 +200,8 @@ function Dashboard(props) {
       return game.name == gameName
     })
     if (result === undefined) {
-      setSnack(true)
+      setErrorBar(true)
       setErrorMessage("You don't have " + gameName)
-     
     }else {
       const data = { host: host, nickname: userName }
       socket.emit("join", data)
@@ -231,7 +232,7 @@ function Dashboard(props) {
   const handleCreateClick = () => {
     if (menubarGames.length == 0) {
       setErrorMessage("Add some Games First")
-      setSnack(true)
+      setErrorBar(true)
     } else {
       setCreate(true)
     }
@@ -277,31 +278,11 @@ function Dashboard(props) {
     setGameRoom(false)
   }
 
-  const handleSnack = () => {
-      setSnack(false)
-  }
   // console.log(props.roomsRedux);
   return (
     <>
-      <Snackbar
-        open={snack}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        autoHideDuration={1000}
-        //onClose={handleSnack}
-      >
-        <SnackbarContent
-          style={{
-            backgroundColor: "#00ff60",
-            color: "black",
-            justifyContent: "center",
-            fontWeight: "bolder",
-            fontSize: "14px",
-            borderRadius: "10px",
-          }}
-          message={<span id="client-snackbar">{ErrorMessage}</span>}
-        />
-      </Snackbar>
 
+    {errorbar ? (<div className="errorbar"><span>{ErrorMessage}</span></div>):null}
       {session ? (
         <div>
           {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
