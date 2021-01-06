@@ -397,7 +397,7 @@ function Room(props) {
                     <button className="ready-button" onClick={handleStart}>
                       START
                     </button>
-                  ) : host === props.userName ? (
+                  ) : host === props.nickname ? (
                     <button className="ready-button-start-disabled" disabled>
                       START
                     </button>

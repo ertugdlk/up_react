@@ -356,7 +356,7 @@ function Dashboard(props) {
               </button>
               {returnButton ? (
                 <button className="return-button" onClick={handleReturnGame}>
-                  Return to Existing Game
+                  Return to Game
                 </button>
               ) : null}
             </div>
