@@ -3,6 +3,7 @@ import axios from "../utils"
 import css from "../components/css/Room.css"
 import Logo from "../logo.png"
 import ClearIcon from "@material-ui/icons/Clear"
+import close from "../close.png"
 import { Segment, SegmentGroup } from "semantic-ui-react"
 import Countdown from "react-countdown"
 import Snackbar from "@material-ui/core/Snackbar"
@@ -24,6 +25,7 @@ function Room(props) {
   let chatRef = useRef()
   const [snackbar, setSnackbar] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState("")
+  const [sure,setSure] = useState(false)
 
   useEffect(() => {
     async function RoomUsers() {
@@ -198,10 +200,16 @@ function Room(props) {
     })
   }, [])
 
-  const handleEnterPressed = (e) => {
-    if (e.charCode === 13 || e.keyCode === 13) {
-      handleSendMessage()
+  const handleSureWindow = () => {
+    if (props.nickname == props.host) {
+      setSure(true)
+    } else{
+      setSure(false)
     }
+  }
+
+  const handleCancelButton = () => {
+      setSure(false)
   }
 
   const handleSendMessage = () => {
@@ -223,6 +231,11 @@ function Room(props) {
   const handleStart = () => {
     const data = { host: props.host }
     props.socket.emit("countdown", data)
+  }
+
+  const handleKick = () => {
+    const data = {nickname:props.nickname}
+    props.socket.emit("kick",data)
   }
 
   const handleStartMatch = async () => {
@@ -356,6 +369,7 @@ function Room(props) {
                           {" "}
                           {handleHost(member)} {member.nickname}{" "}
                           {member.readyStatus ? "Ready" : "Unready"}
+                          <img src={close} className="kick-icon" onClick={handleSureWindow}></img>
                         </li>
                       )
                     })}
@@ -372,6 +386,7 @@ function Room(props) {
                         <li className="team-users">
                           {handleHost(member)} {member.nickname}{" "}
                           {member.readyStatus ? "Ready" : "Unready"}
+                          <img src={close} className="kick-icon" onClick={handleSureWindow}></img>
                         </li>
                       )
                     })}
@@ -407,6 +422,7 @@ function Room(props) {
                   </button>
                 </div>
               </div>
+              {sure? <div className="sure-window"><span className="sure-text">Are You Sure?</span><button className="sure-buttons" onClick={handleKick}>Kick</button><button className="sure-buttons" onClick={handleCancelButton}>Cancel</button></div>:null}
               <div className="chat-holder">
                 <div className="chat">
                   <div className="chat-field">

@@ -138,8 +138,15 @@
   margin: 2px;
 }
 
+.kick-icon{
+  float: right;
+  margin-top: 3px;
+  text-align: center;
+  cursor: default;
+}
+
 .team-buttons {
-  width: 148px;
+  width: 180px;
   background-color: #0b0b00;
   color: #35ac45;
   text-align: center;
@@ -200,7 +207,7 @@
   background-color: #00ff60;
   border-radius: 8px;
   padding: 5px 20px;
-  margin: 10px;
+  margin: 10px 50px;
 }
 
 .chat-utils {
@@ -216,6 +223,31 @@
   padding: 5px 20px;
   margin: 10px;
   cursor: not-allowed;
+}
+
+.sure-window{
+  color:white;
+  display: grid;
+  border:1px solid #00ff60;
+  height: 100px;
+  width: fit-content;
+  margin:0 auto;
+  background-color: #0b0b00;
+}
+
+.sure-text{
+  margin: 0 auto;
+  height: fit-content;
+  width: fit-content;
+}
+
+.sure-buttons{
+  border: none;
+  background-color: #0ab74c;
+  border-radius: 10px;
+  margin: 0 60px;
+  align-self: center;
+
 }
 
 @media screen and (max-width: 1600px) {
