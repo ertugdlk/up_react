@@ -25,7 +25,8 @@ function Room(props) {
   let chatRef = useRef()
   const [snackbar, setSnackbar] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState("")
-  const [sure,setSure] = useState(false)
+  const [sure, setSure] = useState(false)
+  const [selectedPlayer, setSelectedPlayer] = useState("")
 
   useEffect(() => {
     async function RoomUsers() {
@@ -159,6 +160,14 @@ function Room(props) {
       setHost(newHost.nickname)
     })
 
+    props.socket.on("userKicked", ({ nickname, team, host }) => {
+      if (props.nickname == nickname) {
+        const data = { nickname: props.nickname, host: host }
+        props.socket.emit("leave", data)
+        window.location.reload()
+      }
+    })
+
     props.socket.on("readyChange", async (data) => {
       const url = "room/getdata"
       const response = await axios.post(
@@ -200,16 +209,8 @@ function Room(props) {
     })
   }, [])
 
-  const handleSureWindow = () => {
-    if (props.nickname == props.host) {
-      setSure(true)
-    } else{
-      setSure(false)
-    }
-  }
-
   const handleCancelButton = () => {
-      setSure(false)
+    setSure(false)
   }
 
   const handleSendMessage = () => {
@@ -233,9 +234,14 @@ function Room(props) {
     props.socket.emit("countdown", data)
   }
 
+  const handleSureWindow = (nickname) => {
+    setSure(true)
+    setSelectedPlayer(nickname)
+  }
+
   const handleKick = () => {
-    const data = {nickname:props.nickname}
-    props.socket.emit("kick",data)
+    const data = { host: host, nickname: selectedPlayer }
+    props.socket.emit("kick", data)
   }
 
   const handleStartMatch = async () => {
@@ -364,12 +370,19 @@ function Room(props) {
                   </button>
                   <ul>
                     {team1.map((member) => {
+                      var user = member.nickname
                       return (
                         <li className="team-users">
                           {" "}
                           {handleHost(member)} {member.nickname}{" "}
                           {member.readyStatus ? "Ready" : "Unready"}
-                          <img src={close} className="kick-icon" onClick={handleSureWindow}></img>
+                          {host == props.nickname ? (
+                            <img
+                              src={close}
+                              className="kick-icon"
+                              onClick={(member) => handleSureWindow(user)}
+                            ></img>
+                          ) : null}
                         </li>
                       )
                     })}
@@ -382,11 +395,18 @@ function Room(props) {
                   </button>
                   <ul>
                     {team2.map((member) => {
+                      var user = member.nickname
                       return (
                         <li className="team-users">
                           {handleHost(member)} {member.nickname}{" "}
                           {member.readyStatus ? "Ready" : "Unready"}
-                          <img src={close} className="kick-icon" onClick={handleSureWindow}></img>
+                          {host == props.nickname ? (
+                            <img
+                              src={close}
+                              className="kick-icon"
+                              onClick={() => handleSureWindow(user)}
+                            ></img>
+                          ) : null}
                         </li>
                       )
                     })}
@@ -422,7 +442,17 @@ function Room(props) {
                   </button>
                 </div>
               </div>
-              {sure? <div className="sure-window"><span className="sure-text">Are You Sure?</span><button className="sure-buttons" onClick={handleKick}>Kick</button><button className="sure-buttons" onClick={handleCancelButton}>Cancel</button></div>:null}
+              {sure ? (
+                <div className="sure-window">
+                  <span className="sure-text">Are You Sure?</span>
+                  <button className="sure-buttons" onClick={handleKick}>
+                    Kick
+                  </button>
+                  <button className="sure-buttons" onClick={handleCancelButton}>
+                    Cancel
+                  </button>
+                </div>
+              ) : null}
               <div className="chat-holder">
                 <div className="chat">
                   <div className="chat-field">
