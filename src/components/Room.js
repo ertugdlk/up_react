@@ -4,6 +4,7 @@ import css from "../components/css/Room.css"
 import Logo from "../logo.png"
 import ClearIcon from "@material-ui/icons/Clear"
 import close from "../close.png"
+import crown from "../crown.png"
 import { Segment, SegmentGroup } from "semantic-ui-react"
 import Countdown from "react-countdown"
 import Snackbar from "@material-ui/core/Snackbar"
@@ -284,7 +285,7 @@ function Room(props) {
 
   const handleHost = (member) => {
     if (host === member.nickname) {
-      return "HOST"
+      return <img src={crown} className="crown"></img>
     } else {
       return ""
     }
@@ -373,9 +374,10 @@ function Room(props) {
                       var user = member.nickname
                       return (
                         <li className="team-users">
-                          {" "}
-                          {handleHost(member)} {member.nickname}{" "}
+                          {" "} <span>{handleHost(member)}</span> <span className="team-user"> {member.nickname} </span> {" "}
+                          <div className="ready-status">
                           {member.readyStatus ? "Ready" : "Unready"}
+                          </div>
                           {host == props.nickname ? (
                             <img
                               src={close}
@@ -388,40 +390,16 @@ function Room(props) {
                     })}
                   </ul>
                 </div>
+                <div className="detail-and-button-container">
                 <div className="map-photo">{checkGameInformation()}</div>
-                <div className="team-2">
-                  <button onClick={handleTeamSwap} className="team-buttons">
-                    TEAM 2
-                  </button>
-                  <ul>
-                    {team2.map((member) => {
-                      var user = member.nickname
-                      return (
-                        <li className="team-users">
-                          {handleHost(member)} {member.nickname}{" "}
-                          {member.readyStatus ? "Ready" : "Unready"}
-                          {host == props.nickname ? (
-                            <img
-                              src={close}
-                              className="kick-icon"
-                              onClick={() => handleSureWindow(user)}
-                            ></img>
-                          ) : null}
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
-
                 <div className="gameDetails">
-                  <span>Game Details </span>
-                  <span>
+                  <span>Game Details</span>
+                  <div>
                     {" "}
                     {props.roomResponse.settings.map}{" "}
                     {props.roomResponse.settings.type}
-                  </span>
+                  </div>
                 </div>
-                <div className="clear"></div>
                 <div className="buttons-group">
                   {checkHostOrNot() ? null : (
                     <button onClick={handleReady} className="ready-button">
@@ -441,6 +419,33 @@ function Room(props) {
                     LEAVE
                   </button>
                 </div>
+                </div>
+                <div className="team-2">
+                  <button onClick={handleTeamSwap} className="team-buttons">
+                    TEAM 2
+                  </button>
+                  <ul>
+                    {team2.map((member) => {
+                      var user = member.nickname
+                      return (
+                        <li className="team-users">
+                          {" "} <span>{handleHost(member)}</span> <span className="team-user"> {member.nickname} </span> {" "}
+                          <div className="ready-status">
+                          {member.readyStatus ? "Ready" : "Unready"}
+                          </div>
+                          {host == props.nickname ? (
+                            <img
+                              src={close}
+                              className="kick-icon"
+                              onClick={() => handleSureWindow(user)}
+                            ></img>
+                          ) : null}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </div>
+                <div className="clear"></div>
               </div>
               {sure ? (
                 <div className="sure-window">
