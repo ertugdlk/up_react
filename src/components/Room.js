@@ -380,7 +380,7 @@ function Room(props) {
                             <img
                               src={close}
                               className="kick-icon"
-                              onClick={(member) => handleSureWindow(user)}
+                              onClick={() => handleSureWindow(user)}
                             ></img>
                           ) : null}
                         </li>
