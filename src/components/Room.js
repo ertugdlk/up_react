@@ -242,6 +242,7 @@ function Room(props) {
   const handleKick = () => {
     const data = { host: host, nickname: selectedPlayer }
     props.socket.emit("kick", data)
+    setSure(false)
   }
 
   const handleStartMatch = async () => {
