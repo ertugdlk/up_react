@@ -243,11 +243,13 @@ function Room(props) {
   }
 
   const handleSureWindow = (nickname) => {
+    setReport(false)
     setSure(true)
     setSelectedPlayer(nickname)
   }
 
   const handleReportWindow = (nickname) => {
+    setSure(false)
     setReport(true)
     setSelectedPlayer(nickname)
   }
@@ -306,7 +308,7 @@ function Room(props) {
 
   const handleHost = (member) => {
     if (host === member.nickname) {
-      return <img src={crown} className="crown"></img>
+      return "HOST"
     } else {
       return ""
     }
@@ -395,7 +397,7 @@ function Room(props) {
                       var user = member.nickname
                       return (
                         <li className="team-users">
-                          {" "} <span>{handleHost(member)}</span> <span className="team-user"> {member.nickname} </span> {" "}
+                          {" "} <span className="host-status">{handleHost(member)}</span> <span className="team-user"> {member.nickname} </span> {" "}
                           <div className="ready-status">
                           {member.readyStatus ? "Ready" : "Unready"}
                           </div>
@@ -409,7 +411,7 @@ function Room(props) {
                           <ReportIcon className="report-icon"
                                fontSize="small"
                                 onClick={() => handleReportWindow(user)}
-                            ></ReportIcon>
+                            ></ReportIcon> 
                         </li>
                       )
                     })}
@@ -489,7 +491,7 @@ function Room(props) {
               ) : null}
               {report ? (
                 <div className="sure-window">
-                  <span className="sure-text">Are you sure?</span>
+                  <span className="sure-text">Are You Sure?</span>
                   <button className="sure-buttons" onClick={handleReport}>
                     Report
                   </button>
