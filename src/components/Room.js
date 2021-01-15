@@ -3,6 +3,8 @@ import axios from "../utils"
 import css from "../components/css/Room.css"
 import Logo from "../logo.png"
 import ClearIcon from "@material-ui/icons/Clear"
+import ReportIcon from '@material-ui/icons/Report'
+import CachedIcon from '@material-ui/icons/Cached'
 import close from "../close.png"
 import crown from "../crown.png"
 import { Segment, SegmentGroup } from "semantic-ui-react"
@@ -27,6 +29,7 @@ function Room(props) {
   const [snackbar, setSnackbar] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState("")
   const [sure, setSure] = useState(false)
+  const [report,setReport] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState("")
 
   useEffect(() => {
@@ -214,6 +217,10 @@ function Room(props) {
     setSure(false)
   }
 
+  const handleReportCancel = () => {
+    setReport(false)
+  }
+
   const handleSendMessage = () => {
     const data = { host: props.host, nickname: props.nickname, msg: message }
     props.socket.emit("message", data)
@@ -240,10 +247,24 @@ function Room(props) {
     setSelectedPlayer(nickname)
   }
 
+  const handleReportWindow = (nickname) => {
+    setReport(true)
+    setSelectedPlayer(nickname)
+  }
+
   const handleKick = () => {
     const data = { host: host, nickname: selectedPlayer }
     props.socket.emit("kick", data)
+    setReport(false)
   }
+
+
+  const handleReport = () =>{
+    const data = { nickname: selectedPlayer}
+    props.socket.emit("report",data)
+    setSure(false)
+  }
+
 
   const handleStartMatch = async () => {
     try {
@@ -366,7 +387,7 @@ function Room(props) {
             <div className="teams-container">
               <div className="game-teams">
                 <div className="team-1">
-                  <button onClick={handleTeamSwap} className="team-buttons">
+                  <button onClick={handleTeamSwap} className="team-buttons"><CachedIcon className="change-icon" fontSize="small"></CachedIcon>
                     TEAM 1
                   </button>
                   <ul>
@@ -385,6 +406,10 @@ function Room(props) {
                               onClick={() => handleSureWindow(user)}
                             ></img>
                           ) : null}
+                          <ReportIcon className="report-icon"
+                               fontSize="small"
+                                onClick={() => handleReportWindow(user)}
+                            ></ReportIcon>
                         </li>
                       )
                     })}
@@ -421,7 +446,7 @@ function Room(props) {
                 </div>
                 </div>
                 <div className="team-2">
-                  <button onClick={handleTeamSwap} className="team-buttons">
+                  <button onClick={handleTeamSwap} className="team-buttons"> <CachedIcon className="change-icon" fontSize="small"></CachedIcon>
                     TEAM 2
                   </button>
                   <ul>
@@ -440,6 +465,10 @@ function Room(props) {
                               onClick={() => handleSureWindow(user)}
                             ></img>
                           ) : null}
+                          <ReportIcon className="report-icon"
+                               fontSize="small"
+                                onClick={() => handleReportWindow(user)}
+                            ></ReportIcon>
                         </li>
                       )
                     })}
@@ -454,6 +483,17 @@ function Room(props) {
                     Kick
                   </button>
                   <button className="sure-buttons" onClick={handleCancelButton}>
+                    Cancel
+                  </button>
+                </div>
+              ) : null}
+              {report ? (
+                <div className="sure-window">
+                  <span className="sure-text">Are you sure?</span>
+                  <button className="sure-buttons" onClick={handleReport}>
+                    Report
+                  </button>
+                  <button className="sure-buttons" onClick={handleReportCancel}>
                     Cancel
                   </button>
                 </div>

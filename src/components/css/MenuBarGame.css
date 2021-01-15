@@ -52,25 +52,24 @@
   display: flex;
   position: absolute;
   margin-top: 50px;
-  width: 83%;
-  background-color: #343438;
+  width: 100%;
   flex-flow: column nowrap;
 }
 
 .dropdown-content a {
   display: flex;
   color: white;
-  padding: 16px 4px;
   text-decoration: none;
   flex-flow: column nowrap;
   align-items: center;
 }
 
-.dropdown-content button {
-  text-align: left;
-  margin-left: 15px;
+.dropdown-button {
+  text-align: center;
+  border: 0.1px solid #fff;
+  background-color: #0ab74c;
 }
 
-.dropdown-content a:hover {
+.dropdown-button:hover {
   cursor: pointer;
 }

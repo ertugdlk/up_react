@@ -25,10 +25,10 @@ function MenuBarGame(props) {
             <img src={Logo} /> {props.data.name}
           </button>
           {click ? (
-            <div class='dropdown-content' ref={dropdown}>
-              <button>* Duel</button>
-              <button>* Events</button>
-              <button>* Leaderboard</button>
+            <div className='dropdown-content' ref={dropdown}>
+              <button className="dropdown-button">Duel</button>
+              <button className="dropdown-button">Events</button>
+              <button className="dropdown-button">Leaderboard</button>
             </div>
           ) : null}
         </li>

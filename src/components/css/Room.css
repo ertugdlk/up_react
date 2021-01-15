@@ -47,6 +47,14 @@
   height: 100vh;
 }
 
+.change-icon{
+  float: left;
+}
+
+.change-icon:hover{
+  color:#00ff60;
+}
+
 .gameDetails {
   height: fit-content;
   text-align: center;
@@ -94,10 +102,15 @@
   padding: 20px;
   text-align: center;
 }
+
 .team-1 ul li:last-child {
   border-bottom: none;
   width: 100%;
   margin-top: 5px;
+}
+
+.report-icon:hover{
+  color:#00ff60;
 }
 
 .team-user{
