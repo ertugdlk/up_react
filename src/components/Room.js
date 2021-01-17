@@ -3,7 +3,10 @@ import axios from "../utils"
 import css from "../components/css/Room.css"
 import Logo from "../logo.png"
 import ClearIcon from "@material-ui/icons/Clear"
+import ReportIcon from "@material-ui/icons/Report"
+import CachedIcon from "@material-ui/icons/Cached"
 import close from "../close.png"
+import crown from "../crown.png"
 import { Segment, SegmentGroup } from "semantic-ui-react"
 import Countdown from "react-countdown"
 import Snackbar from "@material-ui/core/Snackbar"
@@ -26,6 +29,7 @@ function Room(props) {
   const [snackbar, setSnackbar] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState("")
   const [sure, setSure] = useState(false)
+  const [report, setReport] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState("")
 
   useEffect(() => {
@@ -213,6 +217,10 @@ function Room(props) {
     setSure(false)
   }
 
+  const handleReportCancel = () => {
+    setReport(false)
+  }
+
   const handleSendMessage = () => {
     const data = { host: props.host, nickname: props.nickname, msg: message }
     props.socket.emit("message", data)
@@ -235,13 +243,26 @@ function Room(props) {
   }
 
   const handleSureWindow = (nickname) => {
+    setReport(false)
     setSure(true)
+    setSelectedPlayer(nickname)
+  }
+
+  const handleReportWindow = (nickname) => {
+    setSure(false)
+    setReport(true)
     setSelectedPlayer(nickname)
   }
 
   const handleKick = () => {
     const data = { host: host, nickname: selectedPlayer }
     props.socket.emit("kick", data)
+    setReport(false)
+  }
+
+  const handleReport = () => {
+    const data = { nickname: selectedPlayer }
+    props.socket.emit("report", data)
     setSure(false)
   }
 
@@ -367,6 +388,10 @@ function Room(props) {
               <div className="game-teams">
                 <div className="team-1">
                   <button onClick={handleTeamSwap} className="team-buttons">
+                    <CachedIcon
+                      className="change-icon"
+                      fontSize="small"
+                    ></CachedIcon>
                     TEAM 1
                   </button>
                   <ul>
@@ -375,8 +400,13 @@ function Room(props) {
                       return (
                         <li className="team-users">
                           {" "}
-                          {handleHost(member)} {member.nickname}{" "}
-                          {member.readyStatus ? "Ready" : "Unready"}
+                          <span className="host-status">
+                            {handleHost(member)}
+                          </span>{" "}
+                          <span className="team-user"> {member.nickname} </span>{" "}
+                          <div className="ready-status">
+                            {member.readyStatus ? "Ready" : "Unready"}
+                          </div>
                           {host == props.nickname ? (
                             <img
                               src={close}
@@ -384,14 +414,53 @@ function Room(props) {
                               onClick={() => handleSureWindow(user)}
                             ></img>
                           ) : null}
+                          <ReportIcon
+                            className="report-icon"
+                            fontSize="small"
+                            onClick={() => handleReportWindow(user)}
+                          ></ReportIcon>
                         </li>
                       )
                     })}
                   </ul>
                 </div>
-                <div className="map-photo">{checkGameInformation()}</div>
+                <div className="detail-and-button-container">
+                  <div className="map-photo">{checkGameInformation()}</div>
+                  <div className="gameDetails">
+                    <span>Game Details</span>
+                    <div>
+                      {" "}
+                      {props.roomResponse.settings.map}{" "}
+                      {props.roomResponse.settings.type}
+                    </div>
+                  </div>
+                  <div className="buttons-group">
+                    {checkHostOrNot() ? null : (
+                      <button onClick={handleReady} className="ready-button">
+                        READY
+                      </button>
+                    )}
+                    {startButton ? (
+                      <button className="ready-button" onClick={handleStart}>
+                        START
+                      </button>
+                    ) : host === props.nickname ? (
+                      <button className="ready-button-start-disabled" disabled>
+                        START
+                      </button>
+                    ) : null}
+                    <button className="ready-button" onClick={handleLeaveRoom}>
+                      LEAVE
+                    </button>
+                  </div>
+                </div>
                 <div className="team-2">
                   <button onClick={handleTeamSwap} className="team-buttons">
+                    {" "}
+                    <CachedIcon
+                      className="change-icon"
+                      fontSize="small"
+                    ></CachedIcon>
                     TEAM 2
                   </button>
                   <ul>
@@ -399,8 +468,12 @@ function Room(props) {
                       var user = member.nickname
                       return (
                         <li className="team-users">
-                          {handleHost(member)} {member.nickname}{" "}
-                          {member.readyStatus ? "Ready" : "Unready"}
+                          {" "}
+                          <span>{handleHost(member)}</span>{" "}
+                          <span className="team-user"> {member.nickname} </span>{" "}
+                          <div className="ready-status">
+                            {member.readyStatus ? "Ready" : "Unready"}
+                          </div>
                           {host == props.nickname ? (
                             <img
                               src={close}
@@ -408,40 +481,17 @@ function Room(props) {
                               onClick={() => handleSureWindow(user)}
                             ></img>
                           ) : null}
+                          <ReportIcon
+                            className="report-icon"
+                            fontSize="small"
+                            onClick={() => handleReportWindow(user)}
+                          ></ReportIcon>
                         </li>
                       )
                     })}
                   </ul>
                 </div>
-
-                <div className="gameDetails">
-                  <span>Game Details </span>
-                  <span>
-                    {" "}
-                    {props.roomResponse.settings.map}{" "}
-                    {props.roomResponse.settings.type}
-                  </span>
-                </div>
                 <div className="clear"></div>
-                <div className="buttons-group">
-                  {checkHostOrNot() ? null : (
-                    <button onClick={handleReady} className="ready-button">
-                      READY
-                    </button>
-                  )}
-                  {startButton ? (
-                    <button className="ready-button" onClick={handleStart}>
-                      START
-                    </button>
-                  ) : host === props.nickname ? (
-                    <button className="ready-button-start-disabled" disabled>
-                      START
-                    </button>
-                  ) : null}
-                  <button className="ready-button" onClick={handleLeaveRoom}>
-                    LEAVE
-                  </button>
-                </div>
               </div>
               {sure ? (
                 <div className="sure-window">
@@ -450,6 +500,17 @@ function Room(props) {
                     Kick
                   </button>
                   <button className="sure-buttons" onClick={handleCancelButton}>
+                    Cancel
+                  </button>
+                </div>
+              ) : null}
+              {report ? (
+                <div className="sure-window">
+                  <span className="sure-text">Are You Sure?</span>
+                  <button className="sure-buttons" onClick={handleReport}>
+                    Report
+                  </button>
+                  <button className="sure-buttons" onClick={handleReportCancel}>
                     Cancel
                   </button>
                 </div>

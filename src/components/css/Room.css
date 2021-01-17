@@ -1,7 +1,7 @@
 /*Room componentinin cssi*/
 .room-window {
   position: absolute;
-  width: 80.5%;
+  width: 100%;
   height: 600px;
   top: 65px;
   background: #16161b;
@@ -9,7 +9,7 @@
 }
 
 .room-div {
-  position: relative;
+  position: absolute;
   float: left;
   width: 100%;
 }
@@ -17,7 +17,6 @@
 /*Bütün componentlerin yer aldığı divin cssi*/
 .components {
   position: relative;
-  float: left;
   color: #fff;
   font-size: 14px;
   line-height: 1.5715;
@@ -31,8 +30,8 @@
 
 .buttons-group {
   position: relative;
-  float: left;
-  margin-left: 130px;
+  width: 100%;
+  text-align: center;
 }
 
 .clear {
@@ -48,6 +47,14 @@
   height: 100vh;
 }
 
+.change-icon {
+  float: left;
+}
+
+.change-icon:hover {
+  color: #00ff60;
+}
+
 .gameDetails {
   height: fit-content;
   text-align: center;
@@ -55,7 +62,7 @@
 }
 
 .game-teams {
-  display: inline;
+  display: inline-flex;
   position: relative;
   float: left;
 }
@@ -66,12 +73,14 @@
 }
 
 .team-1 {
-  position: relative;
   float: left;
   border-radius: 5px;
-  border: 3px groove green;
+  border: none;
   position: relative;
-  height: 200px;
+  height: 300px;
+  width: 250px;
+  margin-left: -200px;
+  border: none;
 }
 
 .team-1 ul {
@@ -79,41 +88,87 @@
   padding-left: 0px;
   list-style: none;
   height: fit-content;
-  text-align: center;
 }
 
 .team-1 ul li {
-  border: 1px groove gray;
+  border: none;
+  color: #fff;
+  background-color: #000;
   width: 100%;
-  margin: 2px;
+  margin-top: 0px;
   border-left: none;
   border-right: none;
   border-bottom: none;
+  text-align: center;
 }
+
 .team-1 ul li:last-child {
-  border-bottom: 1px groove gray;
+  border-bottom: none;
   width: 100%;
-  margin: 2px;
+  margin-top: 5px;
+}
+
+.report-icon {
+  margin-top: -30px;
+  float: left;
+  cursor: pointer;
+  height: 10px;
+}
+
+.report-icon:hover {
+  color: #00ff60;
+}
+
+.team-user {
+  text-align: center;
+  color: white;
+  font-weight: bolder;
+}
+
+.team-user:hover {
+  color: #35ac45;
+  cursor: crosshair;
+}
+
+.host-status {
+  color: #00ff60;
+  text-align: left;
+}
+
+.ready-status {
+  font-weight: bolder;
+  text-align: center;
+  color: #35ac45;
+}
+
+.detail-and-button-container {
+  position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  width: 100px;
+  height: fit-content;
+  margin-top: 40px;
+  margin-left: 50px;
+  margin-right: 0px;
 }
 
 .map-photo {
-  position: relative;
-  float: left;
   border: 1px solid pink;
-  height: 200px;
-  width: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 20%;
+  width: 100%;
+  margin-top: auto;
 }
 
+.map {
+  height: 100%;
+  width: 100%;
+}
 .team-2 {
   position: relative;
-  float: left;
-  border-radius: 5px;
-  border: 3px groove green;
-  position: relative;
-  height: 200px;
+  float: right;
+  height: fit-content;
+  width: 250px;
+  margin-left: 50px;
 }
 
 .team-2 ul {
@@ -121,51 +176,56 @@
   padding-left: 0px;
   list-style: none;
   height: fit-content;
-  text-align: center;
+  width: 250px;
 }
 
 .team-2 ul li {
-  border: 1px groove gray;
+  border: none;
+  color: #fff;
+  background-color: #000;
   width: 100%;
-  margin: 2px;
+  margin-top: 0px;
   border-left: none;
   border-right: none;
   border-bottom: none;
+  text-align: center;
 }
 .team-2 ul li:last-child {
-  border-bottom: 1px groove gray;
+  border-bottom: none;
   width: 100%;
-  margin: 2px;
+  margin-top: 5px;
 }
 
-.kick-icon{
+.kick-icon {
+  margin-top: -27.5px;
+  margin-right: 5px;
   float: right;
-  margin-top: 3px;
-  text-align: center;
   cursor: default;
+  height: 10px;
 }
 
 .team-buttons {
-  width: 180px;
-  background-color: #0b0b00;
-  color: #35ac45;
+  width: 100%;
+  background-color: transparent;
+  color: #fff;
   text-align: center;
-  border-bottom: 1px groove #35ac45;
+  border-bottom: 1px groove gray;
   cursor: pointer;
   pointer-events: "none";
 }
 
-.team-users {
-  color: #fff;
+.gameDetails {
+  color: #00ff60;
+  font-size: 12px;
+  width: 100%;
+  margin-top: 10px;
 }
-.team-users:hover {
-  color: #35ac45;
-  cursor: crosshair;
-}
-.gameDetails span {
+
+.gameDetails div {
   align-self: center;
   color: #fff;
   font-size: 12px;
+  margin: 5px auto;
 }
 
 .chat {
@@ -175,7 +235,7 @@
 
 .chat-field {
   width: 100%;
-  height: 500px;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -198,7 +258,7 @@
 .chat-send {
   background-color: #35ac45;
   border-color: #35ac45;
-  float: left;
+  float: right;
   width: 20%;
 }
 
@@ -207,7 +267,7 @@
   background-color: #00ff60;
   border-radius: 8px;
   padding: 5px 20px;
-  margin: 10px 50px;
+  margin: 5px 0px;
 }
 
 .chat-utils {
@@ -217,37 +277,36 @@
 }
 
 .ready-button-start-disabled {
-  color: rgb(30, 255, 0);
+  color: #000;
   background-color: #00ff623d;
   border-radius: 8px;
   padding: 5px 20px;
-  margin: 10px;
+  margin: 5px 0px;
   cursor: not-allowed;
 }
 
-.sure-window{
-  color:white;
+.sure-window {
+  color: white;
   display: grid;
-  border:1px solid #00ff60;
+  border: 1px solid #00ff60;
   height: 100px;
   width: fit-content;
-  margin:0 auto;
+  margin: 0 auto;
   background-color: #0b0b00;
 }
 
-.sure-text{
+.sure-text {
   margin: 0 auto;
   height: fit-content;
   width: fit-content;
 }
 
-.sure-buttons{
+.sure-buttons {
   border: none;
   background-color: #0ab74c;
   border-radius: 10px;
   margin: 0 60px;
   align-self: center;
-
 }
 
 @media screen and (max-width: 1600px) {
@@ -255,19 +314,19 @@
     margin: auto;
   }
   .game-teams {
-    display: inline-block;
+    display: inline-flex;
     margin-left: 16%;
     margin-top: 10px;
   }
   .chat-holder {
     margin-top: 20px;
-    width: 95%;
-    margin-left: 20px;
-    height: 200px;
+    width: 250px;
+    margin-left: 30px;
+    height: auto;
   }
   .chat-field {
-    margin-top: 20px;
-    height: 200px;
+    display: inline-flex;
+    height: 400px;
   }
 }
 @media screen and (max-width: 1144px) {
