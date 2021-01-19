@@ -12,6 +12,7 @@
   position: relative;
   float: left;
   width: 100%;
+  padding: 5px;
 }
 
 /*Bütün componentlerin yer aldığı divin cssi*/
@@ -65,6 +66,7 @@
   display: inline-flex;
   position: relative;
   float: left;
+  width:fit-content;
 }
 .chat-holder {
   position: relative;
@@ -78,9 +80,9 @@
   border: none;
   position: relative;
   height: 300px;
-  width: 250px;
-  margin-left: -200px;
+  width: 33%;
   border:none;
+  box-sizing: border-box;
 }
 
 .team-1 ul {
@@ -145,11 +147,13 @@
   position: relative;
   display: flex;
   flex-flow: column wrap;
-  width: 100px;
+  width: 33%;
   height: fit-content;
   margin-top:40px;
   margin-left: 50px;
   margin-right: 0px;
+  box-sizing: border-box;
+  float: left;
 }
 
 .map-photo {
@@ -165,10 +169,11 @@
 }
 .team-2 {
   position: relative;
-  float: right;
+  float: left;
   height: fit-content;
-  width: 250px;
+  width: 33%;
   margin-left: 50px;
+  box-sizing: border-box;
 }
 
 .team-2 ul {
@@ -176,7 +181,7 @@
   padding-left: 0px;
   list-style: none;
   height: fit-content;
-  width: 250px;
+  width: 100%;
 }
 
 .team-2 ul li {
@@ -329,30 +334,146 @@
     display: inline-flex;
     height: 400px;  
   }
+
+  .team-1{
+    width: 100%;
+    float: left;
+  }
+  .detail-and-button-container{
+    width: 100%;
+    float: left;
+  }
+  .team-2{
+    width: 100%;
+    float: left;
+  }
 }
 @media screen and (max-width: 1144px) {
   .game-teams {
     margin-left: 100px;
+  }
+  .room-div{
+    width: 83%;
+    height: fit-content;
+    margin-left: 150px;
+
+  }
+  .chat-holder{
+    margin-left: 2%;
+  }
+
+  .chat-field{
+    display: inline-flex;
+    height: 400px;
+  }
+  
+  .team-1{
+    width: 100%;
+    float: left;
+  }
+  .detail-and-button-container{
+    width: 100%;
+    float: left;
+  }
+  .team-2{
+    width: 100%;
+    float: left;
   }
 }
 
 @media only screen and (min-width: 1680px) {
   .room-window {
     width: 83%;
+    height: fit-content;
     margin-left: 180px;
+  }
+  .room-div{
+    width: 83%;
+    margin-left: 180px;
+  }
+  .chat-holder{
+    margin-left: 2%;
+  }
+  .chat-field{
+    display: inline-flex;
+    height: 40vh;
+  }
+  .game-teams{
+    margin-left: -10vh;
+  }
+  .team-1{
+    width: 100%;
+    float: left;
+  }
+  .detail-and-button-container{
+    width: 100%;
+    float: left;
+  }
+  .team-2{
+    width: 100%;
+    float: left;
   }
 }
 
 @media only screen and (max-width: 1680px) and (min-width: 1500px) {
   .room-window {
     width: 82%;
+    height: fit-content;
     margin-left: 150px;
+  }
+  .room-div{
+    width: 83%;
+    margin-left: 150px;
+  }
+  .chat-holder{
+    margin-left: 2%;
+  }
+  .chat-field{
+    display: inline-flex;
+    height: 40vh;
+  }
+  .team-1{
+    width: 100%;
+    float: left;
+  }
+  .detail-and-button-container{
+    width: 100%;
+    float: left;
+  }
+  .team-2{
+    width: 100%;
+    float: left;
   }
 }
 
 @media only screen and (max-width: 1500px) and (min-width: 1280px) {
   .room-window {
     width: 79%;
+    height: fit-content;
     margin-left: 150px;
+  }
+  .room-div{
+    width: 83%;
+    margin-left: 150px;
+  }
+  .chat-holder{
+    margin-left: 2%;
+  }
+
+  .chat-field{
+    display: inline-flex;
+    height: 40vh;
+  }
+  .team-1{
+    width: 100%;
+    float: left;
+  }
+  .detail-and-button-container{
+    width: 100%;
+    float: left;
+  }
+  .team-2{
+    width: 100%;
+    float: left;
   }
 }
