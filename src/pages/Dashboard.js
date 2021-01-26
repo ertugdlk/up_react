@@ -77,6 +77,7 @@ function Dashboard(props) {
   useEffect(() => {
     /* --------------------------- Redux Get All Rooms -------------------------- */
     props.getAllGameRooms()
+
     /* -------------------------------------------------------------------------- */
 
     socket.on('hostChanged', ({ host, newHost }) => {
@@ -104,7 +105,7 @@ function Dashboard(props) {
     })
 
     socket.on('userCountChange', (data) => {
-      console.log(data)
+      // console.log(data)
       props.getMatchData(data.host, data.positive)
     })
 
@@ -195,10 +196,21 @@ function Dashboard(props) {
     userInfo()
     userGames()
     userSteam()
-  }, [])
+    setGameRooomList(props.roomsRedux)
+  }, [props.roomsRedux])
 
   const handleSearch = async (event) => {
     setSearchWord(event.target.value)
+    console.log('====================================')
+    console.log('event', event)
+    console.log('====================================')
+    const fiteredRoomies = props.roomsRedux.filter((room) => {
+      if (room.host.indexOf(searchWord) !== -1) return room
+    })
+    console.log('====================================')
+    console.log('fiteredRoomies', fiteredRoomies)
+    console.log('====================================')
+    setGameRooomList(fiteredRoomies)
   }
 
   const handleGameRoom = async (host, gameName) => {
@@ -284,7 +296,6 @@ function Dashboard(props) {
     setGameRoom(false)
   }
 
-  // console.log(props.roomsRedux);
   return (
     <>
       {errorbar ? (
@@ -369,7 +380,7 @@ function Dashboard(props) {
               ) : null}
             </div>
             <GameRoomRow
-              data={props.roomsRedux}
+              data={gameRoomsList}
               onJoin={(host, gameName) => handleGameRoom(host, gameName)}
             ></GameRoomRow>
           </div>
