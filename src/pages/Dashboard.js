@@ -199,17 +199,13 @@ function Dashboard(props) {
     setGameRooomList(props.roomsRedux)
   }, [props.roomsRedux])
 
-  const handleSearch = async (event) => {
+  const handleSearch = (event) => {
     setSearchWord(event.target.value)
-    console.log('====================================')
-    console.log('event', event)
-    console.log('====================================')
+
     const fiteredRoomies = props.roomsRedux.filter((room) => {
       if (room.host.indexOf(searchWord) !== -1) return room
     })
-    console.log('====================================')
-    console.log('fiteredRoomies', fiteredRoomies)
-    console.log('====================================')
+
     setGameRooomList(fiteredRoomies)
   }
 
