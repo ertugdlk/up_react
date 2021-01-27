@@ -203,13 +203,13 @@ function Dashboard(props) {
     setSearchWord(event.target.value)
 
     console.log('====================================')
-    console.log('1- roomsRedux:', props.roomsRedux)
+    console.log('1- roomsRedux:', searchWord)
     console.log('====================================')
     var fiteredRoomies = props.roomsRedux.filter((room) => {
       if (room.host.indexOf(searchWord) !== -1) return room
     })
     console.log('====================================')
-    console.log('2- roomsRedux:', props.roomsRedux)
+    console.log('2- roomsRedux:', searchWord)
     console.log('====================================')
 
     setGameRooomList(fiteredRoomies)
@@ -361,6 +361,7 @@ function Dashboard(props) {
                 <img src={searchicon} className='search-image'></img>
                 <input
                   onChange={(e) => handleSearch(e)}
+                  onKeyUp={(e) => handleSearch(e)}
                   value={searchWord}
                   className='search-gameID'
                   placeholder='Search Game ID'
