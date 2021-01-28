@@ -12,10 +12,11 @@ import Countdown from "react-countdown"
 import Snackbar from "@material-ui/core/Snackbar"
 import { SnackbarContent } from "@material-ui/core"
 import Dialog from '@material-ui/core/Dialog'
-import { makeStyles } from '@material-ui/core/styles'
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
 import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
 
 const Axios = require("axios")
 const _ = require("lodash")
@@ -23,8 +24,10 @@ const _ = require("lodash")
 const useStyles = makeStyles((theme) => ({
   dialogComponent: {
     width: '85.1vw',
-    marginLeft: '8vw',
-    marginRight: '8vw',
+    height:'fit-content',
+    marginLeft: '8%',
+    marginRight: '8%',
+    backgroundColor:'black',
     '@media (max-width:1400px)': {
       width: '82.7%',
       marginLeft: '8.6%',
@@ -51,17 +54,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Room(props) {
-const {
-   handleCloseModal,
-   handleMaxWidthChangeModal,
-   handleFullWidthChangeModal,
-   openModal,
-   fullWidthModal,
-   maxWidthModal,
-   socket,
-   nickname,
-   _host,
-  } = props
   const [chat, setChat] = useState(true)
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState("")
@@ -77,6 +69,9 @@ const {
   const [sure, setSure] = useState(false)
   const [report, setReport] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState("")
+  const [openModal,setOpenModal] = useState (true)
+  const [fullWidthModal, setFullWidthModal] = useState('sm')
+  const classes = useStyles()
 
   useEffect(() => {
     async function RoomUsers() {
@@ -401,18 +396,37 @@ const {
     }
   }
 
-  const classes = useStyles()
+
+    const handleCloseModal = () =>{
+      setOpenModal(false)
+    }
 
   return (
-    <React.Fragment>
-      <Dialog
+    <>
+       <Dialog
         className={classes.dialogComponent}
-        fullWidth={props.fullWidthModal}
+        fullWidth={fullWidthModal}
         maxWidth={false}
-        open={props.openModal}
-        onClose={props.handleCloseModal}
-        aria-labelledby='max-width-dialog-title'
+        open={openModal}
       >
+        <Snackbar
+          open={snackbar}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          autoHideDuration={1000}
+          message={ErrorMessage}
+          onClose={handleSnack}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: "#00ff60",
+              color: "black",
+              justifyContent: "center",
+              fontWeight: "bolder",
+              fontSize: "14px",
+            }}
+            message={<span id="client-snackbar">{ErrorMessage}</span>}
+          />
+        </Snackbar>
         <DialogContent>
           <Grid container>
             <Grid item>
@@ -553,123 +567,8 @@ const {
           </Grid>
         </DialogContent>
       </Dialog>
-    </React.Fragment>
+    </>
   )
 }
-
-/*
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
-import { calcTimeDelta } from 'react-countdown';
-
-const useStyles = makeStyles((theme) => ({
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: 'auto',
-    width: 'fit-content',
-  },
-  formControl: {
-    marginTop: theme.spacing(2),
-    minWidth: 120,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing(1),
-  },
-  dialogComponent:{
-    width:"85.1vw",
-    marginLeft:"8vw",
-    marginRight:"8vw",
-    "@media (max-width:1400px)":{
-    width:"82.7%",
-    marginLeft:"8.6%",
-    marginRight:"6%",
-    },
-    "@media (max-width: 1399)":{
-    width:"58.7%",
-    marginLeft:"4.6%",
-    marginRight:"6%",
-    },
-    "@media (max-width:1299px)":{
-        width:"82.7%",
-        marginLeft:"8.6%",
-        marginRight:"6%",
-    },
-    "@media (max-width:1000px)":{
-        width:"68.1%",
-        marginLeft:"17%",
-        marginRight:"5%",
-        },
-  }
-
-}));
-
-export default function Room2({handleCloseModal,handleMaxWidthChangeModal,handleFullWidthChangeModal,openModal,fullWidthModal,maxWidthModal}) {
-  const classes = useStyles();
-
-  return (
-    <React.Fragment>
-      <Dialog
-        className={classes.dialogComponent}
-        fullWidth={fullWidthModal}
-        maxWidth={false}
-        open={openModal}
-        onClose={handleCloseModal}
-        aria-labelledby="max-width-dialog-title"
-      >
-        <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            You can set my maximum width and whether to adapt or not.
-          </DialogContentText>
-          <form className={classes.form} noValidate>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-              <Select
-                autoFocus
-                value={maxWidthModal}
-                onChange={handleMaxWidthChangeModal}
-                inputProps={{
-                  name: 'max-width',
-                  id: 'max-width',
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={<Switch checked={fullWidthModal} onChange={handleFullWidthChangeModal} />}
-              label="Full width"
-            />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
-}
-
-*/
+//Test
 export default Room
