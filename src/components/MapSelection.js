@@ -3,23 +3,25 @@ import React, { useState,useEffect } from 'react'
 import axios from '../utils'
 /* -------------------------------------------------------------------------- */
 import css from "../components/css/MapSelection.css"
+import CenterModal from './UI/CenterModal'
+import { set } from 'js-cookie'
 
-function MapSelection(props) {
+function MapSelection() {
 
     const [maps, setMaps] = useState([])
 
     useEffect(() => {
         async function GameMaps() {
-          const url = 'detail/allmaps'
-          const response = await axios.get(url, { withCredentials: true })
-          if (response.data) {
-            setMaps(response.data)
+          const url = 'room/getmaps'
+          const response = await axios.post(url, {gameName:"CSGO"},{ withCredentials: true })
+          if (response.data) {       
+            console.log(response.data)
+            setMaps(response.data.maps)
           }
         }
     
         GameMaps()
       }, [])
-
   return (
     <>
     <div className="map-room-window">
@@ -30,7 +32,7 @@ function MapSelection(props) {
                   className='map'
                 >
                   <figure key={map.name}>
-                    <span>{map.name}</span>
+                    <span>{map.name}</span> {/*Buraya image gelecek*/}
                   </figure>
                 </div>
               ))}

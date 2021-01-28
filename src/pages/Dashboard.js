@@ -26,6 +26,7 @@ import {
   removeGameRoom,
 } from "../actions/index"
 import Room from "../components/Room"
+import MapSelection from "../components/MapSelection"
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from "../utils"
@@ -64,6 +65,7 @@ function Dashboard(props) {
   const [session, setSession] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState("")
   const [errorbar, setErrorBar] = useState(false)
+  const [mapSelect, setMapSelect] = useState(false)
 
   useEffect(() => {
     setTimeout(() => setErrorBar(), 5000)
@@ -247,6 +249,7 @@ function Dashboard(props) {
     )
     setRoomResponse(response.data)
     setGameRoom(true)
+    setMapSelect(true)
   }
 
   const handleCreateRoom = (data) => {
@@ -278,6 +281,10 @@ function Dashboard(props) {
     setGameRoom(false)
   }
 
+  const handleMapSelectClose = () => {
+    setMapSelect(false)
+  }
+
   // console.log(props.roomsRedux);
   return (
     <>
@@ -305,7 +312,7 @@ function Dashboard(props) {
               games={menubarGames}
             ></CreateGame>
           ) : null}
-
+          {mapSelect? <MapSelection onClose={handleMapSelectClose}></MapSelection>:null}
           {gameRoom ? (
             <Room
               host={selectedHost}

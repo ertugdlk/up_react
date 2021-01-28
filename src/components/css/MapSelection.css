@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 12px;
-    z-index: 1200;
+    z-index: 3000;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
     background: #0b0b0b;
     color: white;
@@ -51,7 +51,7 @@
     transform: translateZ(0);
     transition: 0.3s;
   }
-  .maps .map span {
+  .maps .map div {
     max-height: 100%;
     width: 100%;
   }
@@ -116,14 +116,14 @@
   /* -------------------------------------------------------------------------- */
   
   @media (max-width: 1080px) {
-    .span {
+    .div {
       flex: 100%;
       max-width: 480px;
     }
   }
   
   @media (max-width: 400px) {
-    .span{
+    .div{
       font-size: 16px;
     }
   }
