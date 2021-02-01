@@ -11,9 +11,47 @@ import { Segment, SegmentGroup } from "semantic-ui-react"
 import Countdown from "react-countdown"
 import Snackbar from "@material-ui/core/Snackbar"
 import { SnackbarContent } from "@material-ui/core"
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogContentText from "@material-ui/core/DialogContentText"
+import Grid from "@material-ui/core/Grid"
+import { makeStyles } from "@material-ui/core/styles"
 
 const Axios = require("axios")
 const _ = require("lodash")
+
+const useStyles = makeStyles((theme) => ({
+  dialogComponent: {
+    width: "85.1vw",
+    height: "fit-content",
+    marginLeft: "8%",
+    marginRight: "8%",
+    backgroundColor: "black",
+    "@media (max-width:1400px)": {
+      width: "82.7%",
+      marginLeft: "8.6%",
+      marginRight: "6%",
+      color: "white",
+      backgroundColor: "black",
+    },
+    "@media (max-width: 1399)": {
+      width: "58.7%",
+      marginLeft: "4.6%",
+      marginRight: "6%",
+    },
+    "@media (max-width:1299px)": {
+      width: "82.7%",
+      marginLeft: "8.6%",
+      marginRight: "6%",
+    },
+    "@media (max-width:1000px)": {
+      width: "68.1%",
+      marginLeft: "17%",
+      marginRight: "5%",
+    },
+  },
+}))
 
 function Room(props) {
   const [chat, setChat] = useState(true)
@@ -31,6 +69,8 @@ function Room(props) {
   const [sure, setSure] = useState(false)
   const [report, setReport] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState("")
+  const [fullWidthModal, setFullWidthModal] = useState("sm")
+  const classes = useStyles()
 
   useEffect(() => {
     async function RoomUsers() {
@@ -355,10 +395,27 @@ function Room(props) {
     }
   }
 
+  // const handleCloseModal = () =>{
+  //   setOpenModal(false)
+  // }
+
   return (
     <>
-      <div className="room-window">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      <Dialog
+        className={classes.dialogComponent}
+        fullWidth={fullWidthModal}
+        maxWidth={false}
+        open={props.openModal}
+        onClose={props.handleCloseModal}
+        PaperProps={{
+          style: {
+            backgroundColor: "#16161b",
+            boxShadow: "none",
+            height: "90vh",
+            paddingTop: "50px",
+          },
+        }}
+      >
         <Snackbar
           open={snackbar}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
@@ -377,145 +434,146 @@ function Room(props) {
             message={<span id="client-snackbar">{ErrorMessage}</span>}
           />
         </Snackbar>
-        <div className="room-div">
-          <div className="CloseButton1">
-            <ClearIcon
-              fontSize="large"
-              onClick={() => props.handleCloseRoom()}
-            ></ClearIcon>{" "}
-          </div>
-          <div className="components">
-            <div className="teams-container">
-              <div className="game-teams">
-                <div className="team-1">
-                  <button onClick={handleTeamSwap} className="team-buttons">
-                    <CachedIcon
-                      className="change-icon"
-                      fontSize="small"
-                    ></CachedIcon>
-                    TEAM 1
-                  </button>
-                  <ul>
-                    {team1.map((member) => {
-                      var user = member.nickname
-                      return (
-                        <li className="team-users">
-                          {" "}
-                          <span className="host-status">
-                            {handleHost(member)}
-                          </span>{" "}
-                          <span className="team-user"> {member.nickname} </span>{" "}
-                          <div className="ready-status">
-                            {member.readyStatus ? "Ready" : "Unready"}
-                          </div>
-                          {host == props.nickname ? (
-                            <img
-                              src={close}
-                              className="kick-icon"
-                              onClick={() => handleSureWindow(user)}
-                            ></img>
-                          ) : null}
-                          <ReportIcon
-                            className="report-icon"
-                            fontSize="small"
-                            onClick={() => handleReportWindow(user)}
-                          ></ReportIcon>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
-                <div className="detail-and-button-container">
-                  <div className="map-photo">{checkGameInformation()}</div>
-                  <div className="gameDetails">
-                    <span>Game Details</span>
-                    <div>
-                      {" "}
-                      {props.roomResponse.settings.map}{" "}
-                      {props.roomResponse.settings.type}
-                    </div>
+        <DialogContent>
+          <Grid
+            container
+            spacing={3}
+            direction="row"
+            justify="space-evenly"
+            alignItems="flex-start"
+          >
+            <Grid item lg={4} xl={3}>
+              <div className="team-1">
+                <button onClick={handleTeamSwap} className="team-buttons">
+                  <CachedIcon
+                    className="change-icon"
+                    fontSize="small"
+                  ></CachedIcon>
+                  TEAM 1
+                </button>
+                <ul>
+                  {team1.map((member) => {
+                    var user = member.nickname
+                    return (
+                      <li className="team-users">
+                        {" "}
+                        <span className="host-status">
+                          {handleHost(member)}
+                        </span>{" "}
+                        <span className="team-user"> {member.nickname} </span>{" "}
+                        <div className="ready-status">
+                          {member.readyStatus ? "Ready" : "Unready"}
+                        </div>
+                        {host == props.nickname ? (
+                          <img
+                            src={close}
+                            className="kick-icon"
+                            onClick={() => handleSureWindow(user)}
+                          ></img>
+                        ) : null}
+                        <ReportIcon
+                          className="report-icon"
+                          fontSize="small"
+                          onClick={() => handleReportWindow(user)}
+                        ></ReportIcon>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </Grid>
+            <Grid item lg={4} xl={3}>
+              <div className="detail-and-button-container">
+                <div className="map-photo">{checkGameInformation()}</div>
+                <div className="gameDetails">
+                  <span>Game Details</span>
+                  <div>
+                    {props.roomResponse.settings.map}
+                    {props.roomResponse.settings.type}
                   </div>
-                  <div className="buttons-group">
+                </div>
+                <div className="buttons-group">
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
                     {checkHostOrNot() ? null : (
-                      <button onClick={handleReady} className="ready-button">
-                        READY
-                      </button>
+                      <Grid item>
+                        <button onClick={handleReady} className="ready-button">
+                          READY
+                        </button>
+                      </Grid>
                     )}
                     {startButton ? (
-                      <button className="ready-button" onClick={handleStart}>
-                        START
-                      </button>
+                      <Grid item>
+                        <button className="ready-button" onClick={handleStart}>
+                          START
+                        </button>
+                      </Grid>
                     ) : host === props.nickname ? (
-                      <button className="ready-button-start-disabled" disabled>
-                        START
-                      </button>
+                      <Grid item>
+                        <button
+                          className="ready-button-start-disabled"
+                          disabled
+                        >
+                          START
+                        </button>
+                      </Grid>
                     ) : null}
-                    <button className="ready-button" onClick={handleLeaveRoom}>
-                      LEAVE
-                    </button>
-                  </div>
+                    <Grid item>
+                      <button
+                        className="ready-button"
+                        onClick={handleLeaveRoom}
+                      >
+                        LEAVE
+                      </button>
+                    </Grid>
+                  </Grid>
                 </div>
-                <div className="team-2">
-                  <button onClick={handleTeamSwap} className="team-buttons">
-                    {" "}
-                    <CachedIcon
-                      className="change-icon"
-                      fontSize="small"
-                    ></CachedIcon>
-                    TEAM 2
-                  </button>
-                  <ul>
-                    {team2.map((member) => {
-                      var user = member.nickname
-                      return (
-                        <li className="team-users">
-                          {" "}
-                          <span>{handleHost(member)}</span>{" "}
-                          <span className="team-user"> {member.nickname} </span>{" "}
-                          <div className="ready-status">
-                            {member.readyStatus ? "Ready" : "Unready"}
-                          </div>
-                          {host == props.nickname ? (
-                            <img
-                              src={close}
-                              className="kick-icon"
-                              onClick={() => handleSureWindow(user)}
-                            ></img>
-                          ) : null}
-                          <ReportIcon
-                            className="report-icon"
-                            fontSize="small"
-                            onClick={() => handleReportWindow(user)}
-                          ></ReportIcon>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
-                <div className="clear"></div>
               </div>
-              {sure ? (
-                <div className="sure-window">
-                  <span className="sure-text">Are You Sure?</span>
-                  <button className="sure-buttons" onClick={handleKick}>
-                    Kick
-                  </button>
-                  <button className="sure-buttons" onClick={handleCancelButton}>
-                    Cancel
-                  </button>
-                </div>
-              ) : null}
-              {report ? (
-                <div className="sure-window">
-                  <span className="sure-text">Are You Sure?</span>
-                  <button className="sure-buttons" onClick={handleReport}>
-                    Report
-                  </button>
-                  <button className="sure-buttons" onClick={handleReportCancel}>
-                    Cancel
-                  </button>
-                </div>
-              ) : null}
+            </Grid>
+            <Grid item lg={4} xl={3}>
+              <div className="team-1">
+                <button onClick={handleTeamSwap} className="team-buttons">
+                  {" "}
+                  <CachedIcon
+                    className="change-icon"
+                    fontSize="small"
+                  ></CachedIcon>
+                  TEAM 2
+                </button>
+                <ul>
+                  {team2.map((member) => {
+                    var user = member.nickname
+                    return (
+                      <li className="team-users">
+                        {" "}
+                        <span>{handleHost(member)}</span>{" "}
+                        <span className="team-user"> {member.nickname} </span>{" "}
+                        <div className="ready-status">
+                          {member.readyStatus ? "Ready" : "Unready"}
+                        </div>
+                        {host == props.nickname ? (
+                          <img
+                            src={close}
+                            className="kick-icon"
+                            onClick={() => handleSureWindow(user)}
+                          ></img>
+                        ) : null}
+                        <ReportIcon
+                          className="report-icon"
+                          fontSize="small"
+                          onClick={() => handleReportWindow(user)}
+                        ></ReportIcon>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </Grid>
+            <Grid item lg={10} xl={3}>
               <div className="chat-holder">
                 <div className="chat">
                   <div className="chat-field">
@@ -539,12 +597,12 @@ function Room(props) {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
-
+//Test
 export default Room

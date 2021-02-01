@@ -30,6 +30,8 @@
 }
 
 .buttons-group {
+  display: flex;
+  flex-direction: row;
   position: relative;
   width: 100%;
   text-align: center;
@@ -44,7 +46,6 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 35px;
-  width: 80%;
   height: 100vh;
 }
 
@@ -70,17 +71,14 @@
 }
 .chat-holder {
   position: relative;
-  float: left;
-  width: 40%;
 }
 
 .team-1 {
-  float: left;
   border-radius: 5px;
   border: none;
   position: relative;
   height: 300px;
-  width: 33%;
+  min-width: 250px;
   border: none;
   box-sizing: border-box;
 }
@@ -147,13 +145,7 @@
   position: relative;
   display: flex;
   flex-flow: column wrap;
-  width: 33%;
   height: fit-content;
-  margin-top: 40px;
-  margin-left: 50px;
-  margin-right: 0px;
-  box-sizing: border-box;
-  float: left;
 }
 
 .map-photo {
@@ -168,10 +160,8 @@
   width: 100%;
 }
 .team-2 {
-  position: relative;
-  float: left;
   height: fit-content;
-  width: 33%;
+  min-width: 250px;
   margin-left: 50px;
   box-sizing: border-box;
 }
@@ -181,7 +171,12 @@
   padding-left: 0px;
   list-style: none;
   height: fit-content;
-  width: 100%;
+  width: 250px;
+  margin-block-start: auto;
+  margin-block-end: auto;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+  padding-inline-start: auto;
 }
 
 .team-2 ul li {
@@ -236,13 +231,17 @@
 .chat {
   border: 1px solid green;
   width: 100%;
+  min-height: 250px;
+  position: relative;
+  border-radius: 5px;
 }
 
 .chat-field {
   width: 100%;
-  height: 100%;
+  height: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
+  display: inline-flex;
 }
 
 .chat-message {
@@ -276,9 +275,7 @@
 }
 
 .chat-utils {
-  float: left;
   position: relative;
-  width: 100%;
 }
 
 .ready-button-start-disabled {
@@ -324,10 +321,8 @@
     margin-top: 10px;
   }
   .chat-holder {
-    margin-top: 20px;
-    width: 250px;
-    margin-left: 30px;
-    height: 200px;
+    margin-bottom: 50px;
+    height: auto;
   }
   .chat-field {
     display: inline-flex;
