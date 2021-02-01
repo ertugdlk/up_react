@@ -18,6 +18,7 @@ import CreateGame from '../components/CreateGame'
 import MenuBarGame from '../components/MenuBarGame'
 import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons'
 import { connect } from 'react-redux'
+
 import {
   getAllGameRooms,
   addNewGame,
@@ -66,6 +67,15 @@ function Dashboard(props) {
   const [errorbar, setErrorBar] = useState(false)
   const [gameRoomsList, setGameRooomList] = useState([])
   const [searchWord, setSearchWord] = useState('')
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleCloseModal = () => {
+    setOpenModal(false)
+  }
+
+  const handleRoomOpen = () => {
+    setOpenModal(true)
+  }
 
   useEffect(() => {
     setTimeout(() => setErrorBar(), 5000)
@@ -259,6 +269,7 @@ function Dashboard(props) {
     )
     setRoomResponse(response.data)
     setGameRoom(true)
+    handleRoomOpen()
   }
 
   const handleCreateRoom = (data) => {
@@ -319,12 +330,13 @@ function Dashboard(props) {
 
           {gameRoom ? (
             <Room
+              openModal={openModal}
               host={selectedHost}
               socket={socket}
               nickname={userName}
               roomResponse={roomResponse}
               _host={_host}
-              handleCloseRoom={handleCloseRoom}
+              handleCloseModal={handleCloseModal}
             ></Room>
           ) : null}
           <GlobalStyle></GlobalStyle>
