@@ -211,7 +211,7 @@
   text-align: center;
   border-bottom: 1px groove gray;
   cursor: pointer;
-  pointer-events: "none";
+  pointer-events: 'none';
 }
 
 .gameDetails {
@@ -241,7 +241,7 @@
   height: 400px;
   overflow-x: hidden;
   overflow-y: scroll;
-  display: inline-flex;
+  display: inline-block;
 }
 
 .chat-message {
@@ -249,6 +249,7 @@
   clear: both;
   width: 100%;
   float: left;
+  margin: 3px 0px 3px 3px;
 }
 
 .chat-input {
@@ -325,7 +326,7 @@
     height: auto;
   }
   .chat-field {
-    display: inline-flex;
+    display: inline-block;
     height: 400px;
   }
 
@@ -356,7 +357,7 @@
   }
 
   .chat-field {
-    display: inline-flex;
+    display: inline-block;
     height: 400px;
   }
 
@@ -388,7 +389,7 @@
     margin-left: 2%;
   }
   .chat-field {
-    display: inline-flex;
+    display: inline-block;
     height: 40vh;
   }
   .game-teams {
@@ -422,7 +423,7 @@
     margin-left: 2%;
   }
   .chat-field {
-    display: inline-flex;
+    display: inline-block;
     height: 40vh;
   }
   .team-1 {
@@ -454,7 +455,7 @@
   }
 
   .chat-field {
-    display: inline-flex;
+    display: inline-block;
     height: 40vh;
   }
   .team-1 {
