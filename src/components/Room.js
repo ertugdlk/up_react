@@ -490,7 +490,7 @@ function Room(props) {
                       START
                     </button>
                   ) : host === props.nickname ? (
-                    <button className='ready-button-start-disabled' disabled>
+                    <button className ='ready-button-start-disabled' disabled>
                       START
                     </button>
                   ) : null}
