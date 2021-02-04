@@ -11,45 +11,44 @@ import { Segment, SegmentGroup } from "semantic-ui-react"
 import Countdown from "react-countdown"
 import Snackbar from "@material-ui/core/Snackbar"
 import { SnackbarContent } from "@material-ui/core"
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import Grid from '@material-ui/core/Grid'
-import { makeStyles } from '@material-ui/core/styles'
-import CloseIcon from '@material-ui/icons/Clear';
+import Dialog from "@material-ui/core/Dialog"
+import DialogActions from "@material-ui/core/DialogActions"
+import DialogContent from "@material-ui/core/DialogContent"
+import DialogContentText from "@material-ui/core/DialogContentText"
+import Grid from "@material-ui/core/Grid"
+import { makeStyles } from "@material-ui/core/styles"
 
 const Axios = require("axios")
 const _ = require("lodash")
 
 const useStyles = makeStyles((theme) => ({
   dialogComponent: {
-    width: '85.1vw',
-    height:'fit-content',
-    marginLeft: '8%',
-    marginRight: '8%',
-    backgroundColor:'black',
-    '@media (max-width:1400px)': {
-      width: '82.7%',
-      marginLeft: '8.6%',
-      marginRight: '6%',
-      color: 'white',
-      backgroundColor: 'black',
+    width: "85.1vw",
+    height: "fit-content",
+    marginLeft: "8%",
+    marginRight: "8%",
+    backgroundColor: "black",
+    "@media (max-width:1400px)": {
+      width: "82.7%",
+      marginLeft: "8.6%",
+      marginRight: "6%",
+      color: "white",
+      backgroundColor: "black",
     },
-    '@media (max-width: 1399)': {
-      width: '58.7%',
-      marginLeft: '4.6%',
-      marginRight: '6%',
+    "@media (max-width: 1399)": {
+      width: "58.7%",
+      marginLeft: "4.6%",
+      marginRight: "6%",
     },
-    '@media (max-width:1299px)': {
-      width: '82.7%',
-      marginLeft: '8.6%',
-      marginRight: '6%',
+    "@media (max-width:1299px)": {
+      width: "82.7%",
+      marginLeft: "8.6%",
+      marginRight: "6%",
     },
-    '@media (max-width:1000px)': {
-      width: '68.1%',
-      marginLeft: '17%',
-      marginRight: '5%',
+    "@media (max-width:1000px)": {
+      width: "68.1%",
+      marginLeft: "17%",
+      marginRight: "5%",
     },
   },
 }))
@@ -70,8 +69,7 @@ function Room(props) {
   const [sure, setSure] = useState(false)
   const [report, setReport] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState("")
-  const [openModal,setOpenModal] = useState (true)
-  const [fullWidthModal, setFullWidthModal] = useState('sm')
+  const [fullWidthModal, setFullWidthModal] = useState("sm")
   const classes = useStyles()
 
   useEffect(() => {
@@ -397,18 +395,26 @@ function Room(props) {
     }
   }
 
-
-    const handleCloseModal = () =>{
-      setOpenModal(false)
-    }
+  // const handleCloseModal = () =>{
+  //   setOpenModal(false)
+  // }
 
   return (
     <>
-       <Dialog
+      <Dialog
         className={classes.dialogComponent}
         fullWidth={fullWidthModal}
         maxWidth={false}
-        open={openModal}
+        open={props.openModal}
+        onClose={props.handleCloseModal}
+        PaperProps={{
+          style: {
+            backgroundColor: "#16161b",
+            boxShadow: "none",
+            height: "90vh",
+            paddingTop: "50px",
+          },
+        }}
       >
         <Snackbar
           open={snackbar}
@@ -429,13 +435,19 @@ function Room(props) {
           />
         </Snackbar>
         <DialogContent>
-          <Grid container>
-            <Grid item>
-              <div className='team-1'>
-                <button onClick={handleTeamSwap} className='team-buttons'>
+          <Grid
+            container
+            spacing={3}
+            direction="row"
+            justify="space-evenly"
+            alignItems="flex-start"
+          >
+            <Grid item lg={4} xl={3}>
+              <div className="team-1">
+                <button onClick={handleTeamSwap} className="team-buttons">
                   <CachedIcon
-                    className='change-icon'
-                    fontSize='small'
+                    className="change-icon"
+                    fontSize="small"
                   ></CachedIcon>
                   TEAM 1
                 </button>
@@ -443,25 +455,25 @@ function Room(props) {
                   {team1.map((member) => {
                     var user = member.nickname
                     return (
-                      <li className='team-users'>
-                        {' '}
-                        <span className='host-status'>
+                      <li className="team-users">
+                        {" "}
+                        <span className="host-status">
                           {handleHost(member)}
-                        </span>{' '}
-                        <span className='team-user'> {member.nickname} </span>{' '}
-                        <div className='ready-status'>
-                          {member.readyStatus ? 'Ready' : 'Unready'}
+                        </span>{" "}
+                        <span className="team-user"> {member.nickname} </span>{" "}
+                        <div className="ready-status">
+                          {member.readyStatus ? "Ready" : "Unready"}
                         </div>
                         {host == props.nickname ? (
                           <img
                             src={close}
-                            className='kick-icon'
+                            className="kick-icon"
                             onClick={() => handleSureWindow(user)}
                           ></img>
                         ) : null}
                         <ReportIcon
-                          className='report-icon'
-                          fontSize='small'
+                          className="report-icon"
+                          fontSize="small"
                           onClick={() => handleReportWindow(user)}
                         ></ReportIcon>
                       </li>
@@ -470,44 +482,65 @@ function Room(props) {
                 </ul>
               </div>
             </Grid>
-            <Grid item>
-              <div className='detail-and-button-container'>
-                <div className='map-photo'>{checkGameInformation()}</div>
-                <div className='gameDetails'>
+            <Grid item lg={4} xl={3}>
+              <div className="detail-and-button-container">
+                <div className="map-photo">{checkGameInformation()}</div>
+                <div className="gameDetails">
                   <span>Game Details</span>
                   <div>
                     {props.roomResponse.settings.map}
                     {props.roomResponse.settings.type}
                   </div>
                 </div>
-                <div className='buttons-group'>
-                  {checkHostOrNot() ? null : (
-                    <button onClick={handleReady} className='ready-button'>
-                      READY
-                    </button>
-                  )}
-                  {startButton ? (
-                    <button className='ready-button' onClick={handleStart}>
-                      START
-                    </button>
-                  ) : host === props.nickname ? (
-                    <button className ='ready-button-start-disabled' disabled>
-                      START
-                    </button>
-                  ) : null}
-                  <button className='ready-button' onClick={handleLeaveRoom}>
-                    LEAVE
-                  </button>
+                <div className="buttons-group">
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-evenly"
+                    alignItems="center"
+                  >
+                    {checkHostOrNot() ? null : (
+                      <Grid item>
+                        <button onClick={handleReady} className="ready-button">
+                          READY
+                        </button>
+                      </Grid>
+                    )}
+                    {startButton ? (
+                      <Grid item>
+                        <button className="ready-button" onClick={handleStart}>
+                          START
+                        </button>
+                      </Grid>
+                    ) : host === props.nickname ? (
+                      <Grid item>
+                        <button
+                          className="ready-button-start-disabled"
+                          disabled
+                        >
+                          START
+                        </button>
+                      </Grid>
+                    ) : null}
+                    <Grid item>
+                      <button
+                        className="ready-button"
+                        onClick={handleLeaveRoom}
+                      >
+                        LEAVE
+                      </button>
+                    </Grid>
+                  </Grid>
                 </div>
               </div>
             </Grid>
-            <Grid item>
-              <div className='team-2'>
-                <button onClick={handleTeamSwap} className='team-buttons'>
-                  {' '}
+            <Grid item lg={4} xl={3}>
+              <div className="team-1">
+                <button onClick={handleTeamSwap} className="team-buttons">
+                  {" "}
                   <CachedIcon
-                    className='change-icon'
-                    fontSize='small'
+                    className="change-icon"
+                    fontSize="small"
                   ></CachedIcon>
                   TEAM 2
                 </button>
@@ -515,23 +548,23 @@ function Room(props) {
                   {team2.map((member) => {
                     var user = member.nickname
                     return (
-                      <li className='team-users'>
-                        {' '}
-                        <span>{handleHost(member)}</span>{' '}
-                        <span className='team-user'> {member.nickname} </span>{' '}
-                        <div className='ready-status'>
-                          {member.readyStatus ? 'Ready' : 'Unready'}
+                      <li className="team-users">
+                        {" "}
+                        <span>{handleHost(member)}</span>{" "}
+                        <span className="team-user"> {member.nickname} </span>{" "}
+                        <div className="ready-status">
+                          {member.readyStatus ? "Ready" : "Unready"}
                         </div>
                         {host == props.nickname ? (
                           <img
                             src={close}
-                            className='kick-icon'
+                            className="kick-icon"
                             onClick={() => handleSureWindow(user)}
                           ></img>
                         ) : null}
                         <ReportIcon
-                          className='report-icon'
-                          fontSize='small'
+                          className="report-icon"
+                          fontSize="small"
                           onClick={() => handleReportWindow(user)}
                         ></ReportIcon>
                       </li>
@@ -540,10 +573,10 @@ function Room(props) {
                 </ul>
               </div>
             </Grid>
-            <Grid item>
-              <div className='chat-holder'>
-                <div className='chat'>
-                  <div className='chat-field'>
+            <Grid item lg={10} xl={3}>
+              <div className="chat-holder">
+                <div className="chat">
+                  <div className="chat-field">
                     {messages.map((message) => {
                       return (
                         <span className='chat-message'>

@@ -18,6 +18,7 @@ import CreateGame from "../components/CreateGame"
 import MenuBarGame from "../components/MenuBarGame"
 import { NavigateBefore, SportsHockeyRounded } from "@material-ui/icons"
 import { connect } from "react-redux"
+
 import {
   getAllGameRooms,
   addNewGame,
@@ -67,6 +68,17 @@ function Dashboard(props) {
   const [ErrorMessage, setErrorMessage] = useState("")
   const [errorbar, setErrorBar] = useState(false)
   const [mapSelect, setMapSelect] = useState(false)
+  const [gameRoomsList, setGameRooomList] = useState([])
+  const [searchWord, setSearchWord] = useState("")
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleCloseModal = () => {
+    setOpenModal(false)
+  }
+
+  const handleRoomOpen = () => {
+    setOpenModal(true)
+  }
 
   useEffect(() => {
     setTimeout(() => setErrorBar(), 5000)
@@ -78,6 +90,7 @@ function Dashboard(props) {
   useEffect(() => {
     /* --------------------------- Redux Get All Rooms -------------------------- */
     props.getAllGameRooms()
+
     /* -------------------------------------------------------------------------- */
 
     socket.on("hostChanged", ({ host, newHost }) => {
@@ -116,12 +129,14 @@ function Dashboard(props) {
     socket.on("roomData", (data) => {
       setRoomResponse(data)
       setGameRoom(true)
+      handleRoomOpen()
     })
 
     socket.on("roomCreated", (data) => {
       setSelectedHost(data.host)
       setRoomResponse(data)
       setGameRoom(true)
+      handleRoomOpen()
     })
 
     socket.on("Error", (msg) => {
@@ -196,7 +211,16 @@ function Dashboard(props) {
     userInfo()
     userGames()
     userSteam()
-  }, [])
+    setGameRooomList(props.roomsRedux)
+  }, [props.roomsRedux])
+
+  const handleSearch = (event) => {
+    setSearchWord(event.target.value)
+    var fiteredRoomies = props.roomsRedux.filter((room) => {
+      if (room.host.indexOf(searchWord) !== -1) return room
+    })
+    setGameRooomList(fiteredRoomies)
+  }
 
   const handleGameRoom = async (host, gameName) => {
     const result = _.find(menubarGames, (game) => {
@@ -271,6 +295,7 @@ function Dashboard(props) {
     )
     setRoomResponse(response.data)
     setGameRoom(true)
+    handleRoomOpen()
   }
 
   const handleCreateRoom = (data) => {
@@ -336,12 +361,13 @@ function Dashboard(props) {
           {mapSelect? <MapSelection onClose={handleMapSelectClose}></MapSelection>:null}
           {gameRoom ? (
             <Room
+              openModal={openModal}
               host={selectedHost}
               socket={socket}
               nickname={userName}
               roomResponse={roomResponse}
               _host={_host}
-              handleCloseRoom={handleCloseRoom}
+              handleCloseModal={handleCloseModal}
             ></Room>
           ) : null}
           <GlobalStyle></GlobalStyle>
@@ -369,6 +395,9 @@ function Dashboard(props) {
               <div className="search-game">
                 <img src={searchicon} className="search-image"></img>
                 <input
+                  onChange={(e) => handleSearch(e)}
+                  onKeyUp={(e) => handleSearch(e)}
+                  value={searchWord}
                   className="search-gameID"
                   placeholder="Search Game ID"
                 ></input>
@@ -389,7 +418,7 @@ function Dashboard(props) {
               ) : null}
             </div>
             <GameRoomRow
-              data={props.roomsRedux}
+              data={gameRoomsList}
               onJoin={(host, gameName) => handleGameRoom(host, gameName)}
             ></GameRoomRow>
           </div>
