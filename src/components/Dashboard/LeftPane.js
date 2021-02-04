@@ -36,11 +36,13 @@ const LeftPane = (props) => {
   const [gamesList, setGamesList] = useState(false);
   const [menubarGames, setMenubarGames] = useState([]);
   const [avatar, setAvatar] = useState([])
+  const [balance,setBalance] = useState ([])
   /* -------------------------------------------------------------------------- */
 
   const history = useHistory();
 
   useEffect(() => {
+    userBalance();
     userAvatar();
     userGames();
     props.getAllUserGames();
@@ -63,7 +65,16 @@ const LeftPane = (props) => {
     }else
       setAvatar(response.data)
   }
-
+  
+  async function userBalance () {
+    const url = "wallet/getbalance"
+    const response = await axios.get(url, {withCredentials:true});
+    if (response.data.status === 0){
+      setBalance("Not Verified")
+    } else{
+      setBalance(response.data.balance)
+    }
+  }
   async function userGames() {
     const url = 'detail/games';
     const response = await axios.get(url, { withCredentials: true });
@@ -79,7 +90,7 @@ const LeftPane = (props) => {
         <div class='menubar-nickname'>{props.userName}</div>
         <div className='menubar-mail'>{email}</div>
         <div className='balance'>
-          <img src={Bag} className='menubar-icon'></img>123,456
+          <img src={Bag} className='menubar-icon'></img>{balance}<span className="up"> UP</span>
         </div>
         <div className='menubar-buttons'>
           <div className='btn-container'>

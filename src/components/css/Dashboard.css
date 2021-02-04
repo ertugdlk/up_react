@@ -379,6 +379,11 @@ button {
   padding: 1px 8px;
 }
 
+.up{
+  font-weight: bold;
+  color: #00ff60;
+}
+
 .btn-container:not(:last-child) {
   border-right: 1px solid #989aa0;
 }
