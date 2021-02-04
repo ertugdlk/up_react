@@ -227,30 +227,38 @@ function Dashboard(props) {
       return game.name == gameName
     })
     const url2 = "room/checkjoined"
-    const response2 = await axios.post(url2, {nickname:userName}, {withCredentials:true})
+    const response2 = await axios.post(
+      url2,
+      { nickname: userName },
+      { withCredentials: true }
+    )
 
     const url3 = "room/checkblacklist"
-    const response3 = await axios.post(url3,{host:host} , {withCredentials:true})
+    const response3 = await axios.post(
+      url3,
+      { host: host },
+      { withCredentials: true }
+    )
 
-    if(result === undefined || response2.data.status === 0 || response3.data.status === 0){
+    if (
+      result === undefined ||
+      response2.data.status === 0 ||
+      response3.data.status === 0
+    ) {
       if (result === undefined) {
         setErrorBar(true)
         setErrorMessage("You don't have " + gameName)
+      } else if (response2.data.status === 0) {
+        setErrorBar(true)
+        setErrorMessage("Already in a room ")
+      } else if (response3.data.status === 0) {
+        setErrorBar(true)
+        setErrorBar("You are kicked")
+      } else {
+        setErrorBar(true)
+        setErrorBar("Undefined Error")
       }
-      else if(response2.data.status ===0){
-          setErrorBar(true)
-          setErrorMessage("Already in a room")
-      } 
-      else if(response3.data.status === 0){
-          setErrorBar(true)
-          setErrorBar("You are kicked")
-      } 
-      else {
-          setErrorBar(true)
-          setErrorBar("Undefined Error")
-      }
-  }
-      else{
+    } else {
       const data = { host: host, nickname: userName }
       socket.emit("join", data)
       setSelectedHost(host)
@@ -358,7 +366,9 @@ function Dashboard(props) {
               games={menubarGames}
             ></CreateGame>
           ) : null}
-          {mapSelect? <MapSelection onClose={handleMapSelectClose}></MapSelection>:null}
+          {mapSelect ? (
+            <MapSelection onClose={handleMapSelectClose}></MapSelection>
+          ) : null}
           {gameRoom ? (
             <Room
               openModal={openModal}
