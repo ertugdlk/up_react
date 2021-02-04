@@ -1,7 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, useEffect} from "react"
 import { createGlobalStyle } from "styled-components"
 import ClearIcon from "@material-ui/icons/Clear"
 import css from "../components/css/MyAccount.css"
+import axios from '../utils';
+import Logo from '../logo.png';
 import {
   Container,
   Image,
@@ -22,7 +24,16 @@ const GlobalStyle = createGlobalStyle`
 function MyAccount(props) {
   const [passlo, setPasswordVis] = React.useState(false)
   const [mailo, setMailVis] = React.useState(false)
+  const [avatar,setAvatar] = useState([])
 
+  async function userAvatar () {
+    const url = "detail/steamavatar"
+    const response = await axios.get(url,{withCredentials:true});
+    if(response.data ===""){
+      setAvatar(Logo)
+    }else
+      setAvatar(response.data)
+  }
   const setPasswordLink = () => {
     if (mailo) {
       setMailVis(!mailo)
@@ -38,6 +49,10 @@ function MyAccount(props) {
   }
 
   const Test = () => {}
+
+  useEffect(() => {
+    userAvatar();
+  }, []);
 
   return (
     <>
@@ -57,7 +72,7 @@ function MyAccount(props) {
                 </Grid.Row>
                 <Grid.Row>
                   <Image
-                    src="https://thumbs.dreamstime.com/b/default-avatar-photo-placeholder-profile-icon-eps-file-easy-to-edit-default-avatar-photo-placeholder-profile-icon-124557887.jpg"
+                    src={avatar}
                     size="small"
                     circular
                     centered

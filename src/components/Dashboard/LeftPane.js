@@ -35,11 +35,13 @@ const LeftPane = (props) => {
   const [account, setAccount] = useState(false);
   const [gamesList, setGamesList] = useState(false);
   const [menubarGames, setMenubarGames] = useState([]);
+  const [avatar, setAvatar] = useState([])
   /* -------------------------------------------------------------------------- */
 
   const history = useHistory();
 
   useEffect(() => {
+    userAvatar();
     userGames();
     props.getAllUserGames();
   }, []);
@@ -53,6 +55,15 @@ const LeftPane = (props) => {
     setGamesList(true);
   };
 
+  async function userAvatar () {
+    const url = "detail/steamavatar"
+    const response = await axios.get(url,{withCredentials:true});
+    if(response.data ===""){
+      setAvatar(Logo)
+    }else
+      setAvatar(response.data)
+  }
+
   async function userGames() {
     const url = 'detail/games';
     const response = await axios.get(url, { withCredentials: true });
@@ -63,7 +74,7 @@ const LeftPane = (props) => {
     <div className='MenuBar'>
       <div className='menubar-user'>
         <div className='menubar-userpic'>
-          <img src={Logo} className='img-responsive' alt=''></img>
+          <img src={avatar} className='img-responsive' alt=''></img>
         </div>
         <div class='menubar-nickname'>{props.userName}</div>
         <div className='menubar-mail'>{email}</div>

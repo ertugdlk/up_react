@@ -33,6 +33,7 @@ import axios from "../utils"
 import { baseUrl } from "../utils/helpers"
 import LeftPane from "../components/Dashboard/LeftPane"
 import CenterModal from "../components/UI/CenterModal"
+import { set } from "js-cookie"
 
 /* -------------------------------------------------------------------------- */
 const _ = require("lodash")
@@ -104,8 +105,8 @@ function Dashboard(props) {
     })
 
     socket.on("userCountChange", (data) => {
-      console.log(data)
       props.getMatchData(data.host, data.positive)
+      console.log(data)
     })
 
     socket.on("newRoom", (data) => {
@@ -201,10 +202,31 @@ function Dashboard(props) {
     const result = _.find(menubarGames, (game) => {
       return game.name == gameName
     })
-    if (result === undefined) {
-      setErrorBar(true)
-      setErrorMessage("You don't have " + gameName)
-    } else {
+    const url2 = "room/checkjoined"
+    const response2 = await axios.post(url2, {nickname:userName}, {withCredentials:true})
+
+    const url3 = "room/checkblacklist"
+    const response3 = await axios.post(url3,{host:host} , {withCredentials:true})
+
+    if(result === undefined || response2.data.status === 0 || response3.data.status === 0){
+      if (result === undefined) {
+        setErrorBar(true)
+        setErrorMessage("You don't have " + gameName)
+      }
+      else if(response2.data.status ===0){
+          setErrorBar(true)
+          setErrorMessage("Already in a room")
+      } 
+      else if(response3.data.status === 0){
+          setErrorBar(true)
+          setErrorBar("You are kicked")
+      } 
+      else {
+          setErrorBar(true)
+          setErrorBar("Undefined Error")
+      }
+  }
+      else{
       const data = { host: host, nickname: userName }
       socket.emit("join", data)
       setSelectedHost(host)
@@ -249,7 +271,6 @@ function Dashboard(props) {
     )
     setRoomResponse(response.data)
     setGameRoom(true)
-    setMapSelect(true)
   }
 
   const handleCreateRoom = (data) => {
