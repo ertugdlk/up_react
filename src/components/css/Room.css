@@ -6,6 +6,8 @@
   top: 65px;
   background: #16161b;
   z-index: 3000;
+  border: 1px solid red;
+  margin: 0 auto;
 }
 
 .room-div {
@@ -385,7 +387,7 @@
   }
 }
 
-@media only screen and (min-width: 1680px) {
+@media only screen and (min-width: 1680px) and (max-width:1919px) {
   .room-window {
     width: 83%;
     height: fit-content;

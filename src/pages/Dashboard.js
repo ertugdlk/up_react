@@ -27,12 +27,14 @@ import {
   removeGameRoom,
 } from "../actions/index"
 import Room from "../components/Room"
+import MapSelection from "../components/MapSelection"
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from "../utils"
 import { baseUrl } from "../utils/helpers"
 import LeftPane from "../components/Dashboard/LeftPane"
 import CenterModal from "../components/UI/CenterModal"
+import { set } from "js-cookie"
 
 /* -------------------------------------------------------------------------- */
 const _ = require("lodash")
@@ -65,6 +67,7 @@ function Dashboard(props) {
   const [session, setSession] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState("")
   const [errorbar, setErrorBar] = useState(false)
+  const [mapSelect, setMapSelect] = useState(false)
   const [gameRoomsList, setGameRooomList] = useState([])
   const [searchWord, setSearchWord] = useState("")
   const [openModal, setOpenModal] = useState(false)
@@ -115,8 +118,8 @@ function Dashboard(props) {
     })
 
     socket.on("userCountChange", (data) => {
-      // console.log(data)
       props.getMatchData(data.host, data.positive)
+      console.log(data)
     })
 
     socket.on("newRoom", (data) => {
@@ -223,9 +226,38 @@ function Dashboard(props) {
     const result = _.find(menubarGames, (game) => {
       return game.name == gameName
     })
-    if (result === undefined) {
-      setErrorBar(true)
-      setErrorMessage("You don't have " + gameName)
+    const url2 = "room/checkjoined"
+    const response2 = await axios.post(
+      url2,
+      { nickname: userName },
+      { withCredentials: true }
+    )
+
+    const url3 = "room/checkblacklist"
+    const response3 = await axios.post(
+      url3,
+      { host: host },
+      { withCredentials: true }
+    )
+
+    if (
+      result === undefined ||
+      response2.data.status === 0 ||
+      response3.data.status === 0
+    ) {
+      if (result === undefined) {
+        setErrorBar(true)
+        setErrorMessage("You don't have " + gameName)
+      } else if (response2.data.status === 0) {
+        setErrorBar(true)
+        setErrorMessage("Already in a room ")
+      } else if (response3.data.status === 0) {
+        setErrorBar(true)
+        setErrorBar("You are kicked")
+      } else {
+        setErrorBar(true)
+        setErrorBar("Undefined Error")
+      }
     } else {
       const data = { host: host, nickname: userName }
       socket.emit("join", data)
@@ -304,6 +336,11 @@ function Dashboard(props) {
     setGameRoom(false)
   }
 
+  const handleMapSelectClose = () => {
+    setMapSelect(false)
+  }
+
+  // console.log(props.roomsRedux);
   return (
     <>
       {errorbar ? (
@@ -330,7 +367,9 @@ function Dashboard(props) {
               games={menubarGames}
             ></CreateGame>
           ) : null}
-
+          {mapSelect ? (
+            <MapSelection onClose={handleMapSelectClose}></MapSelection>
+          ) : null}
           {gameRoom ? (
             <Room
               openModal={openModal}
