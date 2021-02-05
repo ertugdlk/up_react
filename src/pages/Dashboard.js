@@ -292,6 +292,7 @@ function Dashboard(props) {
     logout()
     history.push("/")
   }
+  
   const handleSteam = () => {
     async function steamauth() {
       window.open(baseUrl + "steam/auth", "_self")

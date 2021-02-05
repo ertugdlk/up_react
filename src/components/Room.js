@@ -17,6 +17,8 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
+import CloseIcon from '@material-ui/icons/Close'
+import SureWindow from './UI/SureWindow'
 
 const Axios = require('axios')
 const _ = require('lodash')
@@ -66,11 +68,43 @@ function Room(props) {
   let chatRef = useRef()
   const [snackbar, setSnackbar] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState('')
-  const [sure, setSure] = useState(false)
   const [report, setReport] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState('')
   const [fullWidthModal, setFullWidthModal] = useState('sm')
   const classes = useStyles()
+
+  const [sureWindow, setSureWindow] = useState(false)
+  const [reportWindow, setReportWindow] = useState(false)
+
+  const handleSureWindowOpen = (nickname) => {
+    setSureWindow(true)
+    setSelectedPlayer(nickname)
+  }
+
+  const handleSureWindowClose = () => {
+    setSureWindow(false)
+  }
+
+  const handleReportWindowOpen = (nickname) => {
+    setReportWindow(true)
+    setSelectedPlayer(nickname)
+  }
+
+  const handleReportWindowClose = () => {
+    setReportWindow(false)
+  }
+
+  const handleKick = () => {
+    const data = { host: host, nickname: selectedPlayer }
+    props.socket.emit('kick', data)
+    setReport(false)
+  }
+
+  const handleReport = () => {
+    const data = { nickname: selectedPlayer }
+    props.socket.emit('report', data)
+    // setSure(false)
+  }
 
   useEffect(() => {
     async function RoomUsers() {
@@ -253,14 +287,6 @@ function Room(props) {
     })
   }, [])
 
-  const handleCancelButton = () => {
-    setSure(false)
-  }
-
-  const handleReportCancel = () => {
-    setReport(false)
-  }
-
   const handleSendMessage = () => {
     const data = { host: props.host, nickname: props.nickname, msg: message }
     setMessages((oldArray) => [...oldArray, data])
@@ -287,30 +313,6 @@ function Room(props) {
   const handleStart = () => {
     const data = { host: props.host }
     props.socket.emit('countdown', data)
-  }
-
-  const handleSureWindow = (nickname) => {
-    setReport(false)
-    setSure(true)
-    setSelectedPlayer(nickname)
-  }
-
-  const handleReportWindow = (nickname) => {
-    setSure(false)
-    setReport(true)
-    setSelectedPlayer(nickname)
-  }
-
-  const handleKick = () => {
-    const data = { host: host, nickname: selectedPlayer }
-    props.socket.emit('kick', data)
-    setReport(false)
-  }
-
-  const handleReport = () => {
-    const data = { nickname: selectedPlayer }
-    props.socket.emit('report', data)
-    setSure(false)
   }
 
   const handleStartMatch = async () => {
@@ -463,25 +465,25 @@ function Room(props) {
                     var user = member.nickname
                     return (
                       <li className='team-users'>
-                        {' '}
                         <span className='host-status'>
                           {handleHost(member)}
-                        </span>{' '}
-                        <span className='team-user'> {member.nickname} </span>{' '}
+                        </span>
+                        <span className='team-user'> {member.nickname} </span>
                         <div className='ready-status'>
                           {member.readyStatus ? 'Ready' : 'Unready'}
                         </div>
                         {host == props.nickname ? (
-                          <img
-                            src={close}
+                          <CloseIcon
+                            // src={close}
                             className='kick-icon'
-                            onClick={() => handleSureWindow(user)}
-                          ></img>
+                            fontSize='large'
+                            onClick={() => handleSureWindowOpen(user)}
+                          />
                         ) : null}
                         <ReportIcon
                           className='report-icon'
                           fontSize='small'
-                          onClick={() => handleReportWindow(user)}
+                          onClick={() => handleReportWindowOpen(user)}
                         ></ReportIcon>
                       </li>
                     )
@@ -542,7 +544,7 @@ function Room(props) {
               </div>
             </Grid>
             <Grid item lg={4} xl={3}>
-              <div className='team-1'>
+              <div className='team-2'>
                 <button onClick={handleTeamSwap} className='team-buttons'>
                   {' '}
                   <CachedIcon
@@ -556,23 +558,28 @@ function Room(props) {
                     var user = member.nickname
                     return (
                       <li className='team-users'>
-                        {' '}
-                        <span>{handleHost(member)}</span>{' '}
-                        <span className='team-user'> {member.nickname} </span>{' '}
+                        <span>{handleHost(member)}</span>
+                        <span className='team-user'> {member.nickname} </span>
                         <div className='ready-status'>
                           {member.readyStatus ? 'Ready' : 'Unready'}
                         </div>
                         {host == props.nickname ? (
-                          <img
-                            src={close}
+                          // <img
+                          //   src={close}
+                          //   className='kick-icon'
+                          // onClick={() => handleSureWindow(user)}
+                          // ></img>
+                          <CloseIcon
+                            // src={close}
                             className='kick-icon'
-                            onClick={() => handleSureWindow(user)}
-                          ></img>
+                            fontSize='large'
+                            onClick={() => handleSureWindowOpen(user)}
+                          />
                         ) : null}
                         <ReportIcon
                           className='report-icon'
                           fontSize='small'
-                          onClick={() => handleReportWindow(user)}
+                          onClick={() => handleReportWindowOpen(user)}
                         ></ReportIcon>
                       </li>
                     )
@@ -608,6 +615,21 @@ function Room(props) {
           </Grid>
         </DialogContent>
       </Dialog>
+
+      {/* /* --------------------------- KICK BUTTON CONFIRM -------------------------- */}
+      <SureWindow
+        sureWindow={sureWindow}
+        handleSureWindowClose={handleSureWindowClose}
+        confirmButtnFunc={handleKick}
+      />
+      {/* /* --------------------------- KICK BUTTON CONFIRM -------------------------- */}
+      {/* /* --------------------------- Report BUTTON CONFIRM -------------------------- */}
+      <SureWindow
+        sureWindow={reportWindow}
+        handleSureWindowClose={handleReportWindowClose}
+        confirmButtnFunc={handleReport}
+      />
+      {/* /* --------------------------- Report BUTTON CONFIRM -------------------------- */}
     </>
   )
 }
