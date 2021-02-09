@@ -95,12 +95,15 @@ function VerificationForm(props) {
         setDOBErrorText('')
         
     const url = 'credential/add';
-    const response = await axios.post(url, {phone,id,name,surname,dob});
-    console.log(response)
+    const response = await axios.post(url, {phone,id,name,surname,dob,withCredentials:true});
+    console.log(response.data)
 
-    if(response.status === 200){
+    if(response.data.status === 1){
       setErrorMessage("Register successful")
       window.location.reload(true);
+    }else if(response.data.status === 0){
+      setErrorMessage(response.data.message)
+      setOpen(true)
     }
   }
   } catch (err) {
