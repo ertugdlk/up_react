@@ -34,6 +34,7 @@ import axios from "../utils"
 import { baseUrl } from "../utils/helpers"
 import LeftPane from "../components/Dashboard/LeftPane"
 import CenterModal from "../components/UI/CenterModal"
+import verificationForm from "../components/VerificationForm"
 import { set } from "js-cookie"
 
 /* -------------------------------------------------------------------------- */
@@ -71,6 +72,8 @@ function Dashboard(props) {
   const [gameRoomsList, setGameRooomList] = useState([])
   const [searchWord, setSearchWord] = useState("")
   const [openModal, setOpenModal] = useState(false)
+  const [preventCreate,setPreventCreate] = useState(false)
+  const [verificationForm,setVerificationForm] = useState(false)
 
   const handleCloseModal = () => {
     setOpenModal(false)
@@ -78,6 +81,10 @@ function Dashboard(props) {
 
   const handleRoomOpen = () => {
     setOpenModal(true)
+  }
+
+  const handleVerificationForm = () => {
+    setVerificationForm(true)
   }
 
   useEffect(() => {
@@ -251,6 +258,7 @@ function Dashboard(props) {
       } else if (response2.data.status === 0) {
         setErrorBar(true)
         setErrorMessage("Already in a room ")
+        setPreventCreate(true)
       } else if (response3.data.status === 0) {
         setErrorBar(true)
         setErrorBar("You are kicked")
@@ -285,11 +293,20 @@ function Dashboard(props) {
     setGamesList(false)
   }
 
+  const handleVerificationFormClose = () =>{
+    setVerificationForm(false)
+  }
+
   const handleCreateClick = () => {
     if (menubarGames.length == 0) {
       setErrorMessage("Add some Games First")
       setErrorBar(true)
-    } else {
+    } else if(preventCreate === true){
+      setCreate(false)
+      setErrorBar(true)
+      setErrorMessage("Already in a room")
+    }
+    else {
       setCreate(true)
     }
   }
@@ -365,11 +382,13 @@ function Dashboard(props) {
               onCreate={handleCreateRoom}
               onClose={handleCreateClose}
               games={menubarGames}
+              
             ></CreateGame>
           ) : null}
           {mapSelect ? (
             <MapSelection onClose={handleMapSelectClose}></MapSelection>
           ) : null}
+          {verificationForm ? (<CenterModal><verificationForm onClose={handleVerificationFormClose}></verificationForm></CenterModal>):null}
           {gameRoom ? (
             <Room
               openModal={openModal}
@@ -389,7 +408,7 @@ function Dashboard(props) {
                   <img src={Logo} />
                 </a>
               </div>
-              <div className="HeaderRightMenu">
+              <div className="HeahadderRightMenu">
                 <button onClick={handleAccount}>Account Settings</button>
                 <button onClick={handleLogout}>Logout</button>
               </div>
@@ -436,7 +455,7 @@ function Dashboard(props) {
 
           {/* -------------------------------- LEFT PANE ------------------------------- */}
 
-          <LeftPane userName={userName} handleAddGame={handleAddGame} />
+          <LeftPane userName={userName} handleAddGame={handleAddGame} handleVerificationForm={handleVerificationForm} handleVerificationFormClose={handleVerificationFormClose} verificationForm={verificationForm} />
 
           {/* /* -------------------------------- LEFT PANE ------------------------------- */}
 

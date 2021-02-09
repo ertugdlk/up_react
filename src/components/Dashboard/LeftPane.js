@@ -37,6 +37,7 @@ const LeftPane = (props) => {
   const [menubarGames, setMenubarGames] = useState([]);
   const [avatar, setAvatar] = useState([])
   const [balance,setBalance] = useState ([])
+  const [verified,setVerified] = useState(false)
   /* -------------------------------------------------------------------------- */
 
   const history = useHistory();
@@ -71,8 +72,10 @@ const LeftPane = (props) => {
     const response = await axios.get(url, {withCredentials:true});
     if (response.data.status === 0){
       setBalance("Not Verified")
+      setVerified(false)
     } else{
       setBalance(response.data.balance)
+      setVerified(true)
     }
   }
   async function userGames() {
@@ -90,7 +93,9 @@ const LeftPane = (props) => {
         <div class='menubar-nickname'>{props.userName}</div>
         <div className='menubar-mail'>{email}</div>
         <div className='balance'>
-          <img src={Bag} className='menubar-icon'></img>{balance}<span className="up"> UP</span>
+          <img src={Bag} className='menubar-icon'></img><button className="balance-button" onClick={props.handleVerificationForm}>{balance}</button>{verified ? (
+            <span className="up"> UP</span>
+          ) : null}
         </div>
         <div className='menubar-buttons'>
           <div className='btn-container'>
@@ -112,11 +117,13 @@ const LeftPane = (props) => {
         </ul>
       </div>
     </div>
+
   );
 };
 
 const mapStateToProps = (state) => {
-  return { userGames: state.userGames };
+  return { userGames: state.userGames}
+  ;
 };
 
 export default connect(mapStateToProps, { getAllUserGames })(LeftPane);
