@@ -288,18 +288,21 @@ function Room(props) {
   }, [])
 
   const handleSendMessage = () => {
+    if (message === '') {
+      return
+    }
     const data = { host: props.host, nickname: props.nickname, msg: message }
     setMessages((oldArray) => [...oldArray, data])
-    console.log('====================================')
-    console.log('Data:', data)
-    console.log('====================================')
-    console.log('====================================')
-    console.log('message:', messages)
-    console.log('====================================')
     props.socket.emit('message', data)
     chatRef.current.value = ''
+    setMessage('')
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' || event.code === 'Enter' || event.which === 13) {
+      handleSendMessage()
+    }
+  }
   const handleTeamSwap = () => {
     const data = { host: props.host, nickname: props.nickname }
     props.socket.emit('changeTeam', data)
@@ -603,6 +606,7 @@ function Room(props) {
                     <input
                       className='chat-input'
                       ref={chatRef}
+                      onKeyPress={handleKeyDown}
                       onChange={(e) => setMessage(e.target.value)}
                     ></input>
                     <button className='chat-send' onClick={handleSendMessage}>
