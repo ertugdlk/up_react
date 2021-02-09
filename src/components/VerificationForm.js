@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import ClearIcon from '@material-ui/icons/Clear';
-import { createGlobalStyle } from 'styled-components';
-const _ = require('lodash');
+import React, { useEffect, useState } from 'react'
+import ClearIcon from '@material-ui/icons/Clear'
+import { createGlobalStyle } from 'styled-components'
+
+import CenterModal from '../components/UI/CenterModal'
+
+const _ = require('lodash')
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
   body {
     font-family: 'Raleway', sans-serif;
-  }`;
+  }`
 
 function verificationForm(props) {
-
   return (
-    <>
-      {' '}
-      <GlobalStyle></GlobalStyle>
+    <CenterModal>
+      {/* <GlobalStyle></GlobalStyle>
       <div className='VerificationForm' style={{width:"300px",height:"300px",zIndex:"3000"}}>
         <div className='CloseButton1'>
-          {' '}
           <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon>{'patates'}
         </div>
         <header className='header'>Create Game</header>
@@ -26,7 +26,6 @@ function verificationForm(props) {
           <select className='create-select'>
             {props.games.map((game, index) => (
               <option className='create-option' value={index}>
-                {' '}
                 {game.name}
               </option>
             ))}
@@ -51,9 +50,20 @@ function verificationForm(props) {
         <button class='button'>
           Create Game
         </button>
-      </div>
-    </>
-  );
+      </div> */}
+
+      <p
+        style={{
+          backgroundColor: 'red',
+          width: '300px',
+          height: '300px',
+          color: 'white',
+        }}
+      >
+        TEST
+      </p>
+    </CenterModal>
+  )
 }
 
-export default verificationForm;
+export default verificationForm
