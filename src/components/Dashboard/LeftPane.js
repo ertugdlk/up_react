@@ -117,11 +117,13 @@ const LeftPane = (props) => {
         </ul>
       </div>
     </div>
+
   );
 };
 
 const mapStateToProps = (state) => {
-  return { userGames: state.userGames };
+  return { userGames: state.userGames}
+  ;
 };
 
 export default connect(mapStateToProps, { getAllUserGames })(LeftPane);
