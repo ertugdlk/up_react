@@ -25,17 +25,18 @@ const _ = require('lodash')
 
 const useStyles = makeStyles((theme) => ({
   dialogComponent: {
-    width: '85.1vw',
+    width: '84vw',
     height: 'fit-content',
-    marginLeft: '8%',
-    marginRight: '8%',
-    backgroundColor: 'black',
+    // marginLeft: '8%',
+    // marginRight: '8%',
+    zIndex: '997 !important',
+    margin: 'auto',
+    marginTop: '65px',
     '@media (max-width:1400px)': {
       width: '82.7%',
       marginLeft: '8.6%',
       marginRight: '6%',
       color: 'white',
-      backgroundColor: 'black',
     },
     '@media (max-width: 1399)': {
       width: '58.7%',
@@ -265,6 +266,7 @@ function Room(props) {
     })
 
     props.socket.on('teamChange', async (data) => {
+      if (start) return
       try {
         const url = 'room/getdata'
         const response = await axios.post(
@@ -304,6 +306,7 @@ function Room(props) {
     }
   }
   const handleTeamSwap = () => {
+    if (start) return
     const data = { host: props.host, nickname: props.nickname }
     props.socket.emit('changeTeam', data)
   }
