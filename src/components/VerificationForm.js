@@ -9,7 +9,7 @@ import { SnackbarContent } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import {makeStyles,createStyles} from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-
+import css from '../components/css/VerificationForm.css'
 const _ = require('lodash')
 
 const GlobalStyle = createGlobalStyle`
@@ -24,14 +24,12 @@ const useStyles = makeStyles(theme =>
       color: "white",
       "&.Mui-focused": {
         color:'white',
-        borderColor: 'green'
       },
       "& .MuiInput-underline:after": {
         borderBottomColor: "green"
       },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: "red",
         color:"green"
       },
     }
@@ -59,7 +57,6 @@ function VerificationForm(props) {
   const [nameErrorText,setNameErrorText] = useState('');
   const [surnameErrorText,setSurnameErrorText] = useState('');
   const [dobErrorText,setDOBErrorText] = useState ('');
-  const history = useHistory();
 
   const handleVerificate = async () =>{
     try {

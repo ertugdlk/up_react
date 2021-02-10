@@ -409,7 +409,7 @@ function Dashboard(props) {
                   <img src={Logo} />
                 </a>
               </div>
-              <div className='HeahadderRightMenu'>
+              <div className='HeaderRightMenu'>
                 <button onClick={handleAccount}>Account Settings</button>
                 <button onClick={handleLogout}>Logout</button>
               </div>

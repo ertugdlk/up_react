@@ -35,19 +35,7 @@
   
   .info{
     width: 100%;
-    font-size: 8px;
-  }
-
-  .register-input {
-    margin-top: 0.5em;
-    margin-bottom: 0.8em;
-    padding: 0.5em;
-    color: #fff;
-    background-color: #1b1c23;
-    border: none;
-    border-radius: 8px;
-    width: auto;
-    justify-self: center;
+    font-size: 12px;
   }
   
   .register-button {

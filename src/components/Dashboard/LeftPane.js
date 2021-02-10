@@ -93,7 +93,7 @@ const LeftPane = (props) => {
         <div class='menubar-nickname'>{props.userName}</div>
         <div className='menubar-mail'>{email}</div>
         <div className='balance'>
-        <img src={Bag} className='menubar-icon'></img><button className="balance-button" onClick={props.handleVerificationForm}>{balance}</button>{verified ? (
+        <img src={Bag} className='menubar-icon'></img>{verified?<span>{balance}</span>:<button className="balance-button" onClick={props.handleVerificationForm}>{balance}</button>}{verified ? (
             <span className="up"> UP</span>
           ) : null}
         </div>
