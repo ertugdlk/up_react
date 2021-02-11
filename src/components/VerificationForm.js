@@ -100,12 +100,14 @@ function VerificationForm(props) {
         setDOBErrorText("")
 
         const url = "credential/add"
-        const response = await axios.post(
-          url,
-          { phone, identityID: id, name, surname, dateOfBirth: dob },
-          { witCredentials: true }
-        )
-        console.log(response.data)
+        const body = {
+          phone: phone,
+          identityID: id,
+          name: name,
+          surname: surname,
+          dateOfBirth: dob,
+        }
+        const response = await axios.post(url, body, { withCredentials: true })
 
         if (response.data.status === 1) {
           setErrorMessage("Register successful")
