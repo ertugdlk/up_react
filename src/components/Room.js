@@ -24,6 +24,10 @@ const Axios = require("axios")
 const _ = require("lodash")
 
 const useStyles = makeStyles((theme) => ({
+  countdown: {
+    color:"white"
+  },
+
   dialogComponent: {
     width: "84vw",
     height: "fit-content",
@@ -68,7 +72,7 @@ function Room(props) {
   const [team2, setTeam2] = useState([])
   const [startButton, setStartButton] = useState(false)
   const [start, setStart] = useState(false)
-  const [gameInformation, setGameInformation] = useState("")
+  const [gameInformation, setGameInformation] = useState([])
   const [host, setHost] = useState("")
   let chatRef = useRef()
   const [snackbar, setSnackbar] = useState(false)
@@ -326,7 +330,7 @@ function Room(props) {
   }
 
   const handleStartMatch = async () => {
-    try {
+
       setGameInformation("213.243.44.6")
       const url = "rcon/setupmatch"
       const response = await axios.post(
@@ -334,26 +338,20 @@ function Room(props) {
         { host: props.host },
         { withCredentials: true }
       )
-    } catch (error) {
-      throw error
-    }
   }
 
   const checkGameInformation = () => {
     if (gameInformation != "") {
-      return <span>{gameInformation}</span>
+      const url = "steam://connect/" + gameInformation
+      return <form action={url} className="connect">
+      <span>{gameInformation}</span> 
+      <input type="submit" value="Connect" className="register-button" />
+  </form>
     }
     if (start) {
       return (
         <Countdown
-          date={Date.now() + 10000}
-          onComplete={() => handleStartMatch()}
-        />
-      )
-    }
-    if (start) {
-      return (
-        <Countdown
+          className={classes.countdown}
           date={Date.now() + 10000}
           onComplete={() => handleStartMatch()}
         />

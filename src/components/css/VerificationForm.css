@@ -10,6 +10,7 @@
     display: grid;
     justify-items: flex-start;
     text-align: left;
+    width: fit-content;
   }
   /*Popupın cssi*/
   .register-window {
@@ -34,8 +35,11 @@
   }
   
   .info{
-    width: 100%;
-    font-size: 12px;
+    margin-left: -50%;
+    text-align: center;
+    width: 200%;
+    font-size: 14px;
+    margin-bottom: 20px;
   }
   
   .register-button {

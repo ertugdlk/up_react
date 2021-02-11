@@ -67,6 +67,9 @@ function VerificationForm(props) {
         setIDErrorText("ID field is empty!")
         setIdError(true)
       }
+      if(id.length<11){
+        setIDErrorText("ID must have 11 digits")
+      }
       if (name === "") {
         setNameErrorText("Name field is empty!")
         setNameError(true)
@@ -76,6 +79,10 @@ function VerificationForm(props) {
         setSurnameError(true)
         if (dob === "") {
           setDOBErrorText("Date of birth field can't be empty!")
+          setDOBError(true)
+        }
+        if(dob>Date.now()){
+          setDOBErrorText("Invalid date")
           setDOBError(true)
         }
       }
@@ -152,16 +159,12 @@ function VerificationForm(props) {
           </div>
           <div className="register-modal">
             <h2 className="register-title">Verify Your Account</h2>
-            <span className="info">
-              Please enter the information correctly as it is going to be
-              controlled
-            </span>
-            <label className="labels">Phone</label>
+            <span className="info">These informations will be checked</span>
             <TextField
               type="tel"
               id="phone"
               name="phone"
-              placeholder="5325323232"
+              placeholder="53xxxxxxxx"
               required
               error={phoneError}
               helperText={phoneErrorText}
@@ -170,11 +173,10 @@ function VerificationForm(props) {
               pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
               onChange={(e) => setPhone(e.target.value)}
             />
-            <label className="labels">Identity ID</label>
             <TextField
               type="text"
               name="identity-id"
-              placeholder="12312312312"
+              placeholder="Identity ID"
               required
               error={idError}
               helperText={idErrorText}
@@ -183,11 +185,10 @@ function VerificationForm(props) {
               InputProps={{ className: classes.root }}
               onChange={(e) => setID(e.target.value)}
             />
-            <label className="labels">Name</label>
             <TextField
               type="text"
               name="name"
-              placeholder="Your Name"
+              placeholder="Name"
               required
               error={nameError}
               helperText={nameErrorText}
@@ -195,11 +196,10 @@ function VerificationForm(props) {
               InputProps={{ className: classes.root }}
               onChange={(e) => setName(e.target.value.toUpperCase())}
             />
-            <label className="labels"> Surname</label>
             <TextField
               type="text"
               name="surname"
-              placeholder="Your Surname"
+              placeholder="Surname"
               required
               error={surnameError}
               helperText={surnameErrorText}
@@ -207,7 +207,6 @@ function VerificationForm(props) {
               InputProps={{ className: classes.root }}
               onChange={(e) => setNurmane(e.target.value.toUpperCase())}
             />
-            <label className="labels">Date of Birth</label>
             <TextField
               type="date"
               name="dob"
