@@ -105,8 +105,7 @@ function VerificationForm(props) {
           { phone, identityID: id, name, surname, dateOfBirth: dob },
           { witCredentials: true }
         )
-        console.log(response.data)
-
+          console.log(response)
         if (response.data.status === 1) {
           setErrorMessage("Register successful")
           window.location.reload(true)
@@ -191,7 +190,7 @@ function VerificationForm(props) {
               helperText={nameErrorText}
               className={classes.root}
               InputProps={{ className: classes.root }}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value.toUpperCase())}
             />
             <label className="labels"> Surname</label>
             <TextField
@@ -203,7 +202,7 @@ function VerificationForm(props) {
               helperText={surnameErrorText}
               className={classes.root}
               InputProps={{ className: classes.root }}
-              onChange={(e) => setNurmane(e.target.value)}
+              onChange={(e) => setNurmane(e.target.value.toUpperCase())}
             />
             <label className="labels">Date of Birth</label>
             <TextField
