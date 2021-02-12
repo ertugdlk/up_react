@@ -25,7 +25,7 @@ const _ = require("lodash")
 
 const useStyles = makeStyles((theme) => ({
   countdown: {
-    color:"white"
+    color: "white",
   },
 
   dialogComponent: {
@@ -330,23 +330,24 @@ function Room(props) {
   }
 
   const handleStartMatch = async () => {
-
-      setGameInformation("176.236.134.6")
-      const url = "rcon/setupmatch"
-      const response = await axios.post(
-        url,
-        { host: props.host },
-        { withCredentials: true }
-      )
+    setGameInformation("176.236.134.6")
+    const url = "rcon/setupmatch"
+    const response = await axios.post(
+      url,
+      { host: props.host },
+      { withCredentials: true }
+    )
   }
 
   const checkGameInformation = () => {
     if (gameInformation != "") {
       const url = "steam://connect/" + gameInformation
-      return <form action={url} className="connect">
-      <span>{gameInformation}</span> 
-      <input type="submit" value="Connect" className="register-button" />
-  </form>
+      return (
+        <form action={url} className="connect">
+          <span>{gameInformation}</span>
+          <input type="submit" value="Connect" className="register-button" />
+        </form>
+      )
     }
     if (start) {
       return (
