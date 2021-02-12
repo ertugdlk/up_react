@@ -22,15 +22,22 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       color: "white",
-      "&.Mui-focused": {
-        color: "white",
+      backgroundColor:"#1b1c23",
+      width:"100%",
+      borderRadius:"10px",
+      textAlign:"center",
+      '& label.Mui-focused': {
+        color: 'green',
       },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "green",
-      },
-      "& .MuiOutlinedInput-root": {
-        "& fieldset": {
-          color: "green",
+      '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+          //borderColor: 'red',
+        },
+        '&:hover fieldset': {
+          //borderColor: 'yellow',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#00ff60',
         },
       },
     },
@@ -161,6 +168,7 @@ function VerificationForm(props) {
             <h2 className="register-title">Verify Your Account</h2>
             <span className="info">These informations will be checked</span>
             <TextField
+             variant="outlined"
               type="tel"
               id="phone"
               name="phone"
@@ -173,7 +181,9 @@ function VerificationForm(props) {
               pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
               onChange={(e) => setPhone(e.target.value)}
             />
+            <br></br>
             <TextField
+              variant="outlined"
               type="text"
               name="identity-id"
               placeholder="Identity ID"
@@ -185,7 +195,9 @@ function VerificationForm(props) {
               InputProps={{ className: classes.root }}
               onChange={(e) => setID(e.target.value)}
             />
+            <br></br>
             <TextField
+             variant="outlined"
               type="text"
               name="name"
               placeholder="Name"
@@ -196,7 +208,9 @@ function VerificationForm(props) {
               InputProps={{ className: classes.root }}
               onChange={(e) => setName(e.target.value.toUpperCase())}
             />
+            <br></br>
             <TextField
+             variant="outlined"
               type="text"
               name="surname"
               placeholder="Surname"
@@ -207,7 +221,9 @@ function VerificationForm(props) {
               InputProps={{ className: classes.root }}
               onChange={(e) => setNurmane(e.target.value.toUpperCase())}
             />
+            <br></br>
             <TextField
+             variant="outlined"
               type="date"
               name="dob"
               required
