@@ -26,6 +26,7 @@ import {
   changeGameHost,
   removeGameRoom,
 } from '../actions/index'
+
 import Room from '../components/Room'
 import MapSelection from '../components/MapSelection'
 // import { Menu } from 'semantic-ui-react';
@@ -478,9 +479,9 @@ function Dashboard(props) {
 const mapStateToProps = (state) => {
   return {
     roomsRedux: state.roomsRedux,
-    matchData: state.matchInfo,
   }
 }
+
 
 export default connect(mapStateToProps, {
   getAllGameRooms,
