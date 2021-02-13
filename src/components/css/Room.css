@@ -233,6 +233,13 @@
   margin: 5px auto;
 }
 
+.connect{
+  display: flex;
+  flex-flow: row wrap;
+  height: 30px;
+  width: 30px;
+  color: white;
+}
 .chat {
   border: 1px solid green;
   width: 100%;

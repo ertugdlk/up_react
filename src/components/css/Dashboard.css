@@ -319,6 +319,10 @@
   margin-top: 20px;
 }
 
+.balance-button{
+    cursor: pointer;
+}
+
 .menubar-userpic img {
   float: none;
   margin: 0 auto;

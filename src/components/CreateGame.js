@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import css from './css/CreateGame.css';
 import ClearIcon from '@material-ui/icons/Clear';
 import { createGlobalStyle } from 'styled-components';
+import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
+import axios from "../utils"
 const _ = require('lodash');
 
 const GlobalStyle = createGlobalStyle`
@@ -32,6 +35,28 @@ function CreateGame(props) {
     types: [''],
   });
 
+  const [snackbar,setSnackbar] = useState(false)
+  const [errorMessage,setErrorMessage] = useState('')
+
+  async function userBalance () {
+    const url = "wallet/getbalance"
+    const response = await axios.get(url, {withCredentials:true});
+    console.log(response)
+    if (response.data.status === 0){
+      setErrorMessage("Please buy credits")
+      setSnackbar(true)
+    }if(response.data.balance<data.fee){
+      setErrorMessage("Not enough credits")
+      setSnackbar(true)
+    }
+  }
+
+  const handleSnack = () =>{
+    setSnackbar(false)
+  }
+  useEffect(()=>{
+    userBalance();
+  },[])
   useState(() => {
     setSelectedGame(props.games[0]);
   });
@@ -56,6 +81,24 @@ function CreateGame(props) {
 
   return (
     <>
+     <Snackbar
+          open={snackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          autoHideDuration={1000}
+          message={errorMessage}
+          onClose={handleSnack}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: '#00ff60',
+              color: 'black',
+              justifyContent: 'center',
+              fontWeight: 'bolder',
+              fontSize: '14px',
+            }}
+            message={<span id='client-snackbar'>{errorMessage}</span>}
+          />
+        </Snackbar>
       {' '}
       <GlobalStyle></GlobalStyle>
       <div className='CreateWindow'>

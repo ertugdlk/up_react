@@ -75,6 +75,7 @@ function Dashboard(props) {
   const [openModal, setOpenModal] = useState(false)
   const [preventCreate, setPreventCreate] = useState(false)
   const [verificationForm, setVerificationForm] = useState(false)
+  const [balance,setBalance] = useState(0)
 
   const handleCloseModal = () => {
     setOpenModal(false)
@@ -409,7 +410,7 @@ function Dashboard(props) {
                   <img src={Logo} />
                 </a>
               </div>
-              <div className='HeahadderRightMenu'>
+              <div className='HeaderRightMenu'>
                 <button onClick={handleAccount}>Account Settings</button>
                 <button onClick={handleLogout}>Logout</button>
               </div>
@@ -462,6 +463,7 @@ function Dashboard(props) {
             handleVerificationForm={handleVerificationForm}
             handleVerificationFormClose={handleVerificationFormClose}
             verificationForm={verificationForm}
+            balance={balance}
           />
 
           {/* /* -------------------------------- LEFT PANE ------------------------------- */}
@@ -471,9 +473,9 @@ function Dashboard(props) {
       ) : null}
     </>
   )
-  //deposit ve withdraw butonlarına geçici olarak handleAccount fonksiyonu atandı, para işlemleri entegre edilince düzeltilmeli.
-  //sidebar menüde username gösteriliyor olmalı ama maili tutmadığımız için o gözükmüyor, düzeltilmeli.
-  //balance'a şimdilik kendim bir değer girdim ama daha sonra kullanıcının değeri {balance} veya başka bir şekilde gösterilmeli.
+  //deposit ve withdraw butonlarÄ±na geÃ§ici olarak handleAccount fonksiyonu atandÄ±, para iÅŸlemleri entegre edilince dÃ¼zeltilmeli.
+  //sidebar menÃ¼de username gÃ¶steriliyor olmalÄ± ama maili tutmadÄ±ÄŸÄ±mÄ±z iÃ§in o gÃ¶zÃ¼kmÃ¼yor, dÃ¼zeltilmeli.
+  //balance'a ÅŸimdilik kendim bir deÄŸer girdim ama daha sonra kullanÄ±cÄ±nÄ±n deÄŸeri {balance} veya baÅŸka bir ÅŸekilde gÃ¶sterilmeli.
 }
 
 const mapStateToProps = (state) => {
