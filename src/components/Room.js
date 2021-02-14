@@ -365,7 +365,7 @@ function Room(props) {
 
   const handleHost = (member) => {
     if (host === member.nickname) {
-      return "HOST"
+      return "HOST "
     } else {
       return ""
     }
