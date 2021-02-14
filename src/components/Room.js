@@ -334,8 +334,7 @@ function Room(props) {
       { host: props.host },
       { withCredentials: true }
     )
-    console.log(response)
-    setGameInformation(response)
+    setGameInformation(response.data)
   }
 
   const checkGameInformation = () => {
