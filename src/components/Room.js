@@ -328,13 +328,13 @@ function Room(props) {
   }
 
   const handleStartMatch = async () => {
-    setGameInformation("176.236.134.6")
     const url = "rcon/setupmatch"
     const response = await axios.post(
       url,
       { host: props.host },
       { withCredentials: true }
     )
+    setGameInformation(response)
   }
 
   const checkGameInformation = () => {
