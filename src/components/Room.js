@@ -334,6 +334,7 @@ function Room(props) {
       { host: props.host },
       { withCredentials: true }
     )
+    console.log(response)
     setGameInformation(response)
   }
 
@@ -341,10 +342,13 @@ function Room(props) {
     if (gameInformation != "") {
       const url = "steam://connect/" + gameInformation
       return (
-        <form action={url} className="connect">
+        <div>
           <span>{gameInformation}</span>
-          <input type="submit" value="Connect" className="register-button" />
-        </form>
+          <a href={url} class="btn btn-primary">
+            {" "}
+            Join the Game
+          </a>
+        </div>
       )
     }
     if (start) {
