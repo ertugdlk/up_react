@@ -18,7 +18,6 @@ function GamesList(props) {
     async function GameCards() {
       const url = 'detail/allgames'
       const response = await axios.get(url, { withCredentials: true })
-      console.log(response.data)
       if (response.data) {
         setGames(response.data)
       }

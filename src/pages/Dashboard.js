@@ -75,13 +75,7 @@ function Dashboard(props) {
   const [preventCreate, setPreventCreate] = useState(false)
   const [verificationForm, setVerificationForm] = useState(false)
   const [balance,setBalance] = useState(0)
-  const [verifyName,setVerifyName] = useState("");
-  const [verifyLastName, setVerifyLastName] = useState("");
 
-  const setUserFullName = (name,surname) =>{
-    setVerifyLastName(surname)
-    setVerifyName(name)
-  }
 
   const handleCloseModal = () => {
     setOpenModal(false)
@@ -380,8 +374,6 @@ function Dashboard(props) {
                 userName={userName}
                 onClose={handleAccountClose}
                 email={email}
-                name={verifyName}
-                surname={verifyLastName}
               ></MyAccount>
             </CenterModal>
           ) : null}
@@ -396,7 +388,7 @@ function Dashboard(props) {
             <MapSelection onClose={handleMapSelectClose}></MapSelection>
           ) : null}
           {verificationForm ? (
-            <VerificationForm onClose={handleVerificationFormClose} setUserFullName={setUserFullName}/>
+            <VerificationForm onClose={handleVerificationFormClose} />
           ) : null}
           {gameRoom ? (
             <Room

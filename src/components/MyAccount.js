@@ -14,7 +14,6 @@ import {
   Label,
   Segment,
 } from "semantic-ui-react"
-import VerificationForm from "./VerificationForm";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -26,7 +25,7 @@ function MyAccount(props) {
   const [passlo, setPasswordVis] = React.useState(false)
   const [mailo, setMailVis] = React.useState(false)
   const [avatar,setAvatar] = useState([])
-
+  const [userFullName,setUserFullName]=useState("")
 
   async function userAvatar () {
     const url = "detail/steamavatar"
@@ -36,7 +35,14 @@ function MyAccount(props) {
     }else
       setAvatar(response.data)
   }
+  async function userInfo(){
+    const url= "credential/find"
+    const response =await axios.get(url,{withCredentials:true})
+    if(response.data.status===200){
+    setUserFullName(response.data.name)
+    }
 
+  }
   const setPasswordLink = () => {
     if (mailo) {
       setMailVis(!mailo)
@@ -53,6 +59,7 @@ function MyAccount(props) {
 
   useEffect(() => {
     userAvatar();
+    userInfo();
   }, []);
 
   return (
@@ -82,7 +89,7 @@ function MyAccount(props) {
                   <br></br>
                    <Grid.Row>
                   <Label className="image-label-dist" color="green">
-                   {props.name} {''} {props.surname}
+                    {userFullName}
                   </Label>
                  
                 </Grid.Row>
