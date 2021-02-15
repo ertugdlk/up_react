@@ -75,7 +75,7 @@ function Dashboard(props) {
   const [preventCreate, setPreventCreate] = useState(false)
   const [verificationForm, setVerificationForm] = useState(false)
   const [balance,setBalance] = useState(0)
-
+  const [steamName,setSteamName] = React.useState('')
   const handleCloseModal = () => {
     setOpenModal(false)
   }
@@ -204,11 +204,11 @@ function Dashboard(props) {
     async function userSteam() {
       const url = 'detail/info'
       const response = await axios.get(url, { withCredentials: true })
-
       if (props.steam) {
         if (props.steam == response.data) {
           setErrorMessage('Your Steam Integrated to our system')
           setErrorBar(true)
+          setSteamName(response.data)
         } else {
           setErrorMessage('no match')
           setErrorBar(true)
@@ -463,6 +463,7 @@ function Dashboard(props) {
             handleVerificationFormClose={handleVerificationFormClose}
             verificationForm={verificationForm}
             balance={balance}
+            steamName = {steamName}
           />
 
           {/* /* -------------------------------- LEFT PANE ------------------------------- */}

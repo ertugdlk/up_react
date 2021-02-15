@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import css from './css/CreateGame.css';
 import ClearIcon from '@material-ui/icons/Clear';
 import { createGlobalStyle } from 'styled-components';
@@ -37,17 +37,25 @@ function CreateGame(props) {
 
   const [snackbar,setSnackbar] = useState(false)
   const [errorMessage,setErrorMessage] = useState('')
+  let btn = useRef()
 
   async function userBalance () {
     const url = "wallet/getbalance"
     const response = await axios.get(url, {withCredentials:true});
-    console.log(response)
+    console.log(response.data.balance)
     if (response.data.status === 0){
-      setErrorMessage("Please buy credits")
+      setErrorMessage("Please verify your account")
       setSnackbar(true)
-    }if(response.data.balance<data.fee){
+      btn.current.setAttribute("disabled", "disabled");
+    }if(response.data.balance===0){
+      setErrorMessage("You don't have any credits")
+      setSnackbar(true)      
+      btn.current.setAttribute("disabled", "disabled");
+    }
+    if(response.data.balance<data.fee){
       setErrorMessage("Not enough credits")
       setSnackbar(true)
+      btn.current.setAttribute("disabled", "disabled");
     }
   }
 
@@ -84,7 +92,7 @@ function CreateGame(props) {
      <Snackbar
           open={snackbar}
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-          autoHideDuration={1000}
+          autoHideDuration={3000}
           message={errorMessage}
           onClose={handleSnack}
         >
@@ -149,7 +157,7 @@ function CreateGame(props) {
             onChange={(e) => onFeeChange(e)}
           ></input>
         </div>
-        <button class='button' onClick={() => props.onCreate(data)}>
+       <button class='button' ref={btn} onClick={() => props.onCreate(data)}>
           Create Game
         </button>
       </div>

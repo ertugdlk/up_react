@@ -38,7 +38,8 @@ const LeftPane = (props) => {
   const [avatar, setAvatar] = useState([])
   const [balance,setBalance] = useState ([])
   const [verified,setVerified] = useState(false)
-  /* -------------------------------------------------------------------------- */
+  const [steamName,setSteamName] = React.useState('')
+  /* ------------ -------------------------------------------------------------- */
 
   const history = useHistory();
 
@@ -47,6 +48,7 @@ const LeftPane = (props) => {
     userAvatar();
     userGames();
     props.getAllUserGames();
+    userSteam();
   }, []);
 
   const handleAccount = () => {
@@ -84,6 +86,13 @@ const LeftPane = (props) => {
     setMenubarGames(response.data);
   }
 
+
+  async function userSteam() {
+    const url = 'detail/info'
+    const response = await axios.get(url, { withCredentials: true })
+    setSteamName(response.data)
+  }
+
   return (
     <div className='MenuBar'>
       <div className='menubar-user'>
@@ -91,6 +100,8 @@ const LeftPane = (props) => {
           <img src={avatar} className='img-responsive' alt=''></img>
         </div>
         <div class='menubar-nickname'>{props.userName}</div>
+        <div class="menubar-nickname"> AKA <br></br>
+        <img height="20px" width="auto" src='https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg'/> {steamName} </div>
         <div className='menubar-mail'>{email}</div>
         <div className='balance'>
         <img src={Bag} className='menubar-icon'></img>{verified?<span>{balance}</span>:<button className="balance-button" onClick={props.handleVerificationForm}>{balance}</button>}{verified ? (
