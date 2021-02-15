@@ -24,19 +24,25 @@ const GlobalStyle = createGlobalStyle`
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      width: '150px',
-      color: 'white',
-      '&.Mui-focused': {
-        color: 'white',
-        borderColor: 'green',
-      },
-      '& .MuiInput-underline:after': {
-        borderBottomColor: 'green',
+      color: "white",
+      backgroundColor:"#1b1c23",
+      width:"100%",
+      marginLeft:"-20%",
+      marginBottom:"10px",
+      borderRadius:"10px",
+      '& label.Mui-focused': {
+        color: 'green',
       },
       '& .MuiOutlinedInput-root': {
+        color:"white",
         '& fieldset': {
-          borderColor: 'red',
-          color: 'green',
+          //borderColor: 'red',
+        },
+        '&:hover fieldset': {
+          //borderColor: 'yellow',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#00ff60',
         },
       },
     },
@@ -132,26 +138,24 @@ function LoginWindow(props) {
         </div>
         <div className='login-modal'>
           <h2 className='login-title'>Login</h2>
-          <label className='labels'>Username</label>
           <TextField
-            id='standard-basic'
+            variant="outlined"
             onChange={(e) => setNickname(e.target.value)}
             required
+            placeholder="Username"
             error={nicknameError}
             helperText={nicknameHelperText}
             className={classes.root}
-            InputProps={{ className: classes.root }}
           />
-          <label className='labels'>Password</label>
           <TextField
-            id='standard-basic'
+            variant="outlined"
             onChange={(e) => setPassword(e.target.value)}
             type='password'
             required
+            placeholder="Password"
             error={passwordError}
             helperText={passwordHelperText}
             className={classes.root}
-            InputProps={{ className: classes.root }}
             onKeyPress={handleKeyDown}
           />
           <button className='login-button' onClick={handleLogin}>

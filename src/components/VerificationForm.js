@@ -124,6 +124,7 @@ function VerificationForm(props) {
         const response = await axios.post(url, body, { withCredentials: true })
 
         if (response.data.status === 1) {
+          props.setUserFullName(name,surname)
           setErrorMessage("Register successful")
           window.location.reload(true)
         } else if (response.data.status === 0) {

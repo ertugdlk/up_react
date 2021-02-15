@@ -18,6 +18,7 @@ function GamesList(props) {
     async function GameCards() {
       const url = 'detail/allgames'
       const response = await axios.get(url, { withCredentials: true })
+      console.log(response.data)
       if (response.data) {
         setGames(response.data)
       }
@@ -28,7 +29,7 @@ function GamesList(props) {
 
   const handlePlatformIntegration = (platform) => {
     //check user's exist steam account
-
+    
     //If platform is steam redirect to steam authentication
     if (platform == '5f9a84fca1f0c0b83de7d696') {
       window.open(baseUrl + 'steam/auth', '_self')

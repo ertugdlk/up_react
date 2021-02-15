@@ -26,7 +26,6 @@ import {
   changeGameHost,
   removeGameRoom,
 } from '../actions/index'
-
 import Room from '../components/Room'
 import MapSelection from '../components/MapSelection'
 // import { Menu } from 'semantic-ui-react';
@@ -76,7 +75,14 @@ function Dashboard(props) {
   const [preventCreate, setPreventCreate] = useState(false)
   const [verificationForm, setVerificationForm] = useState(false)
   const [balance,setBalance] = useState(0)
-  const [steamName,setSteamName] = React.useState('')
+  const [verifyName,setVerifyName] = useState("");
+  const [verifyLastName, setVerifyLastName] = useState("");
+
+  const setUserFullName = (name,surname) =>{
+    setVerifyLastName(surname)
+    setVerifyName(name)
+  }
+
   const handleCloseModal = () => {
     setOpenModal(false)
   }
@@ -209,7 +215,6 @@ function Dashboard(props) {
         if (props.steam == response.data) {
           setErrorMessage('Your Steam Integrated to our system')
           setErrorBar(true)
-          setSteamName(response.data)
         } else {
           setErrorMessage('no match')
           setErrorBar(true)
@@ -375,6 +380,8 @@ function Dashboard(props) {
                 userName={userName}
                 onClose={handleAccountClose}
                 email={email}
+                name={verifyName}
+                surname={verifyLastName}
               ></MyAccount>
             </CenterModal>
           ) : null}
@@ -389,7 +396,7 @@ function Dashboard(props) {
             <MapSelection onClose={handleMapSelectClose}></MapSelection>
           ) : null}
           {verificationForm ? (
-            <VerificationForm onClose={handleVerificationFormClose} />
+            <VerificationForm onClose={handleVerificationFormClose} setUserFullName={setUserFullName}/>
           ) : null}
           {gameRoom ? (
             <Room
@@ -464,7 +471,6 @@ function Dashboard(props) {
             handleVerificationFormClose={handleVerificationFormClose}
             verificationForm={verificationForm}
             balance={balance}
-            steamName = {steamName}
           />
 
           {/* /* -------------------------------- LEFT PANE ------------------------------- */}
@@ -482,9 +488,9 @@ function Dashboard(props) {
 const mapStateToProps = (state) => {
   return {
     roomsRedux: state.roomsRedux,
+    matchData: state.matchInfo,
   }
 }
-
 
 export default connect(mapStateToProps, {
   getAllGameRooms,
