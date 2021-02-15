@@ -19,13 +19,15 @@ import Grid from "@material-ui/core/Grid"
 import { makeStyles } from "@material-ui/core/styles"
 import CloseIcon from "@material-ui/icons/Close"
 import SureWindow from "./UI/SureWindow"
+import Button from "@material-ui/core/Button"
+import Box from "@material-ui/core/Box"
 
 const Axios = require("axios")
 const _ = require("lodash")
 
 const useStyles = makeStyles((theme) => ({
   countdown: {
-    color:"white"
+    color: "white",
   },
 
   dialogComponent: {
@@ -35,11 +37,7 @@ const useStyles = makeStyles((theme) => ({
     // marginRight: '8%',
     zIndex: "997 !important",
     margin: "auto",
-    marginTop: "65px",
-    "@media (max-width:1450px)": {
-      width: "84vw",
-      marginTop: "-65px",
-    },
+    marginTop: "20px",
     "@media (max-width:1400px)": {
       width: "82.7%",
       marginLeft: "8.6%",
@@ -330,23 +328,27 @@ function Room(props) {
   }
 
   const handleStartMatch = async () => {
-
-      setGameInformation("176.236.134.6")
-      const url = "rcon/setupmatch"
-      const response = await axios.post(
-        url,
-        { host: props.host },
-        { withCredentials: true }
-      )
+    const url = "rcon/setupmatch"
+    const response = await axios.post(
+      url,
+      { host: props.host },
+      { withCredentials: true }
+    )
+    setGameInformation(response.data)
   }
 
   const checkGameInformation = () => {
     if (gameInformation != "") {
       const url = "steam://connect/" + gameInformation
-      return <form action={url} className="connect">
-      <span>{gameInformation}</span> 
-      <input type="submit" value="Connect" className="register-button" />
-  </form>
+      return (
+        <div>
+          <span>{gameInformation}</span>
+          <a href={url} class="btn btn-primary">
+            {" "}
+            Join the Game
+          </a>
+        </div>
+      )
     }
     if (start) {
       return (
@@ -363,7 +365,7 @@ function Room(props) {
 
   const handleHost = (member) => {
     if (host === member.nickname) {
-      return "HOST"
+      return "HOST "
     } else {
       return ""
     }
@@ -404,7 +406,6 @@ function Room(props) {
     if (props._host == true) {
       return true
     }
-
     if (host == props.nickname) {
       return true
     } else {
@@ -423,7 +424,7 @@ function Room(props) {
         fullWidth={fullWidthModal}
         maxWidth={false}
         open={props.openModal}
-        onClose={props.handleCloseModal}
+        // onClose={props.handleCloseModal}
         PaperProps={{
           style: {
             backgroundColor: "#16161b",
@@ -452,6 +453,20 @@ function Room(props) {
           />
         </Snackbar>
         <DialogContent>
+          <Grid
+            container
+            direction="row"
+            justify="flex-end"
+            alignItems="center"
+          >
+            <Grid item>
+              <Box mb={3}>
+                <Button onClick={props.handleCloseModal}>
+                  <CloseIcon style={{ color: "white" }} fontSize="large" />
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
           <Grid
             container
             spacing={3}

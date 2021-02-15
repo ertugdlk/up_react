@@ -6,5 +6,5 @@ import matchReducer from './matchReducer';
 export default combineReducers({
   roomsRedux: roomsReducer,
   userGames: userGamesReducer,
-  // matchInfo: matchReducer,
+  //matchInfo: matchReducer,
 });

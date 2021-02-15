@@ -13,7 +13,7 @@ export const getAllGameRooms = (rooms = [], isChangeHost = false) => async (
   dispatch
 ) => {
   if (isChangeHost) {
-    dispatch({ type: fetchAllRooms, payload: [...rooms] })
+    dispatch({ type: "FETCH_ALL_ROOMS", payload: [...rooms] })
   }
 
   if (!isChangeHost) {
