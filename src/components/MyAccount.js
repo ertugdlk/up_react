@@ -25,6 +25,7 @@ function MyAccount(props) {
   const [passlo, setPasswordVis] = React.useState(false)
   const [mailo, setMailVis] = React.useState(false)
   const [avatar,setAvatar] = useState([])
+  const [userFullName,setUserFullName]=useState("")
 
   async function userAvatar () {
     const url = "detail/steamavatar"
@@ -33,6 +34,12 @@ function MyAccount(props) {
       setAvatar(Logo)
     }else
       setAvatar(response.data)
+  }
+  async function userInfo(){
+    const url= "credential/find"
+    const response =await axios.get(url,{withCredentials:true})
+    setUserFullName(response.data.name)
+
   }
   const setPasswordLink = () => {
     if (mailo) {
@@ -48,10 +55,9 @@ function MyAccount(props) {
     setMailVis(!mailo)
   }
 
-  const Test = () => {}
-
   useEffect(() => {
     userAvatar();
+    userInfo();
   }, []);
 
   return (
@@ -70,6 +76,7 @@ function MyAccount(props) {
                     {props.userName.toUpperCase()}
                   </Label>
                 </Grid.Row>
+                <br></br>
                 <Grid.Row>
                   <Image
                     src={avatar}
@@ -77,6 +84,13 @@ function MyAccount(props) {
                     circular
                     centered
                   />
+                  <br></br>
+                   <Grid.Row>
+                  <Label className="image-label-dist" color="green">
+                    {userFullName}
+                  </Label>
+                 
+                </Grid.Row>
                 </Grid.Row>
               </Grid.Column>
 

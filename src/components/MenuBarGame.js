@@ -12,7 +12,7 @@ function MenuBarGame(props) {
       btn.current.style.marginBottom = `${dropdown.current.offsetHeight}px`;
     else btn.current.style.marginBottom = 0;
   }, [click]);
-
+  
   function handleDropdown() {
     setClick(!click);
   }

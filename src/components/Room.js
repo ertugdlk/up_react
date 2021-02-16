@@ -22,6 +22,7 @@ import SureWindow from "./UI/SureWindow"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
 import ReportCheckBox from "./UI/ReportCheckBox"
+import MapSelection from "../components/MapSelection"
 
 const Axios = require("axios")
 const _ = require("lodash")
@@ -142,8 +143,8 @@ function Room(props) {
         }
       }
     }
-    setHost(props.host)
 
+    setHost(props.host)
     RoomUsers()
     CheckReadyStatus()
   }, [])
@@ -342,13 +343,14 @@ function Room(props) {
     if (gameInformation != "") {
       const url = "steam://connect/" + gameInformation
       return (
-        <div>
+        <MapSelection></MapSelection>
+        /* <div>
           <span>{gameInformation}</span>
           <a href={url} class="btn btn-primary">
             {" "}
             Join the Game
           </a>
-        </div>
+        </div>*/
       )
     }
     if (start) {

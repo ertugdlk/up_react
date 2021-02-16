@@ -26,7 +26,6 @@ import {
   changeGameHost,
   removeGameRoom,
 } from "../actions/index"
-
 import Room from "../components/Room"
 import MapSelection from "../components/MapSelection"
 // import { Menu } from 'semantic-ui-react';
@@ -205,7 +204,6 @@ function Dashboard(props) {
     async function userSteam() {
       const url = "detail/info"
       const response = await axios.get(url, { withCredentials: true })
-
       if (props.steam) {
         if (props.steam == response.data) {
           setErrorMessage("Your Steam Integrated to our system")
@@ -481,6 +479,7 @@ function Dashboard(props) {
 const mapStateToProps = (state) => {
   return {
     roomsRedux: state.roomsRedux,
+    matchData: state.matchInfo,
   }
 }
 
