@@ -429,7 +429,7 @@ function Dashboard(props) {
                   onKeyUp={(e) => handleSearch(e)}
                   value={searchWord}
                   className="search-gameID"
-                  placeholder="Search Game ID"
+                  placeholder="Search Host Nickname"
                 ></input>
               </div>
               <div className="filter-game">
