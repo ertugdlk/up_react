@@ -9,11 +9,12 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 export default function SureWindow({
   sureWindow,
   handleSureWindowClose,
-  title = 'Title',
-  message = 'Mesaj Yaz',
+  title = '',
+  message = '',
   confirmButtnFunc = () => {},
   agreeBtnText = 'Accept',
   cancelBtnText = 'Cancel',
+  innerComponent = {},
 }) {
   return (
     <div>
@@ -22,11 +23,20 @@ export default function SureWindow({
         onClose={handleSureWindowClose}
         aria-labelledby='alert-dialog-title'
         aria-describedby='alert-dialog-description'
+        PaperProps={{
+          style: {
+            backgroundColor: '#16161b',
+            boxShadow: 'none',
+            padding: '10px',
+            color: 'white',
+          },
+        }}
       >
         <DialogTitle id='alert-dialog-title'>{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>
-            {message}
+            {innerComponent && innerComponent}
+            {message && message}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

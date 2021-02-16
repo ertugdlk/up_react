@@ -21,6 +21,7 @@ import CloseIcon from "@material-ui/icons/Close"
 import SureWindow from "./UI/SureWindow"
 import Button from "@material-ui/core/Button"
 import Box from "@material-ui/core/Box"
+import ReportCheckBox from "./UI/ReportCheckBox"
 
 const Axios = require("axios")
 const _ = require("lodash")
@@ -652,6 +653,9 @@ function Room(props) {
         sureWindow={reportWindow}
         handleSureWindowClose={handleReportWindowClose}
         confirmButtnFunc={handleReport}
+        innerComponent={<ReportCheckBox />}
+        title="Report"
+        agreeBtnText="Send"
       />
       {/* /* --------------------------- Report BUTTON CONFIRM -------------------------- */}
     </>
