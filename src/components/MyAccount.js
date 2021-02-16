@@ -38,9 +38,7 @@ function MyAccount(props) {
   async function userInfo(){
     const url= "credential/find"
     const response =await axios.get(url,{withCredentials:true})
-    if(response.data.status===200){
     setUserFullName(response.data.name)
-    }
 
   }
   const setPasswordLink = () => {

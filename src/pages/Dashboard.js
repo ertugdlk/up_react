@@ -62,7 +62,7 @@ function Dashboard(props) {
   const [menubarGames, setMenubarGames] = useState([])
   const [gameRoom, setGameRoom] = useState(false)
   const [selectedHost, setSelectedHost] = useState('')
-  const [roomResponse, setRoomResponse] = useState({})
+  const [roomResponse, setRoomResponse] = useState([])
   const [returnButton, setReturnButton] = useState(false)
   const [_host, setHost] = useState(false)
   const [session, setSession] = useState(false)
