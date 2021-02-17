@@ -70,8 +70,8 @@
 
 .Header {
   height: 65px;
-  background-color: #353539;
-  top: 0;
+  background-color: #27272b;
+  top: 0px;
   position: absolute;
   left: 0;
   width: 100%;
@@ -240,13 +240,14 @@
 
 .LogoLink {
   outline: none;
+  width: fit-content;
+  height: fit-content;
 }
 
 .dashboard-logo {
   position: absolute;
-  top: -40px;
-  width: 130px;
-  height: 40px;
+  width: 180px;
+  height: 65px;
 }
 
 .avatar {
@@ -381,6 +382,18 @@ button {
   border: 0;
   padding: 3px 6px;
   outline: none;
+}
+
+.account-buttons{
+  background: transparent;
+  color: white;
+  border: 0;
+  padding: 25px;
+  outline: none;
+}
+
+.account-buttons:hover{
+  color: #00f85d;
 }
 
 .btn-container {

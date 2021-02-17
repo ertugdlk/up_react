@@ -340,17 +340,19 @@ function Room(props) {
   }
 
   const checkGameInformation = () => {
+    console.log(gameInformation)
     if (gameInformation != "") {
       const url = "steam://connect/" + gameInformation
       return (
-        <MapSelection></MapSelection>
-        /* <div>
+        <>
+        {team1[0].nickname===props.roomResponse.users[0].nickname || team2[0].nickname===props.roomResponse.users[1].nickname?<MapSelection></MapSelection>: <div>
           <span>{gameInformation}</span>
           <a href={url} class="btn btn-primary">
             {" "}
             Join the Game
           </a>
-        </div>*/
+        </div>}
+        </>
       )
     }
     if (start) {

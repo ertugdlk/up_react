@@ -21,26 +21,30 @@
 
 .MenuBarGame ul li img {
   /*Resimlerin cssi*/
-  border: 1px solid #0ab74c;
-  border-radius: 100%;
   width: 2em;
   height: 2em;
+  margin-left: -30px;
   margin-right: 15px;
   vertical-align: middle;
 }
 
 .gameButton {
   /*Oyun butonlarının özellikleri*/
+  display: flex;
   color: white;
   border: 1px solid transparent;
   height: 50px;
-  width: 150px;
+  width: 180px;
   padding: 10px;
   cursor: pointer;
   display: table-cell;
   font-size: 14px;
-  background-color: #1c3527;
+  background-color: #16161b;
   position: relative;
+}
+
+.gameButton:hover{
+  color:#0ab74c;
 }
 /*
   .dropdown {
@@ -64,9 +68,22 @@
   align-items: center;
 }
 
-.dropdown-button {
+.dropdown-button:not(:last-child) {
   text-align: center;
-  border: 0.1px solid #fff;
+  border-bottom: 0.1px solid #fff;
+  background-color: #0ab74c;
+}
+
+.dropdown-button:hover{
+  background-color: #16161b;
+  color: #0ab74c;  
+}
+.dropdown-button:hover:last-child{
+  background-color: #16161b;
+  color: #0ab74c;  
+}
+.dropdown-button:last-child{
+  text-align: center;
   background-color: #0ab74c;
 }
 

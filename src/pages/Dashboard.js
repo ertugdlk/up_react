@@ -402,16 +402,20 @@ function Dashboard(props) {
           ) : null}
           <GlobalStyle></GlobalStyle>
           <div className="Header">
-            <Grid>
-              <div className="dashboard-logo">
+            <Grid  container direction="row"  justify="flex-start"  alignItems="flex-start">
+              <Grid item xs={2}>
                 <a className="LogoLink" href="/dashboard">
-                  <img src={Logo} />
+                  <img src={Logo} className="dashboard-logo"/>
                 </a>
-              </div>
-              <div className="HeaderRightMenu">
-                <button onClick={handleAccount}>Account Settings</button>
-                <button onClick={handleLogout}>Logout</button>
-              </div>
+              </Grid>
+              <Grid container direction="row" justify="flex-end" alignItems="center">
+                <Grid item xs={1}>
+                <button className="account-buttons" onClick={handleAccount}>Account Settings</button>
+                </Grid>
+                <Grid item xs={1}>
+                <button className="account-buttons" onClick={handleLogout}>Logout</button>
+                </Grid>
+              </Grid>
             </Grid>
           </div>
 
