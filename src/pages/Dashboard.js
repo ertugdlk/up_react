@@ -25,6 +25,8 @@ import {
   getMatchData,
   changeGameHost,
   removeGameRoom,
+  getFreeGameRooms,
+  getPaidGameRooms,
 } from '../actions/index'
 
 import Room from '../components/Room'
@@ -75,7 +77,16 @@ function Dashboard(props) {
   const [openModal, setOpenModal] = useState(false)
   const [preventCreate, setPreventCreate] = useState(false)
   const [verificationForm, setVerificationForm] = useState(false)
-  const [balance,setBalance] = useState(0)
+  const [balance, setBalance] = useState(0)
+
+  const [freeGameList, setFreeGameList] = useState([])
+  const [paidGameList, setPaidGameList] = useState([])
+
+  const [isFreeGame, setIsFreeGame] = useState(true)
+
+  const changeGameMethod = () => {
+    setIsFreeGame(!isFreeGame)
+  }
 
   const handleCloseModal = () => {
     setOpenModal(false)
@@ -99,7 +110,8 @@ function Dashboard(props) {
   useEffect(() => {
     /* --------------------------- Redux Get All Rooms -------------------------- */
     props.getAllGameRooms()
-
+    props.getFreeGameRooms()
+    props.getPaidGameRooms()
     /* -------------------------------------------------------------------------- */
 
     socket.on('hostChanged', ({ host, newHost }) => {
@@ -216,16 +228,19 @@ function Dashboard(props) {
         }
       }
     }
-
+    props.getFreeGameRooms()
+    props.getPaidGameRooms()
     userInfo()
     userGames()
     userSteam()
-    setGameRooomList(props.roomsRedux)
+    setGameRooomList(props.paidGames)
+    setPaidGameList(props.paidGames)
+    setFreeGameList(props.freeGameList)
   }, [props.roomsRedux])
 
   const handleSearch = (event) => {
     setSearchWord(event.target.value)
-    var fiteredRoomies = props.roomsRedux.filter((room) => {
+    var fiteredRoomies = props.paidGames.filter((room) => {
       if (room.host.indexOf(searchWord) !== -1) return room
     })
     setGameRooomList(fiteredRoomies)
@@ -358,7 +373,6 @@ function Dashboard(props) {
     setMapSelect(false)
   }
 
-  // console.log(props.roomsRedux);
   return (
     <>
       {errorbar ? (
@@ -407,7 +421,7 @@ function Dashboard(props) {
             <Grid>
               <div className='dashboard-logo'>
                 <a className='LogoLink' href='/dashboard'>
-                  <img src={Logo} />
+                  <img style={{ width: '239px', height: '64px' }} src={Logo} />
                 </a>
               </div>
               <div className='HeaderRightMenu'>
@@ -422,8 +436,15 @@ function Dashboard(props) {
               <img className='img1' src={Photo1}></img>
             </div>
             <div className='GameFilter'>
-              <button className='open-games'>Open Games</button>
-              <button className='private-games'>Private Games</button>
+              <button className='open-games' onClick={() => changeGameMethod()}>
+                Free Games
+              </button>
+              <button
+                className='private-games'
+                onClick={() => changeGameMethod()}
+              >
+                Paid Games
+              </button>
               <div className='search-game'>
                 <img src={searchicon} className='search-image'></img>
                 <input
@@ -450,9 +471,20 @@ function Dashboard(props) {
               ) : null}
             </div>
             <GameRoomRow
-              data={gameRoomsList}
-              onJoin={(host, gameName) => handleGameRoom(host, gameName)}
-            ></GameRoomRow>
+                data={props.roomsRedux}
+                onJoin={(host, gameName) => handleGameRoom(host, gameName)}
+              ></GameRoomRow>
+            {/* {isFreeGame ? (
+              <GameRoomRow
+                data={props.roomsRedux}
+                onJoin={(host, gameName) => handleGameRoom(host, gameName)}
+              ></GameRoomRow>
+            ) : (
+              <GameRoomRow
+                data={props.roomsRedux}
+                onJoin={(host, gameName) => handleGameRoom(host, gameName)}
+              ></GameRoomRow>
+            )} */}
           </div>
 
           {/* -------------------------------- LEFT PANE ------------------------------- */}
@@ -466,7 +498,7 @@ function Dashboard(props) {
             balance={balance}
           />
 
-          {/* /* -------------------------------- LEFT PANE ------------------------------- */}
+          {/* -------------------------------- LEFT PANE ------------------------------- */}
 
           <div className='SocialBar'></div>
         </div>
@@ -481,9 +513,10 @@ function Dashboard(props) {
 const mapStateToProps = (state) => {
   return {
     roomsRedux: state.roomsRedux,
+    freeGames: state.freeGames,
+    paidGames: state.paidGames,
   }
 }
-
 
 export default connect(mapStateToProps, {
   getAllGameRooms,
@@ -491,4 +524,6 @@ export default connect(mapStateToProps, {
   getMatchData,
   changeGameHost,
   removeGameRoom,
+  getFreeGameRooms,
+  getPaidGameRooms,
 })(Dashboard)
