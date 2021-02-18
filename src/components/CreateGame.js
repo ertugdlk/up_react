@@ -144,7 +144,7 @@ function CreateGame(props) {
           {' '}
           <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon>{' '}
         </div>
-        <header className='header'>Create Game</header>
+        <h2 className='head'>Create Game</h2>
         <div className='CreateRow'>
           <label className='labels'>Game Selection</label>
           <select className='create-select' onChange={(e) => onGameChange(e)}>
