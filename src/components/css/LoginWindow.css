@@ -14,12 +14,15 @@
 .login-modal {
   color: #fff;
   font-size: 14px;
-  width: 50px;
-  margin: 5% 25%;
+  width: fit-content;
+  margin: 10% 25%;
   position: relative;
   justify-content: center;
   line-height: 1.5715;
   list-style: none;
+  justify-items: flex-start;
+  text-align: left;
+
 }
 
 .login-title {

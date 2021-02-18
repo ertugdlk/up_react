@@ -1,13 +1,13 @@
 /*İçeriklerin cssi*/
 .register-modal {
   color: #fff;
-  box-sizing: border-box;
   font-size: 14px;
-  margin: 5% 25%;
-  position: flex;
+  width: fit-content;
+  margin: 10% 25%;
+  position: relative;
+  justify-content: center;
   line-height: 1.5715;
   list-style: none;
-  display: grid;
   justify-items: flex-start;
   text-align: left;
 }
