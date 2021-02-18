@@ -67,6 +67,7 @@ function CreateGame(props) {
   const [snackbar,setSnackbar] = useState(false)
   const [errorMessage,setErrorMessage] = useState('')
   const classes = useStyles()
+  const [free,setFree] = useState(false)
   let btn = useRef()
 
   async function userBalance () {
@@ -81,11 +82,14 @@ function CreateGame(props) {
       setErrorMessage("You don't have any credits")
       setSnackbar(true)      
       btn.current.setAttribute("disabled", "disabled");
+      setFree(true)
+      setData({ ...data, fee: 0 });
     }
     if(response.data.balance<data.fee){
       setErrorMessage("Not enough credits")
       setSnackbar(true)
       btn.current.setAttribute("disabled", "disabled");
+      
     }
   }
 
@@ -181,14 +185,14 @@ function CreateGame(props) {
           </select>
         </div>
         <div className='CreateRow'>
-          <TextField
+         {free ? null : <TextField
             variant="outlined"
             placeholder="Fee"
             onChange={(e) => onFeeChange(e)}
             className={classes.root}
-          />
+          /> }
         </div>
-        <button class="button"  ref={btn} onClick={() => props.onCreate(data)}>
+       <button class="button"  ref={btn} onClick={() => props.onCreate(data)}>
             Create Game
           </button>
       </div>
