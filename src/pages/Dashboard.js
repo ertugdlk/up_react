@@ -85,9 +85,13 @@ function Dashboard(props) {
 
   const [isFreeGame, setIsFreeGame] = useState(true)
 
-  const changeGameMethod = () => {
-    console.log('cahnge')
-    setIsFreeGame(!isFreeGame)
+  const changeGameMethodToFree = () => {
+    console.log('free')
+    setIsFreeGame(true)
+  }
+  const changeGameMethodToPaid = () => {
+    console.log('paid')
+    setIsFreeGame(false)
   }
 
   const handleCloseModal = () => {
@@ -437,10 +441,10 @@ function Dashboard(props) {
               <img className='img1' src={Photo1}></img>
             </div>
             <div className='GameFilter'>
-              <button className='open-games' onClick={changeGameMethod}>
+              <button className='open-games' onClick={changeGameMethodToPaid}>
                 Paid Games
               </button>
-              <button className='private-games' onClick={changeGameMethod}>
+              <button className='private-games' onClick={changeGameMethodToFree}>
                 Free Games
               </button>
               <div className='search-game'>
