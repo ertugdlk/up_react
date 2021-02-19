@@ -46,15 +46,19 @@ function MapSelection(props) {
     <div class='wrapper'>
     <div className='maps'>
               {maps.map((map,index) => (
+                <li className="map-list">
                 <button
                   className='map' onClick={()=> disableButton(index)}>
                     <span>Deneme</span> {/*Buraya image gelecek*/}
                 </button>
+                </li>
               ))}
              {filteredMaps.map((map) => (
+               <li className="map-list">
                 <button disabled className='disabled-map'>
                     <span>Deneme 2</span> {/*Buraya image gelecek*/}
                 </button>
+                </li>
               ))}
             </div>
             </div>
