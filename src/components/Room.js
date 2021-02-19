@@ -302,7 +302,7 @@ function Room(props) {
       return
     }
     const data = { host: props.host, nickname: props.nickname, msg: message }
-    setMessages((oldArray) => [...oldArray, data])
+    // setMessages((oldArray) => [...oldArray, data])
     props.socket.emit("message", data)
     chatRef.current.value = ""
     setMessage("")

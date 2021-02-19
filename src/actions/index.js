@@ -74,9 +74,10 @@ export const addNewGame = (data) => async (dispatch, getState) => {
   if (result !== undefined) {
     return
   } else {
-    dispatch({ type: addNewRoom, payload: data })
+    dispatch({ type: addNewRoom, payload: data })//data.room data.type 
   }
 }
+
 export const removeGameRoom = (host) => async (dispatch, getState) => {
   const result = _.find(getState().roomsRedux, function (room) {
     return room.host == host
