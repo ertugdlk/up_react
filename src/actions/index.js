@@ -1,24 +1,68 @@
 // import Axios from 'axios';
-import axios from "../utils"
+import axios from '../utils'
 import {
   addNewRoom,
   fetchAllRooms,
   getUserGames,
   getMatchDataText,
   removeRoom,
-} from "../utils/helpers"
-import _ from "lodash"
+  fetchFreeRooms,
+  fetchPaidRooms,
+} from '../utils/helpers'
+import _ from 'lodash'
 
 export const getAllGameRooms = (rooms = [], isChangeHost = false) => async (
   dispatch
 ) => {
+  if (!isChangeHost) {
+    console.log('getAllGameRooms - rooms', rooms)
+
+    dispatch({ type: 'FETCH_ALL_ROOMS', payload: [...rooms] })
+  }
+
   if (isChangeHost) {
-    dispatch({ type: "FETCH_ALL_ROOMS", payload: [...rooms] })
+    const response = await axios.get('room/getall', { withCredentials: true })
+    console.log('getAllGameRooms - response', response)
+
+    dispatch({ type: fetchAllRooms, payload: response.data })
+  }
+}
+
+export const getFreeGameRooms = (rooms = [], isChangeHost = false) => async (
+  dispatch
+) => {
+  if (isChangeHost) {
+    console.log('getwaitingfree - rooms', rooms)
+
+    dispatch({ type: fetchFreeRooms, payload: [...rooms] })
   }
 
   if (!isChangeHost) {
-    const response = await axios.get("room/getall", { withCredentials: true })
-    dispatch({ type: fetchAllRooms, payload: response.data })
+    const response = await axios.get('room/getwaitingfree', {
+      withCredentials: true,
+    })
+    console.log('getwaitingfree - response', response)
+
+    dispatch({ type: fetchFreeRooms, payload: response.data })
+  }
+}
+
+export const getPaidGameRooms = (rooms = [], isChangeHost = false) => async (
+  dispatch
+) => {
+  if (isChangeHost) {
+    console.log('getwaitingpaid - rooms', rooms)
+
+    dispatch({ type: fetchPaidRooms, payload: [...rooms] })
+  }
+
+  if (!isChangeHost) {
+    const response = await axios.get('room/getwaitingpaid', {
+      withCredentials: true,
+    })
+    console.log('getwaitingpaid - response', response)
+
+    dispatch({ type: fetchPaidRooms, payload: response.data })
   }
 }
 
@@ -46,7 +90,7 @@ export const removeGameRoom = (host) => async (dispatch, getState) => {
 }
 
 export const getAllUserGames = () => async (dispatch) => {
-  const url = "detail/games"
+  const url = 'detail/games'
   const response = await axios.get(url, { withCredentials: true })
   dispatch({ type: getUserGames, payload: response.data })
 }
