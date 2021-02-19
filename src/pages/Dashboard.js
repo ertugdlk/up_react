@@ -72,7 +72,7 @@ function Dashboard(props) {
   const [session, setSession] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState('')
   const [errorbar, setErrorBar] = useState(false)
-  const [mapSelect, setMapSelect] = useState(true)
+  const [mapSelect, setMapSelect] = useState(false)
   const [gameRoomsList, setGameRooomList] = useState([])
   const [searchWord, setSearchWord] = useState('')
   const [openModal, setOpenModal] = useState(false)
