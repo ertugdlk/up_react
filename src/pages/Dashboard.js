@@ -479,7 +479,7 @@ function Dashboard(props) {
                   data={props.freeGames}
                   onJoin={(host, gameName) => handleGameRoom(host, gameName)}
                 ></GameRoomRow>
-                <div>TESTasdasdasdsadsd</div>
+                <div>FREEEEEEEEEEEEEEEEEEEEEEEEEEEEE</div>
               </>
             ) : (
               <GameRoomRow
