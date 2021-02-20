@@ -303,7 +303,7 @@ function Room(props) {
   }, [])
 
   const handleSendMessage = (e, message) => {
-    debugger
+    // debugger
     e.stopPropagation()
     e.preventDefault()
 
@@ -333,7 +333,11 @@ function Room(props) {
     //   { nickname: props.nickname, msg: message },
     // ])
 
-    setMessages(messages.concat({ nickname: props.nickname, msg: message }))
+    // setMessages(messages.concat({ nickname: props.nickname, msg: message }))
+
+    setMessages((messages) =>
+      messages.concat({ nickname: props.nickname, msg: message })
+    )
 
     console.log('Room:', messages)
     const data = { host: props.host, nickname: props.nickname, msg: message }
@@ -684,6 +688,7 @@ function Room(props) {
                 </div> */}
 
                 <ChatScroll
+                  nickname={props.nickname}
                   messages={messages}
                   setMessages={setMessages}
                   handleSendMessage={handleSendMessage}

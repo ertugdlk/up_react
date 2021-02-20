@@ -5,7 +5,7 @@ import '../css/ChatScroll.css'
 function ChatScroll({
   handleSendMessage,
   setMessages,
-  messages,
+  messages=[],
   handleKeyDown,
 }) {
   const messageEl = useRef(null)
@@ -14,13 +14,13 @@ function ChatScroll({
   let chatRef = useRef()
 
   const controlMessageFloow = (e, message) => {
-    handleSendMessage(e, message)
+    handleSendMessage(e, chatRef.current.value)
     chatRef.current.value = ''
   }
 
   const controlEnterKey = (e, message) => {
     if (e.key === 'Enter' || e.code === 'Enter' || e.which === 13) {
-      handleKeyDown(e, message)
+      handleKeyDown(e, chatRef.current.value)
       chatRef.current.value = ''
     }
   }
@@ -53,7 +53,7 @@ function ChatScroll({
           <input
             type='text'
             placeholder='Type here...'
-            onChange={(e) => setMessage(e.target.value)}
+            // onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => controlEnterKey(e, message)}
             ref={chatRef}
           />
