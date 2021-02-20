@@ -2,26 +2,23 @@ import React, { useEffect, useRef, useState } from 'react'
 import sendIcon from './send.svg'
 import '../css/ChatScroll.css'
 
-function ChatScroll({
-  handleSendMessage,
-  setMessages,
-  messages=[],
-  handleKeyDown,
-}) {
+function ChatScroll({ handleSendMessage, messages = [], handleKeyDown }) {
   const messageEl = useRef(null)
   const [message, setMessage] = useState('')
   const [massagesToShow, setMassagesToShow] = useState([])
-  let chatRef = useRef()
+  let chatRef = useRef('')
 
   const controlMessageFloow = (e, message) => {
-    handleSendMessage(e, chatRef.current.value)
+    handleSendMessage(e, message)
     chatRef.current.value = ''
+    setMessage('')
   }
 
   const controlEnterKey = (e, message) => {
     if (e.key === 'Enter' || e.code === 'Enter' || e.which === 13) {
-      handleKeyDown(e, chatRef.current.value)
+      handleKeyDown(e, message)
       chatRef.current.value = ''
+      setMessage('')
     }
   }
 
@@ -35,6 +32,7 @@ function ChatScroll({
   }, [])
 
   useEffect(() => {
+    setMassagesToShow([])
     console.log('ChatScroll:', messages)
     setMassagesToShow(messages)
   }, [messages])
@@ -45,7 +43,7 @@ function ChatScroll({
         <div className='messages' ref={messageEl}>
           {massagesToShow.map((message, i) => (
             <div key={i} className={`msg${i % 2 !== 0 ? ' dark' : ''}`}>
-              {message.nickname}: {message.msg}
+              {message.nickname}:{message.msg}
             </div>
           ))}
         </div>
@@ -53,11 +51,16 @@ function ChatScroll({
           <input
             type='text'
             placeholder='Type here...'
-            // onChange={(e) => setMessage(e.target.value)}
+            onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => controlEnterKey(e, message)}
             ref={chatRef}
           />
-          <button className="chat-bot-send" onClick={(e) => controlMessageFloow(e, message)}>Send</button>
+          <button
+            className='chat-bot-send'
+            onClick={(e) => controlMessageFloow(e, message)}
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>

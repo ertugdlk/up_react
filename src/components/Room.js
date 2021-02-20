@@ -152,8 +152,6 @@ function Room(props) {
   }, [])
 
   useEffect(() => {
-    // setMessages((prevMsg) => [...prevMsg, message])
-
     props.socket.on('newMessage', (data) => {
       try {
         setMessages((messages) => [
@@ -303,18 +301,15 @@ function Room(props) {
   }, [])
 
   const handleSendMessage = (e, message) => {
-    // debugger
-    e.stopPropagation()
-    e.preventDefault()
+
 
     console.log('handleSendMessage', message)
-    console.log('handleSendMessage -messages', messages)
+    console.log('handleSendMessage -messages', ...messages)
     console.log('nickname:', props.nickname)
 
     if (message === '') {
       return
     }
-
     // setMessages([
     //   ...messages,
     //   {
@@ -322,27 +317,33 @@ function Room(props) {
     //     msg: message,
     //   },
     // ])
-
     // setMessages((prevMsg) => prevMsg, {
     //   nickname: props.nickname,
     //   msg: message,
     // })
-
     // setMessages((messages) => [
     //   ...messages,
     //   { nickname: props.nickname, msg: message },
     // ])
-
     // setMessages(messages.concat({ nickname: props.nickname, msg: message }))
+    // setMessages((oldarray) => [...oldarray, data])
 
-    setMessages((messages) =>
-      messages.concat({ nickname: props.nickname, msg: message })
-    )
+    try {
+
+      setMessages((messages) => [
+        ...messages,
+        { nickname: props.nickname, msg: message },
+      ])
+      console.log('HandelSend:', messages)
+
+    } catch (err) {
+      throw err
+    }
 
     console.log('Room:', messages)
     const data = { host: props.host, nickname: props.nickname, msg: message }
-    // setMessages((oldarray) => [...oldarray, data])
     props.socket.emit('message', data)
+
   }
 
   const handleKeyDown = (event, message) => {
@@ -686,11 +687,9 @@ function Room(props) {
                     </button>
                   </div>
                 </div> */}
-
                 <ChatScroll
                   nickname={props.nickname}
                   messages={messages}
-                  setMessages={setMessages}
                   handleSendMessage={handleSendMessage}
                   handleKeyDown={handleKeyDown}
                 />
