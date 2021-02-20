@@ -426,7 +426,7 @@ function Dashboard(props) {
             <Grid>
               <div className='dashboard-logo'>
                 <a className='LogoLink' href='/dashboard'>
-                  <img style={{ width: '239px', height: '64px' }} src={Logo} />
+                  <img style={{ width: '187px', height: '50px' }} src={Logo} />
                 </a>
               </div>
               <div className='HeaderRightMenu'>

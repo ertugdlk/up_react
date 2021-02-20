@@ -42,6 +42,12 @@
   background-color: #1c3527;
   position: relative;
 }
+
+.gameButton img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
 /*
   .dropdown {
     position: relative;
