@@ -15,14 +15,11 @@ export const getAllGameRooms = (rooms = [], isChangeHost = false) => async (
   dispatch
 ) => {
   if (!isChangeHost) {
-    console.log('getAllGameRooms - rooms', rooms)
-
     dispatch({ type: 'FETCH_ALL_ROOMS', payload: [...rooms] })
   }
 
   if (isChangeHost) {
     const response = await axios.get('room/getall', { withCredentials: true })
-    console.log('getAllGameRooms - response', response)
 
     dispatch({ type: fetchAllRooms, payload: response.data })
   }
@@ -32,8 +29,6 @@ export const getFreeGameRooms = (rooms = [], isChangeHost = false) => async (
   dispatch
 ) => {
   if (isChangeHost) {
-    console.log('getwaitingfree - rooms', rooms)
-
     dispatch({ type: fetchFreeRooms, payload: [...rooms] })
   }
 
@@ -41,7 +36,6 @@ export const getFreeGameRooms = (rooms = [], isChangeHost = false) => async (
     const response = await axios.get('room/getwaitingfree', {
       withCredentials: true,
     })
-    console.log('getwaitingfree - response', response)
 
     dispatch({ type: fetchFreeRooms, payload: response.data })
   }
@@ -51,8 +45,6 @@ export const getPaidGameRooms = (rooms = [], isChangeHost = false) => async (
   dispatch
 ) => {
   if (isChangeHost) {
-    console.log('getwaitingpaid - rooms', rooms)
-
     dispatch({ type: fetchPaidRooms, payload: [...rooms] })
   }
 
@@ -60,7 +52,6 @@ export const getPaidGameRooms = (rooms = [], isChangeHost = false) => async (
     const response = await axios.get('room/getwaitingpaid', {
       withCredentials: true,
     })
-    console.log('getwaitingpaid - response', response)
 
     dispatch({ type: fetchPaidRooms, payload: response.data })
   }
@@ -74,7 +65,7 @@ export const addNewGame = (data) => async (dispatch, getState) => {
   if (result !== undefined) {
     return
   } else {
-    dispatch({ type: addNewRoom, payload: data })//data.room data.type 
+    dispatch({ type: addNewRoom, payload: data }) //data.room data.type
   }
 }
 

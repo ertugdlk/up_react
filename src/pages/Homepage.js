@@ -49,7 +49,7 @@ function Homepage(props) {
         <div className='logo'>
           <a href='/'>
             <img
-              style={{ width: '187px', height: '50px' }}
+              style={{ width: '187px', height: '50px'}}
               src={Logo}
               href='/'
             />{' '}
