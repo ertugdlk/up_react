@@ -303,9 +303,10 @@ function Room(props) {
   }, [])
 
   const handleSendMessage = (e, message) => {
+    debugger
     e.stopPropagation()
     e.preventDefault()
-    
+
     console.log('handleSendMessage', message)
     console.log('handleSendMessage -messages', messages)
     console.log('nickname:', props.nickname)
@@ -334,13 +335,15 @@ function Room(props) {
 
     setMessages(messages.concat({ nickname: props.nickname, msg: message }))
 
+    console.log('Room:', messages)
     const data = { host: props.host, nickname: props.nickname, msg: message }
+    // setMessages((oldarray) => [...oldarray, data])
     props.socket.emit('message', data)
   }
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event, message) => {
     if (event.key === 'Enter' || event.code === 'Enter' || event.which === 13) {
-      handleSendMessage()
+      handleSendMessage(event, message)
     }
   }
   const handleTeamSwap = () => {
@@ -684,6 +687,7 @@ function Room(props) {
                   messages={messages}
                   setMessages={setMessages}
                   handleSendMessage={handleSendMessage}
+                  handleKeyDown={handleKeyDown}
                 />
               </div>
             </Grid>
