@@ -109,12 +109,11 @@ export const getMatchData = (host, isPositive) => async (
 
   if (indexFree > -1) {
     realIndex = indexFree
-    rooms=roomsFree
+    rooms = roomsFree
   }
   if (indexPaid > -1) {
     realIndex = indexPaid
-    rooms=roomsPaid
-
+    rooms = roomsPaid
   }
 
   console.log('indexFree', indexFree)
@@ -131,7 +130,12 @@ export const getMatchData = (host, isPositive) => async (
       break
   }
 
-  dispatch(getAllGameRooms(rooms, true))
+  if (indexFree > -1) {
+    dispatch(getFreeGameRooms(rooms, true))
+  }
+  if (indexPaid > -1) {
+    dispatch(getPaidGameRooms(rooms, true))
+  }
 }
 
 export const changeGameHost = (host, newHost) => async (dispatch, getState) => {
