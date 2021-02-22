@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import sendIcon from './send.svg'
 import '../css/ChatScroll.css'
 
-function ChatScroll({ handleSendMessage, messages = [], handleKeyDown }) {
+function ChatScroll({
+  handleSendMessage,
+  messages = [],
+  handleKeyDown,
+  nickname = '',
+}) {
   const messageEl = useRef(null)
   const [message, setMessage] = useState('')
   const [massagesToShow, setMassagesToShow] = useState([])
@@ -11,14 +16,12 @@ function ChatScroll({ handleSendMessage, messages = [], handleKeyDown }) {
   const controlMessageFloow = (e, message) => {
     handleSendMessage(e, message)
     chatRef.current.value = ''
-    setMessage('')
   }
 
   const controlEnterKey = (e, message) => {
     if (e.key === 'Enter' || e.code === 'Enter' || e.which === 13) {
       handleKeyDown(e, message)
       chatRef.current.value = ''
-      setMessage('')
     }
   }
 
@@ -32,20 +35,25 @@ function ChatScroll({ handleSendMessage, messages = [], handleKeyDown }) {
   }, [])
 
   useEffect(() => {
-    setMassagesToShow([])
-    console.log('ChatScroll:', messages)
     setMassagesToShow(messages)
   }, [messages])
+
+  const chatMessages = (message, i) => {
+    return (
+      <div
+        key={i}
+        className={`msg${message.nickname === nickname ? ' dark' : ''}`}
+      >
+        {message.nickname}:{message.msg}
+      </div>
+    )
+  }
 
   return (
     <div className='App'>
       <div className='chat'>
         <div className='messages' ref={messageEl}>
-          {massagesToShow.map((message, i) => (
-            <div key={i} className={`msg${i % 2 !== 0 ? ' dark' : ''}`}>
-              {message.nickname}:{message.msg}
-            </div>
-          ))}
+          {massagesToShow.map((message, i) => chatMessages(message, i))}
         </div>
         <div className='footer-chat'>
           <input

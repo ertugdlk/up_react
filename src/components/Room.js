@@ -153,10 +153,12 @@ function Room(props) {
 
   useEffect(() => {
     props.socket.on('newMessage', (data) => {
+      console.log('newMessage', data)
+      console.log('MEssages', messages)
       try {
         setMessages((messages) => [
           ...messages,
-          messages.concat({ nickname: data.nickname, msg: data.message }),
+          { nickname: data.nickname, msg: data.message },
         ])
       } catch (err) {
         throw err
@@ -301,49 +303,11 @@ function Room(props) {
   }, [])
 
   const handleSendMessage = (e, message) => {
-
-
-    console.log('handleSendMessage', message)
-    console.log('handleSendMessage -messages', ...messages)
-    console.log('nickname:', props.nickname)
-
     if (message === '') {
       return
     }
-    // setMessages([
-    //   ...messages,
-    //   {
-    //     nickname: props.nickname,
-    //     msg: message,
-    //   },
-    // ])
-    // setMessages((prevMsg) => prevMsg, {
-    //   nickname: props.nickname,
-    //   msg: message,
-    // })
-    // setMessages((messages) => [
-    //   ...messages,
-    //   { nickname: props.nickname, msg: message },
-    // ])
-    // setMessages(messages.concat({ nickname: props.nickname, msg: message }))
-    // setMessages((oldarray) => [...oldarray, data])
-
-    try {
-
-      setMessages((messages) => [
-        ...messages,
-        { nickname: props.nickname, msg: message },
-      ])
-      console.log('HandelSend:', messages)
-
-    } catch (err) {
-      throw err
-    }
-
-    console.log('Room:', messages)
     const data = { host: props.host, nickname: props.nickname, msg: message }
     props.socket.emit('message', data)
-
   }
 
   const handleKeyDown = (event, message) => {
@@ -665,28 +629,7 @@ function Room(props) {
             </Grid>
             <Grid item lg={10} xl={3}>
               <div className='chat-holder'>
-                {/* <div className="chat">
-                  <div className="chat-field">
-                    {messages.map((message) => {
-                      return (
-                        <span className="chat-message">
-                          {message.nickname}: {message.msg}
-                        </span>
-                      )
-                    })}
-                  </div>
-                  <div className="chat-utils">
-                    <input
-                      className="chat-input"
-                      ref={chatRef}
-                      onKeyPress={handleKeyDown}
-                      onChange={(e) => setMessage(e.target.value)}
-                    ></input>
-                    <button className="chat-send" onClick={handleSendMessage}>
-                      SEND
-                    </button>
-                  </div>
-                </div> */}
+                
                 <ChatScroll
                   nickname={props.nickname}
                   messages={messages}
