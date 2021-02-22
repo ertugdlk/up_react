@@ -13,7 +13,7 @@ code {
 }
 
 .chat {
-  border: 1px solid #ddd;
+  border: 1px solid gree;
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
@@ -22,7 +22,6 @@ code {
 .head {
   background: #2d3436;
   padding: 10px;
-  border-bottom: 1px solid #ccc;
   font-weight: 600;
   color: #f5f5f5;
 }

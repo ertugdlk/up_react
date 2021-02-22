@@ -91,18 +91,43 @@ export const getMatchData = (host, isPositive) => async (
   dispatch,
   getState
 ) => {
-  const rooms = getState().roomsRedux
+  const roomsFree = getState().freeGames
+  const roomsPaid = getState().paidGames
+  let realIndex = ''
+  let rooms = []
 
   const index = _.findIndex(getState().roomsRedux, function (room) {
     return room.host == host
   })
 
+  const indexFree = _.findIndex(getState().freeGames, function (room) {
+    return room.host == host
+  })
+  const indexPaid = _.findIndex(getState().paidGames, function (room) {
+    return room.host == host
+  })
+
+  if (indexFree > -1) {
+    realIndex = indexFree
+    rooms=roomsFree
+  }
+  if (indexPaid > -1) {
+    realIndex = indexPaid
+    rooms=roomsPaid
+
+  }
+
+  console.log('indexFree', indexFree)
+  console.log('indexPaid', indexPaid)
+
+  console.log('findIndex', index)
+
   switch (isPositive) {
     case true:
-      rooms[index].userCount += 1
+      rooms[realIndex].userCount += 1
       break
     case false:
-      rooms[index].userCount -= 1
+      rooms[realIndex].userCount -= 1
       break
   }
 
