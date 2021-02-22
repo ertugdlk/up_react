@@ -247,8 +247,10 @@
 
 .dashboard-logo {
   position: absolute;
-  width: 180px;
-  height: 65px;
+  top: 6px;
+  left: 25px;
+  width: 239px;
+  height: 64px;
 }
 
 .avatar {

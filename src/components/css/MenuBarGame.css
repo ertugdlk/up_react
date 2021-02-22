@@ -46,6 +46,11 @@
 .gameButton:hover{
   color:#0ab74c;
 }
+.gameButton img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
 /*
   .dropdown {
     position: relative;
