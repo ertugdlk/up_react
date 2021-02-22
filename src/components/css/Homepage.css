@@ -27,9 +27,7 @@
   display: flex;
   flex-flow: column nowrap;
   background-color: #050505;
-  border:1px solid #050505;
-  display: flex;
-  margin-top:4.7%;
+  margin-top: 70px;
   height: fit-content;
 }
 
