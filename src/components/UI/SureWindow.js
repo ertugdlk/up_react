@@ -14,7 +14,7 @@ export default function SureWindow({
   confirmButtnFunc = () => {},
   agreeBtnText = 'Accept',
   cancelBtnText = 'Cancel',
-  innerComponent = {},
+  innerComponent = '',
 }) {
   return (
     <div>
