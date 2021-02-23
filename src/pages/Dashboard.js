@@ -86,11 +86,9 @@ function Dashboard(props) {
   const [isFreeGame, setIsFreeGame] = useState(true)
 
   const changeGameMethodToFree = () => {
-    console.log('free')
     setIsFreeGame(true)
   }
   const changeGameMethodToPaid = () => {
-    console.log('paid')
     setIsFreeGame(false)
   }
 
@@ -146,7 +144,6 @@ function Dashboard(props) {
 
     socket.on('userCountChange', (data) => {
       props.getMatchData(data.host, data.positive)
-      console.log(data)
     })
 
     socket.on('newRoom', (data) => {
@@ -405,7 +402,7 @@ function Dashboard(props) {
             ></CreateGame>
           ) : null}
           {mapSelect ? (
-            <MapSelection onClose={handleMapSelectClose}></MapSelection>
+            <MapSelection onClose={handleMapSelectClose} roomResponse={roomResponse}></MapSelection>
           ) : null}
           {verificationForm ? (
             <VerificationForm onClose={handleVerificationFormClose} />

@@ -116,11 +116,6 @@ export const getMatchData = (host, isPositive) => async (
     rooms = roomsPaid
   }
 
-  console.log('indexFree', indexFree)
-  console.log('indexPaid', indexPaid)
-
-  console.log('findIndex', index)
-
   switch (isPositive) {
     case true:
       rooms[realIndex].userCount += 1

@@ -10,6 +10,7 @@ display: block;
 text-align: center;
 font-size: larger;
 font-weight: bolder;
+color:white;
 }
 
 .nf-logo{
@@ -33,6 +34,7 @@ font-size: larger;
 font-weight: bolder;
 margin-top: 10px;
 margin-bottom: 10px;
+color:white;
 }
 
 .steps{

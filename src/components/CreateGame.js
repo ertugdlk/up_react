@@ -73,7 +73,6 @@ function CreateGame(props) {
   async function userBalance () {
     const url = "wallet/getbalance"
     const response = await axios.get(url, {withCredentials:true});
-    console.log(response.data.balance)
     if (response.data.status === 0){
       setErrorMessage("Please verify your account")
       setSnackbar(true)

@@ -11,16 +11,19 @@ function MapSelection(props) {
 
     const [maps, setMaps] = useState([])
     const [filteredMaps,setFilteredMaps] = useState([])
-    
+    const [team1FirstIndex,setTeam1FirstIndex] = useState([])
+    const [team2FirstIndex,setTeam2FirstIndex] = useState([])
+
+    setTeam1FirstIndex(props.team1[0].nickname)
+    setTeam2FirstIndex(props.team2[0].nickname)
+
 
     const disableButton = (index) =>{
-      console.log(maps[index])
       const filteredItem = maps.filter(map=>map===maps[index])
       setFilteredMaps(filteredItem)
       setMaps(maps.splice(index,1))
-      
      }
-
+    
     useEffect(() => {
         async function GameMaps() {
           const url = 'room/getmaps'
@@ -33,16 +36,10 @@ function MapSelection(props) {
         GameMaps()
       }, [])
 
-  return (
-    <>
-    <div className="map-room-window">
-    <div className='CloseButton1'>
-            {' '}
-            <ClearIcon
-              fontSize='large'
-              onClick={props.onClose}
-            ></ClearIcon>{' '}
-          </div>
+      if(team1FirstIndex===props.roomResponse.users[0].nickname || team2FirstIndex===props.roomResponse.users[1].nickname){
+        return(
+          <>
+          <div className="map-room-window">
     <div class='wrapper'>
     <div className='maps'>
               {maps.map((map,index) => (
@@ -53,6 +50,17 @@ function MapSelection(props) {
                 </button>
                 </li>
               ))}
+              </div>
+            </div>
+        </div>
+          </>
+        )
+      }else{
+        return(
+        <>
+         <div className="map-room-window">
+    <div class='wrapper'>
+    <div className='maps'>
              {filteredMaps.map((map) => (
                <li className="map-list">
                 <button disabled className='disabled-map'>
@@ -63,8 +71,9 @@ function MapSelection(props) {
             </div>
             </div>
     </div>
-    </>
-  );
+        </>
+        )
+      }
 }
 
 export default MapSelection;

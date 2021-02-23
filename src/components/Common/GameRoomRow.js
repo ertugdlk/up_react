@@ -4,7 +4,6 @@ import { Table, Button } from 'semantic-ui-react'
 import Room from '../Room'
 
 function GameRoomRow(props) {
-  // console.log('GameRoomRow', props)
   //const [gameDetail, setGameDetail] = useState({})
   const [userRoom, setRoom] = useState(false)
   const [selectedHost, setSelectedHost] = useState('')

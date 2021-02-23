@@ -80,7 +80,7 @@ function LoginWindow(props) {
         setOpen(true)
       }
     } catch (err) {
-      console.log(err)
+      throw new Error("Something went wrong")
     }
   }
 

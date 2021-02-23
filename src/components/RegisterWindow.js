@@ -100,8 +100,6 @@ function RegisterWindow(props) {
         setNicknameHelperText('')
       }
       if (!filter.test(email.value)) {
-        console.log(email.value)
-        console.log(!filter.test(email.value))
         setEmailHelperText("Invalid Email")
         setEmailError(true)
       }if(email!=='' && filter.test(email)){
@@ -110,11 +108,9 @@ function RegisterWindow(props) {
         
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
-      console.log(response)
       if (response.status == 200) {
         const url = 'auth/sendotp';
         const response = await axios.post(url, {email});
-        console.log(response)
         handleOTP()
         //history.push("/");
       } else if (response.data.status === 0) {
@@ -123,7 +119,7 @@ function RegisterWindow(props) {
       }
     }
     } catch (err) {
-      console.log(err);
+      throw new Error("Something went wrong")
     }
   };
 

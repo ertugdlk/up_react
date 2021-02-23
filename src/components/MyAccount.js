@@ -124,7 +124,6 @@ function MyAccount(props) {
                     >
                       <Button.Content visible>*********</Button.Content>
                       <Button.Content
-                        onMouseEnter={() => console.log("test")}
                         style={{ backgroundColor: "#0b0b0b" }}
                         hidden
                       >

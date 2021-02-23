@@ -32,6 +32,10 @@ const _ = require('lodash')
 const useStyles = makeStyles((theme) => ({
   countdown: {
     color: 'white',
+    display:'flex',
+    flexFlow:'column wrap',
+    alignItems:'center',
+    marginTop:'25%'
   },
 
   dialogComponent: {
@@ -153,8 +157,6 @@ function Room(props) {
 
   useEffect(() => {
     props.socket.on('newMessage', (data) => {
-      console.log('newMessage', data)
-      console.log('MEssages', messages)
       try {
         setMessages((messages) => [
           ...messages,
@@ -340,7 +342,6 @@ function Room(props) {
       { withCredentials: true }
     )
     setGameInformation(response.data)
-    console.log(response)
   }
 
   const checkGameInformation = () => {
@@ -348,13 +349,27 @@ function Room(props) {
       const url = 'steam://connect/' + gameInformation
       return (
         <>
-        {team1[0].nickname===props.roomResponse.users[0].nickname || team2[0].nickname===props.roomResponse.users[1].nickname?<MapSelection></MapSelection>: <div>
+        {/*{team1[0].nickname===props.roomResponse.users[0].nickname || team2[0].nickname===props.roomResponse.users[1].nickname?*/}
+        <MapSelection
+        team1={team1}
+        team2={team2}
+        ></MapSelection>
+       {/*} <div>
           <span>{gameInformation}</span>
           <a href={url} class="btn btn-primary">
             {" "}
             Join the Game
           </a>
-        </div>}
+      </div>*/}
+        </>
+      )
+    }
+    if(gameInformation == ''){
+      return(
+        <>
+        <MapSelection
+        team1={team1}
+        team2={team2}></MapSelection>
         </>
       )
     }

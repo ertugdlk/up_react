@@ -44,7 +44,7 @@ const OTP = (props) => {
         history.push('/dashboard')
       }
     } catch (err) {
-      console.log(err);
+      throw new Error("Something went wrong")
     }
   };
 
