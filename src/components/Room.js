@@ -353,6 +353,7 @@ function Room(props) {
         <MapSelection
         team1={team1}
         team2={team2}
+        roomResponse={props.roomResponse}
         ></MapSelection>
        {/*} <div>
           <span>{gameInformation}</span>
@@ -369,7 +370,9 @@ function Room(props) {
         <>
         <MapSelection
         team1={team1}
-        team2={team2}></MapSelection>
+        team2={team2}
+        roomResponse={props.roomResponse}
+       ></MapSelection>
         </>
       )
     }

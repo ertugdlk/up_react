@@ -30,8 +30,6 @@ import {
 } from '../actions/index'
 
 import Room from '../components/Room'
-import MapSelection from '../components/MapSelection'
-
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from '../utils'
@@ -72,7 +70,6 @@ function Dashboard(props) {
   const [session, setSession] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState('')
   const [errorbar, setErrorBar] = useState(false)
-  const [mapSelect, setMapSelect] = useState(false)
   const [gameRoomsList, setGameRooomList] = useState([])
   const [searchWord, setSearchWord] = useState('')
   const [openModal, setOpenModal] = useState(false)
@@ -371,10 +368,6 @@ function Dashboard(props) {
     setGameRoom(false)
   }
 
-  const handleMapSelectClose = () => {
-    setMapSelect(false)
-  }
-
   return (
     <>
       {errorbar ? (
@@ -400,9 +393,6 @@ function Dashboard(props) {
               onClose={handleCreateClose}
               games={menubarGames}
             ></CreateGame>
-          ) : null}
-          {mapSelect ? (
-            <MapSelection onClose={handleMapSelectClose} roomResponse={roomResponse}></MapSelection>
           ) : null}
           {verificationForm ? (
             <VerificationForm onClose={handleVerificationFormClose} />
