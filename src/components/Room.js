@@ -629,7 +629,6 @@ function Room(props) {
             </Grid>
             <Grid item lg={10} xl={3}>
               <div className='chat-holder'>
-                
                 <ChatScroll
                   nickname={props.nickname}
                   messages={messages}
