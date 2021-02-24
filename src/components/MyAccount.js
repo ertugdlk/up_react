@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from "react"
+import {Link } from "react-router-dom";
 import { createGlobalStyle } from "styled-components"
 import ClearIcon from "@material-ui/icons/Clear"
 import css from "../components/css/MyAccount.css"
@@ -163,6 +164,8 @@ function MyAccount(props) {
                     </Button>
                   </Segment>
                 )}
+
+                <Link to = '/wallet'><Button className="wallet-button">Wallet</Button></Link>
               </Grid.Column>
             </Grid>
             <Divider vertical />

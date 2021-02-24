@@ -89,6 +89,19 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
+.ui .wallet-button{
+  color: #000;
+  background: #00ff60;
+  border: 2px solid #00ff60;
+  border-radius: 8px;
+  width: 100px;
+  font-weight: bold;
+}
+
+.ui .wallet-button:hover{
+  background-color: #00ff60;
+}
+
 @media only screen and (max-width: 1200px) {
 }
 
