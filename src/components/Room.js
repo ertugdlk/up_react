@@ -311,7 +311,6 @@ function Room(props) {
   }
 
   const handleKeyDown = (event, message) => {
-    
     if (event.key === 'Enter' || event.code === 'Enter' || event.which === 13) {
       handleSendMessage(event, message)
     }
