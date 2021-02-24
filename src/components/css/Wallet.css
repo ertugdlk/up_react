@@ -1,0 +1,261 @@
+.WalletPageContainer{
+    flex-direction: column;
+    width: 100%;
+    height: 1200px;
+    top: 65px;
+    position: relative;
+    background-color: #16161b;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.user-coin-infobox{
+    height: 200px;
+    width: 200px;
+    margin-top: 50px;
+    margin-left: 50px;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-coin-convertion-info{
+    color: #35ab35;
+    font-size: 14px;
+    font-weight: bolder;
+    border-bottom: 1px groove #35ab35;
+    height: fit-content;
+    width: fit-content;
+    text-align: center;
+}
+
+.user-coin-convertion{
+    margin-top: -150px;
+    color: white;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+.bank-accounts{
+    height: 200px;
+    width: 500px;
+    border:1px solid blue;
+    display: flex;
+    flex-flow: row wrap;
+    margin-left: 1000px;
+}
+
+.bank-accounts li{
+    list-style: none;
+    width: 100%;
+    height: 100%;
+}
+
+.bank-accounts-header{
+    color: #35ab35;
+    font-size: 14px;
+    font-weight: bolder;
+    border-bottom: 1px groove #35ab35;
+    height: fit-content;
+    width: 100%;
+    text-align: center;
+    }
+
+.bank-content {
+    display: flex;
+    margin-top: 50px;
+    width: 100%;
+    flex-flow: column nowrap;
+  }
+
+.bank-button:not(:last-child) {
+    text-align: center;
+    border-bottom: 0.1px solid #fff;
+    padding: 10px;
+  }
+  
+.bank-button:first-child{
+    text-align: center;
+    border-top: 0.1px solid #fff;
+    border-bottom: 0.1px solid #fff;
+    padding: 10px;
+}
+.bank-button:last-child{
+    text-align: center;
+    padding: 10px;
+    border-bottom: 0.1px solid #fff;
+  }
+
+.bank-button:hover{
+    color: #0ab74c;  
+    cursor: pointer;
+  }
+.bank-button:hover:last-child{
+    color: #0ab74c;  
+    cursor: pointer;
+  }
+  
+.transaction-history{
+    height: 600px;
+    width: 600px;
+    margin-left: -400px;
+    display: flex;
+    flex-flow: column nowrap;
+    list-style: none;
+}
+
+
+.transaction-history-header{
+    color: #35ab35;
+    font-size: 14px;
+    font-weight: bolder;
+    border-bottom: 1px groove #35ab35;
+    height: fit-content;
+    width: 100%;
+    text-align: center;
+}
+
+.transaction-content{
+    height: 20px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    border-bottom: 1px solid white;
+}
+
+.transaction-content:first-child{
+    height: 20px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    margin-top: 20px;
+}
+.transaction-content:not(:last-child){
+    height: 20px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+.transaction-content:last-child{
+    height: 20px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+.transaction-type{
+    border-right: 1px solid #35ab35;
+    height: 20px;
+    width: 20%;
+    color:white;
+    text-align: center;
+}
+
+.transaction-info{
+    color: white;
+    width: 80%;
+    text-align: center;
+    height: 20px;
+    }
+
+.up-coin-deposit{
+    height: 200px;
+    width: 200px;
+    border:1px solid green;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.wallet-icon{
+    align-self: center;
+    height: 20px;
+    width: 20px;
+}
+
+.convertion{
+    color:#0ab74c;
+    width: 200px;
+    height: fit-content;
+    text-align: center;
+}
+
+.payment-warning{
+    color: white;
+    height: fit-content;
+    width: fit-content;
+    margin-left: 30px;
+    margin-top: -45px;
+    
+}
+
+.deposit-button{
+    color: #000;
+    background-color: #00ff60;
+    font-size: 1em;
+    margin-top: 1.5em;
+    padding: 0.75em;
+    border: 2px solid #00ff60;
+    border-radius: 8px;
+    width: 100px;
+    height: fit-content;
+    margin: 0;
+    -ms-transform: translate(50%, 50%);
+    transform: translate(50%, 50%);
+    font-weight: bold;
+}
+
+.deposit-button:hover{
+    cursor:pointer;
+}
+
+.up-coin-withdraw{
+    margin-top: 50px;
+    height: fit-content;
+    width: 200px;
+    border:1px solid white;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.withdraw-content {
+    display: flex;
+    width: 100%;
+    flex-flow: column nowrap;
+  }
+  
+.dropdown-content-1{
+    display: flex;
+    flex-flow: row wrap;
+    height: fit-content;
+}
+.balance-text{
+    color: white;
+}
+
+.balance-text-balance{
+    color:#35ab35;
+}
+
+.dropdown-btn{
+    color: #000;
+    background-color: #00ff60;
+    border: 2px solid #00ff60;
+    border-radius: 8px;
+    width: 100px;
+    -ms-transform: translate(50%, 50%);
+    transform: translate(50%, 50%);
+    font-weight: bold;
+    margin-bottom: 20px;
+}

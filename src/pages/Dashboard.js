@@ -37,7 +37,7 @@ import { baseUrl } from '../utils/helpers'
 import LeftPane from '../components/Dashboard/LeftPane'
 import CenterModal from '../components/UI/CenterModal'
 import VerificationForm from '../components/VerificationForm'
-import { set } from 'js-cookie'
+import { set } from 'js-cookie' 
 
 /* -------------------------------------------------------------------------- */
 const _ = require('lodash')

@@ -53,7 +53,7 @@ function LoginWindow(props) {
   const [nickname, setNickname] = useState('')
   const [password, setPassword] = useState('')
   const history = useHistory()
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [nicknameError, setNicknameError] = useState(false)
   const [nicknameHelperText, setNicknameHelperText] = useState('')
   const [passwordError, setPasswordError] = useState(false)

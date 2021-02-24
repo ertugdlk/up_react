@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import Dashboard from './pages/Dashboard';
 import Homepage from './pages/Homepage';
 import NotFoundPage from "./pages/NotFoundPage"
+import Wallet from './pages/Wallet'
 import reducers from './reducers/index';
 import 'semantic-ui-css/semantic.min.css';
 import './components/css/index.css';
@@ -32,6 +33,7 @@ ReactDOM.render(
           exact
           component={(props) => <Dashboard {...props.match.params} />}
         />
+        <Route path='/wallet' exact component ={() => <Wallet/>}/>
         <Route path='*' exact component = {()=> <NotFoundPage/>} />
       </Switch>
     </Router>
