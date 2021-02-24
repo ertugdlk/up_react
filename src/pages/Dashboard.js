@@ -40,6 +40,7 @@ import LeftPane from '../components/Dashboard/LeftPane'
 import CenterModal from '../components/UI/CenterModal'
 import VerificationForm from '../components/VerificationForm'
 import { set } from 'js-cookie'
+import Payment from '../components/UI/Payment'
 
 /* -------------------------------------------------------------------------- */
 const _ = require('lodash')
@@ -80,10 +81,19 @@ function Dashboard(props) {
   const [verificationForm, setVerificationForm] = useState(false)
   const [balance, setBalance] = useState(0)
 
+  const [paymentModal, setPaymentModal] = useState(false)
+
   const [freeGameList, setFreeGameList] = useState([])
   const [paidGameList, setPaidGameList] = useState([])
 
   const [isFreeGame, setIsFreeGame] = useState(true)
+
+  const handPaymentModalOpen = () => {
+    setPaymentModal(true)
+  }
+  const handPaymentModalClose = () => {
+    setPaymentModal(false)
+  }
 
   const changeGameMethodToFree = () => {
     console.log('free')
@@ -444,7 +454,10 @@ function Dashboard(props) {
               <button className='open-games' onClick={changeGameMethodToPaid}>
                 Paid Games
               </button>
-              <button className='private-games' onClick={changeGameMethodToFree}>
+              <button
+                className='private-games'
+                onClick={changeGameMethodToFree}
+              >
                 Free Games
               </button>
               <div className='search-game'>
@@ -503,6 +516,7 @@ function Dashboard(props) {
             handleVerificationFormClose={handleVerificationFormClose}
             verificationForm={verificationForm}
             balance={balance}
+            handPaymentModalOpen={handPaymentModalOpen}
           />
 
           {/* -------------------------------- LEFT PANE ------------------------------- */}
@@ -510,6 +524,7 @@ function Dashboard(props) {
           <div className='SocialBar'></div>
         </div>
       ) : null}
+      <Payment paymentModal={paymentModal} handPaymentModalClose={handPaymentModalClose} />
     </>
   )
   //deposit ve withdraw butonlarÄ±na geÃ§ici olarak handleAccount fonksiyonu atandÄ±, para iÅŸlemleri entegre edilince dÃ¼zeltilmeli.
