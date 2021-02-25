@@ -1,118 +1,147 @@
-.MyAccount {
+.map-room-window {
   display: flex;
-  flex-flow: column nowrap;
-  position: fixed;
-  width: 800px;
-  height: 400px;
-  top: 20%;
+  position: absolute;
+  height: 223px;
+  width: 357px;
+  justify-content: center;
+  align-items: center;
   border-radius: 12px;
-  z-index: 1000;
-  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+  z-index: 3000;
   background: #0b0b0b;
   color: white;
-  justify-content: center;
-  align-items: center;
+  border: transparent;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.test {
-  width: 90%;
+.maps .map:after {
+  position: absolute;
 }
 
-.image-label-dist {
-  margin-bottom: 5px !important;
-}
-
-.label-text {
-  color: #0ab740 !important;
-}
-
-.account-emailbox {
-  border: none;
-
-  background-color: transparent;
-  width: 50%;
-  height: 50%;
+.maps .map {
   position: relative;
-  justify-content: center;
-  align-items: center;
+}
+
+.maps {
   display: flex;
-}
-.account-usernamebox {
-  border: none;
-  background-color: transparent;
-  width: 50%;
-  height: 50%;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-}
-.myaccount-labels {
-  font-size: 14px;
+  flex-flow: column nowrap;
 }
 
-.myaccount-button {
-  font-size: 14px;
-  width: 100px;
-  height: 30px;
-  margin-left: 5%;
-  color: #fff;
-  background-color: black;
-  border: 2px solid #0ab740;
-  border-radius: 8px;
+body {
+  background: #24282f;
+  font-family: 'Alegreya Sans';
 }
-.myaccount-button:hover {
-  background-color: darkgreen;
-  color: white;
-  border-color: #0ab740;
+.wrapper {
+  padding: 15px;
+}
+.map {
+  flex-flow: row wrap;
 }
 
-.ui.segment {
-  background-color: rgb(11, 11, 11) !important;
+.maps .map {
+  margin: 20px;
+  width: 180px;
+  height: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+  transform-origin: center top;
+  transform-style: preserve-3d;
+  transform: translateZ(0); 
+  transition: 0.3s;
 }
 
-.ui.fade.animated.button .hidden.content {
-  color: #0ab740 !important;
-  background-color: rgba(0, 0, 0, 0) !important;
+.map-list{
+  list-style: none;
 }
 
-.ui.green.segment:not(.inverted) {
-  border: none !important;
+.disabled-map{
+  margin: 20px;
+  width: 180px;
+  height: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+  transform-origin: center top;
+  transform-style: preserve-3d;
+  transform: translateZ(0); 
+  transition: 0.3s;
+  pointer-events: none;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
 }
 
-.ui.fluid.button {
-  color: #0ab740;
-  background-color: rgba(0, 0, 0, 0);
-}
-.ui.fade.animated.button .hidden.content {
-  color: #0ab740;
-  background-color: rgba(0, 0, 0, 0);
+.maps .map span {
+  max-height: 100%;
+  width: 100%;
 }
 
-.ui .wallet-button{
-  color: #000;
-  background: #00ff60;
-  border: 2px solid #00ff60;
-  border-radius: 8px;
-  width: 100px;
-  font-weight: bold;
+.maps .map:after {
+  content: '';
+  z-index: 10;
+  width: 200%;
+  height: 100%;
+  top: -90%;
+  left: -20px;
+  opacity: 0.1;
+  transform: rotate(45deg);
+  background: linear-gradient(
+    to top,
+    transparent,
+    #fff 15%,
+    rgba(255, 255, 255, 0.5)
+  );
+  transition: 0.3s;
 }
 
-.ui .wallet-button:hover{
-  background-color: #00ff60;
+.maps .map:hover,
+.maps .map:focus,
+.maps .map:active {
+  box-shadow: 0 8px 16px 3px rgba(0, 0, 0, 0.6);
+  transform: translateY(-3px) scale(1.05) rotateX(15deg);
+}
+
+.maps .map:hover:after,
+.maps .map:focus:after,
+.maps .map:active:after {
+  transform: rotate(25deg);
+  top: -40%;
+  opacity: 0.15;
+}
+
+/* -------------------------------- New Added ------------------------------- */
+.outer {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  /*whatever width you want*/
+}
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .div {
+    flex: 100%;
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 400px) {
+  .div{
+    font-size: 16px;
+  }
 }
 
 @media only screen and (max-width: 1200px) {
-}
-
-@media only screen and (max-width: 1680px) {
-  .MyAccount {
-    left: 25%;
-  }
-}
-
-@media only screen and (min-width: 1680px) {
-  .MyAccount {
-    left: 560px;
-  }
 }

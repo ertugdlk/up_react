@@ -86,6 +86,7 @@ function Room(props) {
   const [report, setReport] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState('')
   const [fullWidthModal, setFullWidthModal] = useState('sm')
+  const [mapSelect, setMapSelect] = useState(false)
   const classes = useStyles()
 
   const [sureWindow, setSureWindow] = useState(false)
@@ -335,6 +336,7 @@ function Room(props) {
   }
 
   const handleStartMatch = async () => {
+    setMapSelect(true)
     const url = 'rcon/setupmatch'
     const response = await axios.post(
       url,
@@ -347,13 +349,13 @@ function Room(props) {
   const checkGameInformation = () => {
     if (gameInformation != '') {
       const url = 'steam://connect/' + gameInformation
+      if(mapSelect===true){
       return (
         <>
         {/*{team1[0].nickname===props.roomResponse.users[0].nickname || team2[0].nickname===props.roomResponse.users[1].nickname?*/}
         <MapSelection
         team1={team1}
         team2={team2}
-        roomResponse={props.roomResponse}
         ></MapSelection>
        {/*} <div>
           <span>{gameInformation}</span>
@@ -363,18 +365,21 @@ function Room(props) {
           </a>
       </div>*/}
         </>
-      )
+      )}else{
+        return null
+      }
     }
     if(gameInformation == ''){
+      if(mapSelect===true){
       return(
         <>
         <MapSelection
         team1={team1}
-        team2={team2}
-        roomResponse={props.roomResponse}
-       ></MapSelection>
+        team2={team2}></MapSelection>
         </>
       )
+    }}else{
+      return null
     }
     if (start) {
       return (

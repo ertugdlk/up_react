@@ -30,6 +30,8 @@ import {
 } from '../actions/index'
 
 import Room from '../components/Room'
+import MapSelection from '../components/MapSelection'
+
 // import { Menu } from 'semantic-ui-react';
 /* --------------------------------- HELPERS -------------------------------- */
 import axios from '../utils'
@@ -37,7 +39,7 @@ import { baseUrl } from '../utils/helpers'
 import LeftPane from '../components/Dashboard/LeftPane'
 import CenterModal from '../components/UI/CenterModal'
 import VerificationForm from '../components/VerificationForm'
-import { set } from 'js-cookie' 
+import { set } from 'js-cookie'
 
 /* -------------------------------------------------------------------------- */
 const _ = require('lodash')
@@ -70,6 +72,7 @@ function Dashboard(props) {
   const [session, setSession] = useState(false)
   const [ErrorMessage, setErrorMessage] = useState('')
   const [errorbar, setErrorBar] = useState(false)
+  const [mapSelect, setMapSelect] = useState(false)
   const [gameRoomsList, setGameRooomList] = useState([])
   const [searchWord, setSearchWord] = useState('')
   const [openModal, setOpenModal] = useState(false)
@@ -368,6 +371,10 @@ function Dashboard(props) {
     setGameRoom(false)
   }
 
+  const handleMapSelectClose = () => {
+    setMapSelect(false)
+  }
+
   return (
     <>
       {errorbar ? (
@@ -394,6 +401,9 @@ function Dashboard(props) {
               games={menubarGames}
             ></CreateGame>
           ) : null}
+          {mapSelect ? (
+            <MapSelection onClose={handleMapSelectClose}></MapSelection>
+          ) : null}
           {verificationForm ? (
             <VerificationForm onClose={handleVerificationFormClose} />
           ) : null}
@@ -409,21 +419,17 @@ function Dashboard(props) {
             ></Room>
           ) : null}
           <GlobalStyle></GlobalStyle>
-          <div className="Header">
-            <Grid  container direction="row"  justify="flex-start"  alignItems="flex-start">
-              <Grid item xs={2}>
-                <a className="LogoLink" href="/dashboard">
-                  <img src={Logo} className="dashboard-logo"/>
+          <div className='Header'>
+            <Grid>
+              <div className='dashboard-logo'>
+                <a className='LogoLink' href='/dashboard'>
+                  <img style={{ width: '187px', height: '50px' }} src={Logo} />
                 </a>
-              </Grid>
-              <Grid container direction="row" justify="flex-end" alignItems="center">
-                <Grid item xs={1}>
-                <button className="account-buttons" onClick={handleAccount}>Account Settings</button>
-                </Grid>
-                <Grid item xs={1}>
-                <button className="account-buttons" onClick={handleLogout}>Logout</button>
-                </Grid>
-              </Grid>
+              </div>
+              <div className='HeaderRightMenu'>
+                <button onClick={handleAccount}>Account Settings</button>
+                <button onClick={handleLogout}>Logout</button>
+              </div>
             </Grid>
           </div>
 

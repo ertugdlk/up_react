@@ -36,6 +36,7 @@ function MapSelection(props) {
         GameMaps()
       }, [])
 
+      if(team1FirstIndex || team2FirstIndex ){
         return(
           <>
           <div className="map-room-window">
@@ -52,6 +53,11 @@ function MapSelection(props) {
               </div>
             </div>
         </div>
+          </>
+        )
+      }else{
+        return(
+        <>
          <div className="map-room-window">
     <div class='wrapper'>
     <div className='maps'>
@@ -67,6 +73,7 @@ function MapSelection(props) {
     </div>
         </>
         )
+      }
 }
 
 export default MapSelection;
