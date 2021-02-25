@@ -42,7 +42,7 @@ function Wallet(props) {
   }
 
   if(bankBalance<withdrawReq || bankBalance1<withdrawReq1 || bankBalance2<withdrawReq2){
-    console.log("yarra")
+    console.log("invalid")
 
   }
   async function userBalance() {
