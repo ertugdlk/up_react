@@ -314,7 +314,6 @@ function Room(props) {
   }
 
   const handleKeyDown = (event, message) => {
-    
     if (event.key === 'Enter' || event.code === 'Enter' || event.which === 13) {
       handleSendMessage(event, message)
     }
@@ -655,7 +654,6 @@ function Room(props) {
             </Grid>
             <Grid item lg={10} xl={3}>
               <div className='chat-holder'>
-                
                 <ChatScroll
                   nickname={props.nickname}
                   messages={messages}

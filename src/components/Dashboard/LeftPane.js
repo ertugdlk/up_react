@@ -121,7 +121,7 @@ const LeftPane = (props) => {
               {balance}
             </button>
           )}
-          {verified ? <span className="up"> UP</span> : null}
+          {verified ? <button onClick={props.handPaymentModalOpen}> <span className="up"> UP</span> </button>: null}
         </div>
         <div className="menubar-buttons">
           <div className="btn-container">

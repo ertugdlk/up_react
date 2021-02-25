@@ -16,12 +16,14 @@ function ChatScroll({
   const controlMessageFloow = (e, message) => {
     handleSendMessage(e, message)
     chatRef.current.value = ''
+    setMessage('')
   }
 
   const controlEnterKey = (e, message) => {
     if (e.key === 'Enter' || e.code === 'Enter' || e.which === 13) {
       handleKeyDown(e, message)
       chatRef.current.value = ''
+      setMessage('')
     }
   }
 
