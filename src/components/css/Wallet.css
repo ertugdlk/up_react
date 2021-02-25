@@ -13,8 +13,6 @@
 .user-coin-infobox{
     height: 200px;
     width: 200px;
-    margin-top: 50px;
-    margin-left: 50px;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -32,19 +30,17 @@
 }
 
 .user-coin-convertion{
-    margin-top: -150px;
     color: white;
     font-size: 14px;
     font-weight: bolder;
 }
 
 .bank-accounts{
-    height: 200px;
+    height: fit-content;
     width: 500px;
-    border:1px solid blue;
     display: flex;
     flex-flow: row wrap;
-    margin-left: 1000px;
+    margin-left: 0;
 }
 
 .bank-accounts li{
@@ -99,11 +95,14 @@
   
 .transaction-history{
     height: 600px;
-    width: 600px;
-    margin-left: -400px;
+    width: 50%;
     display: flex;
     flex-flow: column nowrap;
     list-style: none;
+    justify-self: center;
+    align-self: center;
+    margin-left: 5%;
+    margin-top: -15%;
 }
 
 
@@ -173,7 +172,6 @@
 .up-coin-deposit{
     height: 200px;
     width: 200px;
-    border:1px solid green;
     display: flex;
     flex-flow: row wrap;
 }
@@ -258,4 +256,15 @@
     transform: translate(50%, 50%);
     font-weight: bold;
     margin-bottom: 20px;
+}
+
+.deneme{
+    color: #000;
+    background-color: #00ff60;
+    border: 2px solid #00ff60;
+    border-radius: 8px;
+    width: 100px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 50%;
 }

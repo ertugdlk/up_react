@@ -6,6 +6,8 @@ import { Grid } from '@material-ui/core'
 import Logo from '../logo.png'
 import Bag from "../bag_icon.png"
 import css from '../components/css/Wallet.css';
+import Payment from '../components/UI/Payment'
+
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
@@ -26,10 +28,18 @@ function Wallet(props) {
   const [withdrawReq,setWithdrawReq] = useState(20)
   const [withdrawReq1,setWithdrawReq2] = useState(40)  
   const [withdrawReq2,setWithdrawReq3] = useState(60)  
-
+  const [paymentModal, setPaymentModal] = useState(false)
 
   const dropdown = useRef();
   const btn = useRef();
+
+
+  const handPaymentModalOpen = () => {
+    setPaymentModal(true)
+  }
+  const handPaymentModalClose = () => {
+    setPaymentModal(false)
+  }
 
   function handleDropdown() {
     setClick(!click);
@@ -90,44 +100,18 @@ function Wallet(props) {
           <div className="user-coin-infobox">
           <span className="user-coin-convertion-info">Your UP Coin Balance</span>
           <span className="user-coin-convertion">{upBalance} UP coin = {upBalance} TL</span>
-          </div>
+          {paymentModal?null
+          :<button className="deneme" onClick={()=>handPaymentModalOpen()}>Add Payment</button>}
+          </div> 
+          <Payment paymentModal={paymentModal} handPaymentModalClose={handPaymentModalClose}></Payment>
           <div className="bank-accounts">
           <span className="bank-accounts-header">Your Bank Accounts</span>
           <li>
-            <div className="bank-content">
+            {/*<div className="bank-content">
             <button className="bank-button">Bank 1</button>
             <button className="bank-button">Bank 2</button>
             <button className="bank-button">Bank 3</button>
-            </div>
-          </li>
-          </div>
-          <div className="transaction-history"> 
-          <span className="transaction-history-header">Transaction History</span>
-          <li>
-            <div className="transaction-content">
-            <span className="transaction-type">Refund</span>
-            <span className="transaction-info">+50 UP coin</span>
-            </div>
-            <div className="transaction-content">
-            <span className="transaction-type">Refund</span>
-            <span className="transaction-info">+50 UP coin</span>
-            </div>
-            <div className="transaction-content">
-            <span className="transaction-type">Refund</span>
-            <span className="transaction-info">+50 UP coin</span>
-            </div>
-          </li>
-          </div>
-          <div className="up-coin-actions">
-          <div className="up-coin-deposit">
-          <span className="convertion"> 1 UP coin = 1 TL</span>
-          <img src={Bag} className="wallet-icon"></img>
-          {payment?null:<span className="payment-warning"> You have to choose a payment method to buy UP coins.</span>}
-          <button className="deposit-button"> GET UP COIN</button>
-          </div>
-          <div className="up-coin-withdraw"> 
-          <span className="bank-accounts-header">Your Bank Accounts</span>
-          <li>
+          </div>*/}
             <div className="withdraw-content">
             <button className="bank-button" onClick={handleDropdown} ref={btn}>Bank 1</button>
             {click ? (
@@ -156,6 +140,30 @@ function Wallet(props) {
             </div>
           </li>
           </div>
+          <div className="up-coin-actions">
+          <div className="up-coin-deposit">
+          <span className="convertion"> 1 UP coin = 1 TL</span>
+          <img src={Bag} className="wallet-icon"></img>
+          {payment?null:<span className="payment-warning"> You have to choose a payment method to buy UP coins.</span>}
+          <button className="deposit-button"> GET UP COIN</button>
+          </div>
+          </div>
+          <div className="transaction-history"> 
+          <span className="transaction-history-header">Transaction History</span>
+          <li>
+            <div className="transaction-content">
+            <span className="transaction-type">Refund</span>
+            <span className="transaction-info">+50 UP coin</span>
+            </div>
+            <div className="transaction-content">
+            <span className="transaction-type">Refund</span>
+            <span className="transaction-info">+50 UP coin</span>
+            </div>
+            <div className="transaction-content">
+            <span className="transaction-type">Refund</span>
+            <span className="transaction-info">+50 UP coin</span>
+            </div>
+          </li>
           </div>
           </div>
     </>
