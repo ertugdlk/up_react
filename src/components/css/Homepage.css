@@ -14,14 +14,8 @@
 
 .logo {
   position: absolute;
-  top: 6px;
-  left: 25px;
-  width: 239px;
-  height: 64px;
-}
-
-.logo img{
-
+  top: -40px;
+  left: 0;
 }
 
 .span {
@@ -33,7 +27,9 @@
   display: flex;
   flex-flow: column nowrap;
   background-color: #050505;
-  margin-top: 70px;
+  border:1px solid #050505;
+  display: flex;
+  margin-top:4.7%;
   height: fit-content;
 }
 

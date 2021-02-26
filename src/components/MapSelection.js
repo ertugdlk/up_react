@@ -11,11 +11,9 @@ function MapSelection(props) {
 
     const [maps, setMaps] = useState([])
     const [filteredMaps,setFilteredMaps] = useState([])
-    const [team1FirstIndex,setTeam1FirstIndex] = useState([])
-    const [team2FirstIndex,setTeam2FirstIndex] = useState([])
+    const [team1FirstIndex,setTeam1FirstIndex] = useState("")
+    const [team2FirstIndex,setTeam2FirstIndex] = useState("")
 
-    setTeam1FirstIndex(props.team1[0].nickname)
-    setTeam2FirstIndex(props.team2[0].nickname)
 
 
     const disableButton = (index) =>{
@@ -33,10 +31,13 @@ function MapSelection(props) {
           }
         }
 
+      setTeam1FirstIndex(props.team1[0].nickname)
+      setTeam2FirstIndex(props.team2[0].nickname)
+
         GameMaps()
       }, [])
 
-      if(team1FirstIndex || team2FirstIndex ){
+      if(team1FirstIndex != "" || team2FirstIndex != "" ){
         return(
           <>
           <div className="map-room-window">
