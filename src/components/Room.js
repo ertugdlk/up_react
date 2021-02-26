@@ -346,6 +346,7 @@ function Room(props) {
   }
 
   //for pushing
+  //for pushing
   
   const checkGameInformation = () => {
     if (gameInformation != '') {
