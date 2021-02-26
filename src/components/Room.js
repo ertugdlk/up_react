@@ -345,6 +345,8 @@ function Room(props) {
     setGameInformation(response.data)
   }
 
+  //for pushing
+  
   const checkGameInformation = () => {
     if (gameInformation != '') {
       const url = 'steam://connect/' + gameInformation
