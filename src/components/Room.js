@@ -351,21 +351,20 @@ function Room(props) {
       if(mapSelect===true){
       return (
         <>
-        {/*{team1[0].nickname===props.roomResponse.users[0].nickname || team2[0].nickname===props.roomResponse.users[1].nickname?*/}
         <MapSelection
         team1={team1}
         team2={team2}
         ></MapSelection>
-       {/*} <div>
-          <span>{gameInformation}</span>
-          <a href={url} class="btn btn-primary">
-            {" "}
-            Join the Game
-          </a>
-      </div>*/}
         </>
+        
       )}else{
-        return null
+        return (<div>
+        <span>{gameInformation}</span>
+        <a href={url} class="btn btn-primary">
+          {" "}
+          Join the Game
+        </a>
+    </div>)
       }
     }
     if(gameInformation == ''){
@@ -378,7 +377,13 @@ function Room(props) {
         </>
       )
     }}else{
-      return null
+      return (<div>
+      <span>{gameInformation}</span>
+      <a href={url} class="btn btn-primary">
+        {" "}
+        Join the Game
+      </a>
+  </div>)
     }
     if (start) {
       return (
