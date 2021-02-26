@@ -371,6 +371,7 @@ function Room(props) {
       }
     }
     if(gameInformation == ''){
+      const url2 = 'steam://connect/' + gameInformation
       if(mapSelect===true){
       return(
         <>
@@ -380,13 +381,7 @@ function Room(props) {
         </>
       )
     }}else{
-      return (<div>
-      <span>{gameInformation}</span>
-      <a href={url} class="btn btn-primary">
-        {" "}
-        Join the Game
-      </a>
-  </div>)
+      return null
     }
     if (start) {
       return (
