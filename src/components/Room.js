@@ -87,6 +87,7 @@ function Room(props) {
   const [selectedPlayer, setSelectedPlayer] = useState('')
   const [fullWidthModal, setFullWidthModal] = useState('sm')
   const [mapSelect, setMapSelect] = useState(false)
+  const [bannedMap, setBannedMap] = useState({})
   const classes = useStyles()
 
   const [sureWindow, setSureWindow] = useState(false)
@@ -355,6 +356,8 @@ function Room(props) {
       return (
         <>
         <MapSelection
+        host={host}
+        socket={props.socket}
         team1={team1}
         team2={team2}
         ></MapSelection>
@@ -376,6 +379,8 @@ function Room(props) {
       return(
         <>
         <MapSelection
+        host={host}
+        socket={props.socket}
         team1={team1}
         team2={team2}></MapSelection>
         </>

@@ -14,12 +14,14 @@ function MapSelection(props) {
     const [team1FirstIndex,setTeam1FirstIndex] = useState("")
     const [team2FirstIndex,setTeam2FirstIndex] = useState("")
 
-
+    //IMPROVEMENT İLERİSİNN İŞİ 
+    //banlanan mapler localstorage ta tutlup kontrol edilebilir. oda da başladığında local storage da roomid si ile güncel mapler tutulabilir
 
     const disableButton = (index) =>{
-      const filteredItem = maps.filter(map=>map===maps[index])
-      setFilteredMaps(filteredItem)
-      setMaps(maps.splice(index,1))
+      // socket io emit ban
+      const bannedMap = index;
+      props.socket.emit("mapselection", {host:props.host , bannedMap, team: 1})
+
      }
     
     useEffect(() => {
@@ -36,6 +38,18 @@ function MapSelection(props) {
 
         GameMaps()
       }, [])
+
+      useEffect(() => {
+        props.socket.on('nextTurn', ({bannedMap, team}) => {
+          const filteredItem = maps.filter(map=>map===maps[bannedMap])
+
+          if(filteredItem.length == 1){
+            //burda banlama biticek sonraki aşama oda bilgilerinin gösterilmesi ve setupmatch request nin buraya taşınması gerekiyor.
+          }
+          setFilteredMaps(filteredItem)
+          setMaps(maps.splice(bannedMap,1))
+        })
+      })
 
       if(team1FirstIndex != "" || team2FirstIndex != "" ){
         return(
