@@ -13,6 +13,7 @@ function MapSelection(props) {
     const [filteredMaps,setFilteredMaps] = useState([])
     const [team1FirstIndex,setTeam1FirstIndex] = useState("")
     const [team2FirstIndex,setTeam2FirstIndex] = useState("")
+    const [gameInformation,setGameInformation] = useState([])
 
     //IMPROVEMENT İLERİSİNN İŞİ 
     //banlanan mapler localstorage ta tutlup kontrol edilebilir. oda da başladığında local storage da roomid si ile güncel mapler tutulabilir
@@ -40,16 +41,35 @@ function MapSelection(props) {
       }, [])
 
       useEffect(() => {
+        const url = 'steam://connect/' + gameInformation
         props.socket.on('nextTurn', ({bannedMap, team}) => {
           const filteredItem = maps.filter(map=>map===maps[bannedMap])
-
           if(filteredItem.length == 1){
-            //burda banlama biticek sonraki aşama oda bilgilerinin gösterilmesi ve setupmatch request nin buraya taşınması gerekiyor.
+            return(
+            <div>
+              <span>{gameInformation}</span>
+              <a href={url} class="btn btn-primary">
+                {" "}
+                Join the Game
+              </a>
+          </div>
+          )
           }
           setFilteredMaps(filteredItem)
           setMaps(maps.splice(bannedMap,1))
         })
       })
+
+      useEffect(() => {
+          const url = 'rcon/setupmatch'
+          const response = await axios.post(
+            url,
+            { host: props.host },
+            { withCredentials: true }
+          )
+          setGameInformation(response.data)
+        }
+      )
 
       if(team1FirstIndex != "" || team2FirstIndex != "" ){
         return(
