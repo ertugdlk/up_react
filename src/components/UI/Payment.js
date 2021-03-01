@@ -359,7 +359,9 @@ function Payment({ paymentModal, handPaymentModalClose }) {
             Back
           </Button>
         ) : (
-          <Button color='primary'>Close</Button>
+          <Button color='primary' onClick={handPaymentModalClose}>
+            Close
+          </Button>
         )}
         {isMoneySelected ? (
           <Button color='primary'>Deposit</Button>
