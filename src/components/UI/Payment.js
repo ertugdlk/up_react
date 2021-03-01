@@ -56,12 +56,13 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
   formButtonsControl: {
-    display: 'flex',
+    // display: 'flex',
   },
   radioGrupControl: {
     flexDirection: 'row',
   },
   formButtons: {},
+  formButtonsActive: {},
 }))
 
 function Payment({ paymentModal, handPaymentModalClose }) {
@@ -75,7 +76,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
   const [zipCode, setZipCode] = useState('')
   const classes = useStyles()
 
-  function StyledRadio({ text = '' }) {
+  function StyledButton({ text = '' }) {
     const classes = useStyles()
 
     return (
@@ -225,7 +226,12 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               variant='outlined'
                             />
                           </Grid>
-                          <Grid item xs={12} className={classes.gridItems}>
+                          <Grid
+                            container
+                            item
+                            xs={12}
+                            className={classes.gridItems}
+                          >
                             <Grid
                               container
                               direction='row'
@@ -278,37 +284,51 @@ function Payment({ paymentModal, handPaymentModalClose }) {
             <Grid
               container
               direction='column'
-              justify='flex-end'
+              justify='space-around'
               alignItems='center'
               spacing={1}
             >
               <Grid item xs={12}>
                 <Typography variant='h3'>Bakiye Yükleme</Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid container item xs={12}>
+                {/* <div className={classes.mainHolder}> */}
                 <Grid
                   container
                   direction='row'
-                  justify='center'
+                  justify='space-around'
                   alignItems='center'
                   spacing={1}
                 >
                   <Grid item xs={4}>
-                    <Typography variant='h6'>Yükleme Miktarı</Typography>
-                    <Typography variant='body1'>250 Coin</Typography>
+                    <Typography component='p' variant='h6' align='center'>
+                      Yükleme Miktarı
+                    </Typography>
+                    <Typography variant='body1' align='center'>
+                      250 Coin
+                    </Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant='h6'>İşlem Ücreti</Typography>
-                    <Typography variant='body1'>10 Coin Ücretsiz</Typography>
+                    <Typography component='p' variant='h6' align='center'>
+                      İşlem Ücreti
+                    </Typography>
+                    <Typography variant='body1' align='center'>
+                      10 Coin Ücretsiz
+                    </Typography>
                   </Grid>
                   <Grid item xs={4}>
-                    <Typography variant='h6'>Toplam Tutar</Typography>
-                    <Typography variant='body1'>250 Coin = 250 TL</Typography>
+                    <Typography component='p' variant='h6' align='center'>
+                      Toplam Tutar
+                    </Typography>
+                    <Typography variant='body1' align='center'>
+                      250 Coin = 250 TL
+                    </Typography>
                   </Grid>
                 </Grid>
+                {/* </div> */}
               </Grid>
               <Grid item xs={12}>
-                <Typography variant='h6'>
+                <Typography variant='h6' align='center'>
                   Yüklenecek Bakiye Miktarını Seçin
                 </Typography>
 
@@ -324,27 +344,27 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                     <FormControlLabel
                       className={classes.formButtons}
                       value='50'
-                      control={<StyledRadio key={'50'} text='50' />}
+                      control={<StyledButton key={'50'} text='50' />}
                     />
                     <FormControlLabel
                       className={classes.formButtons}
                       value='100'
-                      control={<StyledRadio key={'100'} text='100' />}
+                      control={<StyledButton key={'100'} text='100' />}
                     />
                     <FormControlLabel
                       className={classes.formButtons}
                       value='250'
-                      control={<StyledRadio key={'250'} text='250' />}
+                      control={<StyledButton key={'250'} text='250' />}
                     />
                     <FormControlLabel
                       className={classes.formButtons}
                       value='500'
-                      control={<StyledRadio key={'500'} text='500' />}
+                      control={<StyledButton key={'500'} text='500' />}
                     />
                     <FormControlLabel
                       className={classes.formButtons}
                       value='1000'
-                      control={<StyledRadio key={'1000'} text='1000' />}
+                      control={<StyledButton key={'1000'} text='1000' />}
                     />
                   </RadioGroup>
                 </FormControl>
