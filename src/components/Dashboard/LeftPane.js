@@ -123,8 +123,7 @@ const LeftPane = (props) => {
           )}
           {verified ? (
             <button onClick={props.handPaymentModalOpen}>
-              {' '}
-              <span className='up'> UP</span>{' '}
+              <span className='up'> UP</span>
             </button>
           ) : null}
         </div>
