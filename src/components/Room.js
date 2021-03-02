@@ -337,6 +337,7 @@ function Room(props) {
 
   const handleStartMatch = async () => {
     setMapSelect(true)
+    /*
     const url = 'rcon/setupmatch'
     const response = await axios.post(
       url,
@@ -344,6 +345,7 @@ function Room(props) {
       { withCredentials: true }
     )
     setGameInformation(response.data)
+    */
   }
 
   //for pushing
