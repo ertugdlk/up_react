@@ -40,15 +40,28 @@ function MapSelection(props) {
         GameMaps()
       }, [])
 
-      useEffect(() => {
-        const url = 'steam://connect/' + gameInformation
-        props.socket.on('nextTurn', ({bannedMap, team}) => {
+      useEffect( async () => {
+        
+        props.socket.on('nextTurn', async ({bannedMap, team}) => {
+
           const filteredItem = maps.filter(map=>map===maps[bannedMap])
+
+          //check last map or not
           if(filteredItem.length == 1){
+
+            const url = 'rcon/setupmatch'
+            const response = await axios.post(
+              url,
+              { host: props.host },
+              { withCredentials: true }
+            )
+
+            setGameInformation(response.data)
+            const joinsrc = 'steam://connect/' + gameInformation
             return(
             <div>
               <span>{gameInformation}</span>
-              <a href={url} class="btn btn-primary">
+              <a href={joinsrc} class="btn btn-primary">
                 {" "}
                 Join the Game
               </a>
@@ -60,7 +73,8 @@ function MapSelection(props) {
         })
       })
 
-      useEffect(() => {
+      useEffect(async() => {
+        /*
           const url = 'rcon/setupmatch'
           const response = await axios.post(
             url,
@@ -68,6 +82,7 @@ function MapSelection(props) {
             { withCredentials: true }
           )
           setGameInformation(response.data)
+          */
         }
       )
 
