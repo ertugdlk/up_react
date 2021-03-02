@@ -23,13 +23,13 @@
 }
 
 
-.deneme{
+.homepage-div{
   display: flex;
   flex-flow: column nowrap;
   background-color: #050505;
   border:1px solid #050505;
-  display: flex;
   margin-top:4.7%;
+  width: 100%;
   height: fit-content;
 }
 
@@ -156,8 +156,8 @@
     font-weight: bold;
     line-height: 0.889;
     position: absolute;
-    left: 572.937px;
-    top: 1795.998px;
+    left: 40%;
+    top: 2045.998px;
     z-index: 4;
   }
 
@@ -172,8 +172,8 @@
     border-radius: 5px;
     background-color: rgb(0, 255, 96);
     position: absolute;
-    left: 643px;
-    top: 1886px;
+    left: 45%;
+    top: 2145px;
     width: 234px;
     height: 40px;
     z-index: 5; 

@@ -60,7 +60,7 @@ function MapSelection(props) {
         })
       })
 
-      useEffect(() => {
+      useEffect(async () => {
           const url = 'rcon/setupmatch'
           const response = await axios.post(
             url,
