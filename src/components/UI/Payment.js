@@ -28,7 +28,7 @@ import {
 } from '../../utils/helpers'
 
 const useStyles = makeStyles((theme) => ({
-  root: { minHeight: 400, minWidth: 800 },
+  root: { minHeight: 550, minWidth: 1015 },
   mainHolder: {
     flexGrow: 1,
     padding: 10,
@@ -42,9 +42,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%',
     color: 'white',
-    
   },
-
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -184,9 +182,8 @@ function Payment({ paymentModal, handPaymentModalClose }) {
     <Dialog
       PaperProps={{
         style: {
-          minWidth: 800,
-          maxWidth: 1200,
-          minHeight: 400,
+          minHeight: 550,
+          minWidth: 1200,
           backgroundColor: unknownprosBackGround,
           borderRadius: 12,
           boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5);',
@@ -296,6 +293,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               {'Buy so we can earn money?'}
                             </Typography>
                           </Grid>
+                          <Divider classes={{ root: classes.dividerAmca }} />
                           <Grid item xs={12} className={classes.gridItems}>
                             <InputLabel shrink>
                               <Typography
@@ -326,6 +324,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               }}
                             />
                           </Grid>
+                          <Divider classes={{ root: classes.dividerAmca }} />
                           <Grid item xs={12} className={classes.gridItems}>
                             <InputLabel shrink>
                               <Typography
@@ -357,6 +356,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               }}
                             />
                           </Grid>
+                          <Divider classes={{ root: classes.dividerAmca }} />
                           <Grid
                             container
                             item
@@ -370,7 +370,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               alignItems='center'
                               spacing={1}
                             >
-                              <Grid item xs={4}>
+                              <Grid item xs={3}>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
@@ -383,6 +383,19 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                       focused: classes.focused,
                                       notchedOutline: classes.notchedOutline,
                                     },
+                                  }}
+                                />
+                              </Grid>
+                              <Grid
+                                item
+                                xs={1}
+                                className={classes.dividerAmcaVerticalGrids}
+                              >
+                                <Divider
+                                  flexItem
+                                  orientation='vertical'
+                                  classes={{
+                                    root: classes.dividerAmcaVertical,
                                   }}
                                 />
                               </Grid>
@@ -402,7 +415,20 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                   }}
                                 />
                               </Grid>
-                              <Grid item xs={4}>
+                              <Grid
+                                item
+                                xs={1}
+                                className={classes.dividerAmcaVerticalGrids}
+                              >
+                                <Divider
+                                  flexItem
+                                  orientation='vertical'
+                                  classes={{
+                                    root: classes.dividerAmcaVertical,
+                                  }}
+                                />
+                              </Grid>
+                              <Grid item xs={3}>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
