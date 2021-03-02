@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
+
 import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
@@ -11,15 +12,20 @@ import Typography from '@material-ui/core/Typography'
 import CardImageHolder from '../../card_image.png'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
+import Send from '@material-ui/icons/Send'
 
-import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormControl from '@material-ui/core/FormControl'
-import FormLabel from '@material-ui/core/FormLabel'
-import clsx from 'clsx'
+import Divider from '@material-ui/core/Divider'
+import CancelIcon from '@material-ui/icons/Cancel'
 
 import { makeStyles } from '@material-ui/core/styles'
+import {
+  unknownprosBackGround,
+  unknownprosGreen,
+  unknownprosDenied,
+} from '../../utils/helpers'
 
 const useStyles = makeStyles((theme) => ({
   root: { minHeight: 400, minWidth: 800 },
@@ -36,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%',
     color: 'white',
+    
   },
 
   paper: {
@@ -44,8 +51,11 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
   media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    width: '100%',
+    minHeight: 100,
+    marginTop: 10,
+    padding: 10,
+    // paddingTop: '56.25%', // 16:9
   },
   gridItems: {
     width: '100%',
@@ -54,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
   inputs: {
     width: '100%',
     color: 'white',
+    borderColor: 'green',
   },
   formButtonsControl: {
     // display: 'flex',
@@ -61,13 +72,73 @@ const useStyles = makeStyles((theme) => ({
   radioGrupControl: {
     flexDirection: 'row',
   },
-  formButtons: {},
+  formButtons: {
+    margin: 8,
+    marginTop: 1,
+  },
   formButtonsActive: {},
+  bakiyeBtns: {
+    backgroundColor: 'green',
+    fontSize: 26,
+  },
+  dividerAmca: {
+    width: '100%',
+    backgroundColor: 'white',
+    minHeight: 2,
+    margin: 10,
+  },
+  dividerAmcaVertical: {
+    padding: 0,
+    minWidth: 2,
+    backgroundColor: 'white',
+    height: 60,
+    margin: 0,
+    '& hr': {
+      margin: 0,
+    },
+  },
+  dividerAmcaVerticalGrids: {
+    flexBasis: 'auto',
+  },
+  GoBtns: {
+    backgroundColor: '#00ff60',
+  },
+
+  inputInput: {
+    borderColor: 'white',
+    backgroundColor: 'white',
+    '&$focused$notchedOutline': {
+      borderColor: 'white',
+    },
+    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'white',
+    },
+    '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'white',
+    },
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'white',
+    },
+    '& .MuiOutlinedInput-input': {},
+    '&:hover .MuiOutlinedInput-input': {},
+    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {},
+    '& .MuiInputLabel-outlined': {},
+    '&:hover .MuiInputLabel-outlined': {},
+    '& .MuiInputLabel-outlined.Mui-focused': {},
+  },
 }))
 
 function Payment({ paymentModal, handPaymentModalClose }) {
+  const texts = [
+    '50 Coins',
+    '100 Coins',
+    '250 Coins',
+    '500 Coins',
+    '1000 Coins',
+  ]
+  const middle = texts[Math.round((texts.length - 1) / 2)]
   const [isMoneySelected, setIsMoneySelected] = useState(false)
-  const [selectedMoneyAmount, setSelectedMoneyAmount] = useState('250')
+  const [selectedMoneyAmount, setSelectedMoneyAmount] = useState(middle)
   const [cardHolderName, setCardHolderName] = useState('')
   const [carNumeber, setCarNumeber] = useState('')
   const [cvv, setCvv] = useState('')
@@ -81,9 +152,17 @@ function Payment({ paymentModal, handPaymentModalClose }) {
 
     return (
       <Button
-        style={{ color: text === selectedMoneyAmount ? 'pink' : 'white' }}
+        style={{
+          color:
+            text === selectedMoneyAmount ? 'black' : `${unknownprosDenied}`,
+          backgroundColor:
+            text === selectedMoneyAmount
+              ? `${unknownprosGreen}`
+              : `${unknownprosBackGround}`,
+        }}
         variant='contained'
         onClick={(e) => handleChangeMoneyAmount(e, text)}
+        className={classes.bakiyeBtns}
       >
         {text}
       </Button>
@@ -108,8 +187,9 @@ function Payment({ paymentModal, handPaymentModalClose }) {
           minWidth: 800,
           maxWidth: 1200,
           minHeight: 400,
-          backgroundColor: 'grey',
-          boxShadow: 'none',
+          backgroundColor: unknownprosBackGround,
+          borderRadius: 12,
+          boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5);',
           padding: '10px',
           color: 'white',
         },
@@ -120,6 +200,16 @@ function Payment({ paymentModal, handPaymentModalClose }) {
       aria-describedby='alert-dialog-description'
       className={classes.root}
     >
+      <div className={classes.mainHolder}>
+        <Grid container direction='row' justify='flex-end' alignItems='center'>
+          <Grid item>
+            <Button color='secondary' onClick={handPaymentModalClose}>
+              <CancelIcon />
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
+
       <DialogContent>
         {isMoneySelected ? (
           <div className={classes.mainHolder}>
@@ -153,10 +243,15 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                 <CardMedia
                                   className={classes.media}
                                   image={CardImageHolder}
-                                  title='Paella dish'
                                 />
                                 <CardContent>
-                                  <Typography variant='body2' component='p'>
+                                  <Typography
+                                    style={{
+                                      color: `${unknownprosDenied}`,
+                                    }}
+                                    variant='body2'
+                                    component='p'
+                                  >
                                     Card/Debit
                                   </Typography>
                                 </CardContent>
@@ -169,10 +264,15 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                 <CardMedia
                                   className={classes.media}
                                   image={CardImageHolder}
-                                  title='Paella dish'
                                 />
                                 <CardContent>
-                                  <Typography variant='body2' component='p'>
+                                  <Typography
+                                    style={{
+                                      color: `${unknownprosDenied}`,
+                                    }}
+                                    variant='body2'
+                                    component='p'
+                                  >
                                     Card/Debit
                                   </Typography>
                                 </CardContent>
@@ -198,7 +298,13 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                           </Grid>
                           <Grid item xs={12} className={classes.gridItems}>
                             <InputLabel shrink>
-                              <Typography variant='h4' component='h5'>
+                              <Typography
+                                style={{
+                                  color: 'white',
+                                }}
+                                variant='h4'
+                                component='h5'
+                              >
                                 Cardholder Name
                               </Typography>
                             </InputLabel>
@@ -209,12 +315,27 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               className={classes.inputs}
                               id='outlined-basic'
                               variant='outlined'
+                              placeholder='XXXXXXXX XXXXXXXX'
+                              InputProps={{
+                                classes: {
+                                  maxLength: 30,
+                                  root: classes.inputInput,
+                                  focused: classes.focused,
+                                  notchedOutline: classes.notchedOutline,
+                                },
+                              }}
                             />
                           </Grid>
                           <Grid item xs={12} className={classes.gridItems}>
                             <InputLabel shrink>
-                              <Typography variant='h4' component='h5'>
-                                Card Name
+                              <Typography
+                                style={{
+                                  color: 'white',
+                                }}
+                                variant='h4'
+                                component='h5'
+                              >
+                                Card Number
                               </Typography>
                             </InputLabel>
 
@@ -224,6 +345,16 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               className={classes.inputs}
                               id='outlined-basic'
                               variant='outlined'
+                              type=''
+                              placeholder='XXXX-XXXX-XXXX-XXXX'
+                              InputProps={{
+                                classes: {
+                                  maxLength: 16,
+                                  root: classes.inputInput,
+                                  focused: classes.focused,
+                                  notchedOutline: classes.notchedOutline,
+                                },
+                              }}
                             />
                           </Grid>
                           <Grid
@@ -245,8 +376,13 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='CVV'
-                                  inputProps={{
+                                  InputProps={{
                                     maxLength: 3,
+                                    classes: {
+                                      root: classes.inputInput,
+                                      focused: classes.focused,
+                                      notchedOutline: classes.notchedOutline,
+                                    },
                                   }}
                                 />
                               </Grid>
@@ -256,6 +392,14 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='Expiration'
+                                  InputProps={{
+                                    maxLength: 5,
+                                    classes: {
+                                      root: classes.inputInput,
+                                      focused: classes.focused,
+                                      notchedOutline: classes.notchedOutline,
+                                    },
+                                  }}
                                 />
                               </Grid>
                               <Grid item xs={4}>
@@ -264,8 +408,14 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='Zip Code'
-                                  inputProps={{
-                                    maxLength: 3,
+                                  InputProps={{
+                                    maxLength: 6,
+
+                                    classes: {
+                                      root: classes.inputInput,
+                                      focused: classes.focused,
+                                      notchedOutline: classes.notchedOutline,
+                                    },
                                   }}
                                 />
                               </Grid>
@@ -291,6 +441,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
               <Grid item xs={12}>
                 <Typography variant='h3'>Bakiye Yükleme</Typography>
               </Grid>
+              <Divider classes={{ root: classes.dividerAmca }} />
               <Grid container item xs={12}>
                 {/* <div className={classes.mainHolder}> */}
                 <Grid
@@ -300,7 +451,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                   alignItems='center'
                   spacing={1}
                 >
-                  <Grid item xs={4}>
+                  <Grid item xs={3}>
                     <Typography component='p' variant='h6' align='center'>
                       Yükleme Miktarı
                     </Typography>
@@ -308,6 +459,18 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                       250 Coin
                     </Typography>
                   </Grid>
+                  <Grid
+                    item
+                    xs={1}
+                    className={classes.dividerAmcaVerticalGrids}
+                  >
+                    <Divider
+                      flexItem
+                      orientation='vertical'
+                      classes={{ root: classes.dividerAmcaVertical }}
+                    />
+                  </Grid>
+
                   <Grid item xs={4}>
                     <Typography component='p' variant='h6' align='center'>
                       İşlem Ücreti
@@ -316,7 +479,18 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                       10 Coin Ücretsiz
                     </Typography>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid
+                    item
+                    xs={1}
+                    className={classes.dividerAmcaVerticalGrids}
+                  >
+                    <Divider
+                      flexItem
+                      orientation='vertical'
+                      classes={{ root: classes.dividerAmcaVertical }}
+                    />
+                  </Grid>
+                  <Grid item xs={3}>
                     <Typography component='p' variant='h6' align='center'>
                       Toplam Tutar
                     </Typography>
@@ -327,45 +501,48 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                 </Grid>
                 {/* </div> */}
               </Grid>
+              <Divider classes={{ root: classes.dividerAmca }} />
               <Grid item xs={12}>
                 <Typography variant='h6' align='center'>
                   Yüklenecek Bakiye Miktarını Seçin
                 </Typography>
-
+              </Grid>
+              <Divider classes={{ root: classes.dividerAmca }} />
+              <Grid item xs={12}>
                 <FormControl className={classes.formButtonsControl}>
                   <RadioGroup
                     defaultValue={selectedMoneyAmount}
-                    aria-label='gender'
-                    name='customized-radios'
-                    // onChange={handleChangeMoneyAmount}
+                    aria-label='coin'
+                    name='coin-radios'
+                    onChange={handleChangeMoneyAmount}
                     value={selectedMoneyAmount}
                     className={classes.radioGrupControl}
                   >
-                    <FormControlLabel
-                      className={classes.formButtons}
-                      value='50'
-                      control={<StyledButton key={'50'} text='50' />}
-                    />
-                    <FormControlLabel
-                      className={classes.formButtons}
-                      value='100'
-                      control={<StyledButton key={'100'} text='100' />}
-                    />
-                    <FormControlLabel
-                      className={classes.formButtons}
-                      value='250'
-                      control={<StyledButton key={'250'} text='250' />}
-                    />
-                    <FormControlLabel
-                      className={classes.formButtons}
-                      value='500'
-                      control={<StyledButton key={'500'} text='500' />}
-                    />
-                    <FormControlLabel
-                      className={classes.formButtons}
-                      value='1000'
-                      control={<StyledButton key={'1000'} text='1000' />}
-                    />
+                    <>
+                      {texts &&
+                        texts.map((item, index) => {
+                          return (
+                            <>
+                              <FormControlLabel
+                                className={classes.formButtons}
+                                value={item}
+                                control={
+                                  <StyledButton key={item} text={item} />
+                                }
+                              />
+                              {index !== texts.length - 1 ? (
+                                <Divider
+                                  flexItem
+                                  orientation='vertical'
+                                  classes={{
+                                    root: classes.dividerAmcaVertical,
+                                  }}
+                                />
+                              ) : null}
+                            </>
+                          )
+                        })}
+                    </>
                   </RadioGroup>
                 </FormControl>
               </Grid>
@@ -375,18 +552,34 @@ function Payment({ paymentModal, handPaymentModalClose }) {
       </DialogContent>
       <DialogActions>
         {isMoneySelected ? (
-          <Button color='primary' onClick={unSelectMoney}>
+          <Button variant='text' color='primary' onClick={unSelectMoney}>
             Back
           </Button>
         ) : (
-          <Button color='primary' onClick={handPaymentModalClose}>
+          <Button
+            variant='text'
+            onClick={handPaymentModalClose}
+            color='primary'
+            endIcon={<CancelIcon />}
+          >
             Close
           </Button>
         )}
         {isMoneySelected ? (
-          <Button color='primary'>Deposit</Button>
+          <Button
+            className={classes.GoBtns}
+            variant='contained'
+            endIcon={<Send />}
+          >
+            Deposit
+          </Button>
         ) : (
-          <Button color='primary' onClick={selectMoney}>
+          <Button
+            className={classes.GoBtns}
+            variant='contained'
+            onClick={selectMoney}
+            endIcon={<Send />}
+          >
             Next
           </Button>
         )}
