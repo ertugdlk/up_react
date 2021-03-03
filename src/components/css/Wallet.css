@@ -17,6 +17,7 @@
     flex-flow: row wrap;
     align-items: center;
     justify-content: center;
+    margin-top: 50px;
 }
 
 .user-coin-convertion-info{
@@ -41,6 +42,7 @@
     display: flex;
     flex-flow: row wrap;
     margin-left: 0;
+    margin-top: 50px;
 }
 
 .bank-accounts li{
@@ -101,7 +103,7 @@
     list-style: none;
     justify-self: center;
     align-self: center;
-    margin-left: 5%;
+    margin-left: 2%;
     margin-top: -15%;
 }
 
@@ -174,6 +176,7 @@
     width: 200px;
     display: flex;
     flex-flow: row wrap;
+    margin-top: 50px;
 }
 
 .wallet-icon{
@@ -240,6 +243,8 @@
 }
 .balance-text{
     color: white;
+    width: 500px;
+    text-align: center;
 }
 
 .balance-text-balance{
@@ -256,6 +261,7 @@
     transform: translate(50%, 50%);
     font-weight: bold;
     margin-bottom: 20px;
+    margin-left: 30%;
 }
 
 .deneme{
@@ -263,7 +269,7 @@
     background-color: #00ff60;
     border: 2px solid #00ff60;
     border-radius: 8px;
-    width: 100px;
+    width: fit-content;
     font-weight: bold;
     margin-top: 0px;
     margin-bottom: 50%;

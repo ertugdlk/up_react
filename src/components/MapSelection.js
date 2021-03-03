@@ -162,6 +162,10 @@ function MapSelection(props) {
           }
           setFilteredMaps(filteredItem)
           setMaps(maps.splice(bannedMap,1))
+
+          if(maps.length==2){
+            setMaps(maps.splice(1,1))
+          }
         })
       })
 
