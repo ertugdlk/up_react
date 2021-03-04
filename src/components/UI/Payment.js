@@ -184,7 +184,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
         style: {
           minHeight: 550,
           minWidth: 1200,
-          backgroundColor: unknownprosBackGround,
+          backgroundColor: `${unknownprosBackGround}`,
           borderRadius: 12,
           boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5);',
           padding: '10px',
@@ -344,7 +344,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               className={classes.inputs}
                               id='outlined-basic'
                               variant='outlined'
-                              type=''
+                              type='number'
                               placeholder='XXXX-XXXX-XXXX-XXXX'
                               InputProps={{
                                 classes: {
