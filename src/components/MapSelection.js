@@ -41,14 +41,17 @@ function MapSelection(props) {
       }, [])
 
       useEffect(() => {
+        let filteredItems = []
         const url = 'steam://connect/' + gameInformation
         props.socket.on('nextTurn', ({bannedMap, team}) => {
-          const filteredItem = maps.filter(banMap=>{
+          filteredItems = filteredItems.concat(maps[bannedMap])
+         
+          /*const filteredItem = maps.filter(banMap=>{
             console.log("banned map", bannedMap)
             console.log("remaining maps", maps.splice(bannedMap,1))
             return banMap=== maps[bannedMap]})
-            console.log("filtered item",filteredItem)
-          if(filteredItem.length == 1){
+            console.log("filtered item",filteredItem)*/
+          if(filteredItems.length == 1){
             return(
             <div>
               <span>{gameInformation}</span>
@@ -59,7 +62,7 @@ function MapSelection(props) {
           </div>
           )
           }
-          setFilteredMaps(filteredItem)
+          setFilteredMaps(filteredItems)
           setMaps(maps.splice(bannedMap,1))
         })
       })
