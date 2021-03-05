@@ -22,17 +22,27 @@ function GamesList(props) {
 
   useEffect(() => {
     async function GameCards() {
+      try{
       const url = 'detail/allgames'
       const response = await axios.get(url, { withCredentials: true })
       if (response.data) {
         setGames(response.data)
       }
+    }catch(err){
+      alert("We couldn't get the games from our server")
     }
+    }
+  
 
     async function userGames() {
+      try{
       const url = 'detail/games';
       const response = await axios.get(url, { withCredentials: true });
       setExistingGames(response.data);
+    }catch(err){
+      alert("We couldn't get your games!")
+    }
+
     }
 
     GameCards()
@@ -42,6 +52,7 @@ function GamesList(props) {
  
 
   const handlePlatformIntegration = (platform) => {
+    try{
     //check user's exist steam account
     for (let i = 0; i < existingGames.length; i++) {
      if(games[i].name===existingGames[i].name){
@@ -56,6 +67,9 @@ function GamesList(props) {
       setErrorMessage("All games are added")
       setSnackbar(true)
     }
+  }catch(err){
+    alert("Steam integration failed")
+  }
   }
 
   const handleSnack = () => {

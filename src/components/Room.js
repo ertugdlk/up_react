@@ -112,19 +112,28 @@ function Room(props) {
   }
 
   const handleKick = () => {
+    try{
     const data = { host: host, nickname: selectedPlayer }
     props.socket.emit('kick', data)
     setReport(false)
+    }catch(err){
+    alert("Can't be kicked!")
+    }
   }
 
   const handleReport = () => {
+    try{
     const data = { nickname: selectedPlayer }
     props.socket.emit('report', data)
     // setSure(false)
+    }catch(err){
+      alert("Can't be reported")
+    }
   }
 
   useEffect(() => {
     async function RoomUsers() {
+      try{
       if (!props.roomResponse.users) {
         setErrorMessage('no room with this host')
         setSnackbar(true)
@@ -139,9 +148,13 @@ function Room(props) {
         })
         setTeam2(team2users)
       }
+    }catch(err){
+      alert("Teams couldn't be set")
+    }
     }
 
     async function CheckReadyStatus() {
+      try{
       const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2
       if (props.roomResponse.readyCount === limit) {
         if (props.nickname == props.host) {
@@ -149,6 +162,9 @@ function Room(props) {
           setErrorMessage('All players are Ready')
           setSnackbar(true)
         }
+      }
+      }catch(err){
+        alert("Couldn't get ready status")
       }
     }
 
@@ -165,7 +181,7 @@ function Room(props) {
           { nickname: data.nickname, msg: data.message },
         ])
       } catch (err) {
-        throw err
+        throw new Error("Message couldn't sent")
       }
     })
 
@@ -173,11 +189,12 @@ function Room(props) {
       try {
         setStart(true)
       } catch (error) {
-        throw error
+        throw new Error("Countdown couldn't be started")
       }
     })
 
     props.socket.on('GameReadyStatus', (data) => {
+      try{
       if (props.nickname == data.host) {
         if (data.msg == 'all_ready') {
           setStartButton(true)
@@ -195,9 +212,13 @@ function Room(props) {
           setStart(false)
         }
       }
+    }catch(err){
+      throw new Error("Couldn't get game status")
+    }
     })
 
     props.socket.on('newUserJoined', (data) => {
+      try{
       if (data.nickname != props.nickname) {
         if (data.team == 1) {
           setTeam1((team1) =>
@@ -217,9 +238,13 @@ function Room(props) {
           )
         }
       }
+    }catch(err){
+      throw new Error("Couldn't get room users data")
+    }
     })
 
     props.socket.on('UserLeft', (user) => {
+      try{
       var teamArr
       if (user.team === 1) {
         teamArr = team1
@@ -234,9 +259,13 @@ function Room(props) {
         })
         setTeam2(teamArr)
       }
+    }catch(err){
+      throw new Error("Couldn't get room users data")
+    }
     })
 
     props.socket.on('HostLeft', async ({ host, newHost }) => {
+      try{
       const url = 'room/getdata'
       const response = await axios.post(
         url,
@@ -254,17 +283,25 @@ function Room(props) {
       setTeam2(team2users)
 
       setHost(newHost.nickname)
+    }catch(err){
+      throw new Error("Couldn't get room users data")
+    }
     })
 
     props.socket.on('userKicked', ({ nickname, team, host }) => {
+      try{
       if (props.nickname == nickname) {
         const data = { nickname: props.nickname, host: host }
         props.socket.emit('leave', data)
         window.location.reload()
       }
+      }catch(err){
+        throw new Error("Couldn't get room users data")
+      }
     })
 
     props.socket.on('readyChange', async (data) => {
+      try{
       const url = 'room/getdata'
       const response = await axios.post(
         url,
@@ -280,11 +317,14 @@ function Room(props) {
         return user.team == 2
       })
       setTeam2(team2users)
+      }catch(err){
+        throw new Error("Couldn't get ready data")
+      }
     })
 
     props.socket.on('teamChange', async (data) => {
-      if (start) return
       try {
+      if (start) return
         const url = 'room/getdata'
         const response = await axios.post(
           url,
@@ -307,11 +347,15 @@ function Room(props) {
   }, [])
 
   const handleSendMessage = (e, message) => {
+    try{
     if (message === '') {
       return
     }
     const data = { host: props.host, nickname: props.nickname, msg: message }
     props.socket.emit('message', data)
+  }catch(err){
+    throw new Error("Couldn't send your message")
+  }
   }
 
   const handleKeyDown = (event, message) => {
@@ -320,19 +364,31 @@ function Room(props) {
     }
   }
   const handleTeamSwap = () => {
+    try{
     if (start) return
     const data = { host: props.host, nickname: props.nickname }
     props.socket.emit('changeTeam', data)
+    }catch(err){
+      throw new Error("Couldn't get room users data")
+    }
   }
 
   const handleReady = () => {
+    try{
     const data = { host: props.host, nickname: props.nickname }
     props.socket.emit('ready', data)
+    }catch(err){
+      throw new Error("Couldn't change ready status")
+    }
   }
 
   const handleStart = () => {
+    try{
     const data = { host: props.host }
     props.socket.emit('countdown', data)
+    }catch(err){
+      throw new Error("Couldn't start,please try again")
+    }
   }
 
   const handleStartMatch = async () => {
@@ -352,6 +408,7 @@ function Room(props) {
   //for pushing
   
   const checkGameInformation = () => {
+    try{
     if (gameInformation != '') {
       const url = 'steam://connect/' + gameInformation
       if(mapSelect===true){
@@ -413,6 +470,9 @@ function Room(props) {
         ></img>
       )
     }
+  }catch(err){
+    throw new Error("Couldn't get game info")
+  }
   }
 
   const handleHost = (member) => {
@@ -424,6 +484,7 @@ function Room(props) {
   }
 
   const handleLeaveRoom = () => {
+    try{
     const user1 = _.find(team1, (member) => {
       return member.nickname == props.nickname
     })
@@ -448,6 +509,9 @@ function Room(props) {
       props.socket.emit('leave', data)
       window.location.reload()
     }
+  }catch(err){
+    throw new Error("Couldn't process your request")
+  }
   }
 
   const handleSnack = () => {
@@ -455,6 +519,7 @@ function Room(props) {
   }
 
   const checkHostOrNot = () => {
+    try{
     if (props._host == true) {
       return true
     }
@@ -463,6 +528,9 @@ function Room(props) {
     } else {
       return false
     }
+  }catch(err){
+    throw new Error("Couldn't check if host or not")
+  }
   }
 
   // const handleCloseModal = () =>{

@@ -129,13 +129,18 @@ function Dashboard(props) {
     /* -------------------------------------------------------------------------- */
 
     socket.on('hostChanged', ({ host, newHost }) => {
+      try{
       props.changeGameHost(host, newHost)
       if (selectedHost == host) {
         setSelectedHost(newHost)
       }
+    }catch(err){
+      throw new Error("Couldn't change room data")
+    }
     })
 
     socket.on('HostLeft', async ({ host, newHost }) => {
+      try{
       setSelectedHost(newHost.nickname)
       if (userName == newHost) {
         const url = 'room/getdata'
@@ -146,45 +151,76 @@ function Dashboard(props) {
         )
         setRoomResponse(response.data)
       }
+    }catch(err){
+      throw new Error("Couldn't change room data")
+    }
     })
 
     socket.on('roomDeleted', ({ host }) => {
+      try{
       props.removeGameRoom(host)
+      }catch(err){
+        throw new Error("Couldn't delete room")
+      }
     })
 
     socket.on('userCountChange', (data) => {
+      try{
       props.getMatchData(data.host, data.positive)
+      }catch(err){
+        throw new Error("Couldn't change room data")
+      }
     })
 
     socket.on('newRoom', (data) => {
+      try{
       props.addNewGame(data)
+      }catch(err){
+      throw new Error("Couldn't create room")
+      }
     })
 
     socket.on('roomData', (data) => {
+      try{
       setRoomResponse(data)
       setGameRoom(true)
       handleRoomOpen()
+      }catch(err){
+        throw new Error("Couldn't get room data")
+      }
     })
 
     socket.on('roomCreated', (data) => {
+      try{
       setSelectedHost(data.host)
       setRoomResponse(data)
       setGameRoom(true)
       handleRoomOpen()
+      }catch(err){
+        throw new Error("Couldn't make the required changes")
+      }
     })
 
     socket.on('Error', (msg) => {
+      try{
       setErrorMessage(msg)
       setErrorBar(true)
+      }catch(err){
+        throw new Error("Couldn't set the error message")
+      }
     })
 
     socket.on('openedRoom', (data) => {
+      try{
       setSelectedHost(data.room.host)
       if (data.room.host == data.nickname) {
         setHost(true)
       }
       setRoomResponse(data.room)
       setReturnButton(true)
+    }catch(err){
+      throw new Error("Couldn't open room")
+    }
     })
   }, [])
   /* -------------------------------------------------------------------------- */
@@ -212,12 +248,13 @@ function Dashboard(props) {
 
         socket.emit('login', response.data.nickname)
       } catch (error) {
-        throw error
+        throw new Error("Couldn't get user info")
         //history.push("/")
       }
     }
 
     async function userGames() {
+      try{
       const url = 'detail/games'
       const response = await axios.get(url, { withCredentials: true })
       if (!response.data.output) {
@@ -225,9 +262,13 @@ function Dashboard(props) {
       } else {
         return history.push('/')
       }
+    }catch(err){
+      throw new Error("Couldn't get your games")
+    }
     }
 
     async function userSteam() {
+      try{
       const url = 'detail/info'
       const response = await axios.get(url, { withCredentials: true })
       if (props.steam) {
@@ -239,6 +280,9 @@ function Dashboard(props) {
           setErrorBar(true)
         }
       }
+    }catch(err){
+      throw new Error("Couldn't get your Steam info")
+    }
     }
     props.getFreeGameRooms()
     props.getPaidGameRooms()
@@ -251,14 +295,19 @@ function Dashboard(props) {
   }, [props.roomsRedux])
 
   const handleSearch = (event) => {
+    try{
     setSearchWord(event.target.value)
     var fiteredRoomies = props.paidGames.filter((room) => {
       if (room.host.indexOf(searchWord) !== -1) return room
     })
     setGameRooomList(fiteredRoomies)
+  }catch(err){
+    throw new Error("Couldn't search!")
+  }
   }
 
   const handleGameRoom = async (host, gameName) => {
+    try{
     const result = _.find(menubarGames, (game) => {
       return game.name == gameName
     })
@@ -300,6 +349,9 @@ function Dashboard(props) {
       socket.emit('join', data)
       setSelectedHost(host)
     }
+  }catch(err){
+    throw new Error("Couldn't change room data")
+  }
   }
 
   const handleAccount = () => {
@@ -327,6 +379,7 @@ function Dashboard(props) {
   }
 
   const handleCreateClick = () => {
+    try{
     if (menubarGames.length == 0) {
       setErrorMessage('Add some Games First')
       setErrorBar(true)
@@ -337,9 +390,13 @@ function Dashboard(props) {
     } else {
       setCreate(true)
     }
+  }catch(err){
+    throw new Error("Something went wrong")
+  }
   }
 
   const handleReturnGame = async () => {
+    try{
     const url = 'room/getdata'
     const response = await axios.post(
       url,
@@ -349,17 +406,25 @@ function Dashboard(props) {
     setRoomResponse(response.data)
     setGameRoom(true)
     handleRoomOpen()
+    }catch(err){
+      throw new Error("Couldn't process your request")
+    }
   }
 
   const handleCreateRoom = (data) => {
+    try{
     data.host = userName
     setCreate(false)
     setHost(true)
     socket.emit('create', data)
     // props.getAllGameRooms();
+    }catch(error){
+      throw new Error("Couldn't create room")
+    }
   }
 
   const handleLogout = () => {
+    try{
     async function logout() {
       const url = 'auth/logout'
       await axios.get(url, { withCredentials: true })
@@ -368,14 +433,21 @@ function Dashboard(props) {
     // setAnchorEl(null);
     logout()
     history.push('/')
+  }catch(err){
+    throw new Error("Couldn't change room data")
+  }
   }
 
   const handleSteam = () => {
+    try{
     async function steamauth() {
       window.open(baseUrl + 'steam/auth', '_self')
     }
     steamauth()
-  }
+  }catch(err){
+  throw new Error("Couldn't process your request")
+}
+}
 
   const handleCloseRoom = () => {
     setGameRoom(false)

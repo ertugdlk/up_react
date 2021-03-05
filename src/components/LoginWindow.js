@@ -96,7 +96,7 @@ function LoginWindow(props) {
           }
         }
       } catch (error) {
-        throw error
+        throw new Error("Something went wrong")
       }
     }
     userInfo()

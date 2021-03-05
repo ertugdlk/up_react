@@ -29,20 +29,27 @@ function MyAccount(props) {
   const [userFullName,setUserFullName]=useState("")
 
   async function userAvatar () {
+    try{
     const url = "detail/steamavatar"
     const response = await axios.get(url,{withCredentials:true});
     if(response.data ===""){
       setAvatar(Logo)
     }else
       setAvatar(response.data)
+  }catch(err){
+    alert("We couldn't get your avatar")
+  }
   }
   async function userInfo(){
+    try{
     const url= "credential/find"
     const response =await axios.get(url,{withCredentials:true})
     if(response===undefined || null || ""){
       setUserFullName("No info")
     }else setUserFullName(response.data.name)
-
+  }catch(err){
+      alert("We couldn't get your info")
+    }
   }
   const setPasswordLink = () => {
     if (mailo) {

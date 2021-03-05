@@ -63,14 +63,19 @@ const LeftPane = (props) => {
   async function userAvatar() {
     const url = "detail/steamavatar"
     const response = await axios.get(url, { withCredentials: true })
+    try{
     if (response.data === "") {
       setAvatar(Logo)
     } else setAvatar(response.data)
+  }catch(err){
+    alert("We couldn't get your avatar")
+  }
   }
 
   async function userBalance() {
     const url = "wallet/getbalance"
     const response = await axios.get(url, { withCredentials: true })
+    try{
     if (response.data.status === 0) {
       setBalance("Not Verified")
       setVerified(false)
@@ -78,17 +83,28 @@ const LeftPane = (props) => {
       setBalance(response.data.balance)
       setVerified(true)
     }
+  }catch(err){
+    alert("We couldn't get your balance")
+  }
   }
   async function userGames() {
+    try{
     const url = "detail/games"
     const response = await axios.get(url, { withCredentials: true })
     setMenubarGames(response.data)
+    }catch(err){
+    alert("We couldn't get your games")
+    }
   }
 
   async function userSteam() {
+    try{
     const url = "detail/info"
     const response = await axios.get(url, { withCredentials: true })
     setSteamName(response.data)
+    }catch(err){
+    alert("We couldn't get your Steam username")
+    }
   }
 
   return (

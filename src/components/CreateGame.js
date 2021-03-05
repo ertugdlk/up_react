@@ -71,6 +71,7 @@ function CreateGame(props) {
   let btn = useRef()
 
   async function userBalance () {
+    try{
     const url = "wallet/getbalance"
     const response = await axios.get(url, {withCredentials:true});
     if (response.data.status === 0){
@@ -90,6 +91,9 @@ function CreateGame(props) {
       btn.current.setAttribute("disabled", "disabled");
       
     }
+  }catch(err){
+    alert("We couldn't get your balance")
+  }
   }
 
   const handleSnack = () =>{
