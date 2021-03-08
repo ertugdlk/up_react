@@ -13,6 +13,7 @@ function MapSelection(props) {
   const [team2FirstIndex, setTeam2FirstIndex] = useState('')
   const [gameInformation, setGameInformation] = useState([])
   const [gameUrl, setGameUrl] = useState('')
+  const [priority,setPriority] = useState([])
 
   //IMPROVEMENT İLERİSİNN İŞİ
   //banlanan mapler localstorage ta tutlup kontrol edilebilir. oda da başladığında local storage da roomid si ile güncel mapler tutulabilir
@@ -86,10 +87,21 @@ function MapSelection(props) {
   //   setGameInformation(response.data)
   // })
 
+
+  //priority diye bir variable oluştur, eğer priority team1firstindex'e eşitse map disable edilebilsin, daha sonra maps length 1 ise priorityi team2FirstIndex'e eşitle ve map disable edebilsin.
+  //
+
+
   if ((team1FirstIndex != '' || team2FirstIndex != '') && maps.length !== 1) {
-    return (
-      <>
-        <div className='map-room-window'>
+
+    if(maps.length===2){
+      setPriority(team1FirstIndex)
+    }
+
+    if(priority===team1FirstIndex){
+      return(
+        <>
+         <div className='map-room-window'>
           <div class='wrapper'>
             <div className='maps'>
               {maps.map((map, index) => (
@@ -103,11 +115,11 @@ function MapSelection(props) {
           </div>
         </div>
       </>
-    )
-  } else {
-    return (
-      <>
-        <div className='map-room-window'>
+      )
+    } else{
+      return(
+        <>
+         <div className='map-room-window'>
           <div class='wrapper'>
             <div className='maps'>
               <div>
@@ -119,8 +131,48 @@ function MapSelection(props) {
             </div>
           </div>
         </div>
-      </>
-    )
+        </>
+      )
+    }
+  } else if((team1FirstIndex != '' || team2FirstIndex != '') && maps.length == 1) {
+    setPriority(team2FirstIndex)
+
+    if(priority===team2FirstIndex){
+      return(
+        <>
+        <div className='map-room-window'>
+          <div class='wrapper'>
+            <div className='maps'>
+              {maps.map((map, index) => (
+                <li className='map-list'>
+                  <button className='map' onClick={() => disableButton(index)}>
+                    <span>{maps[index]}</span> {/*Buraya image gelecek*/}
+                  </button>
+                </li>
+              ))}
+            </div>
+          </div>
+        </div>
+        </>
+      )
+    } else{
+      return(
+        <>
+         <div className='map-room-window'>
+          <div class='wrapper'>
+            <div className='maps'>
+              <div>
+                <span>{gameInformation}</span>
+                <a href={'url'} class='btn btn-primary'>
+                  Join the Game
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </>
+      )
+    }
   }
 }
 
