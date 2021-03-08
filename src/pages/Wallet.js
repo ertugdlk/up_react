@@ -5,6 +5,7 @@ import { createGlobalStyle } from 'styled-components'
 import { Grid } from '@material-ui/core'
 import Logo from '../logo.png'
 import Bag from "../bag_icon.png"
+import backIcon from "../back-icon.png"
 import css from '../components/css/Wallet.css';
 import Payment from '../components/UI/Payment'
 
@@ -56,15 +57,22 @@ function Wallet(props) {
 
   }
   async function userBalance() {
+    try{
     const url = "wallet/getbalance"
     const response = await axios.get(url, { withCredentials: true })
     if (response.status === 200) {
       setUpBalance(response.data.balance)
     } else{
+      alert("Something went wrong")
     }
+  }catch(err){
+    throw new Error("Couldn't get your balance")
+  }
   }
 
+
   useEffect(() => {
+    try{
     userBalance()
     if (click)
     btn.current.style.marginBottom = `${dropdown.current.offsetHeight}px`;
@@ -73,7 +81,10 @@ function Wallet(props) {
     if(click2)
     btn.current.style.marginBottom = `${dropdown.current.offsetHeight}px`;
   else btn.current.style.marginBottom = 0;
-  }, [])
+  }catch(err){
+    throw new Error("Something went wrong")
+  }
+}, [])
 
   return (
     <>
@@ -97,6 +108,11 @@ function Wallet(props) {
           </div>
 
           <div className='WalletPageContainer'>
+          <div className="back-button-div">
+          <a className="LogoLink" href="/dashboard">
+            <img src={backIcon} className="back-button"/>
+          </a>
+          </div>
           <div className="user-coin-infobox">
           <span className="user-coin-convertion-info">Your UP Coin Balance</span>
           <span className="user-coin-convertion">{upBalance} UP coin = {upBalance} TL</span>
