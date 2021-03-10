@@ -112,12 +112,6 @@ function MapSelection(props) {
 
 
   if ((team1FirstIndex != '' || team2FirstIndex != '') && maps.length !== 1) {
-
-    if(maps.length==2){
-      setCurrentPlayer(props.team1[0].nickname)
-    }
-
-      if(currentPlayer===props.team1[0].nickname){
       return(
         <>
          <div className='map-room-window'>
@@ -135,46 +129,7 @@ function MapSelection(props) {
         </div>
       </>
       )
-      }else{
-        return(
-          <>
-          <div className='map-room-window'>
-           <div class='wrapper'>
-             <div className='maps'>
-               <div>
-                 <span>{gameInformation}</span>
-                 <a href={'url'} class='btn btn-primary'>
-                   Join the Game
-                 </a>
-               </div>
-             </div>
-           </div>
-         </div>
-         </>
-        )
-      }
-    } else if((team1FirstIndex != '' || team2FirstIndex != '') && maps.length == 1){
-      setCurrentPlayer(props.team2[0].nickname)
-
-      if(currentPlayer===props.team2[0].nickname){
-        return(
-          <>
-          <div className='map-room-window'>
-           <div class='wrapper'>
-             <div className='maps'>
-               {maps.map((map, index) => (
-                 <li className='map-list'>
-                   <button className='map' onClick={() => disableButton(index)}>
-                     <span>{maps[index]}</span> {/*Buraya image gelecek*/}
-                   </button>
-                 </li>
-               ))}
-             </div>
-           </div>
-         </div>
-       </>
-        )
-      }else{
+    } else{
       return(
         <>
          <div className='map-room-window'>
@@ -190,23 +145,6 @@ function MapSelection(props) {
           </div>
         </div>
         </>
-      )
-    }
-    } else{
-      return(<>
-        <div className='map-room-window'>
-          <div class='wrapper'>
-            <div className='maps'>
-              <div>
-                <span>{gameInformation}</span>
-                <a href={'url'} class='btn btn-primary'>
-                  Join the Game
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
       )
     }
   }
