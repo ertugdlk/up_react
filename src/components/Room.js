@@ -32,10 +32,10 @@ const _ = require('lodash')
 const useStyles = makeStyles((theme) => ({
   countdown: {
     color: 'white',
-    display:'flex',
-    flexFlow:'column wrap',
-    alignItems:'center',
-    marginTop:'25%'
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'center',
+    marginTop: '25%',
   },
 
   dialogComponent: {
@@ -112,58 +112,59 @@ function Room(props) {
   }
 
   const handleKick = () => {
-    try{
-    const data = { host: host, nickname: selectedPlayer }
-    props.socket.emit('kick', data)
-    setReport(false)
-    }catch(err){
-    alert("Can't be kicked!")
+    try {
+      const data = { host: host, nickname: selectedPlayer }
+      props.socket.emit('kick', data)
+      setReport(false)
+    } catch (err) {
+      alert("Can't be kicked!")
     }
   }
 
   const handleReport = () => {
-    try{
-    const data = { nickname: selectedPlayer }
-    props.socket.emit('report', data)
-    // setSure(false)
-    }catch(err){
+    try {
+      const data = { nickname: selectedPlayer }
+      props.socket.emit('report', data)
+      // setSure(false)
+    } catch (err) {
       alert("Can't be reported")
     }
   }
 
   useEffect(() => {
+    console.log('Location', window.location.href)
     async function RoomUsers() {
-      try{
-      if (!props.roomResponse.users) {
-        setErrorMessage('no room with this host')
-        setSnackbar(true)
-      } else {
-        const allusers = props.roomResponse.users
-        const team1users = _.filter(allusers, function (user) {
-          return user.team == 1
-        })
-        setTeam1(team1users)
-        const team2users = _.filter(allusers, function (user) {
-          return user.team == 2
-        })
-        setTeam2(team2users)
+      try {
+        if (!props.roomResponse.users) {
+          setErrorMessage('no room with this host')
+          setSnackbar(true)
+        } else {
+          const allusers = props.roomResponse.users
+          const team1users = _.filter(allusers, function (user) {
+            return user.team == 1
+          })
+          setTeam1(team1users)
+          const team2users = _.filter(allusers, function (user) {
+            return user.team == 2
+          })
+          setTeam2(team2users)
+        }
+      } catch (err) {
+        alert("Teams couldn't be set")
       }
-    }catch(err){
-      alert("Teams couldn't be set")
-    }
     }
 
     async function CheckReadyStatus() {
-      try{
-      const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2
-      if (props.roomResponse.readyCount === limit) {
-        if (props.nickname == props.host) {
-          setStartButton(true)
-          setErrorMessage('All players are Ready')
-          setSnackbar(true)
+      try {
+        const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2
+        if (props.roomResponse.readyCount === limit) {
+          if (props.nickname == props.host) {
+            setStartButton(true)
+            setErrorMessage('All players are Ready')
+            setSnackbar(true)
+          }
         }
-      }
-      }catch(err){
+      } catch (err) {
         alert("Couldn't get ready status")
       }
     }
@@ -194,137 +195,137 @@ function Room(props) {
     })
 
     props.socket.on('GameReadyStatus', (data) => {
-      try{
-      if (props.nickname == data.host) {
-        if (data.msg == 'all_ready') {
-          setStartButton(true)
-          setErrorMessage('all_ready')
-          setSnackbar(true)
+      try {
+        if (props.nickname == data.host) {
+          if (data.msg == 'all_ready') {
+            setStartButton(true)
+            setErrorMessage('all_ready')
+            setSnackbar(true)
+          } else {
+            setStart(false)
+            setStartButton(false)
+            setErrorMessage(data.msg)
+            setSnackbar(true)
+          }
         } else {
-          setStart(false)
-          setStartButton(false)
-          setErrorMessage(data.msg)
-          setSnackbar(true)
+          if (data.msg == 'all_ready') {
+          } else {
+            setStart(false)
+          }
         }
-      } else {
-        if (data.msg == 'all_ready') {
-        } else {
-          setStart(false)
-        }
+      } catch (err) {
+        throw new Error("Couldn't get game status")
       }
-    }catch(err){
-      throw new Error("Couldn't get game status")
-    }
     })
 
     props.socket.on('newUserJoined', (data) => {
-      try{
-      if (data.nickname != props.nickname) {
-        if (data.team == 1) {
-          setTeam1((team1) =>
-            team1.concat({
-              nickname: data.nickname,
-              team: data.team,
-              readyStatus: data.readyStatus,
-            })
-          )
-        } else {
-          setTeam2((team2) =>
-            team2.concat({
-              nickname: data.nickname,
-              team: data.team,
-              readyStatus: data.readyStatus,
-            })
-          )
+      try {
+        if (data.nickname != props.nickname) {
+          if (data.team == 1) {
+            setTeam1((team1) =>
+              team1.concat({
+                nickname: data.nickname,
+                team: data.team,
+                readyStatus: data.readyStatus,
+              })
+            )
+          } else {
+            setTeam2((team2) =>
+              team2.concat({
+                nickname: data.nickname,
+                team: data.team,
+                readyStatus: data.readyStatus,
+              })
+            )
+          }
         }
+      } catch (err) {
+        throw new Error("Couldn't get room users data")
       }
-    }catch(err){
-      throw new Error("Couldn't get room users data")
-    }
     })
 
     props.socket.on('UserLeft', (user) => {
-      try{
-      var teamArr
-      if (user.team === 1) {
-        teamArr = team1
-        _.remove(teamArr, (team1member) => {
-          return team1member.nickname == user.nickname
-        })
-        setTeam1(teamArr)
-      } else {
-        teamArr = team2
-        _.remove(teamArr, (team2member) => {
-          return team2member.nickname == user.nickname
-        })
-        setTeam2(teamArr)
+      try {
+        var teamArr
+        if (user.team === 1) {
+          teamArr = team1
+          _.remove(teamArr, (team1member) => {
+            return team1member.nickname == user.nickname
+          })
+          setTeam1(teamArr)
+        } else {
+          teamArr = team2
+          _.remove(teamArr, (team2member) => {
+            return team2member.nickname == user.nickname
+          })
+          setTeam2(teamArr)
+        }
+      } catch (err) {
+        throw new Error("Couldn't get room users data")
       }
-    }catch(err){
-      throw new Error("Couldn't get room users data")
-    }
     })
 
     props.socket.on('HostLeft', async ({ host, newHost }) => {
-      try{
-      const url = 'room/getdata'
-      const response = await axios.post(
-        url,
-        { host: newHost.nickname },
-        { withCredentials: true }
-      )
-      const allusers = response.data.users
-      const team1users = _.filter(allusers, function (user) {
-        return user.team == 1
-      })
-      setTeam1(team1users)
-      const team2users = _.filter(allusers, function (user) {
-        return user.team == 2
-      })
-      setTeam2(team2users)
+      try {
+        const url = 'room/getdata'
+        const response = await axios.post(
+          url,
+          { host: newHost.nickname },
+          { withCredentials: true }
+        )
+        const allusers = response.data.users
+        const team1users = _.filter(allusers, function (user) {
+          return user.team == 1
+        })
+        setTeam1(team1users)
+        const team2users = _.filter(allusers, function (user) {
+          return user.team == 2
+        })
+        setTeam2(team2users)
 
-      setHost(newHost.nickname)
-    }catch(err){
-      throw new Error("Couldn't get room users data")
-    }
+        setHost(newHost.nickname)
+      } catch (err) {
+        throw new Error("Couldn't get room users data")
+      }
     })
 
     props.socket.on('userKicked', ({ nickname, team, host }) => {
-      try{
-      if (props.nickname == nickname) {
-        const data = { nickname: props.nickname, host: host }
-        props.socket.emit('leave', data)
-        window.location.reload()
-      }
-      }catch(err){
+      try {
+        if (props.nickname == nickname) {
+          const data = { nickname: props.nickname, host: host }
+          props.socket.emit('leave', data)
+          window.location.reload()
+        }
+      } catch (err) {
         throw new Error("Couldn't get room users data")
       }
     })
 
     props.socket.on('readyChange', async (data) => {
-      try{
-      const url = 'room/getdata'
-      const response = await axios.post(
-        url,
-        { host: data.host },
-        { withCredentials: true }
-      )
-      const allusers = response.data.users
-      const team1users = _.filter(allusers, function (user) {
-        return user.team == 1
-      })
-      setTeam1(team1users)
-      const team2users = _.filter(allusers, function (user) {
-        return user.team == 2
-      })
-      setTeam2(team2users)
-      }catch(err){
+      try {
+        const url = 'room/getdata'
+        const response = await axios.post(
+          url,
+          { host: data.host },
+          { withCredentials: true }
+        )
+        const allusers = response.data.users
+        const team1users = _.filter(allusers, function (user) {
+          return user.team == 1
+        })
+        setTeam1(team1users)
+        const team2users = _.filter(allusers, function (user) {
+          return user.team == 2
+        })
+        setTeam2(team2users)
+      } catch (err) {
         throw new Error("Couldn't get ready data")
       }
     })
 
     props.socket.on('teamChange', async (data) => {
       try {
-      if (start) return
+        if (start) return
         const url = 'room/getdata'
         const response = await axios.post(
           url,
@@ -347,15 +348,15 @@ function Room(props) {
   }, [])
 
   const handleSendMessage = (e, message) => {
-    try{
-    if (message === '') {
-      return
+    try {
+      if (message === '') {
+        return
+      }
+      const data = { host: props.host, nickname: props.nickname, msg: message }
+      props.socket.emit('message', data)
+    } catch (err) {
+      throw new Error("Couldn't send your message")
     }
-    const data = { host: props.host, nickname: props.nickname, msg: message }
-    props.socket.emit('message', data)
-  }catch(err){
-    throw new Error("Couldn't send your message")
-  }
   }
 
   const handleKeyDown = (event, message) => {
@@ -364,29 +365,29 @@ function Room(props) {
     }
   }
   const handleTeamSwap = () => {
-    try{
-    if (start) return
-    const data = { host: props.host, nickname: props.nickname }
-    props.socket.emit('changeTeam', data)
-    }catch(err){
+    try {
+      if (start) return
+      const data = { host: props.host, nickname: props.nickname }
+      props.socket.emit('changeTeam', data)
+    } catch (err) {
       throw new Error("Couldn't get room users data")
     }
   }
 
   const handleReady = () => {
-    try{
-    const data = { host: props.host, nickname: props.nickname }
-    props.socket.emit('ready', data)
-    }catch(err){
+    try {
+      const data = { host: props.host, nickname: props.nickname }
+      props.socket.emit('ready', data)
+    } catch (err) {
       throw new Error("Couldn't change ready status")
     }
   }
 
   const handleStart = () => {
-    try{
-    const data = { host: props.host }
-    props.socket.emit('countdown', data)
-    }catch(err){
+    try {
+      const data = { host: props.host }
+      props.socket.emit('countdown', data)
+    } catch (err) {
       throw new Error("Couldn't start,please try again")
     }
   }
@@ -406,73 +407,79 @@ function Room(props) {
 
   //for pushing
   //for pushing
-  
+
   const checkGameInformation = () => {
-    try{
-    if (gameInformation != '') {
-      const url = 'steam://connect/' + gameInformation
-      if(mapSelect===true){
-      return (
-        <>
-        <MapSelection
-        host={host}
-        socket={props.socket}
-        team1={team1}
-        team2={team2}
-        ></MapSelection>
-        </>
-        
-      )}else{
-        return (<div>
-        <span>{gameInformation}</span>
-        <a href={url} class="btn btn-primary">
-          {" "}
-          Join the Game
-        </a>
-    </div>)
+    try {
+      if (gameInformation != '') {
+        const url = 'steam://connect/' + gameInformation
+        if (mapSelect === true) {
+          return (
+            <>
+              <MapSelection
+                host={host}
+                nickname={props.nickname}
+                socket={props.socket}
+                team1={team1}
+                team2={team2}
+              ></MapSelection>
+            </>
+          )
+        } else {
+          return (
+            <div>
+              <span>{gameInformation}</span>
+              <a href={url} class='btn btn-primary'>
+                {' '}
+                Join the Game
+              </a>
+            </div>
+          )
+        }
       }
+      if (gameInformation == '') {
+        const url2 = 'steam://connect/' + gameInformation
+        if (mapSelect === true) {
+          return (
+            <>
+              <MapSelection
+                host={host}
+                nickname={props.nickname}
+                socket={props.socket}
+                team1={team1}
+                team2={team2}
+              ></MapSelection>
+            </>
+          )
+        }
+      } else {
+        return null
+      }
+      if (start) {
+        return (
+          <Countdown
+            className={classes.countdown}
+            date={Date.now() + 10000}
+            onComplete={() => handleStartMatch()}
+          />
+        )
+      } else {
+        return (
+          <img
+            className='mapo'
+            style={{
+              width: '187px',
+              height: '50px',
+              margin: 'auto',
+              marginTop: '24%',
+              marginLeft: '28%',
+            }}
+            src={Logo}
+          ></img>
+        )
+      }
+    } catch (err) {
+      throw new Error("Couldn't get game info")
     }
-    if(gameInformation == ''){
-      const url2 = 'steam://connect/' + gameInformation
-      if(mapSelect===true){
-      return(
-        <>
-        <MapSelection
-        host={host}
-        socket={props.socket}
-        team1={team1}
-        team2={team2}></MapSelection>
-        </>
-      )
-    }}else{
-      return null
-    }
-    if (start) {
-      return (
-        <Countdown
-          className={classes.countdown}
-          date={Date.now() + 10000}
-          onComplete={() => handleStartMatch()}
-        />
-      )
-    } else {
-      return (
-        <img
-          className='mapo'
-          style={{
-            width: '187px',
-            height: '50px',
-            margin: 'auto',
-            marginTop: '24%',
-            marginLeft: '28%',
-          }}
-          src={Logo}
-        ></img>
-      )
-    }
-  }catch(err){
-    throw new Error("Couldn't get game info")
-  }
   }
 
   const handleHost = (member) => {
@@ -484,34 +491,34 @@ function Room(props) {
   }
 
   const handleLeaveRoom = () => {
-    try{
-    const user1 = _.find(team1, (member) => {
-      return member.nickname == props.nickname
-    })
+    try {
+      const user1 = _.find(team1, (member) => {
+        return member.nickname == props.nickname
+      })
 
-    const user2 = _.find(team2, (member) => {
-      return member.nickname == props.nickname
-    })
+      const user2 = _.find(team2, (member) => {
+        return member.nickname == props.nickname
+      })
 
-    const temp = !user1 ? user2 : user1
+      const temp = !user1 ? user2 : user1
 
-    if (temp.readyStatus === true) {
-      if (host === props.nickname) {
+      if (temp.readyStatus === true) {
+        if (host === props.nickname) {
+          const data = { nickname: props.nickname, host: host }
+          props.socket.emit('leave', data)
+          window.location.reload()
+        } else {
+          setErrorMessage('Before quit, change your ready status')
+          setSnackbar(true)
+        }
+      } else {
         const data = { nickname: props.nickname, host: host }
         props.socket.emit('leave', data)
         window.location.reload()
-      } else {
-        setErrorMessage('Before quit, change your ready status')
-        setSnackbar(true)
       }
-    } else {
-      const data = { nickname: props.nickname, host: host }
-      props.socket.emit('leave', data)
-      window.location.reload()
+    } catch (err) {
+      throw new Error("Couldn't process your request")
     }
-  }catch(err){
-    throw new Error("Couldn't process your request")
-  }
   }
 
   const handleSnack = () => {
@@ -519,18 +526,18 @@ function Room(props) {
   }
 
   const checkHostOrNot = () => {
-    try{
-    if (props._host == true) {
-      return true
+    try {
+      if (props._host == true) {
+        return true
+      }
+      if (host == props.nickname) {
+        return true
+      } else {
+        return false
+      }
+    } catch (err) {
+      throw new Error("Couldn't check if host or not")
     }
-    if (host == props.nickname) {
-      return true
-    } else {
-      return false
-    }
-  }catch(err){
-    throw new Error("Couldn't check if host or not")
-  }
   }
 
   // const handleCloseModal = () =>{

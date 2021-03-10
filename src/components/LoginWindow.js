@@ -24,17 +24,17 @@ const GlobalStyle = createGlobalStyle`
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      color: "white",
-      backgroundColor:"#1b1c23",
-      width:"100%",
-      marginLeft:"-20%",
-      marginBottom:"10px",
-      borderRadius:"10px",
+      color: 'white',
+      backgroundColor: '#1b1c23',
+      width: '100%',
+      marginLeft: '-20%',
+      marginBottom: '10px',
+      borderRadius: '10px',
       '& label.Mui-focused': {
         color: 'green',
       },
       '& .MuiOutlinedInput-root': {
-        color:"white",
+        color: 'white',
         '& fieldset': {
           //borderColor: 'red',
         },
@@ -80,7 +80,7 @@ function LoginWindow(props) {
         setOpen(true)
       }
     } catch (err) {
-      throw new Error("Something went wrong")
+      throw new Error('Something went wrong')
     }
   }
 
@@ -96,7 +96,7 @@ function LoginWindow(props) {
           }
         }
       } catch (error) {
-        throw new Error("Something went wrong")
+        throw new Error('Something went wrong')
       }
     }
     userInfo()
@@ -139,20 +139,20 @@ function LoginWindow(props) {
         <div className='login-modal'>
           <h2 className='login-title'>Login</h2>
           <TextField
-            variant="outlined"
+            variant='outlined'
             onChange={(e) => setNickname(e.target.value)}
             required
-            placeholder="Username"
+            placeholder='Username'
             error={nicknameError}
             helperText={nicknameHelperText}
             className={classes.root}
           />
           <TextField
-            variant="outlined"
+            variant='outlined'
             onChange={(e) => setPassword(e.target.value)}
             type='password'
             required
-            placeholder="Password"
+            placeholder='Password'
             error={passwordError}
             helperText={passwordHelperText}
             className={classes.root}

@@ -13,6 +13,12 @@ function MapSelection(props) {
   const [team2FirstIndex, setTeam2FirstIndex] = useState('')
   const [gameInformation, setGameInformation] = useState([])
   const [gameUrl, setGameUrl] = useState('')
+  const [currentPlayer, setCurrentPlayer] = useState('')
+  const [currentHost, setCurrentHost] = useState('')
+
+  useEffect(() => {
+    setCurrentHost(props.host)
+  }, [props.host])
 
   //IMPROVEMENT İLERİSİNN İŞİ
   //banlanan mapler localstorage ta tutlup kontrol edilebilir. oda da başladığında local storage da roomid si ile güncel mapler tutulabilir
@@ -22,28 +28,42 @@ function MapSelection(props) {
     if (maps.length !== 1) {
       const bannedMap = index
       props.socket.emit('mapselection', {
-        host: props.host,
+        host: currentHost,
         bannedMap,
         team: 1,
       })
     }
   }
 
-  const fetchMyGameInfo = useCallback(async () => {
+  const setLastMapAction = async () => {
+    const url = 'room/setlastmap'
+    const response = await axios.post(
+      url,
+      { host: currentHost, last_map: maps[0] },
+      { withCredentials: true }
+    )
+    console.log('setLastMapAction', response)
+    if (response) {
+      fetchMyGameInfo()
+    }
+  }
+
+  const fetchMyGameInfo = async () => {
     const url = 'rcon/setupmatch'
     const response = await axios.post(
       url,
-      { host: props.host },
+      { host: currentHost },
       { withCredentials: true }
     )
 
-    console.log('setupmatch', response)
+    console.log('fetchMyGameInfo', response)
     setGameInformation(response.data)
-  }, [])
+  }
 
+  //Host mu koontrol et
   useEffect(() => {
-    if (maps.length === 1) {
-      fetchMyGameInfo()
+    if (maps.length === 1 && props.nickname === currentHost) {
+      setLastMapAction()
     }
   }, [maps])
 
@@ -73,18 +93,6 @@ function MapSelection(props) {
       setMaps(maps.splice(bannedMap, 1))
     })
   })
-
-  // useEffect(async () => {
-  //   const url = 'rcon/setupmatch'
-  //   const response = await axios.post(
-  //     url,
-  //     { host: props.host },
-  //     { withCredentials: true }
-  //   )
-
-  //   console.log('setupmatch', response)
-  //   setGameInformation(response.data)
-  // })
 
   if ((team1FirstIndex != '' || team2FirstIndex != '') && maps.length !== 1) {
     return (
