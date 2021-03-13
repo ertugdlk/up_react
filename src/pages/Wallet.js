@@ -1,4 +1,5 @@
-import React, { useState,useEffect,useRef } from 'react'
+import React, { useState,useEffect,useRef} from 'react'
+import { useHistory } from 'react-router-dom'
 import axios from '../utils';
 import { Button } from '../components/Common/Button'
 import { createGlobalStyle } from 'styled-components'
@@ -8,6 +9,9 @@ import Bag from "../bag_icon.png"
 import backIcon from "../back-icon.png"
 import css from '../components/css/Wallet.css';
 import Payment from '../components/UI/Payment'
+import CenterModal from '../components/UI/CenterModal'
+import MyAccount from '../components/MyAccount'
+import { baseUrl } from '../utils/helpers'
 
 
 const GlobalStyle = createGlobalStyle`
@@ -30,10 +34,37 @@ function Wallet(props) {
   const [withdrawReq1,setWithdrawReq2] = useState(40)  
   const [withdrawReq2,setWithdrawReq3] = useState(60)  
   const [paymentModal, setPaymentModal] = useState(false)
+  const [transactionHistory, setTransactionHistory] = useState(false);
+  const [account, setAccount] = useState(false)
+  const [userName, setUsername] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [session, setSession] = useState(false)
+
+  const socketio = require('socket.io-client')
+  const socket = socketio(baseUrl, {
+    transports: ['websocket'],
+  })
+  
+
+  const history = useHistory()
 
   const dropdown = useRef();
   const btn = useRef();
 
+  const handleLogout = () => {
+    try{
+    async function logout() {
+      const url = 'auth/logout'
+      await axios.get(url, { withCredentials: true })
+    }
+
+    // setAnchorEl(null);
+    logout()
+    history.push('/')
+  }catch(err){
+    throw new Error("Couldn't change room data")
+  }
+  }
 
   const handPaymentModalOpen = () => {
     setPaymentModal(true)
@@ -52,6 +83,19 @@ function Wallet(props) {
     setClick2(!click2);
   }
 
+  const handleAccount = () => {
+    // setAnchorEl(null);
+    setAccount(true)
+  }
+
+  const handleAccountClose = () => {
+    setAccount(false)
+  }
+
+  function handleTransationHistory(){
+    setTransactionHistory(!transactionHistory)
+  }
+  
   if(bankBalance<withdrawReq || bankBalance1<withdrawReq1 || bankBalance2<withdrawReq2){
     console.log("invalid")
 
@@ -70,10 +114,38 @@ function Wallet(props) {
   }
   }
 
+  async function userInfo() {
+    try {
+      const url = 'auth/me'
+      const response = await axios.get(url, { withCredentials: true })
+
+      if (response.status == 200) {
+        if (response.data.nickname) {
+          setUsername(response.data.nickname)
+          setEmail(response.data.email)
+          setSession(true)
+        } else {
+          if (response.data.output.statusCode == 401) {
+            return history.push('/')
+          }
+        }
+      } else {
+        if (response.data.output.statusCode) {
+          return history.push('/')
+        }
+      }
+
+      socket.emit('login', response.data.nickname)
+    } catch (error) {
+      throw new Error("Couldn't get user info")
+      //history.push("/")
+    }
+  }
 
   useEffect(() => {
     try{
     userBalance()
+    userInfo()
     if (click)
     btn.current.style.marginBottom = `${dropdown.current.offsetHeight}px`;
     if(click1)
@@ -98,15 +170,25 @@ function Wallet(props) {
               </Grid>
               <Grid container direction="row" justify="flex-end" alignItems="center">
                 <Grid item xs={1}>
-                <button className="account-buttons">Account Settings</button>
+                <button className="account-buttons" onClick={handleAccount}>Account Settings</button>
                 </Grid>
                 <Grid item xs={1}>
-                <button className="account-buttons">Logout</button>
+                <button className="account-buttons" onClick={handleLogout}>Logout</button>
                 </Grid>
               </Grid>
             </Grid>
           </div>
 
+          {account ? (
+            <CenterModal>
+              <MyAccount
+                userName={userName}
+                onClose={handleAccountClose}
+                email={email}
+              ></MyAccount>
+            </CenterModal>
+          ) : null}
+          
           <div className='WalletPageContainer'>
           <div className="back-button-div">
           <a className="LogoLink" href="/dashboard">
@@ -116,18 +198,13 @@ function Wallet(props) {
           <div className="user-coin-infobox">
           <span className="user-coin-convertion-info">Your UP Coin Balance</span>
           <span className="user-coin-convertion">{upBalance} UP coin = {upBalance} TL</span>
-          {paymentModal?null
-          :<button className="deneme" onClick={()=>handPaymentModalOpen()}>Add Payment</button>}
+          {paymentModal?
+          null:<button className="deneme" onClick={()=>handPaymentModalOpen()}>Add Payment</button>}
           </div> 
           <Payment paymentModal={paymentModal} handPaymentModalClose={handPaymentModalClose}></Payment>
           <div className="bank-accounts">
           <span className="bank-accounts-header">Your Bank Accounts</span>
           <li>
-            {/*<div className="bank-content">
-            <button className="bank-button">Bank 1</button>
-            <button className="bank-button">Bank 2</button>
-            <button className="bank-button">Bank 3</button>
-          </div>*/}
             <div className="withdraw-content">
             <button className="bank-button" onClick={handleDropdown} ref={btn}>Bank 1</button>
             {click ? (
@@ -164,6 +241,7 @@ function Wallet(props) {
           <button className="deposit-button"> GET UP COIN</button>
           </div>
           </div>
+          {transactionHistory?(
           <div className="transaction-history"> 
           <span className="transaction-history-header">Transaction History</span>
           <li>
@@ -180,7 +258,7 @@ function Wallet(props) {
             <span className="transaction-info">+50 UP coin</span>
             </div>
           </li>
-          </div>
+          </div>):<button className="transaction-history-button" onClick={handleTransationHistory}>Transaction History</button>}
           </div>
     </>
   )

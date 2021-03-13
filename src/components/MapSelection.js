@@ -163,5 +163,4 @@ function MapSelection(props) {
     )
   }
 }
-
 export default MapSelection
