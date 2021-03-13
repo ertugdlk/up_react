@@ -92,6 +92,7 @@ function Room(props) {
 
   const [sureWindow, setSureWindow] = useState(false)
   const [reportWindow, setReportWindow] = useState(false)
+  const [showBanIcons, setShowBanIcons] = useState(false)
 
   const handleSureWindowOpen = (nickname) => {
     setSureWindow(true)
@@ -544,6 +545,13 @@ function Room(props) {
   //   setOpenModal(false)
   // }
 
+  const handleBanIcons = () => {
+    setShowBanIcons(true)
+  }
+  const handleBanIconsLeave = () => {
+    setShowBanIcons(false)
+  }
+
   return (
     <>
       <Dialog
@@ -614,7 +622,11 @@ function Room(props) {
                   {team1.map((member) => {
                     var user = member.nickname
                     return (
-                      <li className='team-users'>
+                      <li
+                        className='team-users'
+                        onMouseEnter={handleBanIcons}
+                        onMouseLeave={handleBanIconsLeave}
+                      >
                         <span className='host-status'>
                           {handleHost(member)}
                         </span>
@@ -622,19 +634,21 @@ function Room(props) {
                         <div className='ready-status'>
                           {member.readyStatus ? 'Ready' : 'Unready'}
                         </div>
-                        {host == props.nickname ? (
+                        {showBanIcons && (
                           <CloseIcon
                             // src={close}
                             className='kick-icon'
                             fontSize='large'
                             onClick={() => handleSureWindowOpen(user)}
                           />
-                        ) : null}
-                        <ReportIcon
-                          className='report-icon'
-                          fontSize='small'
-                          onClick={() => handleReportWindowOpen(user)}
-                        ></ReportIcon>
+                        )}
+                        {showBanIcons && (
+                          <ReportIcon
+                            className='report-icon'
+                            fontSize='small'
+                            onClick={() => handleReportWindowOpen(user)}
+                          ></ReportIcon>
+                        )}
                       </li>
                     )
                   })}
@@ -707,13 +721,17 @@ function Room(props) {
                   {team2.map((member) => {
                     var user = member.nickname
                     return (
-                      <li className='team-users'>
+                      <li
+                        className='team-users'
+                        onMouseEnter={handleBanIcons}
+                        onMouseLeave={handleBanIconsLeave}
+                      >
                         <span>{handleHost(member)}</span>
                         <span className='team-user'> {member.nickname} </span>
                         <div className='ready-status'>
                           {member.readyStatus ? 'Ready' : 'Unready'}
                         </div>
-                        {host == props.nickname ? (
+                        {showBanIcons && (
                           // <img
                           //   src={close}
                           //   className='kick-icon'
@@ -725,12 +743,14 @@ function Room(props) {
                             fontSize='large'
                             onClick={() => handleSureWindowOpen(user)}
                           />
-                        ) : null}
-                        <ReportIcon
-                          className='report-icon'
-                          fontSize='small'
-                          onClick={() => handleReportWindowOpen(user)}
-                        ></ReportIcon>
+                        )}
+                        {showBanIcons && (
+                          <ReportIcon
+                            className='report-icon'
+                            fontSize='small'
+                            onClick={() => handleReportWindowOpen(user)}
+                          ></ReportIcon>
+                        )}
                       </li>
                     )
                   })}

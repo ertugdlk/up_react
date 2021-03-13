@@ -9,29 +9,58 @@ import { set } from 'js-cookie'
 
 function MapSelection(props) {
   const [maps, setMaps] = useState([])
-  const [team1FirstIndex, setTeam1FirstIndex] = useState('')
-  const [team2FirstIndex, setTeam2FirstIndex] = useState('')
+  const [teamOneChooser, setTeamOneChooser] = useState('')
+  const [teamTwoChooser, setTeamTwoChooser] = useState('')
   const [gameInformation, setGameInformation] = useState([])
   const [gameUrl, setGameUrl] = useState('')
   const [currentPlayer, setCurrentPlayer] = useState('')
   const [currentHost, setCurrentHost] = useState('')
+  const [priority, setPriority] = useState([])
+  const [currentChooser, setCurrentChooser] = useState({
+    teamOne: true,
+    teamTwo: false,
+  })
 
   useEffect(() => {
     setCurrentHost(props.host)
   }, [props.host])
-  const [priority,setPriority] = useState([])
 
   //IMPROVEMENT İLERİSİNN İŞİ
   //banlanan mapler localstorage ta tutlup kontrol edilebilir. oda da başladığında local storage da roomid si ile güncel mapler tutulabilir
 
+  useEffect(() => {
+    console.log('All props', props)
+  }, [])
+
   const disableButton = (index) => {
-    // socket io emit ban
-    if (maps.length !== 1) {
-      const bannedMap = index
-      props.socket.emit('mapselection', {
-        host: currentHost,
-        bannedMap,
-        team: 1,
+    if (currentChooser.teamOne && teamOneChooser.nickname === props.nickname) {
+      if (maps.length !== 1) {
+        const bannedMap = index
+        // socket io emit ban
+        props.socket.emit('mapselection', {
+          host: currentHost,
+          bannedMap,
+          team: 1,
+        })
+      }
+      setCurrentChooser({
+        teamOne: false,
+        teamTwo: true,
+      })
+    }
+    if (currentChooser.teamTwo && teamTwoChooser.nickname === props.nickname) {
+      if (maps.length !== 1) {
+        const bannedMap = index
+        // socket io emit ban
+        props.socket.emit('mapselection', {
+          host: currentHost,
+          bannedMap,
+          team: 1,
+        })
+      }
+      setCurrentChooser({
+        teamOne: true,
+        teamTwo: false,
       })
     }
   }
@@ -47,6 +76,7 @@ function MapSelection(props) {
     if (response) {
       fetchMyGameInfo()
     }
+    fetchMyGameInfo()
   }
 
   const fetchMyGameInfo = async () => {
@@ -77,6 +107,7 @@ function MapSelection(props) {
           { gameName: 'CSGO' },
           { withCredentials: true }
         )
+        console.log('GameMaps', response)
         if (response.data) {
           setMaps(response.data.maps)
         }
@@ -84,8 +115,8 @@ function MapSelection(props) {
       GameMaps()
     }
 
-    setTeam1FirstIndex(props.team1[0].nickname)
-    setTeam2FirstIndex(props.team2[0].nickname)
+    setTeamOneChooser(props.team1[0])
+    setTeamTwoChooser(props.team2[0])
   }, [])
 
   useEffect(() => {
@@ -95,71 +126,9 @@ function MapSelection(props) {
     })
   })
 
-  // useEffect(async () => {
-  //   const url = 'rcon/setupmatch'
-  //   const response = await axios.post(
-  //     url,
-  //     { host: props.host },
-  //     { withCredentials: true }
-  //   )
-
-  //   console.log('setupmatch', response)
-  //   setGameInformation(response.data)
-  // })
-
-
-  //priority diye bir variable oluştur, eğer priority team1firstindex'e eşitse map disable edilebilsin, daha sonra maps length 1 ise priorityi team2FirstIndex'e eşitle ve map disable edebilsin.
-  //
-
-
-  if ((team1FirstIndex != '' || team2FirstIndex != '') && maps.length !== 1) {
-
-    if(maps.length===2){
-      setPriority(team1FirstIndex)
-    }
-
-    if(priority===team1FirstIndex){
-      return(
-        <>
-         <div className='map-room-window'>
-          <div class='wrapper'>
-            <div className='maps'>
-              {maps.map((map, index) => (
-                <li className='map-list'>
-                  <button className='map' onClick={() => disableButton(index)}>
-                    <span>{maps[index]}</span> {/*Buraya image gelecek*/}
-                  </button>
-                </li>
-              ))}
-            </div>
-          </div>
-        </div>
-      </>
-      )
-    } else{
-      return(
-        <>
-         <div className='map-room-window'>
-          <div class='wrapper'>
-            <div className='maps'>
-              <div>
-                <span>{gameInformation}</span>
-                <a href={'url'} class='btn btn-primary'>
-                  Join the Game
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        </>
-      )
-    }
-  } else if((team1FirstIndex != '' || team2FirstIndex != '') && maps.length == 1) {
-    setPriority(team2FirstIndex)
-
-    if(priority===team2FirstIndex){
-      return(
-        <>
+  if ((teamOneChooser != '' || teamTwoChooser != '') && maps.length !== 1) {
+    return (
+      <>
         <div className='map-room-window'>
           <div class='wrapper'>
             <div className='maps'>
@@ -173,12 +142,12 @@ function MapSelection(props) {
             </div>
           </div>
         </div>
-        </>
-      )
-    } else{
-      return(
-        <>
-         <div className='map-room-window'>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <div className='map-room-window'>
           <div class='wrapper'>
             <div className='maps'>
               <div>
@@ -190,9 +159,8 @@ function MapSelection(props) {
             </div>
           </div>
         </div>
-        </>
-      )
-    }
+      </>
+    )
   }
 }
 
