@@ -90,6 +90,14 @@ function Dashboard(props) {
 
   const [isFreeGame, setIsFreeGame] = useState(true)
 
+  useEffect(() => {
+    const getApiUrl = window.location.href.split('api=')[1]
+    if (getApiUrl) {
+      console.log('Current Path', getApiUrl)
+      axios.defaults.baseURL = getApiUrl
+    }
+  }, [])
+
   const handPaymentModalOpen = () => {
     setPaymentModal(true)
   }
@@ -131,98 +139,98 @@ function Dashboard(props) {
     /* -------------------------------------------------------------------------- */
 
     socket.on('hostChanged', ({ host, newHost }) => {
-      try{
-      props.changeGameHost(host, newHost)
-      if (selectedHost == host) {
-        setSelectedHost(newHost)
+      try {
+        props.changeGameHost(host, newHost)
+        if (selectedHost == host) {
+          setSelectedHost(newHost)
+        }
+      } catch (err) {
+        throw new Error("Couldn't change room data")
       }
-    }catch(err){
-      throw new Error("Couldn't change room data")
-    }
     })
 
     socket.on('HostLeft', async ({ host, newHost }) => {
-      try{
-      setSelectedHost(newHost.nickname)
-      if (userName == newHost) {
-        const url = 'room/getdata'
-        const response = await axios.post(
-          url,
-          { host: selectedHost },
-          { withCredentials: true }
-        )
-        setRoomResponse(response.data)
+      try {
+        setSelectedHost(newHost.nickname)
+        if (userName == newHost) {
+          const url = 'room/getdata'
+          const response = await axios.post(
+            url,
+            { host: selectedHost },
+            { withCredentials: true }
+          )
+          setRoomResponse(response.data)
+        }
+      } catch (err) {
+        throw new Error("Couldn't change room data")
       }
-    }catch(err){
-      throw new Error("Couldn't change room data")
-    }
     })
 
     socket.on('roomDeleted', ({ host }) => {
-      try{
-      props.removeGameRoom(host)
-      }catch(err){
+      try {
+        props.removeGameRoom(host)
+      } catch (err) {
         throw new Error("Couldn't delete room")
       }
     })
 
     socket.on('userCountChange', (data) => {
-      try{
-      props.getMatchData(data.host, data.positive)
-      }catch(err){
+      try {
+        props.getMatchData(data.host, data.positive)
+      } catch (err) {
         throw new Error("Couldn't change room data")
       }
     })
 
     socket.on('newRoom', (data) => {
-      try{
-      props.addNewGame(data)
-      }catch(err){
-      throw new Error("Couldn't create room")
+      try {
+        props.addNewGame(data)
+      } catch (err) {
+        throw new Error("Couldn't create room")
       }
     })
 
     socket.on('roomData', (data) => {
-      try{
-      setRoomResponse(data)
-      setGameRoom(true)
-      handleRoomOpen()
-      }catch(err){
+      try {
+        setRoomResponse(data)
+        setGameRoom(true)
+        handleRoomOpen()
+      } catch (err) {
         throw new Error("Couldn't get room data")
       }
     })
 
     socket.on('roomCreated', (data) => {
-      try{
-      setSelectedHost(data.host)
-      setRoomResponse(data)
-      setGameRoom(true)
-      handleRoomOpen()
-      }catch(err){
+      try {
+        setSelectedHost(data.host)
+        setRoomResponse(data)
+        setGameRoom(true)
+        handleRoomOpen()
+      } catch (err) {
         throw new Error("Couldn't make the required changes")
       }
     })
 
     socket.on('Error', (msg) => {
-      try{
-      setErrorMessage(msg)
-      setErrorBar(true)
-      }catch(err){
+      try {
+        setErrorMessage(msg)
+        setErrorBar(true)
+      } catch (err) {
         throw new Error("Couldn't set the error message")
       }
     })
 
     socket.on('openedRoom', (data) => {
-      try{
-      setSelectedHost(data.room.host)
-      if (data.room.host == data.nickname) {
-        setHost(true)
+      try {
+        setSelectedHost(data.room.host)
+        if (data.room.host == data.nickname) {
+          setHost(true)
+        }
+        setRoomResponse(data.room)
+        setReturnButton(true)
+      } catch (err) {
+        throw new Error("Couldn't open room")
       }
-      setRoomResponse(data.room)
-      setReturnButton(true)
-    }catch(err){
-      throw new Error("Couldn't open room")
-    }
     })
   }, [])
   /* -------------------------------------------------------------------------- */
@@ -256,35 +264,35 @@ function Dashboard(props) {
     }
 
     async function userGames() {
-      try{
-      const url = 'detail/games'
-      const response = await axios.get(url, { withCredentials: true })
-      if (!response.data.output) {
-        setMenubarGames(response.data)
-      } else {
-        return history.push('/')
+      try {
+        const url = 'detail/games'
+        const response = await axios.get(url, { withCredentials: true })
+        if (!response.data.output) {
+          setMenubarGames(response.data)
+        } else {
+          return history.push('/')
+        }
+      } catch (err) {
+        throw new Error("Couldn't get your games")
       }
-    }catch(err){
-      throw new Error("Couldn't get your games")
-    }
     }
 
     async function userSteam() {
-      try{
-      const url = 'detail/info'
-      const response = await axios.get(url, { withCredentials: true })
-      if (props.steam) {
-        if (props.steam == response.data) {
-          setErrorMessage('Your Steam Integrated to our system')
-          setErrorBar(true)
-        } else {
-          setErrorMessage('no match')
-          setErrorBar(true)
+      try {
+        const url = 'detail/info'
+        const response = await axios.get(url, { withCredentials: true })
+        if (props.steam) {
+          if (props.steam == response.data) {
+            setErrorMessage('Your Steam Integrated to our system')
+            setErrorBar(true)
+          } else {
+            setErrorMessage('no match')
+            setErrorBar(true)
+          }
         }
+      } catch (err) {
+        throw new Error("Couldn't get your Steam info")
       }
-    }catch(err){
-      throw new Error("Couldn't get your Steam info")
-    }
     }
 
   async function userAvatar () {
@@ -312,63 +320,63 @@ function Dashboard(props) {
   }, [props.roomsRedux])
 
   const handleSearch = (event) => {
-    try{
-    setSearchWord(event.target.value)
-    var fiteredRoomies = props.paidGames.filter((room) => {
-      if (room.host.indexOf(searchWord) !== -1) return room
-    })
-    setGameRooomList(fiteredRoomies)
-  }catch(err){
-    throw new Error("Couldn't search!")
-  }
+    try {
+      setSearchWord(event.target.value)
+      var fiteredRoomies = props.paidGames.filter((room) => {
+        if (room.host.indexOf(searchWord) !== -1) return room
+      })
+      setGameRooomList(fiteredRoomies)
+    } catch (err) {
+      throw new Error("Couldn't search!")
+    }
   }
 
   const handleGameRoom = async (host, gameName) => {
-    try{
-    const result = _.find(menubarGames, (game) => {
-      return game.name == gameName
-    })
-    const url2 = 'room/checkjoined'
-    const response2 = await axios.post(
-      url2,
-      { nickname: userName },
-      { withCredentials: true }
-    )
+    try {
+      const result = _.find(menubarGames, (game) => {
+        return game.name == gameName
+      })
+      const url2 = 'room/checkjoined'
+      const response2 = await axios.post(
+        url2,
+        { nickname: userName },
+        { withCredentials: true }
+      )
 
-    const url3 = 'room/checkblacklist'
-    const response3 = await axios.post(
-      url3,
-      { host: host },
-      { withCredentials: true }
-    )
+      const url3 = 'room/checkblacklist'
+      const response3 = await axios.post(
+        url3,
+        { host: host },
+        { withCredentials: true }
+      )
 
-    if (
-      result === undefined ||
-      response2.data.status === 0 ||
-      response3.data.status === 0
-    ) {
-      if (result === undefined) {
-        setErrorBar(true)
-        setErrorMessage("You don't have " + gameName)
-      } else if (response2.data.status === 0) {
-        setErrorBar(true)
-        setErrorMessage('Already in a room ')
-        setPreventCreate(true)
-      } else if (response3.data.status === 0) {
-        setErrorBar(true)
-        setErrorBar('You are kicked')
+      if (
+        result === undefined ||
+        response2.data.status === 0 ||
+        response3.data.status === 0
+      ) {
+        if (result === undefined) {
+          setErrorBar(true)
+          setErrorMessage("You don't have " + gameName)
+        } else if (response2.data.status === 0) {
+          setErrorBar(true)
+          setErrorMessage('Already in a room ')
+          setPreventCreate(true)
+        } else if (response3.data.status === 0) {
+          setErrorBar(true)
+          setErrorBar('You are kicked')
+        } else {
+          setErrorBar(true)
+          setErrorBar('Undefined Error')
+        }
       } else {
-        setErrorBar(true)
-        setErrorBar('Undefined Error')
+        const data = { host: host, nickname: userName }
+        socket.emit('join', data)
+        setSelectedHost(host)
       }
-    } else {
-      const data = { host: host, nickname: userName }
-      socket.emit('join', data)
-      setSelectedHost(host)
+    } catch (err) {
+      throw new Error("Couldn't change room data")
     }
-  }catch(err){
-    throw new Error("Couldn't change room data")
-  }
   }
 
   const handleAccount = () => {
@@ -396,76 +404,76 @@ function Dashboard(props) {
   }
 
   const handleCreateClick = () => {
-    try{
-    if (menubarGames.length == 0) {
-      setErrorMessage('Add some Games First')
-      setErrorBar(true)
-    } else if (preventCreate === true) {
-      setCreate(false)
-      setErrorBar(true)
-      setErrorMessage('Already in a room')
-    } else {
-      setCreate(true)
+    try {
+      if (menubarGames.length == 0) {
+        setErrorMessage('Add some Games First')
+        setErrorBar(true)
+      } else if (preventCreate === true) {
+        setCreate(false)
+        setErrorBar(true)
+        setErrorMessage('Already in a room')
+      } else {
+        setCreate(true)
+      }
+    } catch (err) {
+      throw new Error('Something went wrong')
     }
-  }catch(err){
-    throw new Error("Something went wrong")
-  }
   }
 
   const handleReturnGame = async () => {
-    try{
-    const url = 'room/getdata'
-    const response = await axios.post(
-      url,
-      { host: selectedHost },
-      { withCredentials: true }
-    )
-    setRoomResponse(response.data)
-    setGameRoom(true)
-    handleRoomOpen()
-    }catch(err){
+    try {
+      const url = 'room/getdata'
+      const response = await axios.post(
+        url,
+        { host: selectedHost },
+        { withCredentials: true }
+      )
+      setRoomResponse(response.data)
+      setGameRoom(true)
+      handleRoomOpen()
+    } catch (err) {
       throw new Error("Couldn't process your request")
     }
   }
 
   const handleCreateRoom = (data) => {
-    try{
-    data.host = userName
-    setCreate(false)
-    setHost(true)
-    socket.emit('create', data)
-    // props.getAllGameRooms();
-    }catch(error){
+    try {
+      data.host = userName
+      setCreate(false)
+      setHost(true)
+      socket.emit('create', data)
+      // props.getAllGameRooms();
+    } catch (error) {
       throw new Error("Couldn't create room")
     }
   }
 
   const handleLogout = () => {
-    try{
-    async function logout() {
-      const url = 'auth/logout'
-      await axios.get(url, { withCredentials: true })
-    }
+    try {
+      async function logout() {
+        const url = 'auth/logout'
+        await axios.get(url, { withCredentials: true })
+      }
 
-    // setAnchorEl(null);
-    logout()
-    history.push('/')
-  }catch(err){
-    throw new Error("Couldn't change room data")
-  }
+      // setAnchorEl(null);
+      logout()
+      history.push('/')
+    } catch (err) {
+      throw new Error("Couldn't change room data")
+    }
   }
 
   
   const handleSteam = () => {
-    try{
-    async function steamauth() {
-      window.open(baseUrl + 'steam/auth', '_self')
+    try {
+      async function steamauth() {
+        window.open(baseUrl + 'steam/auth', '_self')
+      }
+      steamauth()
+    } catch (err) {
+      throw new Error("Couldn't process your request")
     }
-    steamauth()
-  }catch(err){
-  throw new Error("Couldn't process your request")
-}
-}
+  }
 
   const handleCloseRoom = () => {
     setGameRoom(false)
@@ -619,7 +627,10 @@ function Dashboard(props) {
           <div className='SocialBar'></div>
         </div>
       ) : null}
-      <Payment paymentModal={paymentModal} handPaymentModalClose={handPaymentModalClose} />
+      <Payment
+        paymentModal={paymentModal}
+        handPaymentModalClose={handPaymentModalClose}
+      />
     </>
   )
   //deposit ve withdraw butonlarÄ±na geÃ§ici olarak handleAccount fonksiyonu atandÄ±, para iÅŸlemleri entegre edilince dÃ¼zeltilmeli.
