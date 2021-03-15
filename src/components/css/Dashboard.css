@@ -515,7 +515,7 @@ button {
 }
 
 .discord-logo{
-  height: 25px;
+  height: 50px;
 }
 
 .language-container{  
@@ -587,6 +587,14 @@ button {
   color: #9ea0a5;
   font-size: 16px;
   font-weight: bolder;
+}
+
+.logout-icon{
+  height: 25px;
+}
+
+.account-settings-button:hover{
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 1680px) {

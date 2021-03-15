@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
+import Door from "../logout-icon.png"
 import Bag from '../bag_icon.png'
 import searchicon from '../search_icon.png'
 import Cart from "../shopping-cart.png"
@@ -82,6 +83,9 @@ function Dashboard(props) {
   const [verificationForm, setVerificationForm] = useState(false)
   const [avatar,setAvatar] = useState([])
   const [balance, setBalance] = useState(0)
+  const [dropdownMenu,setDropdownMenu] = useState(false)
+  const menuDropdown = useRef();
+  const userButton = useRef();
 
   const [paymentModal, setPaymentModal] = useState(false)
 
@@ -124,6 +128,8 @@ function Dashboard(props) {
     setVerificationForm(true)
   }
 
+
+
   useEffect(() => {
     setTimeout(() => setErrorBar(), 5000)
   })
@@ -131,7 +137,12 @@ function Dashboard(props) {
   // const [rooms, setRooms] = useState([]);
   const history = useHistory()
 
+  function handleAccountDropdown() {
+    setDropdownMenu(!dropdownMenu);
+  }
+
   useEffect(() => {
+
     /* --------------------------- Redux Get All Rooms -------------------------- */
     props.getAllGameRooms()
     props.getFreeGameRooms()
@@ -541,10 +552,14 @@ function Dashboard(props) {
               <div className='HeaderRightMenu'>
               <div className="header-user">
               <img src={avatar} className="img-responsive-header" alt="User-pic"></img>
-              <div class="header-nickname">{userName}</div>
+              <div>
+                <li>
+              <button class="header-nickname" onClick={handleAccountDropdown} ref={userButton}>{userName}</button>
+              {dropdownMenu? (<div ref={menuDropdown}><button onClick={handleAccount} className="account-settings-button">Account Settings</button>)</div>):null}
+              </li>
               </div>
-                <button onClick={handleAccount}>Account Settings</button>
-                <button onClick={handleLogout}>Logout</button>
+              </div>
+                <button onClick={handleLogout} className="logout-button"> <img src={Door} className="logout-icon" alt="Logout"></img></button>
               </div>
             </Grid>
           </div>
