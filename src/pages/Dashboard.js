@@ -4,6 +4,7 @@ import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
 import Bag from '../bag_icon.png'
 import searchicon from '../search_icon.png'
+import Cart from "../shopping-cart.png"
 import Filter from '../filter_icon.png'
 import { Grid } from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
@@ -79,6 +80,7 @@ function Dashboard(props) {
   const [openModal, setOpenModal] = useState(false)
   const [preventCreate, setPreventCreate] = useState(false)
   const [verificationForm, setVerificationForm] = useState(false)
+  const [avatar,setAvatar] = useState([])
   const [balance, setBalance] = useState(0)
 
   const [paymentModal, setPaymentModal] = useState(false)
@@ -284,11 +286,26 @@ function Dashboard(props) {
       throw new Error("Couldn't get your Steam info")
     }
     }
+
+  async function userAvatar () {
+    try{
+    const url = "detail/steamavatar"
+    const response = await axios.get(url,{withCredentials:true});
+    if(response.data ===""){
+      setAvatar(Logo)
+    }else
+      setAvatar(response.data)
+  }catch(err){
+    alert("We couldn't get your avatar")
+  }
+  }
+
     props.getFreeGameRooms()
     props.getPaidGameRooms()
     userInfo()
     userGames()
     userSteam()
+    userAvatar()
     setGameRooomList(props.paidGames)
     setPaidGameList(props.paidGames)
     setFreeGameList(props.freeGameList)
@@ -438,6 +455,7 @@ function Dashboard(props) {
   }
   }
 
+  
   const handleSteam = () => {
     try{
     async function steamauth() {
@@ -508,7 +526,15 @@ function Dashboard(props) {
                   <img style={{ width: '187px', height: '50px' }} src={Logo} />
                 </a>
               </div>
+              <div className="shop">
+                <img src={Cart} alt="shopping-cart" className="shopping-cart-img"></img>
+                <span className="shop-text">MARKET</span>
+              </div>
               <div className='HeaderRightMenu'>
+              <div className="header-user">
+              <img src={avatar} className="img-responsive-header" alt="User-pic"></img>
+              <div class="header-nickname">{userName}</div>
+              </div>
                 <button onClick={handleAccount}>Account Settings</button>
                 <button onClick={handleLogout}>Logout</button>
               </div>

@@ -462,6 +462,133 @@ button {
   outline: none;
 }
 
+.bottom-left{
+  margin-top: 550px;
+  height: fit-content;
+  width: 100%;
+}
+
+.support-container{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-left-text{
+  position: relative;
+  color:#fff;
+  font-weight: bolder;
+  margin-left: 10px;
+}
+
+.support{
+  height: 25px;
+  margin-left: -52.5px;
+}
+
+.legal-conditions-container{
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.legal-conditions{
+  height: 25px;
+}
+
+.discord-container{
+  margin-top: 20px;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: #27272b;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  margin-left: 25%;
+  z-index: 9999;
+  position: relative;
+}
+
+.discord-logo{
+  height: 25px;
+}
+
+.language-container{  
+  position: relative;
+  background-color: #000000;
+  margin-top: -25px;
+  height: 155px;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+}
+
+.language{
+  margin-top: 20%;
+  margin-left: 5%;
+}
+
+.copyright{
+  margin-top: 25%;
+  color: #fff;
+  margin-left: 15%;
+}
+
+.header-user{
+  height: 65px;
+  width: 100px;
+  display: flex;
+  flex-flow: row wrap;
+  align-content: space-evenly;
+  justify-content: center;
+  align-items: center;
+}
+.img-responsive-header {
+  float: none;
+  margin: 0% auto;
+  width: 20px;
+  height: 20px;
+  border: 1px solid;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+  border-color: #00ff60;
+}
+
+.header-nickname {
+  text-align: center;
+  color: white;
+  font-size: 16px;
+}
+
+.shop{
+  height: 65px;
+  position: absolute;
+  left: 500px;
+  z-index: 998;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.shopping-cart-img{
+  height: 25px;
+  width: 25px;
+  margin-right: 10px;
+}
+
+.shop-text{
+  color: #9ea0a5;
+  font-size: 16px;
+  font-weight: bolder;
+}
+
 @media only screen and (min-width: 1680px) {
   .Container {
     width: 80%;
