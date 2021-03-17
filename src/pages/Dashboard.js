@@ -618,6 +618,7 @@ function Dashboard(props) {
           {/* -------------------------------- LEFT PANE ------------------------------- */}
 
           <LeftPane
+          handPaymentModalOpen={handPaymentModalOpen}
             userName={userName}
             handleAddGame={handleAddGame}
             handleVerificationForm={handleVerificationForm}

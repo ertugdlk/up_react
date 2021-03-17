@@ -399,6 +399,7 @@ button {
 }
 
 .btn-container {
+  padding: 1px 8px;
 }
 
 .up {
@@ -410,7 +411,7 @@ button {
   background-color: #35ac45;
   height: 100%;
   width: 100%;
-  padding: 1px 4px;
+  padding: 1px4px;
   
 }
 
