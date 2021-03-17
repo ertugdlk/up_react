@@ -160,6 +160,7 @@ function Wallet(props) {
 
   return (
     <>
+    
       <GlobalStyle></GlobalStyle>
       <div className="Header">
             <Grid  container direction="row"  justify="flex-start"  alignItems="flex-start">

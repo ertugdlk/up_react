@@ -144,7 +144,7 @@ const LeftPane = (props) => {
         </div>
         <div className="menubar-buttons">
           <div className="btn-container">
-            <button onClick={handleAccount}>Deposit</button>
+            <button onClick={props.handPaymentModalOpen}>Deposit</button>
           </div>
           <div className="btn-container">
             <button onClick={handleAccount}>Withdraw</button>
