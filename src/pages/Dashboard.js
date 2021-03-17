@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
@@ -83,9 +83,6 @@ function Dashboard(props) {
   const [verificationForm, setVerificationForm] = useState(false)
   const [avatar,setAvatar] = useState([])
   const [balance, setBalance] = useState(0)
-  const [dropdownMenu,setDropdownMenu] = useState(false)
-  const menuDropdown = useRef();
-  const userButton = useRef();
 
   const [paymentModal, setPaymentModal] = useState(false)
 
@@ -136,10 +133,6 @@ function Dashboard(props) {
 
   // const [rooms, setRooms] = useState([]);
   const history = useHistory()
-
-  function handleAccountDropdown() {
-    setDropdownMenu(!dropdownMenu);
-  }
 
   useEffect(() => {
 
@@ -553,10 +546,7 @@ function Dashboard(props) {
               <div className="header-user">
               <img src={avatar} className="img-responsive-header" alt="User-pic"></img>
               <div>
-                <li>
-              <button class="header-nickname" onClick={handleAccountDropdown} ref={userButton}>{userName}</button>
-              {dropdownMenu? (<div ref={menuDropdown}><button onClick={handleAccount} className="account-settings-button">Account Settings</button>)</div>):null}
-              </li>
+              <button class="header-nickname" onClick={handleAccount}>{userName}</button>
               </div>
               </div>
                 <button onClick={handleLogout} className="logout-button"> <img src={Door} className="logout-icon" alt="Logout"></img></button>
@@ -628,6 +618,7 @@ function Dashboard(props) {
           {/* -------------------------------- LEFT PANE ------------------------------- */}
 
           <LeftPane
+          handPaymentModalOpen={handPaymentModalOpen}
             userName={userName}
             handleAddGame={handleAddGame}
             handleVerificationForm={handleVerificationForm}

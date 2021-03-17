@@ -359,7 +359,6 @@
 .balance {
   color: white;
   font-size: 15px;
-  margin-bottom: 5px;
   border-bottom: 1px outset white;
   padding-bottom: 10px;
 }
@@ -409,7 +408,16 @@ button {
 }
 
 .btn-container:not(:last-child) {
-  border-right: 1px solid #989aa0;
+  background-color: #35ac45;
+  height: 100%;
+  width: 100%;
+  padding: 1px4px;
+  
+}
+
+.btn-container:last-child{
+  border-left: 1px solid #989aa0;
+  padding: 1px 8px;
 }
 
 .SocialBar {

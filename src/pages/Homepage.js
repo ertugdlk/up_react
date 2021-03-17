@@ -58,7 +58,7 @@ function Homepage(props) {
       <header className='header'>
         <div className='logo'>
           <a href='/'>
-            <img src={Logo} href='/' />{' '}
+            <img src={Logo} href='/' className="logo-img"/>{' '}
           </a>
         </div>
         <Grid>
