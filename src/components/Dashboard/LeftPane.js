@@ -144,11 +144,13 @@ const LeftPane = (props) => {
             <button onClick={props.handPaymentModalOpen}>
               <span className='up'> UP</span>
             </button>
-          ) : null}
+          ) : <button onClick={props.handleVerificationForm}>
+          <span className='up'> UP</span>
+        </button>}
         </div>
         <div className="menubar-buttons">
           <div className="btn-container">
-            <button onClick={props.handPaymentModalOpen}>Deposit</button>
+          {verified? (<button onClick={props.handPaymentModalOpen}>Deposit</button>):<button onClick={props.handleVerificationForm}>Deposit</button>} 
           </div>
           <div className='btn-container'>
             <button onClick={handleAccount}>Withdraw</button>
