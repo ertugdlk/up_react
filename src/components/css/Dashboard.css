@@ -71,7 +71,7 @@
 
 .Header {
   height: 65px;
-  background-color: #27272b;
+  background-image: linear-gradient(to left, #28272c, #28272c, #28272c, #2E2D31, #2E2D31, #2E2D31, #2E2D31, #2E2D31, #2E2D31, #2E2D31, #39383d, #525156);
   top: 0px;
   position: absolute;
   left: 0;
@@ -314,7 +314,7 @@
   left: 0px;
   align-self: flex-start;
   justify-self: flex-start;
-  background-color: #27272b;
+  background-image: linear-gradient(to bottom, #28272c, #28272c, #28272c, #2E2D31, #2E2D31, #2E2D31, #39383d, #39383d, #39383d, #424146, #424146, #525156);
   z-index: 999;
 }
 
