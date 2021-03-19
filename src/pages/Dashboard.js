@@ -636,6 +636,7 @@ function Dashboard(props) {
       <Payment
         paymentModal={paymentModal}
         handPaymentModalClose={handPaymentModalClose}
+        userName={userName}
       />
     </>
   )

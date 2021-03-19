@@ -26,6 +26,7 @@ import {
   unknownprosGreen,
   unknownprosDenied,
 } from '../../utils/helpers'
+import axios from '../../utils'
 
 const useStyles = makeStyles((theme) => ({
   root: { minHeight: 550, minWidth: 1015 },
@@ -126,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Payment({ paymentModal, handPaymentModalClose }) {
+function Payment(props, {paymentModal, handPaymentModalClose }) {
   const texts = [
     '50 Coins',
     '100 Coins',
@@ -143,7 +144,15 @@ function Payment({ paymentModal, handPaymentModalClose }) {
   const [experieYear, setExperieYear] = useState('')
   const [experieMonth, setExperieMonth] = useState('')
   const [zipCode, setZipCode] = useState('')
+  const [user,setUser] = useState(props.userName)
+  const [name,setName] = useState('')
+  const [surname,setSurname] = useState('')
   const classes = useStyles()
+
+  useEffect(()=>{
+    getName();
+    getSurname();
+  },[])
 
   function StyledButton({ text = '' }) {
     const classes = useStyles()
@@ -167,6 +176,29 @@ function Payment({ paymentModal, handPaymentModalClose }) {
     )
   }
 
+  const handleDeposit = async () => {
+    try {
+        const url = "credential/add"
+        const body = {
+          cc_holder_name:cardHolderName,
+          cc_no:carNumeber,
+          expiry_month:experieMonth,
+          expiry_year:experieYear,
+          cvv:cvv,
+          currency_code:"TRY",
+          installments_number:1,
+          invoice_description:"Testing",
+          total:selectedMoneyAmount,
+          name:name,
+          surname:surname,
+          nickname:user
+        }
+        const response = await axios.post(url, body, { withCredentials: true })
+    } catch (err) {
+      throw new Error("Something went wrong")
+    }
+  }
+
   const handleChangeMoneyAmount = (e, text) => {
     setSelectedMoneyAmount(text)
   }
@@ -176,6 +208,14 @@ function Payment({ paymentModal, handPaymentModalClose }) {
   }
   const unSelectMoney = () => {
     setIsMoneySelected(false)
+  }
+
+  const getName = () => {
+    setName(cardHolderName.split(" ")[0])
+  }
+
+  const getSurname = () =>{
+    setSurname(cardHolderName.split(" ")[1])
   }
 
   return (
@@ -314,6 +354,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               id='outlined-basic'
                               variant='outlined'
                               placeholder='XXXXXXXX XXXXXXXX'
+                              onChange={(e) => setCardHolderName(e.target.value)}
                               InputProps={{
                                 classes: {
                                   maxLength: 30,
@@ -346,6 +387,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                               variant='outlined'
                               type='number'
                               placeholder='XXXX-XXXX-XXXX-XXXX'
+                              onChange={(e) => setCarNumeber(e.target.value)}
                               InputProps={{
                                 classes: {
                                   maxLength: 16,
@@ -376,6 +418,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='CVV'
+                                  onChange={(e) => setCvv(e.target.value)}
                                   InputProps={{
                                     maxLength: 3,
                                     classes: {
@@ -399,14 +442,34 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                   }}
                                 />
                               </Grid>
-                              <Grid item xs={4}>
+                              <Grid item xs={2}>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  label='Expiration'
+                                  label='Expiration Month'
+                                  placeholder="XX"
+                                  onChange={(e) => setExperieMonth(e.target.value)}
                                   InputProps={{
-                                    maxLength: 5,
+                                    maxLength: 2,
+                                    classes: {
+                                      root: classes.inputInput,
+                                      focused: classes.focused,
+                                      notchedOutline: classes.notchedOutline,
+                                    },
+                                  }}
+                                />
+                              </Grid>
+                              <Grid item xs={2}>
+                                <TextField
+                                  className={classes.inputs}
+                                  id='outlined-basic'
+                                  variant='outlined'
+                                  label='Expiration Year'
+                                  placeholder="XX"
+                                  onChange={(e) => setExperieYear(e.target.value)}
+                                  InputProps={{
+                                    maxLength: 2,
                                     classes: {
                                       root: classes.inputInput,
                                       focused: classes.focused,
@@ -434,6 +497,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='Zip Code'
+                                  onChange={(e) => setZipCode(e.target.value)}
                                   InputProps={{
                                     maxLength: 6,
 
@@ -596,6 +660,7 @@ function Payment({ paymentModal, handPaymentModalClose }) {
             className={classes.GoBtns}
             variant='contained'
             endIcon={<Send />}
+            onClick={handleDeposit}
           >
             Deposit
           </Button>
