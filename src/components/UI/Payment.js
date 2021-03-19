@@ -21,11 +21,7 @@ import Divider from '@material-ui/core/Divider'
 import CancelIcon from '@material-ui/icons/Cancel'
 
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  unknownprosBackGround,
-  unknownprosGreen,
-  unknownprosDenied,
-} from '../../utils/helpers'
+import { unknownprosBackGround, unknownprosGreen, unknownprosDenied } from '../../utils/helpers'
 import axios from '../../utils'
 
 const useStyles = makeStyles((theme) => ({
@@ -127,14 +123,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Payment(props, {paymentModal, handPaymentModalClose }) {
-  const texts = [
-    '50 Coins',
-    '100 Coins',
-    '250 Coins',
-    '500 Coins',
-    '1000 Coins',
-  ]
+function Payment(props, { paymentModal, handPaymentModalClose }) {
+  const texts = ['50 Coins', '100 Coins', '250 Coins', '500 Coins', '1000 Coins']
   const middle = texts[Math.round((texts.length - 1) / 2)]
   const [isMoneySelected, setIsMoneySelected] = useState(false)
   const [selectedMoneyAmount, setSelectedMoneyAmount] = useState(middle)
@@ -144,15 +134,15 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
   const [experieYear, setExperieYear] = useState('')
   const [experieMonth, setExperieMonth] = useState('')
   const [zipCode, setZipCode] = useState('')
-  const [user,setUser] = useState(props.userName)
-  const [name,setName] = useState('')
-  const [surname,setSurname] = useState('')
+  const [user, setUser] = useState(props.userName)
+  const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
   const classes = useStyles()
 
-  useEffect(()=>{
-    getName();
-    getSurname();
-  },[])
+  useEffect(() => {
+    getName()
+    getSurname()
+  }, [])
 
   function StyledButton({ text = '' }) {
     const classes = useStyles()
@@ -160,12 +150,8 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
     return (
       <Button
         style={{
-          color:
-            text === selectedMoneyAmount ? 'black' : `${unknownprosDenied}`,
-          backgroundColor:
-            text === selectedMoneyAmount
-              ? `${unknownprosGreen}`
-              : `${unknownprosBackGround}`,
+          color: text === selectedMoneyAmount ? 'black' : `${unknownprosDenied}`,
+          backgroundColor: text === selectedMoneyAmount ? `${unknownprosGreen}` : `${unknownprosBackGround}`,
         }}
         variant='contained'
         onClick={(e) => handleChangeMoneyAmount(e, text)}
@@ -178,24 +164,24 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
 
   const handleDeposit = async () => {
     try {
-        const url = "credential/add"
-        const body = {
-          cc_holder_name:cardHolderName,
-          cc_no:carNumeber,
-          expiry_month:experieMonth,
-          expiry_year:experieYear,
-          cvv:cvv,
-          currency_code:"TRY",
-          installments_number:1,
-          invoice_description:"Testing",
-          total:selectedMoneyAmount,
-          name:name,
-          surname:surname,
-          nickname:user
-        }
-        const response = await axios.post(url, body, { withCredentials: true })
+      const url = 'credential/add'
+      const body = {
+        cc_holder_name: cardHolderName,
+        cc_no: carNumeber,
+        expiry_month: experieMonth,
+        expiry_year: experieYear,
+        cvv: cvv,
+        currency_code: 'TRY',
+        installments_number: 1,
+        invoice_description: 'Testing',
+        total: selectedMoneyAmount / 500,
+        name: name,
+        surname: surname,
+        nickname: user,
+      }
+      const response = await axios.post(url, body, { withCredentials: true })
     } catch (err) {
-      throw new Error("Something went wrong")
+      throw new Error('Something went wrong')
     }
   }
 
@@ -211,11 +197,11 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
   }
 
   const getName = () => {
-    setName(cardHolderName.split(" ")[0])
+    setName(cardHolderName.split(' ')[0])
   }
 
-  const getSurname = () =>{
-    setSurname(cardHolderName.split(" ")[1])
+  const getSurname = () => {
+    setSurname(cardHolderName.split(' ')[1])
   }
 
   return (
@@ -250,37 +236,17 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
       <DialogContent>
         {isMoneySelected ? (
           <div className={classes.mainHolder}>
-            <Grid
-              container
-              direction='column'
-              justify='flex-end'
-              alignItems='center'
-              spacing={1}
-            >
+            <Grid container direction='column' justify='flex-end' alignItems='center' spacing={1}>
               <Grid item xs={12}>
                 <div className={classes.mainHolder}>
-                  <Grid
-                    container
-                    direction='row'
-                    justify='center'
-                    alignItems='center'
-                  >
+                  <Grid container direction='row' justify='center' alignItems='center'>
                     <Grid item xs={3} className={classes.gridItems}>
                       <div className={classes.mainHolder}>
-                        <Grid
-                          container
-                          direction='column'
-                          justify='flex-start'
-                          alignItems='flex-start'
-                          spacing={1}
-                        >
+                        <Grid container direction='column' justify='flex-start' alignItems='flex-start' spacing={1}>
                           <Grid item xs={6} className={classes.gridItems}>
                             <Button>
                               <Card className={classes.card}>
-                                <CardMedia
-                                  className={classes.media}
-                                  image={CardImageHolder}
-                                />
+                                <CardMedia className={classes.media} image={CardImageHolder} />
                                 <CardContent>
                                   <Typography
                                     style={{
@@ -298,10 +264,7 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                           <Grid item xs={6} className={classes.gridItems}>
                             <Button>
                               <Card className={classes.card}>
-                                <CardMedia
-                                  className={classes.media}
-                                  image={CardImageHolder}
-                                />
+                                <CardMedia className={classes.media} image={CardImageHolder} />
                                 <CardContent>
                                   <Typography
                                     style={{
@@ -321,13 +284,7 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                     </Grid>
                     <Grid item xs={9}>
                       <div className={classes.mainHolder}>
-                        <Grid
-                          container
-                          direction='column'
-                          justify='center'
-                          alignItems='center'
-                          spacing={1}
-                        >
+                        <Grid container direction='column' justify='center' alignItems='center' spacing={1}>
                           <Grid item xs={12} className={classes.gridItems}>
                             <Typography variant='h4' component='h5'>
                               {'Buy so we can earn money?'}
@@ -399,19 +356,8 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                             />
                           </Grid>
                           <Divider classes={{ root: classes.dividerAmca }} />
-                          <Grid
-                            container
-                            item
-                            xs={12}
-                            className={classes.gridItems}
-                          >
-                            <Grid
-                              container
-                              direction='row'
-                              justify='space-between'
-                              alignItems='center'
-                              spacing={1}
-                            >
+                          <Grid container item xs={12} className={classes.gridItems}>
+                            <Grid container direction='row' justify='space-between' alignItems='center' spacing={1}>
                               <Grid item xs={3}>
                                 <TextField
                                   className={classes.inputs}
@@ -429,11 +375,7 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                                   }}
                                 />
                               </Grid>
-                              <Grid
-                                item
-                                xs={1}
-                                className={classes.dividerAmcaVerticalGrids}
-                              >
+                              <Grid item xs={1} className={classes.dividerAmcaVerticalGrids}>
                                 <Divider
                                   flexItem
                                   orientation='vertical'
@@ -448,7 +390,7 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='Expiration Month'
-                                  placeholder="XX"
+                                  placeholder='XX'
                                   onChange={(e) => setExperieMonth(e.target.value)}
                                   InputProps={{
                                     maxLength: 2,
@@ -466,7 +408,7 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='Expiration Year'
-                                  placeholder="XX"
+                                  placeholder='XX'
                                   onChange={(e) => setExperieYear(e.target.value)}
                                   InputProps={{
                                     maxLength: 2,
@@ -478,11 +420,7 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                                   }}
                                 />
                               </Grid>
-                              <Grid
-                                item
-                                xs={1}
-                                className={classes.dividerAmcaVerticalGrids}
-                              >
+                              <Grid item xs={1} className={classes.dividerAmcaVerticalGrids}>
                                 <Divider
                                   flexItem
                                   orientation='vertical'
@@ -521,26 +459,14 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
           </div>
         ) : (
           <div className={classes.mainHolder}>
-            <Grid
-              container
-              direction='column'
-              justify='space-around'
-              alignItems='center'
-              spacing={1}
-            >
+            <Grid container direction='column' justify='space-around' alignItems='center' spacing={1}>
               <Grid item xs={12}>
                 <Typography variant='h3'>Bakiye Yükleme</Typography>
               </Grid>
               <Divider classes={{ root: classes.dividerAmca }} />
               <Grid container item xs={12}>
                 {/* <div className={classes.mainHolder}> */}
-                <Grid
-                  container
-                  direction='row'
-                  justify='space-around'
-                  alignItems='center'
-                  spacing={1}
-                >
+                <Grid container direction='row' justify='space-around' alignItems='center' spacing={1}>
                   <Grid item xs={3}>
                     <Typography component='p' variant='h6' align='center'>
                       Yükleme Miktarı
@@ -549,16 +475,8 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                       250 Coin
                     </Typography>
                   </Grid>
-                  <Grid
-                    item
-                    xs={1}
-                    className={classes.dividerAmcaVerticalGrids}
-                  >
-                    <Divider
-                      flexItem
-                      orientation='vertical'
-                      classes={{ root: classes.dividerAmcaVertical }}
-                    />
+                  <Grid item xs={1} className={classes.dividerAmcaVerticalGrids}>
+                    <Divider flexItem orientation='vertical' classes={{ root: classes.dividerAmcaVertical }} />
                   </Grid>
 
                   <Grid item xs={4}>
@@ -569,16 +487,8 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
                       10 Coin Ücretsiz
                     </Typography>
                   </Grid>
-                  <Grid
-                    item
-                    xs={1}
-                    className={classes.dividerAmcaVerticalGrids}
-                  >
-                    <Divider
-                      flexItem
-                      orientation='vertical'
-                      classes={{ root: classes.dividerAmcaVertical }}
-                    />
+                  <Grid item xs={1} className={classes.dividerAmcaVerticalGrids}>
+                    <Divider flexItem orientation='vertical' classes={{ root: classes.dividerAmcaVertical }} />
                   </Grid>
                   <Grid item xs={3}>
                     <Typography component='p' variant='h6' align='center'>
@@ -600,26 +510,13 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
               <Divider classes={{ root: classes.dividerAmca }} />
               <Grid item xs={12}>
                 <FormControl className={classes.formButtonsControl}>
-                  <RadioGroup
-                    defaultValue={selectedMoneyAmount}
-                    aria-label='coin'
-                    name='coin-radios'
-                    onChange={handleChangeMoneyAmount}
-                    value={selectedMoneyAmount}
-                    className={classes.radioGrupControl}
-                  >
+                  <RadioGroup defaultValue={selectedMoneyAmount} aria-label='coin' name='coin-radios' onChange={handleChangeMoneyAmount} value={selectedMoneyAmount} className={classes.radioGrupControl}>
                     <>
                       {texts &&
                         texts.map((item, index) => {
                           return (
                             <>
-                              <FormControlLabel
-                                className={classes.formButtons}
-                                value={item}
-                                control={
-                                  <StyledButton key={item} text={item} />
-                                }
-                              />
+                              <FormControlLabel className={classes.formButtons} value={item} control={<StyledButton key={item} text={item} />} />
                               {index !== texts.length - 1 ? (
                                 <Divider
                                   flexItem
@@ -646,31 +543,16 @@ function Payment(props, {paymentModal, handPaymentModalClose }) {
             Back
           </Button>
         ) : (
-          <Button
-            variant='text'
-            onClick={handPaymentModalClose}
-            color='primary'
-            endIcon={<CancelIcon />}
-          >
+          <Button variant='text' onClick={handPaymentModalClose} color='primary' endIcon={<CancelIcon />}>
             Close
           </Button>
         )}
         {isMoneySelected ? (
-          <Button
-            className={classes.GoBtns}
-            variant='contained'
-            endIcon={<Send />}
-            onClick={handleDeposit}
-          >
+          <Button className={classes.GoBtns} variant='contained' endIcon={<Send />} onClick={handleDeposit}>
             Deposit
           </Button>
         ) : (
-          <Button
-            className={classes.GoBtns}
-            variant='contained'
-            onClick={selectMoney}
-            endIcon={<Send />}
-          >
+          <Button className={classes.GoBtns} variant='contained' onClick={selectMoney} endIcon={<Send />}>
             Next
           </Button>
         )}
