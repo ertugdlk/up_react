@@ -539,12 +539,12 @@ function Dashboard(props) {
                 </a>
               </div>
               <div className="shop">
-                <img src={Cart} alt="shopping-cart" className="shopping-cart-img"></img>
+                <img loading="lazy" src={Cart} alt="shopping-cart" className="shopping-cart-img"></img>
                 <span className="shop-text">MARKET</span>
               </div>
               <div className='HeaderRightMenu'>
               <div className="header-user">
-              <img src={avatar} className="img-responsive-header" alt="User-pic"></img>
+              <img loading="lazy" src={avatar} className="img-responsive-header" alt="User-pic"></img>
               <div>
               <button class="header-nickname" onClick={handleAccount}>{userName}</button>
               </div>
@@ -556,7 +556,7 @@ function Dashboard(props) {
 
           <div className='Container'>
             <div className='Slider'>
-              <img className='img1' src={Photo1}></img>
+              <img loading="lazy" className='img1' src={Photo1}></img>
             </div>
             <div className='GameFilter'>
               <button className='open-games' onClick={changeGameMethodToPaid}>
@@ -569,7 +569,7 @@ function Dashboard(props) {
                 Free Games
               </button>
               <div className='search-game'>
-                <img src={searchicon} className='search-image'></img>
+                <img loading="lazy" src={searchicon} className='search-image'></img>
                 <input
                   onChange={(e) => handleSearch(e)}
                   onKeyUp={(e) => handleSearch(e)}
@@ -579,7 +579,7 @@ function Dashboard(props) {
                 ></input>
               </div>
               <div className='filter-game'>
-                <img src={Filter} className='filter-image'></img>
+                <img loading="lazy" src={Filter} className='filter-image'></img>
                 <button className='filter-games'>Filter</button>
               </div>
               <button className='Random'>Random</button>
@@ -618,7 +618,6 @@ function Dashboard(props) {
           {/* -------------------------------- LEFT PANE ------------------------------- */}
 
           <LeftPane
-          handPaymentModalOpen={handPaymentModalOpen}
             userName={userName}
             handleAddGame={handleAddGame}
             handleVerificationForm={handleVerificationForm}

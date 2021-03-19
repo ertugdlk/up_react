@@ -114,13 +114,14 @@ const LeftPane = (props) => {
     <div className="MenuBar">
       <div className="menubar-user">
         <div className="menubar-userpic">
-          <img src={avatar} className="img-responsive" alt="User-pic"></img>
+          <img loading="lazy" src={avatar} className="img-responsive" alt="User-pic"></img>
         </div>
         <div class='menubar-nickname'>{props.userName}</div>
         <div class='menubar-nickname'>
           {' '}
           <br></br>
           <img
+            loading="lazy"
             height='20px'
             width='auto'
             src='https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg'
@@ -129,7 +130,7 @@ const LeftPane = (props) => {
         </div>
         <div className='menubar-mail'>{email}</div>
         <div className='balance'>
-          <img src={Bag} className='menubar-icon'></img>
+          <img  loading="lazy" src={Bag} className='menubar-icon'></img>
           {verified ? (
             <span>{balance}</span>
           ) : (
@@ -170,15 +171,15 @@ const LeftPane = (props) => {
 
       <div className="bottom-left">
         <div className="support-container">
-          <img src={Support} alt="Support" className="support"></img>
+          <img loading="lazy" src={Support} alt="Support" className="support"></img>
           <button className="bottom-left-text">Support</button>
         </div>
         <div className="legal-conditions-container">
-          <img src={Pencil} alt="Legal Conditions" className="legal-conditions"></img>
+          <img loading="lazy" src={Pencil} alt="Legal Conditions" className="legal-conditions"></img>
           <button disabled className="bottom-left-text">Legal Conditions</button>
         </div>
         <div className="discord-container">
-          <img src={Discord} className="discord-logo" alt="Discord"></img>
+          <img loading="lazy" src={Discord} className="discord-logo" alt="Discord"></img>
         </div>
         <div className="language-container">
          <button disabled className="language">Translation component here</button>
