@@ -78,7 +78,7 @@ function NotFoundPage(props) {
         <div className="deneme">
         <div className="nf-logo">
             <a href='/'>
-              <img src={Logo}/>
+              <img loading="lazy" src={Logo}/>
             </a>
           </div>
             <p className="nf-img-description">
@@ -90,15 +90,15 @@ function NotFoundPage(props) {
             </p>
         <div className="steps-container">
         <span className="steps-instructions">Step 1: Click on your Steam Username</span>
-        <img src={FirstStep} className="steps" alt="first-step"></img>
+        <img loading="lazy" src={FirstStep} className="steps" alt="first-step"></img>
         <span className="steps-instructions">Step 2: In the menu below, click on Privacy Settings</span>
-        <img src={SecondStep} className="steps" alt="second-step"></img>
+        <img loading="lazy" src={SecondStep} className="steps" alt="second-step"></img>
         <span className="steps-instructions">Step 3: In this menu, please apply the following changes</span>
-        <img src={ThirdStep} className="steps" alt="third-step"></img>
+        <img loading="lazy" src={ThirdStep} className="steps" alt="third-step"></img>
         <span className="steps-instructions">Step 4: Click on My Profile and change it to public</span>
-        <img src={FourthStep} className="steps" alt="fourth-step"></img>
+        <img loading="lazy" src={FourthStep} className="steps" alt="fourth-step"></img>
         <span className="steps-instructions">Step 5: Click on Game Details and change it to public</span>
-        <img src={FifthStep} className="steps" alt="fifth-step"></img>
+        <img loading="lazy" src={FifthStep} className="steps" alt="fifth-step"></img>
         </div>
         </div>
       </>

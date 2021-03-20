@@ -466,6 +466,7 @@ function Room(props) {
       } else {
         return (
           <img
+            loading="lazy"
             className='mapo'
             style={{
               width: '187px',

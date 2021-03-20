@@ -113,7 +113,7 @@ function GamesList(props) {
                   onClick={() => handlePlatformIntegration(game.platform)}
                 >
                   <figure key={game.name}>
-                    <img src={game.img} />
+                    <img loading="lazy" src={game.img} />
                   </figure>
                 </div>
               ))}

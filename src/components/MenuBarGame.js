@@ -22,7 +22,7 @@ function MenuBarGame(props) {
       <div>
         <li>
           <button className='gameButton' onClick={handleDropdown} ref={btn}>
-            <img src={Logo} /> {props.data.name}
+            <img loading="lazy" src={Logo} /> {props.data.name}
           </button>
           {click ? (
             <div className='dropdown-content' ref={dropdown}>
