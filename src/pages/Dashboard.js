@@ -482,25 +482,30 @@ function Dashboard(props) {
                   <img style={{ width: '187px', height: '50px' }} src={Logo} />
                 </a>
               </div>
-              <div className="shop">
-                <img loading="lazy" src={Cart} alt="shopping-cart" className="shopping-cart-img"></img>
-                <span className="shop-text">MARKET</span>
+              <div className='shop'>
+                <img loading='lazy' src={Cart} alt='shopping-cart' className='shopping-cart-img'></img>
+                <span className='shop-text'>MARKET</span>
               </div>
               <div className='HeaderRightMenu'>
-              <div className="header-user">
-              <img loading="lazy" src={avatar} className="img-responsive-header" alt="User-pic"></img>
-              <div>
-              <button class="header-nickname" onClick={handleAccount}>{userName}</button>
-              </div>
-              </div>
-                <button onClick={handleLogout} className="logout-button"> <img src={Door} className="logout-icon" alt="Logout"></img></button>
+                <div className='header-user'>
+                  <img loading='lazy' src={avatar} className='img-responsive-header' alt='User-pic'></img>
+                  <div>
+                    <button class='header-nickname' onClick={handleAccount}>
+                      {userName}
+                    </button>
+                  </div>
+                </div>
+                <button onClick={handleLogout} className='logout-button'>
+                  {' '}
+                  <img src={Door} className='logout-icon' alt='Logout'></img>
+                </button>
               </div>
             </Grid>
           </div>
 
           <div className='Container'>
             <div className='Slider'>
-              <img loading="lazy" className='img1' src={Photo1}></img>
+              <img loading='lazy' className='img1' src={Photo1}></img>
             </div>
             <div className='GameFilter'>
               <button className='open-games' onClick={changeGameMethodToPaid}>
@@ -510,17 +515,11 @@ function Dashboard(props) {
                 Free Games
               </button>
               <div className='search-game'>
-                <img loading="lazy" src={searchicon} className='search-image'></img>
-                <input
-                  onChange={(e) => handleSearch(e)}
-                  onKeyUp={(e) => handleSearch(e)}
-                  value={searchWord}
-                  className='search-gameID'
-                  placeholder='Search Host Nickname'
-                ></input>
+                <img loading='lazy' src={searchicon} className='search-image'></img>
+                <input onChange={(e) => handleSearch(e)} onKeyUp={(e) => handleSearch(e)} value={searchWord} className='search-gameID' placeholder='Search Host Nickname'></input>
               </div>
               <div className='filter-game'>
-                <img loading="lazy" src={Filter} className='filter-image'></img>
+                <img loading='lazy' src={Filter} className='filter-image'></img>
                 <button className='filter-games'>Filter</button>
               </div>
               <button className='Random'>Random</button>
@@ -550,15 +549,7 @@ function Dashboard(props) {
 
           {/* -------------------------------- LEFT PANE ------------------------------- */}
 
-          <LeftPane
-            userName={userName}
-            handleAddGame={handleAddGame}
-            handleVerificationForm={handleVerificationForm}
-            handleVerificationFormClose={handleVerificationFormClose}
-            verificationForm={verificationForm}
-            balance={balance}
-            handPaymentModalOpen={handPaymentModalOpen}
-          />
+          <LeftPane userName={userName} handleAddGame={handleAddGame} handleVerificationForm={handleVerificationForm} handleVerificationFormClose={handleVerificationFormClose} verificationForm={verificationForm} balance={balance} handPaymentModalOpen={handPaymentModalOpen} />
 
           {/* -------------------------------- LEFT PANE ------------------------------- */}
 

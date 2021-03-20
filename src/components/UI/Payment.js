@@ -320,6 +320,9 @@ function Payment(props) {
                                   notchedOutline: classes.notchedOutline,
                                 },
                               }}
+                              onInput={(e) => {
+                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 30)
+                              }}
                             />
                           </Grid>
                           <Divider classes={{ root: classes.dividerAmca }} />
@@ -342,7 +345,7 @@ function Payment(props) {
                               className={classes.inputs}
                               id='outlined-basic'
                               variant='outlined'
-                              type='number'
+                              type='tel'
                               placeholder='XXXX-XXXX-XXXX-XXXX'
                               onChange={(e) => setCarNumeber(e.target.value)}
                               InputProps={{
@@ -352,6 +355,9 @@ function Payment(props) {
                                   focused: classes.focused,
                                   notchedOutline: classes.notchedOutline,
                                 },
+                              }}
+                              onInput={(e) => {
+                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 16)
                               }}
                             />
                           </Grid>
@@ -373,6 +379,9 @@ function Payment(props) {
                                       notchedOutline: classes.notchedOutline,
                                     },
                                   }}
+                                  onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 3)
+                                  }}
                                 />
                               </Grid>
                               <Grid item xs={1} className={classes.dividerAmcaVerticalGrids}>
@@ -391,6 +400,7 @@ function Payment(props) {
                                   variant='outlined'
                                   label='Expiration Month'
                                   placeholder='XX'
+                                  type='tel'
                                   onChange={(e) => setExperieMonth(e.target.value)}
                                   InputProps={{
                                     maxLength: 2,
@@ -399,6 +409,9 @@ function Payment(props) {
                                       focused: classes.focused,
                                       notchedOutline: classes.notchedOutline,
                                     },
+                                  }}
+                                  onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2)
                                   }}
                                 />
                               </Grid>
@@ -409,6 +422,7 @@ function Payment(props) {
                                   variant='outlined'
                                   label='Expiration Year'
                                   placeholder='XX'
+                                  type='tel'
                                   onChange={(e) => setExperieYear(e.target.value)}
                                   InputProps={{
                                     maxLength: 2,
@@ -417,6 +431,9 @@ function Payment(props) {
                                       focused: classes.focused,
                                       notchedOutline: classes.notchedOutline,
                                     },
+                                  }}
+                                  onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2)
                                   }}
                                 />
                               </Grid>
@@ -435,15 +452,18 @@ function Payment(props) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='Zip Code'
+                                  type='tel'
                                   onChange={(e) => setZipCode(e.target.value)}
                                   InputProps={{
                                     maxLength: 6,
-
                                     classes: {
                                       root: classes.inputInput,
                                       focused: classes.focused,
                                       notchedOutline: classes.notchedOutline,
                                     },
+                                  }}
+                                  onInput={(e) => {
+                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
                                   }}
                                 />
                               </Grid>
