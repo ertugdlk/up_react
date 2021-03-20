@@ -25,7 +25,7 @@ import { unknownprosBackGround, unknownprosGreen, unknownprosDenied } from '../.
 import axios from '../../utils'
 
 const useStyles = makeStyles((theme) => ({
-  root: { minHeight: 550, minWidth: 1015 },
+  root: { minHeight: 550, minWidth: 1015, zIndex: 1000 },
   mainHolder: {
     flexGrow: 1,
     padding: 10,
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Payment(props, { paymentModal, handPaymentModalClose }) {
+function Payment(props) {
   const texts = ['50 Coins', '100 Coins', '250 Coins', '500 Coins', '1000 Coins']
   const middle = texts[Math.round((texts.length - 1) / 2)]
   const [isMoneySelected, setIsMoneySelected] = useState(false)
@@ -217,8 +217,8 @@ function Payment(props, { paymentModal, handPaymentModalClose }) {
           color: 'white',
         },
       }}
-      open={paymentModal}
-      onClose={handPaymentModalClose}
+      open={props.paymentModal}
+      onClose={props.handPaymentModalClose}
       aria-labelledby='alert-dialog-title'
       aria-describedby='alert-dialog-description'
       className={classes.root}
@@ -226,7 +226,7 @@ function Payment(props, { paymentModal, handPaymentModalClose }) {
       <div className={classes.mainHolder}>
         <Grid container direction='row' justify='flex-end' alignItems='center'>
           <Grid item>
-            <Button color='secondary' onClick={handPaymentModalClose}>
+            <Button color='secondary' onClick={props.handPaymentModalClose}>
               <CancelIcon />
             </Button>
           </Grid>
@@ -543,7 +543,7 @@ function Payment(props, { paymentModal, handPaymentModalClose }) {
             Back
           </Button>
         ) : (
-          <Button variant='text' onClick={handPaymentModalClose} color='primary' endIcon={<CancelIcon />}>
+          <Button variant='text' onClick={props.handPaymentModalClose} color='primary' endIcon={<CancelIcon />}>
             Close
           </Button>
         )}

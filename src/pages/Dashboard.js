@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import Logo from '../logo.png'
 import Photo1 from '../Photo1.png'
-import Door from "../logout-icon.png"
+import Door from '../logout-icon.png'
 import Bag from '../bag_icon.png'
 import searchicon from '../search_icon.png'
-import Cart from "../shopping-cart.png"
+import Cart from '../shopping-cart.png'
 import Filter from '../filter_icon.png'
 import { Grid } from '@material-ui/core'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
@@ -21,15 +21,7 @@ import MenuBarGame from '../components/MenuBarGame'
 import { NavigateBefore, SportsHockeyRounded } from '@material-ui/icons'
 import { connect } from 'react-redux'
 
-import {
-  getAllGameRooms,
-  addNewGame,
-  getMatchData,
-  changeGameHost,
-  removeGameRoom,
-  getFreeGameRooms,
-  getPaidGameRooms,
-} from '../actions/index'
+import { getAllGameRooms, addNewGame, getMatchData, changeGameHost, removeGameRoom, getFreeGameRooms, getPaidGameRooms } from '../actions/index'
 
 import Room from '../components/Room'
 import MapSelection from '../components/MapSelection'
@@ -81,7 +73,7 @@ function Dashboard(props) {
   const [openModal, setOpenModal] = useState(false)
   const [preventCreate, setPreventCreate] = useState(false)
   const [verificationForm, setVerificationForm] = useState(false)
-  const [avatar,setAvatar] = useState([])
+  const [avatar, setAvatar] = useState([])
   const [balance, setBalance] = useState(0)
 
   const [paymentModal, setPaymentModal] = useState(false)
@@ -100,6 +92,7 @@ function Dashboard(props) {
   }, [])
 
   const handPaymentModalOpen = () => {
+    console.log('test')
     setPaymentModal(true)
   }
   const handPaymentModalClose = () => {
@@ -125,8 +118,6 @@ function Dashboard(props) {
     setVerificationForm(true)
   }
 
-
-
   useEffect(() => {
     setTimeout(() => setErrorBar(), 5000)
   })
@@ -135,7 +126,6 @@ function Dashboard(props) {
   const history = useHistory()
 
   useEffect(() => {
-
     /* --------------------------- Redux Get All Rooms -------------------------- */
     props.getAllGameRooms()
     props.getFreeGameRooms()
@@ -158,11 +148,7 @@ function Dashboard(props) {
         setSelectedHost(newHost.nickname)
         if (userName == newHost) {
           const url = 'room/getdata'
-          const response = await axios.post(
-            url,
-            { host: selectedHost },
-            { withCredentials: true }
-          )
+          const response = await axios.post(url, { host: selectedHost }, { withCredentials: true })
           setRoomResponse(response.data)
         }
       } catch (err) {
@@ -299,18 +285,17 @@ function Dashboard(props) {
       }
     }
 
-  async function userAvatar () {
-    try{
-    const url = "detail/steamavatar"
-    const response = await axios.get(url,{withCredentials:true});
-    if(response.data ===""){
-      setAvatar(Logo)
-    }else
-      setAvatar(response.data)
-  }catch(err){
-    alert("We couldn't get your avatar")
-  }
-  }
+    async function userAvatar() {
+      try {
+        const url = 'detail/steamavatar'
+        const response = await axios.get(url, { withCredentials: true })
+        if (response.data === '') {
+          setAvatar(Logo)
+        } else setAvatar(response.data)
+      } catch (err) {
+        alert("We couldn't get your avatar")
+      }
+    }
 
     props.getFreeGameRooms()
     props.getPaidGameRooms()
@@ -341,24 +326,12 @@ function Dashboard(props) {
         return game.name == gameName
       })
       const url2 = 'room/checkjoined'
-      const response2 = await axios.post(
-        url2,
-        { nickname: userName },
-        { withCredentials: true }
-      )
+      const response2 = await axios.post(url2, { nickname: userName }, { withCredentials: true })
 
       const url3 = 'room/checkblacklist'
-      const response3 = await axios.post(
-        url3,
-        { host: host },
-        { withCredentials: true }
-      )
+      const response3 = await axios.post(url3, { host: host }, { withCredentials: true })
 
-      if (
-        result === undefined ||
-        response2.data.status === 0 ||
-        response3.data.status === 0
-      ) {
+      if (result === undefined || response2.data.status === 0 || response3.data.status === 0) {
         if (result === undefined) {
           setErrorBar(true)
           setErrorMessage("You don't have " + gameName)
@@ -427,11 +400,7 @@ function Dashboard(props) {
   const handleReturnGame = async () => {
     try {
       const url = 'room/getdata'
-      const response = await axios.post(
-        url,
-        { host: selectedHost },
-        { withCredentials: true }
-      )
+      const response = await axios.post(url, { host: selectedHost }, { withCredentials: true })
       setRoomResponse(response.data)
       setGameRoom(true)
       handleRoomOpen()
@@ -467,7 +436,6 @@ function Dashboard(props) {
     }
   }
 
-  
   const handleSteam = () => {
     try {
       async function steamauth() {
@@ -499,37 +467,13 @@ function Dashboard(props) {
           {gamesList ? <GamesList onClose={handleListClose}></GamesList> : null}
           {account ? (
             <CenterModal>
-              <MyAccount
-                userName={userName}
-                onClose={handleAccountClose}
-                email={email}
-              ></MyAccount>
+              <MyAccount userName={userName} onClose={handleAccountClose} email={email}></MyAccount>
             </CenterModal>
           ) : null}
-          {create ? (
-            <CreateGame
-              onCreate={handleCreateRoom}
-              onClose={handleCreateClose}
-              games={menubarGames}
-            ></CreateGame>
-          ) : null}
-          {mapSelect ? (
-            <MapSelection onClose={handleMapSelectClose}></MapSelection>
-          ) : null}
-          {verificationForm ? (
-            <VerificationForm onClose={handleVerificationFormClose} />
-          ) : null}
-          {gameRoom ? (
-            <Room
-              openModal={openModal}
-              host={selectedHost}
-              socket={socket}
-              nickname={userName}
-              roomResponse={roomResponse}
-              _host={_host}
-              handleCloseModal={handleCloseModal}
-            ></Room>
-          ) : null}
+          {create ? <CreateGame onCreate={handleCreateRoom} onClose={handleCreateClose} games={menubarGames}></CreateGame> : null}
+          {mapSelect ? <MapSelection onClose={handleMapSelectClose}></MapSelection> : null}
+          {verificationForm ? <VerificationForm onClose={handleVerificationFormClose} /> : null}
+          {gameRoom ? <Room openModal={openModal} host={selectedHost} socket={socket} nickname={userName} roomResponse={roomResponse} _host={_host} handleCloseModal={handleCloseModal}></Room> : null}
           <GlobalStyle></GlobalStyle>
           <div className='Header'>
             <Grid>
@@ -538,18 +482,23 @@ function Dashboard(props) {
                   <img style={{ width: '187px', height: '50px' }} src={Logo} />
                 </a>
               </div>
-              <div className="shop">
-                <img src={Cart} alt="shopping-cart" className="shopping-cart-img"></img>
-                <span className="shop-text">MARKET</span>
+              <div className='shop'>
+                <img src={Cart} alt='shopping-cart' className='shopping-cart-img'></img>
+                <span className='shop-text'>MARKET</span>
               </div>
               <div className='HeaderRightMenu'>
-              <div className="header-user">
-              <img src={avatar} className="img-responsive-header" alt="User-pic"></img>
-              <div>
-              <button class="header-nickname" onClick={handleAccount}>{userName}</button>
-              </div>
-              </div>
-                <button onClick={handleLogout} className="logout-button"> <img src={Door} className="logout-icon" alt="Logout"></img></button>
+                <div className='header-user'>
+                  <img src={avatar} className='img-responsive-header' alt='User-pic'></img>
+                  <div>
+                    <button class='header-nickname' onClick={handleAccount}>
+                      {userName}
+                    </button>
+                  </div>
+                </div>
+                <button onClick={handleLogout} className='logout-button'>
+                  {' '}
+                  <img src={Door} className='logout-icon' alt='Logout'></img>
+                </button>
               </div>
             </Grid>
           </div>
@@ -562,21 +511,12 @@ function Dashboard(props) {
               <button className='open-games' onClick={changeGameMethodToPaid}>
                 Paid Games
               </button>
-              <button
-                className='private-games'
-                onClick={changeGameMethodToFree}
-              >
+              <button className='private-games' onClick={changeGameMethodToFree}>
                 Free Games
               </button>
               <div className='search-game'>
                 <img src={searchicon} className='search-image'></img>
-                <input
-                  onChange={(e) => handleSearch(e)}
-                  onKeyUp={(e) => handleSearch(e)}
-                  value={searchWord}
-                  className='search-gameID'
-                  placeholder='Search Host Nickname'
-                ></input>
+                <input onChange={(e) => handleSearch(e)} onKeyUp={(e) => handleSearch(e)} value={searchWord} className='search-gameID' placeholder='Search Host Nickname'></input>
               </div>
               <div className='filter-game'>
                 <img src={Filter} className='filter-image'></img>
@@ -599,45 +539,24 @@ function Dashboard(props) {
             ></GameRoomRow> */}
             {isFreeGame ? (
               <>
-                <GameRoomRow
-                  type='FREE'
-                  data={props.freeGames}
-                  onJoin={(host, gameName) => handleGameRoom(host, gameName)}
-                ></GameRoomRow>
+                <GameRoomRow type='FREE' data={props.freeGames} onJoin={(host, gameName) => handleGameRoom(host, gameName)}></GameRoomRow>
                 <div>FREEEEEEEEEEEEEEEEEEEEEEEEEEEEE</div>
               </>
             ) : (
-              <GameRoomRow
-                type='PAID'
-                data={props.paidGames}
-                onJoin={(host, gameName) => handleGameRoom(host, gameName)}
-              ></GameRoomRow>
+              <GameRoomRow type='PAID' data={props.paidGames} onJoin={(host, gameName) => handleGameRoom(host, gameName)}></GameRoomRow>
             )}
           </div>
 
           {/* -------------------------------- LEFT PANE ------------------------------- */}
 
-          <LeftPane
-          handPaymentModalOpen={handPaymentModalOpen}
-            userName={userName}
-            handleAddGame={handleAddGame}
-            handleVerificationForm={handleVerificationForm}
-            handleVerificationFormClose={handleVerificationFormClose}
-            verificationForm={verificationForm}
-            balance={balance}
-            handPaymentModalOpen={handPaymentModalOpen}
-          />
+          <LeftPane handPaymentModalOpen={handPaymentModalOpen} userName={userName} handleAddGame={handleAddGame} handleVerificationForm={handleVerificationForm} handleVerificationFormClose={handleVerificationFormClose} verificationForm={verificationForm} balance={balance} handPaymentModalOpen={handPaymentModalOpen} />
 
           {/* -------------------------------- LEFT PANE ------------------------------- */}
 
           <div className='SocialBar'></div>
         </div>
       ) : null}
-      <Payment
-        paymentModal={paymentModal}
-        handPaymentModalClose={handPaymentModalClose}
-        userName={userName}
-      />
+      <Payment paymentModal={paymentModal} handPaymentModalClose={handPaymentModalClose} userName={userName} />
     </>
   )
   //deposit ve withdraw butonlarÄ±na geÃ§ici olarak handleAccount fonksiyonu atandÄ±, para iÅŸlemleri entegre edilince dÃ¼zeltilmeli.
