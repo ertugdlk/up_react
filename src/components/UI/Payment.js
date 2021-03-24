@@ -139,10 +139,10 @@ function Payment(props) {
   const [surname, setSurname] = useState('')
   const classes = useStyles()
 
-  useEffect(() => {
-    getName()
-    getSurname()
-  }, [])
+  // useEffect(() => {
+  //   getName()
+  //   getSurname()
+  // }, [])
 
   function StyledButton({ text = '' }) {
     const classes = useStyles()
@@ -196,12 +196,56 @@ function Payment(props) {
     setIsMoneySelected(false)
   }
 
-  const getName = () => {
-    setName(cardHolderName.split(' ')[0])
+  // const getName = () => {
+  //   setName(cardHolderName.split(' ')[0])
+  // }
+
+  // const getSurname = () => {
+  //   setSurname(cardHolderName.split(' ')[1])
+  // }
+
+  const handleSetCardHolderName = (e) => {
+    console.log('handleSetCardHolderName', e.target.value)
+    if (e.target.value === 'NaN' || e.target.value === '') {
+      setCardHolderName('')
+    }
+    
+    setCardHolderName(e.target.value)
+    // if (isNaN(e.target.value)) {
+    //   setCardHolderName('')
+    // }
   }
 
-  const getSurname = () => {
-    setSurname(cardHolderName.split(' ')[1])
+  const handleSetCardNumber = (e) => {
+    setCarNumeber(e.target.value)
+    if (isNaN(e.target.value)) {
+      setCarNumeber('')
+    }
+  }
+
+  const handleSetCVV = (e) => {
+    setCvv(e.target.value)
+    if (isNaN(e.target.value)) {
+      setCvv('')
+    }
+  }
+  const handleSetMonth = (e) => {
+    setExperieMonth(e.target.value)
+    if (isNaN(e.target.value)) {
+      setExperieMonth('')
+    }
+  }
+  const handleSetYear = (e) => {
+    setExperieYear(e.target.value)
+    if (isNaN(e.target.value)) {
+      setExperieYear('')
+    }
+  }
+  const handleSetZip = (e) => {
+    setZipCode(e.target.value)
+    if (isNaN(e.target.value)) {
+      setZipCode('')
+    }
   }
 
   return (
@@ -305,16 +349,18 @@ function Payment(props) {
                             </InputLabel>
 
                             <TextField
+                              type='text'
                               autoComplete={false}
                               fullWidth
                               className={classes.inputs}
                               id='outlined-basic'
                               variant='outlined'
                               placeholder='XXXXXXXX XXXXXXXX'
-                              onChange={(e) => setCardHolderName(e.target.value)}
+                              onChange={(e) => handleSetCardHolderName(e)}
+                              value={cardHolderName}
                               InputProps={{
+                                type: 'text',
                                 classes: {
-                                  maxLength: 30,
                                   root: classes.inputInput,
                                   focused: classes.focused,
                                   notchedOutline: classes.notchedOutline,
@@ -347,7 +393,8 @@ function Payment(props) {
                               variant='outlined'
                               type='tel'
                               placeholder='XXXX-XXXX-XXXX-XXXX'
-                              onChange={(e) => setCarNumeber(e.target.value)}
+                              onChange={(e) => handleSetCardNumber(e)}
+                              value={carNumeber}
                               InputProps={{
                                 classes: {
                                   maxLength: 16,
@@ -370,7 +417,8 @@ function Payment(props) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   label='CVV'
-                                  onChange={(e) => setCvv(e.target.value)}
+                                  onChange={(e) => handleSetCVV(e)}
+                                  value={cvv}
                                   InputProps={{
                                     maxLength: 3,
                                     classes: {
@@ -401,7 +449,8 @@ function Payment(props) {
                                   label='Expiration Month'
                                   placeholder='XX'
                                   type='tel'
-                                  onChange={(e) => setExperieMonth(e.target.value)}
+                                  onChange={(e) => handleSetMonth(e)}
+                                  value={experieMonth}
                                   InputProps={{
                                     maxLength: 2,
                                     classes: {
@@ -423,7 +472,8 @@ function Payment(props) {
                                   label='Expiration Year'
                                   placeholder='XX'
                                   type='tel'
-                                  onChange={(e) => setExperieYear(e.target.value)}
+                                  onChange={(e) => handleSetYear(e)}
+                                  value={experieYear}
                                   InputProps={{
                                     maxLength: 2,
                                     classes: {
@@ -453,7 +503,8 @@ function Payment(props) {
                                   variant='outlined'
                                   label='Zip Code'
                                   type='tel'
-                                  onChange={(e) => setZipCode(e.target.value)}
+                                  value={zipCode}
+                                  onChange={(e) => handleSetZip(e)}
                                   InputProps={{
                                     maxLength: 6,
                                     classes: {
