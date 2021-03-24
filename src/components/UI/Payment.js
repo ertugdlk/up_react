@@ -206,14 +206,11 @@ function Payment(props) {
 
   const handleSetCardHolderName = (e) => {
     console.log('handleSetCardHolderName', e.target.value)
-    if (e.target.value === 'NaN' || e.target.value === '') {
+    if (e.target.value === '') {
       setCardHolderName('')
     }
-    
     setCardHolderName(e.target.value)
-    // if (isNaN(e.target.value)) {
-    //   setCardHolderName('')
-    // }
+
   }
 
   const handleSetCardNumber = (e) => {
