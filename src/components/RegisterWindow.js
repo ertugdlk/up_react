@@ -20,20 +20,27 @@ const useStyles = makeStyles(theme =>
   createStyles({
     root: {
       color: "white",
-      "&.Mui-focused": {
-        color:'white',
-        borderColor: 'green'
+      backgroundColor:"#1b1c23",
+      width:"150%",
+      marginLeft:"-20%",
+      marginBottom:"10px",
+      borderRadius:"10px",
+      '& label.Mui-focused': {
+        color: 'green',
       },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "green"
-      },
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: "red",
-        color:"green"
+      '& .MuiOutlinedInput-root': {
+        color:"white",
+        '& fieldset': {
+          //borderColor: 'red',
+        },
+        '&:hover fieldset': {
+          //borderColor: 'yellow',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#00ff60',
+        },
       },
     }
-  }
     },
   )
 );
@@ -93,15 +100,12 @@ function RegisterWindow(props) {
         setNicknameHelperText('')
       }
       if (!filter.test(email.value)) {
-
-        console.log(!filter.test(email))
         setEmailHelperText("Invalid Email")
         setEmailError(true)
       }if(email!=='' && filter.test(email)){
         setEmailHelperText('')
         setEmailError(false)
-      }
-      else{
+        
       const url = 'auth/register';
       const response = await axios.post(url, { nickname, email, password });
       if (response.status == 200) {
@@ -115,7 +119,7 @@ function RegisterWindow(props) {
       }
     }
     } catch (err) {
-      console.log(err);
+      throw new Error("Something went wrong")
     }
   };
 
@@ -143,14 +147,10 @@ function RegisterWindow(props) {
         </div>
         <div className='register-modal'>
           <h2 className='register-title'>Create Account</h2>
-          <label className='labels'>Nickname</label>
-          <TextField id="standard-basic" onChange={(e)=> setNickname(e.target.value)} required error={nicknameError} helperText={nicknameHelperText} className={classes.root} InputProps={{className: classes.root}}/>
-          <label className='labels'>Mail</label>
-          <TextField id="standard-basic" onChange={(e)=> setEmail(e.target.value)} type="email" required error={emailError} helperText={emailHelperText} className={classes.root} InputProps={{className: classes.root}}/>
-          <label className='labels'>Password</label>
-          <TextField id="standard-basic" onChange={(e)=> setPassword(e.target.value)}   type="password" required error={passwordError} helperText={passwordHelperText}  className={classes.root} InputProps={{className: classes.root}}/>
-          <label className='labels'> Confirm Password</label>
-          <TextField id="standard-basic" onChange={(e)=> setSecondPassword(e.target.value)}   type="password" required error={secondPasswordError} helperText={secondPasswordHelperText} className={classes.root} InputProps={{className: classes.root}}/>
+          <TextField variant="outlined" placeholder="Nickname"  onChange={(e)=> setNickname(e.target.value)} required error={nicknameError} helperText={nicknameHelperText} className={classes.root}/>
+          <TextField variant="outlined" placeholder="Email"  onChange={(e)=> setEmail(e.target.value)} type="email" required error={emailError} helperText={emailHelperText} className={classes.root}/>
+          <TextField variant="outlined" placeholder="Password"  onChange={(e)=> setPassword(e.target.value)}   type="password" required error={passwordError} helperText={passwordHelperText}  className={classes.root}/>
+          <TextField  variant="outlined" placeholder="Confirm Password" onChange={(e)=> setSecondPassword(e.target.value)}   type="password" required error={secondPasswordError} helperText={secondPasswordHelperText} className={classes.root} />
           <div>
             <button
               className='register-button'

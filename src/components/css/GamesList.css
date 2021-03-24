@@ -1,10 +1,8 @@
 .GamesList {
   display: flex;
   position: absolute;
-  padding: 10px 80px;
-  height: auto;
   top: 22%;
-  left: 35%;
+  margin: auto;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
@@ -13,7 +11,6 @@
   background: #0b0b0b;
   color: white;
   border: transparent;
-  border: 1px solid #0ab74c;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -32,7 +29,7 @@
 
 body {
   background: #24282f;
-  font-family: 'Alegreya Sans';
+  font-family: "Alegreya Sans";
 }
 .wrapper {
   padding: 15px;
@@ -57,7 +54,7 @@ body {
 }
 
 .cards .card:after {
-  content: '';
+  content: "";
   z-index: 10;
   width: 200%;
   height: 100%;

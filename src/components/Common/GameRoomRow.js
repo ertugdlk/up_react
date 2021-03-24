@@ -1,12 +1,12 @@
-import React, { useState } from "react"
-import "../css/GameRoomRow.css"
-import { Table, Button } from "semantic-ui-react"
-import Room from "../Room"
+import React, { useState } from 'react'
+import '../css/GameRoomRow.css'
+import { Table, Button } from 'semantic-ui-react'
+import Room from '../Room'
 
 function GameRoomRow(props) {
   //const [gameDetail, setGameDetail] = useState({})
   const [userRoom, setRoom] = useState(false)
-  const [selectedHost, setSelectedHost] = useState("")
+  const [selectedHost, setSelectedHost] = useState('')
 
   const handleRoom = (host) => {
     setRoom(true)
@@ -42,7 +42,7 @@ function GameRoomRow(props) {
           <Table.Cell>{dat.fee * 2}</Table.Cell>
           <Table.Cell>
             <Button
-              color="green"
+              color='green'
               onClick={() => props.onJoin(dat.host, dat.name)}
             >
               Join game
@@ -54,7 +54,7 @@ function GameRoomRow(props) {
   }
 
   return (
-    <div className="Games">
+    <div className='Games'>
       {userRoom ? (
         <Room handleCloseRoom={closeRoom} host={selectedHost}></Room>
       ) : null}

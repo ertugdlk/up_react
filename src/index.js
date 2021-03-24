@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 //import './index.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -11,6 +11,8 @@ import thunk from 'redux-thunk';
 /* ------------------------------- App Imports ------------------------------ */
 import Dashboard from './pages/Dashboard';
 import Homepage from './pages/Homepage';
+import NotFoundPage from "./pages/NotFoundPage"
+import Wallet from './pages/Wallet'
 import reducers from './reducers/index';
 import 'semantic-ui-css/semantic.min.css';
 import './components/css/index.css';
@@ -31,6 +33,8 @@ ReactDOM.render(
           exact
           component={(props) => <Dashboard {...props.match.params} />}
         />
+        <Route path='/wallet' exact component ={() => <Wallet/>}/>
+        <Route path='*' exact component = {()=> <NotFoundPage/>} />
       </Switch>
     </Router>
   </Provider>,

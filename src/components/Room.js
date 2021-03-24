@@ -1,36 +1,56 @@
-import React, { useState, useEffect, useRef } from "react"
-import axios from "../utils"
-import css from "../components/css/Room.css"
-import Logo from "../logo.png"
-import ClearIcon from "@material-ui/icons/Clear"
-import ReportIcon from "@material-ui/icons/Report"
-import CachedIcon from "@material-ui/icons/Cached"
-import close from "../close.png"
-import crown from "../crown.png"
-import { Segment, SegmentGroup } from "semantic-ui-react"
-import Countdown from "react-countdown"
-import Snackbar from "@material-ui/core/Snackbar"
-import { SnackbarContent } from "@material-ui/core"
+import React, { useState, useEffect, useRef } from 'react'
+import axios from '../utils'
+import css from '../components/css/Room.css'
+import Logo from '../logo.png'
+import ClearIcon from '@material-ui/icons/Clear'
+import ReportIcon from '@material-ui/icons/Report'
+import CachedIcon from '@material-ui/icons/Cached'
+import close from '../close.png'
+import crown from '../crown.png'
+import { Segment, SegmentGroup } from 'semantic-ui-react'
+import Countdown from 'react-countdown'
+import Snackbar from '@material-ui/core/Snackbar'
+import { SnackbarContent } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
-import { makeStyles } from '@material-ui/core/styles'
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
 import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
+import CloseIcon from '@material-ui/icons/Close'
+import SureWindow from './UI/SureWindow'
+import Button from '@material-ui/core/Button'
+import Box from '@material-ui/core/Box'
+import ReportCheckBox from './UI/ReportCheckBox'
+import MapSelection from '../components/MapSelection'
 
-const Axios = require("axios")
-const _ = require("lodash")
+import ChatScroll from './Common/ChatScroll'
+
+const Axios = require('axios')
+const _ = require('lodash')
 
 const useStyles = makeStyles((theme) => ({
+  countdown: {
+    color: 'white',
+    display: 'flex',
+    flexFlow: 'column wrap',
+    alignItems: 'center',
+    marginTop: '25%',
+  },
+
   dialogComponent: {
-    width: '85.1vw',
-    marginLeft: '8vw',
-    marginRight: '8vw',
+    width: '84vw',
+    height: 'fit-content',
+    // marginLeft: '8%',
+    // marginRight: '8%',
+    zIndex: '997 !important',
+    margin: 'auto',
+    marginTop: '20px',
     '@media (max-width:1400px)': {
       width: '82.7%',
       marginLeft: '8.6%',
       marginRight: '6%',
       color: 'white',
-      backgroundColor: 'black',
     },
     '@media (max-width: 1399)': {
       width: '58.7%',
@@ -51,40 +71,210 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Room(props) {
-const {
-   handleCloseModal,
-   handleMaxWidthChangeModal,
-   handleFullWidthChangeModal,
-   openModal,
-   fullWidthModal,
-   maxWidthModal,
-   socket,
-   nickname,
-   _host,
-  } = props
   const [chat, setChat] = useState(true)
   const [messages, setMessages] = useState([])
-  const [message, setMessage] = useState("")
+  // const [message, setMessage] = useState("")
   const [team1, setTeam1] = useState([])
   const [team2, setTeam2] = useState([])
   const [startButton, setStartButton] = useState(false)
   const [start, setStart] = useState(false)
-  const [gameInformation, setGameInformation] = useState("")
-  const [host, setHost] = useState("")
+  const [gameInformation, setGameInformation] = useState([])
+  const [host, setHost] = useState('')
   let chatRef = useRef()
   const [snackbar, setSnackbar] = useState(false)
-  const [ErrorMessage, setErrorMessage] = useState("")
-  const [sure, setSure] = useState(false)
+  const [ErrorMessage, setErrorMessage] = useState('')
   const [report, setReport] = useState(false)
-  const [selectedPlayer, setSelectedPlayer] = useState("")
+  const [selectedPlayer, setSelectedPlayer] = useState('')
+  const [fullWidthModal, setFullWidthModal] = useState('sm')
+  const [mapSelect, setMapSelect] = useState(false)
+  const [bannedMap, setBannedMap] = useState({})
+  const classes = useStyles()
+
+  const [sureWindow, setSureWindow] = useState(false)
+  const [reportWindow, setReportWindow] = useState(false)
+  const [showBanIcons, setShowBanIcons] = useState(false)
+
+  const handleSureWindowOpen = (nickname) => {
+    setSureWindow(true)
+    setSelectedPlayer(nickname)
+  }
+
+  const handleSureWindowClose = () => {
+    setSureWindow(false)
+  }
+
+  const handleReportWindowOpen = (nickname) => {
+    setReportWindow(true)
+    setSelectedPlayer(nickname)
+  }
+
+  const handleReportWindowClose = () => {
+    setReportWindow(false)
+  }
+
+  const handleKick = () => {
+    try {
+      const data = { host: host, nickname: selectedPlayer }
+      props.socket.emit('kick', data)
+      setReport(false)
+    } catch (err) {
+      alert("Can't be kicked!")
+    }
+  }
+
+  const handleReport = () => {
+    try {
+      const data = { nickname: selectedPlayer }
+      props.socket.emit('report', data)
+      // setSure(false)
+    } catch (err) {
+      alert("Can't be reported")
+    }
+  }
 
   useEffect(() => {
+    console.log('Location', window.location.href)
     async function RoomUsers() {
-      if (!props.roomResponse.users) {
-        setErrorMessage("no room with this host")
-        setSnackbar(true)
-      } else {
-        const allusers = props.roomResponse.users
+      try {
+        if (!props.roomResponse.users) {
+          setErrorMessage('no room with this host')
+          setSnackbar(true)
+        } else {
+          const allusers = props.roomResponse.users
+          const team1users = _.filter(allusers, function (user) {
+            return user.team == 1
+          })
+          setTeam1(team1users)
+          const team2users = _.filter(allusers, function (user) {
+            return user.team == 2
+          })
+          setTeam2(team2users)
+        }
+      } catch (err) {
+        alert("Teams couldn't be set")
+      }
+    }
+
+    async function CheckReadyStatus() {
+      try {
+        const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2
+        if (props.roomResponse.readyCount === limit) {
+          if (props.nickname == props.host) {
+            setStartButton(true)
+            setErrorMessage('All players are Ready')
+            setSnackbar(true)
+          }
+        }
+      } catch (err) {
+        alert("Couldn't get ready status")
+      }
+    }
+
+    setHost(props.host)
+    RoomUsers()
+    CheckReadyStatus()
+  }, [])
+
+  useEffect(() => {
+    props.socket.on('newMessage', (data) => {
+      try {
+        setMessages((messages) => [
+          ...messages,
+          { nickname: data.nickname, msg: data.message },
+        ])
+      } catch (err) {
+        throw new Error("Message couldn't sent")
+      }
+    })
+
+    props.socket.on('countdownStart', (data) => {
+      try {
+        setStart(true)
+      } catch (error) {
+        throw new Error("Countdown couldn't be started")
+      }
+    })
+
+    props.socket.on('GameReadyStatus', (data) => {
+      try {
+        if (props.nickname == data.host) {
+          if (data.msg == 'all_ready') {
+            setStartButton(true)
+            setErrorMessage('all_ready')
+            setSnackbar(true)
+          } else {
+            setStart(false)
+            setStartButton(false)
+            setErrorMessage(data.msg)
+            setSnackbar(true)
+          }
+        } else {
+          if (data.msg == 'all_ready') {
+          } else {
+            setStart(false)
+          }
+        }
+      } catch (err) {
+        throw new Error("Couldn't get game status")
+      }
+    })
+
+    props.socket.on('newUserJoined', (data) => {
+      try {
+        if (data.nickname != props.nickname) {
+          if (data.team == 1) {
+            setTeam1((team1) =>
+              team1.concat({
+                nickname: data.nickname,
+                team: data.team,
+                readyStatus: data.readyStatus,
+              })
+            )
+          } else {
+            setTeam2((team2) =>
+              team2.concat({
+                nickname: data.nickname,
+                team: data.team,
+                readyStatus: data.readyStatus,
+              })
+            )
+          }
+        }
+      } catch (err) {
+        throw new Error("Couldn't get room users data")
+      }
+    })
+
+    props.socket.on('UserLeft', (user) => {
+      try {
+        var teamArr
+        if (user.team === 1) {
+          teamArr = team1
+          _.remove(teamArr, (team1member) => {
+            return team1member.nickname == user.nickname
+          })
+          setTeam1(teamArr)
+        } else {
+          teamArr = team2
+          _.remove(teamArr, (team2member) => {
+            return team2member.nickname == user.nickname
+          })
+          setTeam2(teamArr)
+        }
+      } catch (err) {
+        throw new Error("Couldn't get room users data")
+      }
+    })
+
+    props.socket.on('HostLeft', async ({ host, newHost }) => {
+      try {
+        const url = 'room/getdata'
+        const response = await axios.post(
+          url,
+          { host: newHost.nickname },
+          { withCredentials: true }
+        )
+        const allusers = response.data.users
         const team1users = _.filter(allusers, function (user) {
           return user.team == 1
         })
@@ -93,152 +283,51 @@ const {
           return user.team == 2
         })
         setTeam2(team2users)
-      }
-    }
 
-    async function CheckReadyStatus() {
-      const limit = parseInt(props.roomResponse.settings.type.charAt(0)) * 2
-      if (props.roomResponse.readyCount === limit) {
-        if (props.nickname == props.host) {
-          setStartButton(true)
-          setErrorMessage("All players are Ready")
-          setSnackbar(true)
-        }
-      }
-    }
-    setHost(props.host)
-
-    RoomUsers()
-    CheckReadyStatus()
-  }, [])
-
-  useEffect(() => {
-    props.socket.on("newMessage", (data) => {
-      try {
-        setMessages((messages) =>
-          messages.concat({ nickname: data.nickname, msg: data.message })
-        )
+        setHost(newHost.nickname)
       } catch (err) {
-        throw err
+        throw new Error("Couldn't get room users data")
       }
     })
 
-    props.socket.on("countdownStart", (data) => {
+    props.socket.on('userKicked', ({ nickname, team, host }) => {
       try {
-        setStart(true)
-      } catch (error) {
-        throw error
-      }
-    })
-
-    props.socket.on("GameReadyStatus", (data) => {
-      if (props.nickname == data.host) {
-        if (data.msg == "all_ready") {
-          setStartButton(true)
-          setErrorMessage("all_ready")
-          setSnackbar(true)
-        } else {
-          setStart(false)
-          setStartButton(false)
-          setErrorMessage(data.msg)
-          setSnackbar(true)
+        if (props.nickname == nickname) {
+          const data = { nickname: props.nickname, host: host }
+          props.socket.emit('leave', data)
+          window.location.reload()
         }
-      } else {
-        if (data.msg == "all_ready") {
-        } else {
-          setStart(false)
-        }
+      } catch (err) {
+        throw new Error("Couldn't get room users data")
       }
     })
 
-    props.socket.on("newUserJoined", (data) => {
-      if (data.nickname != props.nickname) {
-        if (data.team == 1) {
-          setTeam1((team1) =>
-            team1.concat({
-              nickname: data.nickname,
-              team: data.team,
-              readyStatus: data.readyStatus,
-            })
-          )
-        } else {
-          setTeam2((team2) =>
-            team2.concat({
-              nickname: data.nickname,
-              team: data.team,
-              readyStatus: data.readyStatus,
-            })
-          )
-        }
-      }
-    })
-
-    props.socket.on("UserLeft", (user) => {
-      var teamArr
-      if (user.team === 1) {
-        teamArr = team1
-        _.remove(teamArr, (team1member) => {
-          return team1member.nickname == user.nickname
-        })
-        setTeam1(teamArr)
-      } else {
-        teamArr = team2
-        _.remove(teamArr, (team2member) => {
-          return team2member.nickname == user.nickname
-        })
-        setTeam2(teamArr)
-      }
-    })
-
-    props.socket.on("HostLeft", async ({ host, newHost }) => {
-      const url = "room/getdata"
-      const response = await axios.post(
-        url,
-        { host: newHost.nickname },
-        { withCredentials: true }
-      )
-      const allusers = response.data.users
-      const team1users = _.filter(allusers, function (user) {
-        return user.team == 1
-      })
-      setTeam1(team1users)
-      const team2users = _.filter(allusers, function (user) {
-        return user.team == 2
-      })
-      setTeam2(team2users)
-
-      setHost(newHost.nickname)
-    })
-
-    props.socket.on("userKicked", ({ nickname, team, host }) => {
-      if (props.nickname == nickname) {
-        const data = { nickname: props.nickname, host: host }
-        props.socket.emit("leave", data)
-        window.location.reload()
-      }
-    })
-
-    props.socket.on("readyChange", async (data) => {
-      const url = "room/getdata"
-      const response = await axios.post(
-        url,
-        { host: data.host },
-        { withCredentials: true }
-      )
-      const allusers = response.data.users
-      const team1users = _.filter(allusers, function (user) {
-        return user.team == 1
-      })
-      setTeam1(team1users)
-      const team2users = _.filter(allusers, function (user) {
-        return user.team == 2
-      })
-      setTeam2(team2users)
-    })
-
-    props.socket.on("teamChange", async (data) => {
+    props.socket.on('readyChange', async (data) => {
       try {
-        const url = "room/getdata"
+        const url = 'room/getdata'
+        const response = await axios.post(
+          url,
+          { host: data.host },
+          { withCredentials: true }
+        )
+        const allusers = response.data.users
+        const team1users = _.filter(allusers, function (user) {
+          return user.team == 1
+        })
+        setTeam1(team1users)
+        const team2users = _.filter(allusers, function (user) {
+          return user.team == 2
+        })
+        setTeam2(team2users)
+      } catch (err) {
+        throw new Error("Couldn't get ready data")
+      }
+    })
+
+    props.socket.on('teamChange', async (data) => {
+      try {
+        if (start) return
+        const url = 'room/getdata'
         const response = await axios.post(
           url,
           { host: props.host },
@@ -259,129 +348,178 @@ const {
     })
   }, [])
 
-  const handleCancelButton = () => {
-    setSure(false)
+  const handleSendMessage = (e, message) => {
+    try {
+      if (message === '') {
+        return
+      }
+      const data = { host: props.host, nickname: props.nickname, msg: message }
+      props.socket.emit('message', data)
+    } catch (err) {
+      throw new Error("Couldn't send your message")
+    }
   }
 
-  const handleReportCancel = () => {
-    setReport(false)
+  const handleKeyDown = (event, message) => {
+    if (event.key === 'Enter' || event.code === 'Enter' || event.which === 13) {
+      handleSendMessage(event, message)
+    }
   }
-
-  const handleSendMessage = () => {
-    const data = { host: props.host, nickname: props.nickname, msg: message }
-    props.socket.emit("message", data)
-    chatRef.current.value = ""
-  }
-
   const handleTeamSwap = () => {
-    const data = { host: props.host, nickname: props.nickname }
-    props.socket.emit("changeTeam", data)
+    try {
+      if (start) return
+      const data = { host: props.host, nickname: props.nickname }
+      props.socket.emit('changeTeam', data)
+    } catch (err) {
+      throw new Error("Couldn't get room users data")
+    }
   }
 
   const handleReady = () => {
-    const data = { host: props.host, nickname: props.nickname }
-    props.socket.emit("ready", data)
+    try {
+      const data = { host: props.host, nickname: props.nickname }
+      props.socket.emit('ready', data)
+    } catch (err) {
+      throw new Error("Couldn't change ready status")
+    }
   }
 
   const handleStart = () => {
-    const data = { host: props.host }
-    props.socket.emit("countdown", data)
-  }
-
-  const handleSureWindow = (nickname) => {
-    setReport(false)
-    setSure(true)
-    setSelectedPlayer(nickname)
-  }
-
-  const handleReportWindow = (nickname) => {
-    setSure(false)
-    setReport(true)
-    setSelectedPlayer(nickname)
-  }
-
-  const handleKick = () => {
-    const data = { host: host, nickname: selectedPlayer }
-    props.socket.emit("kick", data)
-    setReport(false)
-  }
-
-  const handleReport = () => {
-    const data = { nickname: selectedPlayer }
-    props.socket.emit("report", data)
-    setSure(false)
+    try {
+      const data = { host: props.host }
+      props.socket.emit('countdown', data)
+    } catch (err) {
+      throw new Error("Couldn't start,please try again")
+    }
   }
 
   const handleStartMatch = async () => {
-    try {
-      setGameInformation("213.243.44.6")
-      const url = "rcon/setupmatch"
-      const response = await axios.post(
-        url,
-        { host: props.host },
-        { withCredentials: true }
-      )
-    } catch (error) {
-      throw error
-    }
+    setMapSelect(true)
+    /*
+    const url = 'rcon/setupmatch'
+    const response = await axios.post(
+      url,
+      { host: props.host },
+      { withCredentials: true }
+    )
+    setGameInformation(response.data)
+    */
   }
 
+  //for pushing
+  //for pushing
+
   const checkGameInformation = () => {
-    if (gameInformation != "") {
-      return <span>{gameInformation}</span>
-    }
-    if (start) {
-      return (
-        <Countdown
-          date={Date.now() + 10000}
-          onComplete={() => handleStartMatch()}
-        />
-      )
-    }
-    if (start) {
-      return (
-        <Countdown
-          date={Date.now() + 10000}
-          onComplete={() => handleStartMatch()}
-        />
-      )
-    } else {
-      return <img className="map" src={Logo}></img>
+    try {
+      if (gameInformation != '') {
+        const url = 'steam://connect/' + gameInformation
+        if (mapSelect === true) {
+          return (
+            <>
+              <MapSelection
+                host={host}
+                nickname={props.nickname}
+                socket={props.socket}
+                team1={team1}
+                team2={team2}
+              ></MapSelection>
+            </>
+          )
+        } else {
+          return (
+            <div>
+              <span>{gameInformation}</span>
+              <a href={url} class='btn btn-primary'>
+                {' '}
+                Join the Game
+              </a>
+            </div>
+          )
+        }
+      }
+      if (gameInformation == '') {
+        const url2 = 'steam://connect/' + gameInformation
+        if (mapSelect === true) {
+          return (
+            <>
+              <MapSelection
+                host={host}
+                nickname={props.nickname}
+                socket={props.socket}
+                team1={team1}
+                team2={team2}
+              ></MapSelection>
+            </>
+          )
+        }
+      } else {
+        return null
+      }
+      if (start) {
+        return (
+          <Countdown
+            className={classes.countdown}
+            date={Date.now() + 10000}
+            onComplete={() => handleStartMatch()}
+          />
+        )
+      } else {
+        return (
+          <img
+            loading="lazy"
+            className='mapo'
+            style={{
+              width: '187px',
+              height: '50px',
+              margin: 'auto',
+              marginTop: '24%',
+              marginLeft: '28%',
+            }}
+            src={Logo}
+          ></img>
+        )
+      }
+    } catch (err) {
+      throw new Error("Couldn't get game info")
     }
   }
 
   const handleHost = (member) => {
     if (host === member.nickname) {
-      return "HOST"
+      return 'HOST '
     } else {
-      return ""
+      return ''
     }
   }
 
   const handleLeaveRoom = () => {
-    const user1 = _.find(team1, (member) => {
-      return member.nickname == props.nickname
-    })
+    try {
+      const user1 = _.find(team1, (member) => {
+        return member.nickname == props.nickname
+      })
 
-    const user2 = _.find(team2, (member) => {
-      return member.nickname == props.nickname
-    })
+      const user2 = _.find(team2, (member) => {
+        return member.nickname == props.nickname
+      })
 
-    const temp = !user1 ? user2 : user1
+      const temp = !user1 ? user2 : user1
 
-    if (temp.readyStatus === true) {
-      if (host === props.nickname) {
-        const data = { nickname: props.nickname, host: host }
-        props.socket.emit("leave", data)
-        window.location.reload()
+      if (temp.readyStatus === true) {
+        if (host === props.nickname) {
+          const data = { nickname: props.nickname, host: host }
+          props.socket.emit('leave', data)
+          window.location.reload()
+        } else {
+          setErrorMessage('Before quit, change your ready status')
+          setSnackbar(true)
+        }
       } else {
-        setErrorMessage("Before quit, change your ready status")
-        setSnackbar(true)
+        const data = { nickname: props.nickname, host: host }
+        props.socket.emit('leave', data)
+        window.location.reload()
       }
-    } else {
-      const data = { nickname: props.nickname, host: host }
-      props.socket.emit("leave", data)
-      window.location.reload()
+    } catch (err) {
+      throw new Error("Couldn't process your request")
     }
   }
 
@@ -390,32 +528,89 @@ const {
   }
 
   const checkHostOrNot = () => {
-    if (props._host == true) {
-      return true
-    }
-
-    if (host == props.nickname) {
-      return true
-    } else {
-      return false
+    try {
+      if (props._host == true) {
+        return true
+      }
+      if (host == props.nickname) {
+        return true
+      } else {
+        return false
+      }
+    } catch (err) {
+      throw new Error("Couldn't check if host or not")
     }
   }
 
-  const classes = useStyles()
+  // const handleCloseModal = () =>{
+  //   setOpenModal(false)
+  // }
+
+  const handleBanIcons = () => {
+    setShowBanIcons(true)
+  }
+  const handleBanIconsLeave = () => {
+    setShowBanIcons(false)
+  }
 
   return (
-    <React.Fragment>
+    <>
       <Dialog
         className={classes.dialogComponent}
-        fullWidth={props.fullWidthModal}
+        fullWidth={fullWidthModal}
         maxWidth={false}
         open={props.openModal}
-        onClose={props.handleCloseModal}
-        aria-labelledby='max-width-dialog-title'
+        // onClose={props.handleCloseModal}
+        PaperProps={{
+          style: {
+            backgroundColor: '#16161b',
+            boxShadow: 'none',
+            height: '90vh',
+            paddingTop: '50px',
+          },
+        }}
       >
+        <Snackbar
+          open={snackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          autoHideDuration={1000}
+          message={ErrorMessage}
+          onClose={handleSnack}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: '#00ff60',
+              color: 'black',
+              justifyContent: 'center',
+              fontWeight: 'bolder',
+              fontSize: '14px',
+            }}
+            message={<span id='client-snackbar'>{ErrorMessage}</span>}
+          />
+        </Snackbar>
         <DialogContent>
-          <Grid container>
+          <Grid
+            container
+            direction='row'
+            justify='flex-end'
+            alignItems='center'
+          >
             <Grid item>
+              <Box mb={3}>
+                <Button onClick={props.handleCloseModal}>
+                  <CloseIcon style={{ color: 'white' }} fontSize='large' />
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={3}
+            direction='row'
+            justify='space-evenly'
+            alignItems='flex-start'
+          >
+            <Grid item lg={4} xl={3}>
               <div className='team-1'>
                 <button onClick={handleTeamSwap} className='team-buttons'>
                   <CachedIcon
@@ -428,34 +623,40 @@ const {
                   {team1.map((member) => {
                     var user = member.nickname
                     return (
-                      <li className='team-users'>
-                        {' '}
+                      <li
+                        className='team-users'
+                        onMouseEnter={handleBanIcons}
+                        onMouseLeave={handleBanIconsLeave}
+                      >
                         <span className='host-status'>
                           {handleHost(member)}
-                        </span>{' '}
-                        <span className='team-user'> {member.nickname} </span>{' '}
+                        </span>
+                        <span className='team-user'> {member.nickname} </span>
                         <div className='ready-status'>
                           {member.readyStatus ? 'Ready' : 'Unready'}
                         </div>
-                        {host == props.nickname ? (
-                          <img
-                            src={close}
+                        {showBanIcons && (
+                          <CloseIcon
+                            // src={close}
                             className='kick-icon'
-                            onClick={() => handleSureWindow(user)}
-                          ></img>
-                        ) : null}
-                        <ReportIcon
-                          className='report-icon'
-                          fontSize='small'
-                          onClick={() => handleReportWindow(user)}
-                        ></ReportIcon>
+                            fontSize='large'
+                            onClick={() => handleSureWindowOpen(user)}
+                          />
+                        )}
+                        {showBanIcons && (
+                          <ReportIcon
+                            className='report-icon'
+                            fontSize='small'
+                            onClick={() => handleReportWindowOpen(user)}
+                          ></ReportIcon>
+                        )}
                       </li>
                     )
                   })}
                 </ul>
               </div>
             </Grid>
-            <Grid item>
+            <Grid item lg={4} xl={3}>
               <div className='detail-and-button-container'>
                 <div className='map-photo'>{checkGameInformation()}</div>
                 <div className='gameDetails'>
@@ -466,27 +667,48 @@ const {
                   </div>
                 </div>
                 <div className='buttons-group'>
-                  {checkHostOrNot() ? null : (
-                    <button onClick={handleReady} className='ready-button'>
-                      READY
-                    </button>
-                  )}
-                  {startButton ? (
-                    <button className='ready-button' onClick={handleStart}>
-                      START
-                    </button>
-                  ) : host === props.nickname ? (
-                    <button className='ready-button-start-disabled' disabled>
-                      START
-                    </button>
-                  ) : null}
-                  <button className='ready-button' onClick={handleLeaveRoom}>
-                    LEAVE
-                  </button>
+                  <Grid
+                    container
+                    direction='row'
+                    justify='space-evenly'
+                    alignItems='center'
+                  >
+                    {checkHostOrNot() ? null : (
+                      <Grid item>
+                        <button onClick={handleReady} className='ready-button'>
+                          READY
+                        </button>
+                      </Grid>
+                    )}
+                    {startButton ? (
+                      <Grid item>
+                        <button className='ready-button' onClick={handleStart}>
+                          START
+                        </button>
+                      </Grid>
+                    ) : host === props.nickname ? (
+                      <Grid item>
+                        <button
+                          className='ready-button-start-disabled'
+                          disabled
+                        >
+                          START
+                        </button>
+                      </Grid>
+                    ) : null}
+                    <Grid item>
+                      <button
+                        className='ready-button'
+                        onClick={handleLeaveRoom}
+                      >
+                        LEAVE
+                      </button>
+                    </Grid>
+                  </Grid>
                 </div>
               </div>
             </Grid>
-            <Grid item>
+            <Grid item lg={4} xl={3}>
               <div className='team-2'>
                 <button onClick={handleTeamSwap} className='team-buttons'>
                   {' '}
@@ -500,176 +722,75 @@ const {
                   {team2.map((member) => {
                     var user = member.nickname
                     return (
-                      <li className='team-users'>
-                        {' '}
-                        <span>{handleHost(member)}</span>{' '}
-                        <span className='team-user'> {member.nickname} </span>{' '}
+                      <li
+                        className='team-users'
+                        onMouseEnter={handleBanIcons}
+                        onMouseLeave={handleBanIconsLeave}
+                      >
+                        <span>{handleHost(member)}</span>
+                        <span className='team-user'> {member.nickname} </span>
                         <div className='ready-status'>
                           {member.readyStatus ? 'Ready' : 'Unready'}
                         </div>
-                        {host == props.nickname ? (
-                          <img
-                            src={close}
+                        {showBanIcons && (
+                          // <img
+                          //   src={close}
+                          //   className='kick-icon'
+                          // onClick={() => handleSureWindow(user)}
+                          // ></img>
+                          <CloseIcon
+                            // src={close}
                             className='kick-icon'
-                            onClick={() => handleSureWindow(user)}
-                          ></img>
-                        ) : null}
-                        <ReportIcon
-                          className='report-icon'
-                          fontSize='small'
-                          onClick={() => handleReportWindow(user)}
-                        ></ReportIcon>
+                            fontSize='large'
+                            onClick={() => handleSureWindowOpen(user)}
+                          />
+                        )}
+                        {showBanIcons && (
+                          <ReportIcon
+                            className='report-icon'
+                            fontSize='small'
+                            onClick={() => handleReportWindowOpen(user)}
+                          ></ReportIcon>
+                        )}
                       </li>
                     )
                   })}
                 </ul>
               </div>
             </Grid>
-            <Grid item>
+            <Grid item lg={10} xl={3}>
               <div className='chat-holder'>
-                <div className='chat'>
-                  <div className='chat-field'>
-                    {messages.map((message) => {
-                      return (
-                        <span className='chat-message'>
-                          {message.nickname}: {message.msg}
-                        </span>
-                      )
-                    })}
-                  </div>
-                  <div className='chat-utils'>
-                    <input
-                      className='chat-input'
-                      ref={chatRef}
-                      onChange={(e) => setMessage(e.target.value)}
-                    ></input>
-                    <button className='chat-send' onClick={handleSendMessage}>
-                      SEND
-                    </button>
-                  </div>
-                </div>
+                <ChatScroll
+                  nickname={props.nickname}
+                  messages={messages}
+                  handleSendMessage={handleSendMessage}
+                  handleKeyDown={handleKeyDown}
+                />
               </div>
             </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
-    </React.Fragment>
+
+      {/* /* --------------------------- KICK BUTTON CONFIRM -------------------------- */}
+      <SureWindow
+        sureWindow={sureWindow}
+        handleSureWindowClose={handleSureWindowClose}
+        confirmButtnFunc={handleKick}
+      />
+      {/* /* --------------------------- KICK BUTTON CONFIRM -------------------------- */}
+      {/* /* --------------------------- Report BUTTON CONFIRM -------------------------- */}
+      <SureWindow
+        sureWindow={reportWindow}
+        handleSureWindowClose={handleReportWindowClose}
+        confirmButtnFunc={handleReport}
+        innerComponent={<ReportCheckBox />}
+        title='Report'
+        agreeBtnText='Send'
+      />
+      {/* /* --------------------------- Report BUTTON CONFIRM -------------------------- */}
+    </>
   )
 }
-
-/*
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
-import { calcTimeDelta } from 'react-countdown';
-
-const useStyles = makeStyles((theme) => ({
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: 'auto',
-    width: 'fit-content',
-  },
-  formControl: {
-    marginTop: theme.spacing(2),
-    minWidth: 120,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing(1),
-  },
-  dialogComponent:{
-    width:"85.1vw",
-    marginLeft:"8vw",
-    marginRight:"8vw",
-    "@media (max-width:1400px)":{
-    width:"82.7%",
-    marginLeft:"8.6%",
-    marginRight:"6%",
-    },
-    "@media (max-width: 1399)":{
-    width:"58.7%",
-    marginLeft:"4.6%",
-    marginRight:"6%",
-    },
-    "@media (max-width:1299px)":{
-        width:"82.7%",
-        marginLeft:"8.6%",
-        marginRight:"6%",
-    },
-    "@media (max-width:1000px)":{
-        width:"68.1%",
-        marginLeft:"17%",
-        marginRight:"5%",
-        },
-  }
-
-}));
-
-export default function Room2({handleCloseModal,handleMaxWidthChangeModal,handleFullWidthChangeModal,openModal,fullWidthModal,maxWidthModal}) {
-  const classes = useStyles();
-
-  return (
-    <React.Fragment>
-      <Dialog
-        className={classes.dialogComponent}
-        fullWidth={fullWidthModal}
-        maxWidth={false}
-        open={openModal}
-        onClose={handleCloseModal}
-        aria-labelledby="max-width-dialog-title"
-      >
-        <DialogTitle id="max-width-dialog-title">Optional sizes</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            You can set my maximum width and whether to adapt or not.
-          </DialogContentText>
-          <form className={classes.form} noValidate>
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="max-width">maxWidth</InputLabel>
-              <Select
-                autoFocus
-                value={maxWidthModal}
-                onChange={handleMaxWidthChangeModal}
-                inputProps={{
-                  name: 'max-width',
-                  id: 'max-width',
-                }}
-              >
-                <MenuItem value={false}>false</MenuItem>
-                <MenuItem value="xs">xs</MenuItem>
-                <MenuItem value="sm">sm</MenuItem>
-                <MenuItem value="md">md</MenuItem>
-                <MenuItem value="lg">lg</MenuItem>
-                <MenuItem value="xl">xl</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControlLabel
-              className={classes.formControlLabel}
-              control={<Switch checked={fullWidthModal} onChange={handleFullWidthChangeModal} />}
-              label="Full width"
-            />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
-}
-
-*/
+//Test
 export default Room

@@ -1,7 +1,10 @@
-import React, { useState } from "react"
+import React, { useState, useEffect} from "react"
+import {Link } from "react-router-dom";
 import { createGlobalStyle } from "styled-components"
 import ClearIcon from "@material-ui/icons/Clear"
 import css from "../components/css/MyAccount.css"
+import axios from '../utils';
+import Logo from '../logo.png';
 import {
   Container,
   Image,
@@ -22,7 +25,32 @@ const GlobalStyle = createGlobalStyle`
 function MyAccount(props) {
   const [passlo, setPasswordVis] = React.useState(false)
   const [mailo, setMailVis] = React.useState(false)
+  const [avatar,setAvatar] = useState([])
+  const [userFullName,setUserFullName]=useState("")
 
+  async function userAvatar () {
+    try{
+    const url = "detail/steamavatar"
+    const response = await axios.get(url,{withCredentials:true});
+    if(response.data ===""){
+      setAvatar(Logo)
+    }else
+      setAvatar(response.data)
+  }catch(err){
+    alert("We couldn't get your avatar")
+  }
+  }
+  async function userInfo(){
+    try{
+    const url= "credential/find"
+    const response =await axios.get(url,{withCredentials:true})
+    if(response===undefined || null || ""){
+      setUserFullName("No info")
+    }else setUserFullName(response.data.name)
+  }catch(err){
+      alert("We couldn't get your info")
+    }
+  }
   const setPasswordLink = () => {
     if (mailo) {
       setMailVis(!mailo)
@@ -37,7 +65,10 @@ function MyAccount(props) {
     setMailVis(!mailo)
   }
 
-  const Test = () => {}
+  useEffect(() => {
+    userAvatar();
+    userInfo();
+  }, []);
 
   return (
     <>
@@ -55,13 +86,21 @@ function MyAccount(props) {
                     {props.userName.toUpperCase()}
                   </Label>
                 </Grid.Row>
+                <br></br>
                 <Grid.Row>
                   <Image
-                    src="https://thumbs.dreamstime.com/b/default-avatar-photo-placeholder-profile-icon-eps-file-easy-to-edit-default-avatar-photo-placeholder-profile-icon-124557887.jpg"
+                    src={avatar}
                     size="small"
                     circular
                     centered
                   />
+                  <br></br>
+                   <Grid.Row>
+                  <Label className="image-label-dist" color="green">
+                    {userFullName}
+                  </Label>
+                 
+                </Grid.Row>
                 </Grid.Row>
               </Grid.Column>
 
@@ -93,7 +132,6 @@ function MyAccount(props) {
                     >
                       <Button.Content visible>*********</Button.Content>
                       <Button.Content
-                        onMouseEnter={() => console.log("test")}
                         style={{ backgroundColor: "#0b0b0b" }}
                         hidden
                       >
@@ -133,6 +171,8 @@ function MyAccount(props) {
                     </Button>
                   </Segment>
                 )}
+
+                <Link to = '/wallet'><Button className="wallet-button">Wallet</Button></Link>
               </Grid.Column>
             </Grid>
             <Divider vertical />

@@ -1,6 +1,11 @@
-export const baseUrl = "https://test.unknownpros.com:5000/"
-export const fetchAllRooms = "FETCH_ALL_ROOMS"
-export const addNewRoom = "ADD_NEW_ROOM"
-export const getUserGames = "GET_USER_GAMES"
-export const getMatchDataText = "GET_MATCH_DATA"
-export const removeRoom = "REMOVE_ROOM"
+export const baseUrl = 'https://test.unknownpros.com:5000/'
+export const fetchAllRooms = 'FETCH_ALL_ROOMS'
+export const fetchFreeRooms = 'FETCH_FREE_ROOMS'
+export const fetchPaidRooms = 'FETCH_PAID_ROOMS'
+export const addNewRoom = 'ADD_NEW_ROOM'
+export const getUserGames = 'GET_USER_GAMES'
+export const getMatchDataText = 'GET_MATCH_DATA'
+export const removeRoom = 'REMOVE_ROOM'
+export const unknownprosGreen = '#00ff60'
+export const unknownprosBackGround = '#0b0b0b'
+export const unknownprosDenied = '#5c545e'

@@ -9,18 +9,20 @@
   border-radius: 12px;
   z-index: 3;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
-  border: 1px solid #0ab74c;
 }
 /*İçeriklerin cssi*/
 .login-modal {
   color: #fff;
   font-size: 14px;
-  width: 50px;
-  margin: 5% 25%;
+  width: fit-content;
+  margin: 10% 25%;
   position: relative;
   justify-content: center;
   line-height: 1.5715;
   list-style: none;
+  justify-items: flex-start;
+  text-align: left;
+
 }
 
 .login-title {

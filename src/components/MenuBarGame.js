@@ -12,7 +12,7 @@ function MenuBarGame(props) {
       btn.current.style.marginBottom = `${dropdown.current.offsetHeight}px`;
     else btn.current.style.marginBottom = 0;
   }, [click]);
-
+  
   function handleDropdown() {
     setClick(!click);
   }
@@ -22,7 +22,7 @@ function MenuBarGame(props) {
       <div>
         <li>
           <button className='gameButton' onClick={handleDropdown} ref={btn}>
-            <img src={Logo} /> {props.data.name}
+            <img loading="lazy" src={Logo} /> {props.data.name}
           </button>
           {click ? (
             <div className='dropdown-content' ref={dropdown}>

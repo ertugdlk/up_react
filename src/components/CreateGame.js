@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import css from './css/CreateGame.css';
 import ClearIcon from '@material-ui/icons/Clear';
 import { createGlobalStyle } from 'styled-components';
+import Snackbar from '@material-ui/core/Snackbar';
+import { SnackbarContent } from '@material-ui/core';
+import { TextField } from '@material-ui/core'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
+import axios from "../utils"
 const _ = require('lodash');
 
 const GlobalStyle = createGlobalStyle`
@@ -9,6 +14,33 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Raleway', sans-serif;
   }`;
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    root: {
+      color: "white",
+      backgroundColor:"#1b1c23",
+      width:"100%",
+      marginBottom:"10px",
+      borderRadius:"10px",
+      '& label.Mui-focused': {
+        color: 'green',
+      },
+      '& .MuiOutlinedInput-root': {
+        color:"white",
+        '& fieldset': {
+          //borderColor: 'red',
+        },
+        '&:hover fieldset': {
+          //borderColor: 'yellow',
+        },
+        '&.Mui-focused fieldset': {
+          borderColor: '#00ff60',
+        },
+      },
+    },
+  })
+)
 
 function CreateGame(props) {
   const [data, setData] = useState({
@@ -32,6 +64,44 @@ function CreateGame(props) {
     types: [''],
   });
 
+  const [snackbar,setSnackbar] = useState(false)
+  const [errorMessage,setErrorMessage] = useState('')
+  const classes = useStyles()
+  const [free,setFree] = useState(false)
+  let btn = useRef()
+
+  async function userBalance () {
+    try{
+    const url = "wallet/getbalance"
+    const response = await axios.get(url, {withCredentials:true});
+    if (response.data.status === 0){
+      setErrorMessage("Please verify your account")
+      setSnackbar(true)
+      btn.current.setAttribute("disabled", "disabled");
+    }if(response.data.balance===0){
+      setErrorMessage("You don't have any credits")
+      setSnackbar(true)      
+      btn.current.setAttribute("disabled", "disabled");
+      setFree(true)
+      setData({ ...data, fee: 0 });
+    }
+    if(response.data.balance<data.fee){
+      setErrorMessage("Not enough credits")
+      setSnackbar(true)
+      btn.current.setAttribute("disabled", "disabled");
+      
+    }
+  }catch(err){
+    alert("We couldn't get your balance")
+  }
+  }
+
+  const handleSnack = () =>{
+    setSnackbar(false)
+  }
+  useEffect(()=>{
+    userBalance();
+  },[])
   useState(() => {
     setSelectedGame(props.games[0]);
   });
@@ -56,6 +126,24 @@ function CreateGame(props) {
 
   return (
     <>
+     <Snackbar
+          open={snackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          autoHideDuration={3000}
+          message={errorMessage}
+          onClose={handleSnack}
+        >
+          <SnackbarContent
+            style={{
+              backgroundColor: '#00ff60',
+              color: 'black',
+              justifyContent: 'center',
+              fontWeight: 'bolder',
+              fontSize: '14px',
+            }}
+            message={<span id='client-snackbar'>{errorMessage}</span>}
+          />
+        </Snackbar>
       {' '}
       <GlobalStyle></GlobalStyle>
       <div className='CreateWindow'>
@@ -63,7 +151,7 @@ function CreateGame(props) {
           {' '}
           <ClearIcon fontSize='large' onClick={props.onClose}></ClearIcon>{' '}
         </div>
-        <header className='header'>Create Game</header>
+        <h2 className='head'>Create Game</h2>
         <div className='CreateRow'>
           <label className='labels'>Game Selection</label>
           <select className='create-select' onChange={(e) => onGameChange(e)}>
@@ -100,15 +188,16 @@ function CreateGame(props) {
           </select>
         </div>
         <div className='CreateRow'>
-          <label className='labels'>Fee</label>
-          <input
-            className='create-input'
+         {free ? null : <TextField
+            variant="outlined"
+            placeholder="Fee"
             onChange={(e) => onFeeChange(e)}
-          ></input>
+            className={classes.root}
+          /> }
         </div>
-        <button class='button' onClick={() => props.onCreate(data)}>
-          Create Game
-        </button>
+       <button class="button"  ref={btn} onClick={() => props.onCreate(data)}>
+            Create Game
+          </button>
       </div>
     </>
   );
