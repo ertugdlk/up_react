@@ -166,7 +166,7 @@ function Wallet(props) {
             <Grid  container direction="row"  justify="flex-start"  alignItems="flex-start">
               <Grid item xs={2}>
                 <a className="LogoLink" href="/dashboard">
-                  <img src={Logo} className="dashboard-logo"/>
+                  <img loading="lazy" src={Logo} className="dashboard-logo"/>
                 </a>
               </Grid>
               <Grid container direction="row" justify="flex-end" alignItems="center">
@@ -193,7 +193,7 @@ function Wallet(props) {
           <div className='WalletPageContainer'>
           <div className="back-button-div">
           <a className="LogoLink" href="/dashboard">
-            <img src={backIcon} className="back-button"/>
+            <img loading="lazy" src={backIcon} className="back-button"/>
           </a>
           </div>
           <div className="user-coin-infobox">
@@ -237,7 +237,7 @@ function Wallet(props) {
           <div className="up-coin-actions">
           <div className="up-coin-deposit">
           <span className="convertion"> 1 UP coin = 1 TL</span>
-          <img src={Bag} className="wallet-icon"></img>
+          <img loading="lazy" src={Bag} className="wallet-icon"></img>
           {payment?null:<span className="payment-warning"> You have to choose a payment method to buy UP coins.</span>}
           <button className="deposit-button"> GET UP COIN</button>
           </div>

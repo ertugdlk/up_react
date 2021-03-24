@@ -163,6 +163,7 @@ function LoginWindow(props) {
           </button>
           <button className='login-steam-button'>
             <img
+              loading="lazy"
               className='steam-logo'
               src='https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg'
               height='20px'

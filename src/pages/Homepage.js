@@ -58,7 +58,7 @@ function Homepage(props) {
       <header className='header'>
         <div className='logo'>
           <a href='/'>
-            <img src={Logo} href='/' className="logo-img"/>{' '}
+            <img loading="lazy" src={Logo} href='/' className="logo-img"/>{' '}
           </a>
         </div>
         <Grid>
@@ -91,7 +91,7 @@ function Homepage(props) {
             SIGN UP NOW
           </button>
         </div>
-        <img className='join' src={JoinWin}></img>
+        <img loading="lazy" className='join' src={JoinWin}></img>
         <div>
           <span className='text-3'>TRACK YOUR STATS</span>
           <span className='text-4'>
@@ -99,7 +99,7 @@ function Homepage(props) {
             as you climb through the ranks.
           </span>
         </div>
-        <img className='thumbs' src={Thumbs}></img>
+        <img loading="lazy" className='thumbs' src={Thumbs}></img>
         <div>
           <span className='text-5'>PLAY BETTER GAMES</span>
           <span className='text-6'>
@@ -108,14 +108,14 @@ function Homepage(props) {
             the best.
           </span>
         </div>
-        <img className='vs' src={Vs}></img>
+        <img loading="lazy" className='vs' src={Vs}></img>
         <div>
           <span className='text-7'>ARE YOU READY?</span>
           <button className='footer-button' onClick={handleClickCreateAccount}>
             CREATE ACCOUNT
           </button>
         </div>
-        <img className='footer' src={Footer}></img>
+        <img loading="lazy" className='footer' src={Footer}></img>
       </div>
     </>
   )
