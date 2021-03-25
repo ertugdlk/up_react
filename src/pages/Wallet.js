@@ -13,6 +13,8 @@ import CenterModal from '../components/UI/CenterModal'
 import MyAccount from '../components/MyAccount'
 import { baseUrl } from '../utils/helpers'
 
+import Divider from '@material-ui/core/Divider'
+
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
 
 const GlobalStyle = createGlobalStyle`
@@ -185,18 +187,19 @@ function Wallet(props) {
         </CenterModal>
       )}
 
+      <div className='back-button-div'>
+        <a className='LogoLink' href='/dashboard'>
+          <img loading='lazy' src={backIcon} className='back-button' />
+        </a>
+      </div>
+
       <div className='WalletPageContainer'>
-        <div className='back-button-div'>
-          <a className='LogoLink' href='/dashboard'>
-            <img loading='lazy' src={backIcon} className='back-button' />
-          </a>
-        </div>
         <div className='user-coin-infobox'>
           <span className='user-coin-convertion-info'>Your UP Coin Balance</span>
           <span className='user-coin-convertion'>
             {upBalance} UP coin = {upBalance} TL
           </span>
-          {paymentModal ? null : (
+          {!paymentModal && (
             <button className='add-payment-btn' onClick={() => handPaymentModalOpen()}>
               Add Payment
             </button>
@@ -213,51 +216,57 @@ function Wallet(props) {
               <AccountBalanceIcon /> <span style={{ fontSize: '18px', lineHeight: '20px' }}>Bank 1</span>
             </button>
             {click ? (
-              <div className='dropdown-content-1' ref={dropdown}>
+              <div className='dropdown-content-wallet' ref={dropdown}>
                 <span className='balance-text'>Your balance: {bankBalance}</span>
                 <span className='balance-text'>Coin requirement to withdraw: {withdrawReq}</span>
-                <button className='dropdown-btn'>Withdraw</button>
+                <button className='add-payment-btn'>Withdraw</button>
               </div>
             ) : null}
             <button className='bank-button' onClick={handleDropdown1} ref={btn}>
               <AccountBalanceIcon /> <span style={{ fontSize: '18px', lineHeight: '20px' }}>Bank 2</span>
             </button>
             {click1 ? (
-              <div className='dropdown-content-1' ref={dropdown}>
+              <div className='dropdown-content-wallet' ref={dropdown}>
                 <span className='balance-text'> Your Balance: {bankBalance1}</span>
                 <span className='balance-text'>
                   Coin requirement to withdraw: <span>{withdrawReq1}</span>
                 </span>
-                <button className='dropdown-btn'>Withdraw</button>
+                <button className='add-payment-btn'>Withdraw</button>
               </div>
             ) : null}
             <button className='bank-button' onClick={handleDropdown2} ref={btn}>
               <AccountBalanceIcon /> <span style={{ fontSize: '18px', lineHeight: '20px' }}>Bank 3</span>
             </button>
             {click2 ? (
-              <div className='dropdown-content-1' ref={dropdown}>
+              <div className='dropdown-content-wallet' ref={dropdown}>
                 <span className='balance-text'>Your Balance: {bankBalance2}</span>
                 <span className='balance-text'>Coin requirement to withdraw: {withdrawReq2}</span>
-                <button className='dropdown-btn'>Withdraw</button>
+                <button className='add-payment-btn'>Withdraw</button>
               </div>
             ) : null}
           </div>
         </div>
-        <div className='up-coin-actions'>
-          <div className='up-coin-deposit'>
-            <span className='convertion'> 1 UP coin = 1 TL</span>
-            <img loading='lazy' src={Bag} className='wallet-icon'></img>
-            {payment ? null : <span className='payment-warning'> You have to choose a payment method to buy UP coins.</span>}
-            <button className='deposit-button'> GET UP COIN</button>
-          </div>
+        <div className='user-coin-infobox'>
+          <span className='user-coin-convertion-info'>1 UP coin = 1 TL</span>
+          {!payment && <span className='user-coin-convertion'>You have to choose a payment method to buy UP coins.</span>}
+          {!paymentModal && (
+            <button className='add-payment-btn' onClick={() => handPaymentModalOpen()}>
+              GET UP COIN
+            </button>
+          )}
         </div>
       </div>
       {transactionHistory ? (
         <div className='transaction-history'>
+          <Divider className='divider-wallet' variant='middle' />
           <div className='bank-accounts-header'>
             <p>Transaction History</p>
           </div>
           <div className='transaction-content-holder'>
+            <div className='transaction-content'>
+              <span className='transaction-type'>Refund</span>
+              <span className='transaction-info'>+50 UP coin</span>
+            </div>
             <div className='transaction-content'>
               <span className='transaction-type'>Refund</span>
               <span className='transaction-info'>+50 UP coin</span>

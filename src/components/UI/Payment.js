@@ -363,9 +363,9 @@ function Payment(props) {
                                   notchedOutline: classes.notchedOutline,
                                 },
                               }}
-                              onInput={(e) => {
-                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 30)
-                              }}
+                              // onInput={(e) => {
+                              //   e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 30)
+                              // }}
                             />
                           </Grid>
                           <Divider classes={{ root: classes.dividerAmca }} />
