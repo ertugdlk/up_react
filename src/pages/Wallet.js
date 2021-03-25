@@ -13,6 +13,8 @@ import CenterModal from '../components/UI/CenterModal'
 import MyAccount from '../components/MyAccount'
 import { baseUrl } from '../utils/helpers'
 
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css?family=Raleway');
   body {
@@ -195,50 +197,51 @@ function Wallet(props) {
             {upBalance} UP coin = {upBalance} TL
           </span>
           {paymentModal ? null : (
-            <button className='deneme' onClick={() => handPaymentModalOpen()}>
+            <button className='add-payment-btn' onClick={() => handPaymentModalOpen()}>
               Add Payment
             </button>
           )}
         </div>
         <Payment paymentModal={paymentModal} handPaymentModalClose={handPaymentModalClose}></Payment>
         <div className='bank-accounts'>
-          <span className='bank-accounts-header'>Your Bank Accounts</span>
-          <li>
-            <div className='withdraw-content'>
-              <button className='bank-button' onClick={handleDropdown} ref={btn}>
-                Bank 1
-              </button>
-              {click ? (
-                <div className='dropdown-content-1' ref={dropdown}>
-                  <span className='balance-text'>Your balance: {bankBalance}</span>
-                  <span className='balance-text'>Coin requirement to withdraw: {withdrawReq}</span>
-                  <button className='dropdown-btn'>Withdraw</button>
-                </div>
-              ) : null}
-              <button className='bank-button' onClick={handleDropdown1} ref={btn}>
-                Bank 2
-              </button>
-              {click1 ? (
-                <div className='dropdown-content-1' ref={dropdown}>
-                  <span className='balance-text'> Your Balance: {bankBalance1}</span>
-                  <span className='balance-text'>
-                    Coin requirement to withdraw: <span>{withdrawReq1}</span>
-                  </span>
-                  <button className='dropdown-btn'>Withdraw</button>
-                </div>
-              ) : null}
-              <button className='bank-button' onClick={handleDropdown2} ref={btn}>
-                Bank 3
-              </button>
-              {click2 ? (
-                <div className='dropdown-content-1' ref={dropdown}>
-                  <span className='balance-text'>Your Balance: {bankBalance2}</span>
-                  <span className='balance-text'>Coin requirement to withdraw: {withdrawReq2}</span>
-                  <button className='dropdown-btn'>Withdraw</button>
-                </div>
-              ) : null}
-            </div>
-          </li>
+          <div className='bank-accounts-header'>
+            <p> Your Bank Accounts</p>
+          </div>
+          <div style={{ clear: 'both' }}></div>
+          <div className='withdraw-content'>
+            <button className='bank-button' onClick={handleDropdown} ref={btn}>
+              <AccountBalanceIcon /> <span style={{ fontSize: '18px', lineHeight: '20px' }}>Bank 1</span>
+            </button>
+            {click ? (
+              <div className='dropdown-content-1' ref={dropdown}>
+                <span className='balance-text'>Your balance: {bankBalance}</span>
+                <span className='balance-text'>Coin requirement to withdraw: {withdrawReq}</span>
+                <button className='dropdown-btn'>Withdraw</button>
+              </div>
+            ) : null}
+            <button className='bank-button' onClick={handleDropdown1} ref={btn}>
+              <AccountBalanceIcon /> <span style={{ fontSize: '18px', lineHeight: '20px' }}>Bank 2</span>
+            </button>
+            {click1 ? (
+              <div className='dropdown-content-1' ref={dropdown}>
+                <span className='balance-text'> Your Balance: {bankBalance1}</span>
+                <span className='balance-text'>
+                  Coin requirement to withdraw: <span>{withdrawReq1}</span>
+                </span>
+                <button className='dropdown-btn'>Withdraw</button>
+              </div>
+            ) : null}
+            <button className='bank-button' onClick={handleDropdown2} ref={btn}>
+              <AccountBalanceIcon /> <span style={{ fontSize: '18px', lineHeight: '20px' }}>Bank 3</span>
+            </button>
+            {click2 ? (
+              <div className='dropdown-content-1' ref={dropdown}>
+                <span className='balance-text'>Your Balance: {bankBalance2}</span>
+                <span className='balance-text'>Coin requirement to withdraw: {withdrawReq2}</span>
+                <button className='dropdown-btn'>Withdraw</button>
+              </div>
+            ) : null}
+          </div>
         </div>
         <div className='up-coin-actions'>
           <div className='up-coin-deposit'>
@@ -248,31 +251,36 @@ function Wallet(props) {
             <button className='deposit-button'> GET UP COIN</button>
           </div>
         </div>
-        <div style={{ clear: 'both' }}></div>
-        {transactionHistory ? (
-          <div className='transaction-history'>
-            <span className='transaction-history-header'>Transaction History</span>
-            <li>
-              <div className='transaction-content'>
-                <span className='transaction-type'>Refund</span>
-                <span className='transaction-info'>+50 UP coin</span>
-              </div>
-              <div className='transaction-content'>
-                <span className='transaction-type'>Refund</span>
-                <span className='transaction-info'>+50 UP coin</span>
-              </div>
-              <div className='transaction-content'>
-                <span className='transaction-type'>Refund</span>
-                <span className='transaction-info'>+50 UP coin</span>
-              </div>
-            </li>
-          </div>
-        ) : (
-          <button className='transaction-history-button' onClick={handleTransationHistory}>
-            Transaction History
-          </button>
-        )}
       </div>
+      {transactionHistory ? (
+        <div className='transaction-history'>
+          <div className='bank-accounts-header'>
+            <p>Transaction History</p>
+          </div>
+          <div className='transaction-content-holder'>
+            <div className='transaction-content'>
+              <span className='transaction-type'>Refund</span>
+              <span className='transaction-info'>+50 UP coin</span>
+            </div>
+            <div className='transaction-content'>
+              <span className='transaction-type'>Refund</span>
+              <span className='transaction-info'>+50 UP coin</span>
+            </div>
+            <div className='transaction-content'>
+              <span className='transaction-type'>Refund</span>
+              <span className='transaction-info'>+50 UP coin</span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className='bank-accounts-header'>
+          <p>
+            <button className='transaction-history-button' onClick={handleTransationHistory}>
+              Transaction History
+            </button>
+          </p>
+        </div>
+      )}
     </>
   )
 }
