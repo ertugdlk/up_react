@@ -128,6 +128,7 @@ function Payment(props) {
   const middle = texts[Math.round((texts.length - 1) / 2)]
   const [isMoneySelected, setIsMoneySelected] = useState(false)
   const [selectedMoneyAmount, setSelectedMoneyAmount] = useState(middle)
+  const [price,setPrice] = useState(0)
   const [cardHolderName, setCardHolderName] = useState('')
   const [carNumeber, setCarNumeber] = useState('')
   const [cvv, setCvv] = useState('')
@@ -174,12 +175,13 @@ function Payment(props) {
         currency_code: 'TRY',
         installments_number: 1,
         invoice_description: 'Testing',
-        total: selectedMoneyAmount / 500,
+        total: price,
         name: name,
         surname: surname,
         nickname: user,
       }
       const response = await axios.post(url, body, { withCredentials: true })
+      console.log(response)
     } catch (err) {
       throw new Error('Something went wrong')
     }
@@ -191,11 +193,26 @@ function Payment(props) {
 
   const selectMoney = () => {
     setIsMoneySelected(true)
+    handlePrice()
   }
   const unSelectMoney = () => {
     setIsMoneySelected(false)
   }
 
+  const handlePrice = () => {
+
+    if(selectedMoneyAmount==="50 Coins"){
+      setPrice(0.10)
+    } else if(selectedMoneyAmount==="100 Coins"){
+      setPrice(0.20)
+    } else if(selectedMoneyAmount==="250 Coins"){
+      setPrice(0.50)
+    } else if(selectedMoneyAmount==="500 Coins"){
+      setPrice(1)
+    } else if(selectedMoneyAmount==="1000 Coins"){
+      setPrice(2)
+    }
+  }
   // const getName = () => {
   //   setName(cardHolderName.split(' ')[0])
   // }
@@ -203,6 +220,10 @@ function Payment(props) {
   // const getSurname = () => {
   //   setSurname(cardHolderName.split(' ')[1])
   // }
+
+  function insertSlash(val){
+    return val.replace(/^(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4');
+  }
 
   const handleSetCardHolderName = (e) => {
     console.log('handleSetCardHolderName', e.target.value)
@@ -328,7 +349,9 @@ function Payment(props) {
                         <Grid container direction='column' justify='center' alignItems='center' spacing={1}>
                           <Grid item xs={12} className={classes.gridItems}>
                             <Typography variant='h4' component='h5'>
-                              {'Buy so we can earn money?'}
+                              {'You have selected:'} {selectedMoneyAmount}
+                              <br/>
+                              {'You will pay:'} {price} {'TL'}
                             </Typography>
                           </Grid>
                           <Divider classes={{ root: classes.dividerAmca }} />
@@ -391,7 +414,7 @@ function Payment(props) {
                               type='tel'
                               placeholder='XXXX-XXXX-XXXX-XXXX'
                               onChange={(e) => handleSetCardNumber(e)}
-                              value={carNumeber}
+                              value={insertSlash(carNumeber)}
                               InputProps={{
                                 classes: {
                                   maxLength: 16,
@@ -409,11 +432,22 @@ function Payment(props) {
                           <Grid container item xs={12} className={classes.gridItems}>
                             <Grid container direction='row' justify='space-between' alignItems='center' spacing={1}>
                               <Grid item xs={3}>
+                              <InputLabel shrink>
+                              <Typography
+                                style={{
+                                  color: 'white',
+                                  fontSize:'14px'
+                                }}
+                                variant='caption'
+                              >
+                                CVV
+                              </Typography>
+                            </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  label='CVV'
+                                  placeholder ='XXX'
                                   onChange={(e) => handleSetCVV(e)}
                                   value={cvv}
                                   InputProps={{
@@ -428,6 +462,7 @@ function Payment(props) {
                                     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 3)
                                   }}
                                 />
+                                
                               </Grid>
                               <Grid item xs={1} className={classes.dividerAmcaVerticalGrids}>
                                 <Divider
@@ -439,11 +474,21 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={2}>
+                              <InputLabel shrink>
+                              <Typography
+                                style={{
+                                  color: 'white',
+                                  fontSize:'14px'
+                                }}
+                                variant='caption'
+                              >
+                                Exp. Month
+                              </Typography>
+                            </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  label='Expiration Month'
                                   placeholder='XX'
                                   type='tel'
                                   onChange={(e) => handleSetMonth(e)}
@@ -462,11 +507,21 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={2}>
+                              <InputLabel shrink>
+                              <Typography
+                                style={{
+                                  color: 'white',
+                                  fontSize:'14px'
+                                }}
+                                variant='caption'
+                              >
+                                Exp. Year
+                              </Typography>
+                            </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  label='Expiration Year'
                                   placeholder='XX'
                                   type='tel'
                                   onChange={(e) => handleSetYear(e)}
@@ -494,11 +549,22 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={3}>
+                              <InputLabel shrink>
+                              <Typography
+                                style={{
+                                  color: 'white',
+                                  fontSize:'14px'
+                                }}
+                                variant='caption'
+                              >
+                                Zip Code
+                              </Typography>
+                            </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  label='Zip Code'
+                                  placeholder='XXXXX'
                                   type='tel'
                                   value={zipCode}
                                   onChange={(e) => handleSetZip(e)}
