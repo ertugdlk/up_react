@@ -167,7 +167,7 @@ function Payment(props) {
   }
 
   const handleDeposit = async () => {
-    if(checkbox.checkedA===true){
+    if(checkbox.checkedA===false){
     try {
       const url = 'pay/pay2d'
       const body = {
@@ -261,7 +261,7 @@ function Payment(props) {
   }
   const handleSetMonth = (e) => {
     setExperieMonth(e.target.value)
-    if (isNaN(e.target.value)) {
+  if (isNaN(e.target.value)) {
       setExperieMonth('')
     }
   }
@@ -499,7 +499,7 @@ function Payment(props) {
                                   id='outlined-basic'
                                   variant='outlined'
                                   placeholder='XX'
-                                  type='tel'
+                                  type='string'
                                   onChange={(e) => handleSetMonth(e)}
                                   value={experieMonth}
                                   InputProps={{
