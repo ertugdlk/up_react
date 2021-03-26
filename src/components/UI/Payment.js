@@ -129,7 +129,7 @@ function Payment(props) {
   const middle = texts[Math.round((texts.length - 1) / 2)]
   const [isMoneySelected, setIsMoneySelected] = useState(false)
   const [selectedMoneyAmount, setSelectedMoneyAmount] = useState(middle)
-  const [price,setPrice] = useState(0)
+  const [price, setPrice] = useState(0)
   const [cardHolderName, setCardHolderName] = useState('')
   const [carNumeber, setCarNumeber] = useState('')
   const [cvv, setCvv] = useState('')
@@ -167,32 +167,37 @@ function Payment(props) {
   }
 
   const handleDeposit = async () => {
-
     if(checkbox.checkedA===true){
-      try {
-        const url = 'credential/add'
-        const body = {
-          cc_holder_name: cardHolderName,
-          cc_no: carNumeber,
-          expiry_month: experieMonth,
-          expiry_year: experieYear,
-          cvv: cvv,
-          currency_code: 'TRY',
-          installments_number: 1,
-          invoice_description: 'Testing',
-          total: price,
-          name: name,
-          surname: surname,
-          nickname: user,
-        }
-        const response = await axios.post(url, body, { withCredentials: true })
-        console.log(response)
-      } catch (err) {
-        throw new Error('Something went wrong')
+    try {
+      const url = 'pay/pay2d'
+      const body = {
+        cc_holder_name: 'ABDULLAH KANDİLLİ',
+        cc_no: '5168404128791960',
+        expiry_month: '07',
+        expiry_year: '24',
+        cvv: '108',
+        currency_code: 'TRY',
+        installments_number: 1,
+        invoice_description: 'Testing',
+        total: price,
+        name: 'ABDULLAH',
+        surname: 'KANDİLLİ',
+        nickname: 'testalka',
+
+        items: [{ name: 'TestItem', price: '0.10', quantity: 1, description: 'Item test description' }],
       }
-    } else{
-      //buraya 3d secure gelecek
+      debugger
+      console.log('BODY CREDIT', body)
+      console.log('Axios', axios.url)
+      const response = await axios.post(url, body, { withCredentials: true })
+      console.log('Response cREdit', response)
+    } catch (err) {
+      console.log('PAYEMTN ERER >>>>', err)
+      throw new Error('Something went wrong')
     }
+  }else{
+    //buraya 3d secure gelecek
+  }
     
   }
 
@@ -209,16 +214,15 @@ function Payment(props) {
   }
 
   const handlePrice = () => {
-
-    if(selectedMoneyAmount==="50 Coins"){
-      setPrice(0.10)
-    } else if(selectedMoneyAmount==="100 Coins"){
-      setPrice(0.20)
-    } else if(selectedMoneyAmount==="250 Coins"){
-      setPrice(0.50)
-    } else if(selectedMoneyAmount==="500 Coins"){
+    if (selectedMoneyAmount === '50 Coins') {
+      setPrice(0.1)
+    } else if (selectedMoneyAmount === '100 Coins') {
+      setPrice(0.2)
+    } else if (selectedMoneyAmount === '250 Coins') {
+      setPrice(0.5)
+    } else if (selectedMoneyAmount === '500 Coins') {
       setPrice(1)
-    } else if(selectedMoneyAmount==="1000 Coins"){
+    } else if (selectedMoneyAmount === '1000 Coins') {
       setPrice(2)
     }
   }
@@ -230,8 +234,8 @@ function Payment(props) {
   //   setSurname(cardHolderName.split(' ')[1])
   // }
 
-  function insertSlash(val){
-    return val.replace(/^(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4');
+  function insertSlash(val) {
+    return val.replace(/^(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4')
   }
 
   const handleSetCardHolderName = (e) => {
@@ -240,7 +244,6 @@ function Payment(props) {
       setCardHolderName('')
     }
     setCardHolderName(e.target.value)
-
   }
 
   const handleSetCardNumber = (e) => {
@@ -357,7 +360,7 @@ function Payment(props) {
                           <Grid item xs={12} className={classes.gridItems}>
                             <Typography variant='h4' component='h5'>
                               {'You have selected:'} {selectedMoneyAmount}
-                              <br/>
+                              <br />
                               {'You will pay:'} {price} {'TL'}
                             </Typography>
                           </Grid>
@@ -439,22 +442,22 @@ function Payment(props) {
                           <Grid container item xs={12} className={classes.gridItems}>
                             <Grid container direction='row' justify='space-between' alignItems='center' spacing={1}>
                               <Grid item xs={3}>
-                              <InputLabel shrink>
-                              <Typography
-                                style={{
-                                  color: 'white',
-                                  fontSize:'14px'
-                                }}
-                                variant='caption'
-                              >
-                                CVV
-                              </Typography>
-                            </InputLabel>
+                                <InputLabel shrink>
+                                  <Typography
+                                    style={{
+                                      color: 'white',
+                                      fontSize: '14px',
+                                    }}
+                                    variant='caption'
+                                  >
+                                    CVV
+                                  </Typography>
+                                </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  placeholder ='XXX'
+                                  placeholder='XXX'
                                   onChange={(e) => handleSetCVV(e)}
                                   value={cvv}
                                   InputProps={{
@@ -469,7 +472,6 @@ function Payment(props) {
                                     e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 3)
                                   }}
                                 />
-                                
                               </Grid>
                               <Grid item xs={1} className={classes.dividerAmcaVerticalGrids}>
                                 <Divider
@@ -481,17 +483,17 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={2}>
-                              <InputLabel shrink>
-                              <Typography
-                                style={{
-                                  color: 'white',
-                                  fontSize:'14px'
-                                }}
-                                variant='caption'
-                              >
-                                Exp. Month
-                              </Typography>
-                            </InputLabel>
+                                <InputLabel shrink>
+                                  <Typography
+                                    style={{
+                                      color: 'white',
+                                      fontSize: '14px',
+                                    }}
+                                    variant='caption'
+                                  >
+                                    Exp. Month
+                                  </Typography>
+                                </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
@@ -514,17 +516,17 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={2}>
-                              <InputLabel shrink>
-                              <Typography
-                                style={{
-                                  color: 'white',
-                                  fontSize:'14px'
-                                }}
-                                variant='caption'
-                              >
-                                Exp. Year
-                              </Typography>
-                            </InputLabel>
+                                <InputLabel shrink>
+                                  <Typography
+                                    style={{
+                                      color: 'white',
+                                      fontSize: '14px',
+                                    }}
+                                    variant='caption'
+                                  >
+                                    Exp. Year
+                                  </Typography>
+                                </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
