@@ -13,6 +13,7 @@ import CardImageHolder from '../../card_image.png'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
 import Send from '@material-ui/icons/Send'
+import Checkbox from '@material-ui/core/Checkbox';
 
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -134,10 +135,12 @@ function Payment(props) {
   const [cvv, setCvv] = useState('')
   const [experieYear, setExperieYear] = useState('')
   const [experieMonth, setExperieMonth] = useState('')
-  const [zipCode, setZipCode] = useState('')
   const [user, setUser] = useState(props.userName)
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
+  const [checkbox, setCheckbox] = useState({
+    checkedA: true,
+  });
   const classes = useStyles()
 
   // useEffect(() => {
@@ -164,27 +167,33 @@ function Payment(props) {
   }
 
   const handleDeposit = async () => {
-    try {
-      const url = 'credential/add'
-      const body = {
-        cc_holder_name: cardHolderName,
-        cc_no: carNumeber,
-        expiry_month: experieMonth,
-        expiry_year: experieYear,
-        cvv: cvv,
-        currency_code: 'TRY',
-        installments_number: 1,
-        invoice_description: 'Testing',
-        total: price,
-        name: name,
-        surname: surname,
-        nickname: user,
+
+    if(checkbox.checkedA===true){
+      try {
+        const url = 'credential/add'
+        const body = {
+          cc_holder_name: cardHolderName,
+          cc_no: carNumeber,
+          expiry_month: experieMonth,
+          expiry_year: experieYear,
+          cvv: cvv,
+          currency_code: 'TRY',
+          installments_number: 1,
+          invoice_description: 'Testing',
+          total: price,
+          name: name,
+          surname: surname,
+          nickname: user,
+        }
+        const response = await axios.post(url, body, { withCredentials: true })
+        console.log(response)
+      } catch (err) {
+        throw new Error('Something went wrong')
       }
-      const response = await axios.post(url, body, { withCredentials: true })
-      console.log(response)
-    } catch (err) {
-      throw new Error('Something went wrong')
+    } else{
+      //buraya 3d secure gelecek
     }
+    
   }
 
   const handleChangeMoneyAmount = (e, text) => {
@@ -259,12 +268,10 @@ function Payment(props) {
       setExperieYear('')
     }
   }
-  const handleSetZip = (e) => {
-    setZipCode(e.target.value)
-    if (isNaN(e.target.value)) {
-      setZipCode('')
-    }
-  }
+
+  const handleChecked = (event) => {
+    setCheckbox({ ...checkbox, [event.target.name]: event.target.checked });
+  };
 
   return (
     <Dialog
@@ -386,9 +393,9 @@ function Payment(props) {
                                   notchedOutline: classes.notchedOutline,
                                 },
                               }}
-                              onInput={(e) => {
-                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 30)
-                              }}
+                              /*onInput={(e) => {
+                                e.target.value = Math.max(0, (e.target.value)).toString().slice(0, 30)
+                              }}*/
                             />
                           </Grid>
                           <Divider classes={{ root: classes.dividerAmca }} />
@@ -549,37 +556,10 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={3}>
-                              <InputLabel shrink>
-                              <Typography
-                                style={{
-                                  color: 'white',
-                                  fontSize:'14px'
-                                }}
-                                variant='caption'
-                              >
-                                Zip Code
-                              </Typography>
-                            </InputLabel>
-                                <TextField
-                                  className={classes.inputs}
-                                  id='outlined-basic'
-                                  variant='outlined'
-                                  placeholder='XXXXX'
-                                  type='tel'
-                                  value={zipCode}
-                                  onChange={(e) => handleSetZip(e)}
-                                  InputProps={{
-                                    maxLength: 6,
-                                    classes: {
-                                      root: classes.inputInput,
-                                      focused: classes.focused,
-                                      notchedOutline: classes.notchedOutline,
-                                    },
-                                  }}
-                                  onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
-                                  }}
-                                />
+                            <FormControlLabel
+                            control={<Checkbox checked={checkbox.checkedA} onChange={handleChecked} name="checkedA"/>}
+                            label="3D Secure Payment"
+                            />
                               </Grid>
                             </Grid>
                           </Grid>
