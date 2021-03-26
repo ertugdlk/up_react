@@ -188,9 +188,7 @@ function Payment(props) {
 
           items: [{ name: 'TestItem', price: '0.10', quantity: 1, description: 'Item test description' }],
         }
-        debugger
         console.log('BODY CREDIT', body)
-        console.log('Axios', axios.url)
         const response = await axios.post(url, body, { withCredentials: true })
         console.log('Response cREdit', response)
       } catch (err) {
