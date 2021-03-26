@@ -13,7 +13,7 @@ import CardImageHolder from '../../card_image.png'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
 import Send from '@material-ui/icons/Send'
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from '@material-ui/core/Checkbox'
 
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -140,7 +140,7 @@ function Payment(props) {
   const [surname, setSurname] = useState('')
   const [checkbox, setCheckbox] = useState({
     checkedA: true,
-  });
+  })
   const classes = useStyles()
 
   // useEffect(() => {
@@ -167,38 +167,39 @@ function Payment(props) {
   }
 
   const handleDeposit = async () => {
-    if(checkbox.checkedA===false){
-    try {
-      const url = 'pay/pay2d'
-      const body = {
-        cc_holder_name: 'ABDULLAH KANDİLLİ',
-        cc_no: '5168404128791960',
-        expiry_month: '07',
-        expiry_year: '24',
-        cvv: '108',
-        currency_code: 'TRY',
-        installments_number: 1,
-        invoice_description: 'Testing',
-        total: price,
-        name: 'ABDULLAH',
-        surname: 'KANDİLLİ',
-        nickname: 'testalka',
+    getName()
+    getSurname()
+    if (checkbox.checkedA === false) {
+      try {
+        const url = 'pay/pay2d'
+        const body = {
+          cc_holder_name: 'ABDULLAH KANDİLLİ',
+          cc_no: '5168404128791960',
+          expiry_month: '07',
+          expiry_year: '24',
+          cvv: '108',
+          currency_code: 'TRY',
+          installments_number: 1,
+          invoice_description: 'Testing',
+          total: price,
+          name: 'ABDULLAH',
+          surname: 'KANDİLLİ',
+          nickname: 'testalka',
 
-        items: [{ name: 'TestItem', price: '0.10', quantity: 1, description: 'Item test description' }],
+          items: [{ name: 'TestItem', price: '0.10', quantity: 1, description: 'Item test description' }],
+        }
+        debugger
+        console.log('BODY CREDIT', body)
+        console.log('Axios', axios.url)
+        const response = await axios.post(url, body, { withCredentials: true })
+        console.log('Response cREdit', response)
+      } catch (err) {
+        console.log('PAYEMTN ERER >>>>', err)
+        throw new Error('Something went wrong')
       }
-      debugger
-      console.log('BODY CREDIT', body)
-      console.log('Axios', axios.url)
-      const response = await axios.post(url, body, { withCredentials: true })
-      console.log('Response cREdit', response)
-    } catch (err) {
-      console.log('PAYEMTN ERER >>>>', err)
-      throw new Error('Something went wrong')
+    } else {
+      //buraya 3d secure gelecek
     }
-  }else{
-    //buraya 3d secure gelecek
-  }
-    
   }
 
   const handleChangeMoneyAmount = (e, text) => {
@@ -226,13 +227,13 @@ function Payment(props) {
       setPrice(2)
     }
   }
-  // const getName = () => {
-  //   setName(cardHolderName.split(' ')[0])
-  // }
+  const getName = () => {
+    setName(cardHolderName.split(' ')[0])
+  }
 
-  // const getSurname = () => {
-  //   setSurname(cardHolderName.split(' ')[1])
-  // }
+  const getSurname = () => {
+    setSurname(cardHolderName.split(' ')[1])
+  }
 
   function insertSlash(val) {
     return val.replace(/^(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4')
@@ -261,7 +262,7 @@ function Payment(props) {
   }
   const handleSetMonth = (e) => {
     setExperieMonth(e.target.value)
-  if (isNaN(e.target.value)) {
+    if (isNaN(e.target.value)) {
       setExperieMonth('')
     }
   }
@@ -273,8 +274,8 @@ function Payment(props) {
   }
 
   const handleChecked = (event) => {
-    setCheckbox({ ...checkbox, [event.target.name]: event.target.checked });
-  };
+    setCheckbox({ ...checkbox, [event.target.name]: event.target.checked })
+  }
 
   return (
     <Dialog
@@ -469,7 +470,10 @@ function Payment(props) {
                                     },
                                   }}
                                   onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 3)
+                                    // e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 3)
+                                    if (e.target.value.length > 3) {
+                                      e.target.value = e.target.value.slice(0, -1)
+                                    }
                                   }}
                                 />
                               </Grid>
@@ -511,7 +515,9 @@ function Payment(props) {
                                     },
                                   }}
                                   onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2)
+                                    if (e.target.value.length > 2) {
+                                      e.target.value = e.target.value.slice(0, -1)
+                                    }
                                   }}
                                 />
                               </Grid>
@@ -558,10 +564,7 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={3}>
-                            <FormControlLabel
-                            control={<Checkbox checked={checkbox.checkedA} onChange={handleChecked} name="checkedA"/>}
-                            label="3D Secure Payment"
-                            />
+                                <FormControlLabel control={<Checkbox checked={checkbox.checkedA} onChange={handleChecked} name='checkedA' />} label='3D Secure Payment' />
                               </Grid>
                             </Grid>
                           </Grid>
