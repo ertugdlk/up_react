@@ -42,6 +42,7 @@ function Wallet(props) {
   const [userName, setUsername] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [session, setSession] = useState(false)
+  const [transactions, setTransactions] = useState([])
 
   const socketio = require('socket.io-client')
   const socket = socketio(baseUrl, {
@@ -154,6 +155,21 @@ function Wallet(props) {
     } catch (err) {
       throw new Error('Something went wrong')
     }
+
+
+    async function Transactions() {
+      try{
+      const url = 'detail/transactions' //burası değişecek
+      const response = await axios.get(url, { withCredentials: true })
+      if (response.data) {
+        setTransactions(response.data)
+      }
+    }catch(err){
+      alert("We couldn't get your transactions from our server")
+    }
+    }
+
+    Transactions();
   }, [])
 
   return (
@@ -267,17 +283,16 @@ function Wallet(props) {
               <span className='transaction-type'>Refund</span>
               <span className='transaction-info'>+50 UP coin</span>
             </div>
-            <div className='transaction-content'>
-              <span className='transaction-type'>Refund</span>
-              <span className='transaction-info'>+50 UP coin</span>
-            </div>
-            <div className='transaction-content'>
-              <span className='transaction-type'>Refund</span>
-              <span className='transaction-info'>+50 UP coin</span>
-            </div>
-            <div className='transaction-content'>
-              <span className='transaction-type'>Refund</span>
-              <span className='transaction-info'>+50 UP coin</span>
+
+            <div className='transaction-content-holder'>
+              {transactions.map((transaction) => (
+                <div
+                  className='transaction-content' key={transaction.name}>
+
+                    <span className='transaction-type'>{transaction.type}</span>
+                    <span className='transaction-info'>{transaction.detail}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
