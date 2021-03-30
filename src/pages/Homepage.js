@@ -29,6 +29,7 @@ function Homepage(props) {
   //     console.log('Current Path', getApiUrl)
   //     axios.defaults.baseURL = getApiUrl
   //   }
+
   // }, [])
 
   const handleClickLogin = () => {
@@ -57,7 +58,7 @@ function Homepage(props) {
       <header className='header'>
         <div className='logo'>
           <a href='/'>
-            <img loading="lazy" src={Logo} href='/' className="logo-img"/>{' '}
+            <img loading="lazy" src={Logo} href='/' className="logo-img" />{' '}
           </a>
         </div>
         <Grid>
