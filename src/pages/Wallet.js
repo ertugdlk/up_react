@@ -43,6 +43,7 @@ function Wallet(props) {
   const [email, setEmail] = React.useState('')
   const [session, setSession] = useState(false)
   const [transactions, setTransactions] = useState([])
+  const [coinAmount,setCoinAmount] = useState(0)
 
   const socketio = require('socket.io-client')
   const socket = socketio(baseUrl, {
@@ -154,16 +155,33 @@ function Wallet(props) {
       throw new Error('Something went wrong')
     }
 
-
     async function Transactions() {
       try{
       const url = 'transactions/mytransactions'
       const response = await axios.get(url, { withCredentials: true})
-      console.log(response)
+      console.log(response.data.transactions)
+      setTransactions(response.data.transactions)
+
+      for(let i=0;i<=response.data.transactions.length;i++){
+
+        if(response.data.transactions[i].total=="0.1"){
+          setCoinAmount(50)
+        } else if(response.data.transactions[i].total=="0.25"){
+          setCoinAmount(100)
+        } else if(response.data.transactions[i].total=="0.5"){
+          setCoinAmount(250)
+        } else if(response.data.transactions[i].total=="1"){
+          setCoinAmount(500)
+        }else if(response.data.transactions[i].total=="2"){
+          setCoinAmount(1000)
+        }
+      }
     }catch(err){
       alert("We couldn't get your transactions from our server")
     }
     }
+
+    
 
     Transactions()
     userBalance()
@@ -276,14 +294,14 @@ function Wallet(props) {
           <div className='bank-accounts-header'>
             <p>Transaction History</p>
           </div>
-          {/* {<div className='transaction-content-holder'>
+          {<div className='transaction-content-holder'>
               {transactions.map((transaction) => (
-                <div className='transaction-content'>
-                    <span className='transaction-type'></span>
-                    <span className='transaction-info'></span>
+                <div className='transaction-content' key={transaction}>
+                    <span className='transaction-type'>{transaction.invoice_id}</span>
+                    <span className='transaction-info'> {coinAmount} UP - {transaction.total} {transaction.currency_code} - {transaction.invoice_description} </span>
                 </div>
               ))}
-          </div>} */}
+          </div>}
         </div>
       ) : (
         <div className='bank-accounts-header'>
