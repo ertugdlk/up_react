@@ -181,7 +181,7 @@ function Payment(props) {
           currency_code: 'TRY',
           installments_number: 1,
           invoice_description: 'Testing',
-          total: price,
+          total: '0.10',
           name: 'ABDULLAH',
           surname: 'KANDİLLİ',
           nickname: 'testalka',
