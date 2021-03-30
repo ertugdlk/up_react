@@ -13,6 +13,7 @@ import CardImageHolder from '../../card_image.png'
 import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
 import Send from '@material-ui/icons/Send'
+import Checkbox from '@material-ui/core/Checkbox'
 
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -128,21 +129,24 @@ function Payment(props) {
   const middle = texts[Math.round((texts.length - 1) / 2)]
   const [isMoneySelected, setIsMoneySelected] = useState(false)
   const [selectedMoneyAmount, setSelectedMoneyAmount] = useState(middle)
+  const [price, setPrice] = useState(0)
   const [cardHolderName, setCardHolderName] = useState('')
   const [carNumeber, setCarNumeber] = useState('')
   const [cvv, setCvv] = useState('')
   const [experieYear, setExperieYear] = useState('')
   const [experieMonth, setExperieMonth] = useState('')
-  const [zipCode, setZipCode] = useState('')
   const [user, setUser] = useState(props.userName)
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
+  const [checkbox, setCheckbox] = useState({
+    checkedA: true,
+  })
   const classes = useStyles()
 
-  useEffect(() => {
-    getName()
-    getSurname()
-  }, [])
+  // useEffect(() => {
+  //   getName()
+  //   getSurname()
+  // }, [])
 
   function StyledButton({ text = '' }) {
     const classes = useStyles()
@@ -163,25 +167,36 @@ function Payment(props) {
   }
 
   const handleDeposit = async () => {
-    try {
-      const url = 'credential/add'
-      const body = {
-        cc_holder_name: cardHolderName,
-        cc_no: carNumeber,
-        expiry_month: experieMonth,
-        expiry_year: experieYear,
-        cvv: cvv,
-        currency_code: 'TRY',
-        installments_number: 1,
-        invoice_description: 'Testing',
-        total: selectedMoneyAmount / 500,
-        name: name,
-        surname: surname,
-        nickname: user,
+    getName()
+    getSurname()
+    if (checkbox.checkedA === false) {
+      try {
+        const url = 'pay/pay2d'
+        const body = {
+          cc_holder_name: 'ABDULLAH KANDİLLİ',
+          cc_no: '5168404128791960',
+          expiry_month: '07',
+          expiry_year: '24',
+          cvv: '108',
+          currency_code: 'TRY',
+          installments_number: 1,
+          invoice_description: 'Testing',
+          total: '0.10',
+          name: 'ABDULLAH',
+          surname: 'KANDİLLİ',
+          nickname: 'testalka',
+
+          items: [{ name: 'TestItem', price: '0.10', quantity: 1, description: 'Item test description' }],
+        }
+        console.log('BODY CREDIT', body)
+        const response = await axios.post(url, body, { withCredentials: true })
+        console.log('Response cREdit', response)
+      } catch (err) {
+        console.log('PAYEMTN ERER >>>>', err)
+        throw new Error('Something went wrong')
       }
-      const response = await axios.post(url, body, { withCredentials: true })
-    } catch (err) {
-      throw new Error('Something went wrong')
+    } else {
+      //buraya 3d secure gelecek
     }
   }
 
@@ -191,17 +206,73 @@ function Payment(props) {
 
   const selectMoney = () => {
     setIsMoneySelected(true)
+    handlePrice()
   }
   const unSelectMoney = () => {
     setIsMoneySelected(false)
   }
 
+  const handlePrice = () => {
+    if (selectedMoneyAmount === '50 Coins') {
+      setPrice(0.1)
+    } else if (selectedMoneyAmount === '100 Coins') {
+      setPrice(0.2)
+    } else if (selectedMoneyAmount === '250 Coins') {
+      setPrice(0.5)
+    } else if (selectedMoneyAmount === '500 Coins') {
+      setPrice(1)
+    } else if (selectedMoneyAmount === '1000 Coins') {
+      setPrice(2)
+    }
+  }
   const getName = () => {
     setName(cardHolderName.split(' ')[0])
   }
 
   const getSurname = () => {
     setSurname(cardHolderName.split(' ')[1])
+  }
+
+  function insertSlash(val) {
+    return val.replace(/^(\d{4})(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4')
+  }
+
+  const handleSetCardHolderName = (e) => {
+    console.log('handleSetCardHolderName', e.target.value)
+    if (e.target.value === '') {
+      setCardHolderName('')
+    }
+    setCardHolderName(e.target.value)
+  }
+
+  const handleSetCardNumber = (e) => {
+    setCarNumeber(e.target.value)
+    if (isNaN(e.target.value)) {
+      setCarNumeber('')
+    }
+  }
+
+  const handleSetCVV = (e) => {
+    setCvv(e.target.value)
+    if (isNaN(e.target.value)) {
+      setCvv('')
+    }
+  }
+  const handleSetMonth = (e) => {
+    setExperieMonth(e.target.value)
+    if (isNaN(e.target.value)) {
+      setExperieMonth('')
+    }
+  }
+  const handleSetYear = (e) => {
+    setExperieYear(e.target.value)
+    if (isNaN(e.target.value)) {
+      setExperieYear('')
+    }
+  }
+
+  const handleChecked = (event) => {
+    setCheckbox({ ...checkbox, [event.target.name]: event.target.checked })
   }
 
   return (
@@ -287,7 +358,9 @@ function Payment(props) {
                         <Grid container direction='column' justify='center' alignItems='center' spacing={1}>
                           <Grid item xs={12} className={classes.gridItems}>
                             <Typography variant='h4' component='h5'>
-                              {'Buy so we can earn money?'}
+                              {'You have selected:'} {selectedMoneyAmount}
+                              <br />
+                              {'You will pay:'} {price} {'TL'}
                             </Typography>
                           </Grid>
                           <Divider classes={{ root: classes.dividerAmca }} />
@@ -305,24 +378,26 @@ function Payment(props) {
                             </InputLabel>
 
                             <TextField
+                              type='text'
                               autoComplete={false}
                               fullWidth
                               className={classes.inputs}
                               id='outlined-basic'
                               variant='outlined'
                               placeholder='XXXXXXXX XXXXXXXX'
-                              onChange={(e) => setCardHolderName(e.target.value)}
+                              onChange={(e) => handleSetCardHolderName(e)}
+                              value={cardHolderName}
                               InputProps={{
+                                type: 'text',
                                 classes: {
-                                  maxLength: 30,
                                   root: classes.inputInput,
                                   focused: classes.focused,
                                   notchedOutline: classes.notchedOutline,
                                 },
                               }}
-                              onInput={(e) => {
-                                e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 30)
-                              }}
+                              /*onInput={(e) => {
+                                e.target.value = Math.max(0, (e.target.value)).toString().slice(0, 30)
+                              }}*/
                             />
                           </Grid>
                           <Divider classes={{ root: classes.dividerAmca }} />
@@ -347,7 +422,8 @@ function Payment(props) {
                               variant='outlined'
                               type='tel'
                               placeholder='XXXX-XXXX-XXXX-XXXX'
-                              onChange={(e) => setCarNumeber(e.target.value)}
+                              onChange={(e) => handleSetCardNumber(e)}
+                              value={insertSlash(carNumeber)}
                               InputProps={{
                                 classes: {
                                   maxLength: 16,
@@ -365,12 +441,24 @@ function Payment(props) {
                           <Grid container item xs={12} className={classes.gridItems}>
                             <Grid container direction='row' justify='space-between' alignItems='center' spacing={1}>
                               <Grid item xs={3}>
+                                <InputLabel shrink>
+                                  <Typography
+                                    style={{
+                                      color: 'white',
+                                      fontSize: '14px',
+                                    }}
+                                    variant='caption'
+                                  >
+                                    CVV
+                                  </Typography>
+                                </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  label='CVV'
-                                  onChange={(e) => setCvv(e.target.value)}
+                                  placeholder='XXX'
+                                  onChange={(e) => handleSetCVV(e)}
+                                  value={cvv}
                                   InputProps={{
                                     maxLength: 3,
                                     classes: {
@@ -380,7 +468,10 @@ function Payment(props) {
                                     },
                                   }}
                                   onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 3)
+                                    // e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 3)
+                                    if (e.target.value.length > 3) {
+                                      e.target.value = e.target.value.slice(0, -1)
+                                    }
                                   }}
                                 />
                               </Grid>
@@ -394,14 +485,25 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={2}>
+                                <InputLabel shrink>
+                                  <Typography
+                                    style={{
+                                      color: 'white',
+                                      fontSize: '14px',
+                                    }}
+                                    variant='caption'
+                                  >
+                                    Exp. Month
+                                  </Typography>
+                                </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  label='Expiration Month'
                                   placeholder='XX'
-                                  type='tel'
-                                  onChange={(e) => setExperieMonth(e.target.value)}
+                                  type='string'
+                                  onChange={(e) => handleSetMonth(e)}
+                                  value={experieMonth}
                                   InputProps={{
                                     maxLength: 2,
                                     classes: {
@@ -411,19 +513,32 @@ function Payment(props) {
                                     },
                                   }}
                                   onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 2)
+                                    if (e.target.value.length > 2) {
+                                      e.target.value = e.target.value.slice(0, -1)
+                                    }
                                   }}
                                 />
                               </Grid>
                               <Grid item xs={2}>
+                                <InputLabel shrink>
+                                  <Typography
+                                    style={{
+                                      color: 'white',
+                                      fontSize: '14px',
+                                    }}
+                                    variant='caption'
+                                  >
+                                    Exp. Year
+                                  </Typography>
+                                </InputLabel>
                                 <TextField
                                   className={classes.inputs}
                                   id='outlined-basic'
                                   variant='outlined'
-                                  label='Expiration Year'
                                   placeholder='XX'
                                   type='tel'
-                                  onChange={(e) => setExperieYear(e.target.value)}
+                                  onChange={(e) => handleSetYear(e)}
+                                  value={experieYear}
                                   InputProps={{
                                     maxLength: 2,
                                     classes: {
@@ -447,25 +562,7 @@ function Payment(props) {
                                 />
                               </Grid>
                               <Grid item xs={3}>
-                                <TextField
-                                  className={classes.inputs}
-                                  id='outlined-basic'
-                                  variant='outlined'
-                                  label='Zip Code'
-                                  type='tel'
-                                  onChange={(e) => setZipCode(e.target.value)}
-                                  InputProps={{
-                                    maxLength: 6,
-                                    classes: {
-                                      root: classes.inputInput,
-                                      focused: classes.focused,
-                                      notchedOutline: classes.notchedOutline,
-                                    },
-                                  }}
-                                  onInput={(e) => {
-                                    e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 6)
-                                  }}
-                                />
+                                <FormControlLabel control={<Checkbox checked={checkbox.checkedA} onChange={handleChecked} name='checkedA' />} label='3D Secure Payment' />
                               </Grid>
                             </Grid>
                           </Grid>
