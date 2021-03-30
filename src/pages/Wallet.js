@@ -99,9 +99,9 @@ function Wallet(props) {
     setTransactionHistory(!transactionHistory)
   }
 
-  if (bankBalance < withdrawReq || bankBalance1 < withdrawReq1 || bankBalance2 < withdrawReq2) {
-    console.log('invalid')
-  }
+  //if (bankBalance < withdrawReq || bankBalance1 < withdrawReq1 || bankBalance2 < withdrawReq2) {
+    //console.log('invalid')
+  //}
   async function userBalance() {
     try {
       const url = 'wallet/getbalance'
@@ -146,8 +146,6 @@ function Wallet(props) {
 
   useEffect(() => {
     try {
-      userBalance()
-      userInfo()
       if (click) btn.current.style.marginBottom = `${dropdown.current.offsetHeight}px`
       if (click1) btn.current.style.marginBottom = `${dropdown.current.offsetHeight}px`
       if (click2) btn.current.style.marginBottom = `${dropdown.current.offsetHeight}px`
@@ -159,17 +157,17 @@ function Wallet(props) {
 
     async function Transactions() {
       try{
-      const url = 'detail/transactions' //burası değişecek
-      const response = await axios.get(url, { withCredentials: true })
-      if (response.data) {
-        setTransactions(response.data)
-      }
+      const url = 'transactions/mytransactions'
+      const response = await axios.get(url, { withCredentials: true})
+      console.log(response)
     }catch(err){
       alert("We couldn't get your transactions from our server")
     }
     }
 
-    Transactions();
+    Transactions()
+    userBalance()
+    userInfo()
   }, [])
 
   return (
@@ -278,23 +276,14 @@ function Wallet(props) {
           <div className='bank-accounts-header'>
             <p>Transaction History</p>
           </div>
-          <div className='transaction-content-holder'>
-            <div className='transaction-content'>
-              <span className='transaction-type'>Refund</span>
-              <span className='transaction-info'>+50 UP coin</span>
-            </div>
-
-            <div className='transaction-content-holder'>
+          {/* {<div className='transaction-content-holder'>
               {transactions.map((transaction) => (
-                <div
-                  className='transaction-content' key={transaction.name}>
-
-                    <span className='transaction-type'>{transaction.type}</span>
-                    <span className='transaction-info'>{transaction.detail}</span>
+                <div className='transaction-content'>
+                    <span className='transaction-type'></span>
+                    <span className='transaction-info'></span>
                 </div>
               ))}
-            </div>
-          </div>
+          </div>} */}
         </div>
       ) : (
         <div className='bank-accounts-header'>
