@@ -29,7 +29,6 @@ function Homepage(props) {
   //     console.log('Current Path', getApiUrl)
   //     axios.defaults.baseURL = getApiUrl
   //   }
-
   // }, [])
 
   const handleClickLogin = () => {
